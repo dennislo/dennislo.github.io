@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: 'dlo.wtf',
+    title: "dlo.wtf",
     siteTitle: `WTF is DLO?`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    description: `My personal homepage`,
+    author: `@dlo`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
