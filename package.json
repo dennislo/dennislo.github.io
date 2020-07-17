@@ -45,9 +45,9 @@
     ]
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby clean && gatsby build",
     "develop": "gatsby develop",
-    "deploy": "gatsby build && echo \"dlo.wtf\" > public/CNAME && gh-pages -d public -b master",
+    "deploy": "yarn build && echo \"dlo.wtf\" > public/CNAME && gh-pages -d public -b master",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
