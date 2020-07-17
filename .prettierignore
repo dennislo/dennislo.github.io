@@ -3,3 +3,4 @@ package.json
 package-lock.json
 public
 yarn.lock
+src/components/segment.tsx
