@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "gatsby"
-import Segment from "./segment"
 
 interface HeaderProps {
   siteTitle: string
@@ -14,7 +13,6 @@ const Header = ({ siteTitle }: HeaderProps) => (
       marginBottom: `1.45rem`,
     }}
   >
-    <Segment />
     <div
       style={{
         margin: `0 auto`,

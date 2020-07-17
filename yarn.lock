@@ -6092,6 +6092,11 @@ gatsby-plugin-react-helmet@^3.3.6:
   dependencies:
     "@babel/runtime" "^7.10.3"
 
+gatsby-plugin-segment-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-segment-js/-/gatsby-plugin-segment-js-3.3.0.tgz#6cc4c7e705e24a404f9e52f4e195ffb63ae29dd5"
+  integrity sha512-uN3gux4dR+umTI9C73s1V9kgcnDi4jenyTaS0/KqbxPCEQcntXFf/UJoMJCi//FILoYoU373vLmnTShlRyV/mw==
+
 gatsby-plugin-sharp@^2.6.14:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.6.14.tgz#92b1e69a57dcbd316570ccfc58ab4e03bfa252c4"
