@@ -7,12 +7,11 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-
-import Header from "./Header"
-import Bobba from "./icons/Bobba"
-import "./Generated.css"
+import { useStaticQuery, graphql, Link } from "gatsby"
+import Header from "../Header/Header"
+import "../styles/index.scss"
 import styles from "./Layout.module.scss"
+import Sidebar from "../Sidebar/Sidebar"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -33,11 +32,14 @@ const Layout = ({ children }: LayoutProps) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <div className={styles.contentContainer}>
         <div className={styles.contentContainerLeft}>
-          <Bobba />
+          <Sidebar />
         </div>
         <div className={styles.contentContainerRight}>
           <main>{children}</main>
-          <footer>© {new Date().getFullYear()}, Built with ❤</footer>
+          <footer>
+            © {new Date().getFullYear()}, Built with ❤️ using{" "}
+            <Link to="https://www.gatsbyjs.org/">gatsby.js</Link>
+          </footer>
         </div>
       </div>
     </>

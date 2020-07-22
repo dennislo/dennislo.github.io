@@ -1,5 +1,7 @@
+@import "../styles/colors";
+
 .content-container {
-  color: #ffffff;
+  color: $white;
   display: flex;
   height: 100vh;
   margin: 0 auto;
@@ -11,10 +13,16 @@
   background-color: lighten(#000000, 15%);
   flex: 0.1;
   padding: 1rem;
+  text-align: right;
 }
 
 .content-container-right {
   background-color: lighten(#000000, 10%);
   flex: 0.9;
   padding: 1rem;
+}
+
+footer {
+  margin: 55px 0;
+  text-align: center;
 }
