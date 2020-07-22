@@ -71,7 +71,7 @@ module.exports = {
         // number (default to 1000); time to wait after scroll or route change
         // To be used when `delayLoad` is set to `true`
         // delayLoadTime: 1000
-      }
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
