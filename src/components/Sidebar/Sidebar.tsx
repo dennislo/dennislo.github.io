@@ -6,6 +6,7 @@ const Sidebar = () => (
   <>
     <Bobba />
     <div className={styles.introContainer}>
+      <h1>Dennis Lo</h1>
       <p>I wrangle code for fun & profit.</p>
     </div>
     <div className={styles.linksContainer}>
