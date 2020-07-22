@@ -1,18 +1,14 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "gatsby"
+import styles from "./Header.module.scss"
 
 interface HeaderProps {
   siteTitle: string
 }
 
 const Header = ({ siteTitle }: HeaderProps) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
+  <header className={styles.headerContainer}>
     <div
       style={{
         margin: `0 auto`,
