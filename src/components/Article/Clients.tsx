@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
 const Clients = () => (
   <section className="clients">
     <header>
-      <h1>I've worked in:</h1>
+      <h1>I've worked with clients:</h1>
     </header>
 
     <ul>
