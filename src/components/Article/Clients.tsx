@@ -3,9 +3,8 @@ import React from "react"
 const Clients = () => (
   <section className="clients">
     <header>
-      <h1>I've worked with clients:</h1>
+      <h1>Client areas:</h1>
     </header>
-
     <ul>
       <li>
         <a href="https://dlo.wtf">Advertising & Media</a>

@@ -1,8 +1,8 @@
-import React from "react";
-import Github from "../icons/Github";
-import Email from "../icons/Email";
-import Linkedin from "../icons/Linkedin";
-import Instagram from "../icons/Instagram";
+import React from "react"
+import Github from "../icons/Github"
+import Email from "../icons/Email"
+import Linkedin from "../icons/Linkedin"
+import Instagram from "../icons/Instagram"
 
 const Contact = () => (
   <section className="contact">
@@ -23,10 +23,9 @@ const Contact = () => (
           title="email Dennis Lo via dennis@dlo.wtf"
         >
           <Email />
-
           <span className="visuallyhidden">
-              Email Dennis Lo via dennis@dlo.wtf
-            </span>
+            Email Dennis Lo via dennis@dlo.wtf
+          </span>
         </a>
       </li>
 
@@ -36,18 +35,13 @@ const Contact = () => (
           title="Dennis Lo on LinkedIn"
         >
           <Linkedin />
-
           <span className="visuallyhidden">Dennis Lo on LinkedIn</span>
         </a>
       </li>
 
       <li className="instagram">
-        <a
-          href="https://www.instagram.com/dlo"
-          title="Dennis Lo on Instagram"
-        >
+        <a href="https://www.instagram.com/dlo" title="Dennis Lo on Instagram">
           <Instagram />
-
           <span className="visuallyhidden">Dennis Lo on Instagram</span>
         </a>
       </li>

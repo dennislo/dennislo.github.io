@@ -88,7 +88,8 @@ section {
   margin: 2em 0;
 }
 
-section h1, section h2 {
+section h1,
+section h2 {
   /*font-family: NW;*/
   /* Norwester; */
   color: #77b7d8;
@@ -138,7 +139,7 @@ section h1, section h2 {
 .intro p {
   color: #fff;
   font-family: palatino, Baskerville, "Hoefler Text", Garamond,
-  "Times New Roman", Georgia, serif;
+    "Times New Roman", Georgia, serif;
   font-size: 21px;
 
   /* min/default font size + line height for browsers sans media queries or calc(): */
@@ -221,7 +222,8 @@ section h1, section h2 {
 }
 
 .clients a:visited {
-  color: #547e96; /* a bit lighter */
+  // color: #547e96; /* a bit lighter */
+  color: #fff;
 }
 .clients span::before,
 .clients a::before {

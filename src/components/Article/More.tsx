@@ -5,7 +5,6 @@ const More = () => (
     <header>
       <h2>More:</h2>
     </header>
-
     <ul>
       <li>
         <span>
@@ -16,7 +15,7 @@ const More = () => (
         <span>💬 Ask me about Entrepreneurship & Web Development</span>
       </li>
       <li>
-        <span>😍 Enjoys 🏂 Snowboarding & 🚴🏼‍♂️Bike Riding</span>
+        <span>😍 Enjoys Snowboarding & Bike Riding</span>
       </li>
       <li>
         <span>♂ Pronouns: He/Him/His</span>
