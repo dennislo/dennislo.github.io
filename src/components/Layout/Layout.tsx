@@ -8,11 +8,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql, Link } from "gatsby"
-import Header from "../Header/Header"
 import "../styles/index.scss"
-import styles from "./Layout.module.scss"
-import Sidebar from "../Sidebar/Sidebar"
-
+import "./Layout.module.scss"
+import Bobba from "../icons/Bobba"
 interface LayoutProps {
   children: React.ReactNode
 }
@@ -29,19 +27,12 @@ const Layout = ({ children }: LayoutProps) => {
   `)
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div className={styles.contentContainer}>
-        <div className={styles.contentContainerLeft}>
-          <Sidebar />
-        </div>
-        <div className={styles.contentContainerRight}>
-          <main>{children}</main>
-          <footer>
-            © {new Date().getFullYear()}, Built with ❤️ using{" "}
-            <Link to="https://www.gatsbyjs.org/">gatsby.js</Link>
-          </footer>
-        </div>
-      </div>
+      <main>{children}</main>
+      <Bobba />
+      <footer>
+        © {new Date().getFullYear()}, Built with ❤️ using{" "}
+        <Link to="https://www.gatsbyjs.org/">Gatsby.js</Link>
+      </footer>
     </>
   )
 }
