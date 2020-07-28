@@ -10,7 +10,6 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import "../styles/index.scss"
 import "./Layout.module.scss"
-import Bobba from "../icons/Bobba"
 interface LayoutProps {
   children: React.ReactNode
 }
@@ -28,7 +27,6 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <main>{children}</main>
-      <Bobba />
       <footer>
         © {new Date().getFullYear()}, Built with ❤️ using{" "}
         <Link to="https://www.gatsbyjs.org/">Gatsby.js</Link>
