@@ -1,5 +1,4 @@
 import React from "react"
-import "./normalize.scss"
 import "./animation.scss"
 import "./main.scss"
 
