@@ -19,7 +19,7 @@ const Article = () => (
       <p>
         I'm Dennis Lo, a IT consultant & software engineer making elegant and
         useful things with code. I enjoy working in professional, exciting and
-        challenging environments with great people internationally.
+        challenging environments with great people locally or internationally.
       </p>
     </section>
     <Clients />

@@ -3,7 +3,7 @@ import React from "react"
 const More = () => (
   <section className="clients more">
     <header>
-      <h2>More:</h2>
+      <h2>More information:</h2>
     </header>
     <ul>
       <li>
