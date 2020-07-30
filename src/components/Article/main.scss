@@ -1,4 +1,3 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
 html {
   color: #222;
   font-size: 1em;
@@ -93,7 +92,6 @@ section h2 {
   /*font-family: NW;*/
   /* Norwester; */
   color: #77b7d8;
-  /*color: #333;*/
   font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
 }
 
@@ -225,6 +223,11 @@ section h2 {
   // color: #547e96; /* a bit lighter */
   color: #fff;
 }
+
+.clients span {
+  font-size: 14px;
+}
+
 .clients span::before,
 .clients a::before {
   background: transparent;
@@ -240,11 +243,17 @@ section h2 {
 
 .clients a:hover {
   color: #2c424e;
-  background: #b1ff05;
 }
 
 .clients a:hover::before {
   background: #b1ff05;
+}
+
+.clients span:hover {
+  background: blueviolet;
+}
+.clients span:hover::before {
+  background: blueviolet;
 }
 
 @media (min-width: 768px) {
@@ -307,7 +316,8 @@ ul.social {
 }
 
 .social svg:hover {
-  fill: #77b7d8;
+  // fill: #77b7d8;
+  fill: #b3d4fc;
 }
 
 /* ==========================================================================
@@ -315,77 +325,9 @@ ul.social {
    ========================================================================== */
 
 @media only screen and (min-width: 480px) {
-  /* ====================
-    INTERMEDIATE: Menu
-   ==================== */
-
-  nav a {
-    float: left;
-    margin: 0 1.7%;
-    margin-bottom: 0;
-    padding: 25px 2%;
-    width: 27%;
-  }
-
-  nav li:first-child a {
-    margin-left: 0;
-  }
-
-  nav li:last-child a {
-    margin-right: 0;
-  }
-
-  /* ========================
-    INTERMEDIATE: IE Fixes
-   ======================== */
-
-  nav ul li {
-    display: inline;
-  }
-
-  .oldie nav a {
-    margin: 0 0.7%;
-  }
 }
 
 @media only screen and (min-width: 768px) {
-  /* ====================
-    WIDE: CSS3 Effects
-   ==================== */
-
-  .header-container,
-  .main aside {
-    -moz-box-shadow: 0 5px 10px #aaa;
-    -webkit-box-shadow: 0 5px 10px #aaa;
-    box-shadow: 0 5px 10px #aaa;
-  }
-
-  /* ============
-    WIDE: Menu
-   ============ */
-
-  .title {
-    float: left;
-  }
-
-  nav {
-    float: right;
-    width: 38%;
-  }
-
-  /* ============
-    WIDE: Main
-   ============ */
-
-  .main article {
-    float: left;
-    width: 57%;
-  }
-
-  .main aside {
-    float: right;
-    width: 28%;
-  }
 }
 
 @media only screen and (min-width: 1140px) {

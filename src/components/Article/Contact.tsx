@@ -31,7 +31,7 @@ const Contact = () => (
 
       <li className="linkedin">
         <a
-          href="https://www.linkedin.com/in/dennis-lo-a3166245"
+          href="https://www.linkedin.com/in/dennis-lo-profile"
           title="Dennis Lo on LinkedIn"
         >
           <Linkedin />
