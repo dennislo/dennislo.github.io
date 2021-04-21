@@ -21,6 +21,21 @@ const Article = () => (
         challenging environments with great people locally or internationally.
       </p>
     </section>
+    <section className="intro">
+      <h2>Agile IT & Software Limited</h2>
+      <p>
+        We provide IT consultancy services, specialising in Javascript, C#, Java
+        and Bash/Shell. We have experience in assisting clients with a wide
+        range of projects.{" "}
+        <a
+          href="mailto:dennis@dlo.wtf"
+          title="email Dennis Lo via dennis@dlo.wtf"
+        >
+          Please contact us for further information about our services.
+        </a>
+      </p>
+    </section>
+
     <Clients />
     <More />
     <Contact />

@@ -3,7 +3,7 @@ import React from "react"
 const Clients = () => (
   <section className="clients">
     <header>
-      <h1>I've worked with clients from:</h1>
+      <h2>I've worked with clients from:</h2>
     </header>
     <ul>
       <li>
