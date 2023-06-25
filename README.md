@@ -16,7 +16,6 @@
 
     ```shell
     cd gatsby-site/
-    nvm use v18
     npm run develop
     ```
 
