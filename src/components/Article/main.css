@@ -1,0 +1,459 @@
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ccc;
+  display: block;
+  height: 1px;
+  margin: 1em 0;
+  padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.browserupgrade {
+  background: #ccc;
+  color: #000;
+  margin: 0.2em 0;
+  padding: 0.2em 0;
+}
+
+/* ===== Initializr Styles ==================================================
+   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
+   ========================================================================== */
+
+body {
+  font: 16px/26px Helvetica, Helvetica Neue, Arial;
+}
+
+.wrapper {
+  margin: 0 5%;
+  width: 90%;
+}
+
+/* ===============
+    ALL: IE Fixes
+   =============== */
+
+.ie7 .title {
+  padding-top: 20px;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+article.cv {
+  margin: 0 10%;
+}
+
+/*------------------\\\ GLOBAL ///------------------*/
+section.question {
+  margin: 2em 0 0;
+}
+
+section {
+  margin: 2em 0;
+}
+
+section h1,
+section h2 {
+  /*font-family: NW;*/
+  /* Norwester; */
+  color: #77b7d8;
+  font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
+}
+
+@font-face {
+  font-family: "NW";
+  src: url("nw.woff2") format("woff2"), url("nw.woff") format("woff");
+}
+
+/*------------------\\\ INTRO ///------------------*/
+
+.hello,
+.hello:before {
+  transform-origin: bottom;
+}
+
+.hello:before {
+  color: red;
+  content: "hello";
+  position: absolute;
+  z-index: -1;
+}
+
+.hello {
+  border-bottom: 40px solid yellow;
+  border-bottom: 0.36em solid yellow;
+  color: #77b7d8;
+  display: inline-block;
+  font-family: NW, sans-serif;
+  /*text-shadow: 0px 0px 1px #08212f;*/
+  /*color: #007FAA;*/
+  /* somewhat similar but WCAG AA safe; thx colorsafe.co */
+
+  font-size: 4.5em; /* 4.5 * 16px = 72px */
+  font-style: normal;
+  font-weight: 400;
+
+  line-height: 0.7em;
+  margin: 0.5em 0 0.25em 0;
+
+  margin-left: -8px; /* account for space between left edge of first character and left of block */
+}
+
+.intro p {
+  color: #fff;
+  font-family: palatino, Baskerville, "Hoefler Text", Garamond,
+    "Times New Roman", Georgia, serif;
+  font-size: 21px;
+
+  /* min/default font size + line height for browsers sans media queries or calc(): */
+  /* larger sizes are set in media queries below */
+  font-style: italic;
+  line-height: 1.42;
+}
+
+/* elsewhere, set the default size for very small screens & those w/o media queries.
+       here, smoothly scale font size on screens between 220px width and 500px width.
+    /* technique from http://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/
+       but updated to use ems.
+       Using 220px min to catch just about everything - see http://viewportsizes.com */
+@media (min-width: 220px) {
+  /* lower gate */
+  .hello {
+    /* scale between 72px (4.5em) and 160px (10em) */
+    /* window: 220px to 500px (13.75 em - 31.25em) */
+    font-size: calc(4.5em + (10 - 4.5) * ((100vw - 13.75em) / (31.25 - 13.75)));
+  }
+
+  .intro p {
+    /* scale from 21px = 21px/16px = 1.3125 rem up to 27px = 27/16 = 1.6875rem palantino */
+    font-size: calc(
+      1.3125rem + (1.6875 - 1.3125) * ((100vw - 13.75em) / (31.25 - 13.75))
+    );
+    /* scale from 1.42 em (n.b.! not rem) to 1.7 em line spacing */
+    line-height: calc(
+      1.42em + (1.7 - 1.42) * ((100vw - 13.75em) / (31.25 - 13.75))
+    );
+    /* note: equation is generally calc(lower_bound + scale_max * scale_window); */
+  }
+}
+
+@media (min-width: 500px) {
+  /* upper gate */
+  .hello {
+    /* don't get bigger than this */
+    font-size: 10em;
+  }
+
+  .intro p {
+    font-size: 1.6875rem;
+    line-height: 1.7;
+  }
+}
+
+/*------------------\\\ CLIENTS ///------------------*/
+
+.clients ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.clients li {
+  padding-left: 1em;
+  padding-right: 1em;
+  text-indent: -1em;
+}
+
+.clients li:before {
+  color: #fff;
+  content: "\2735"; /* replace bullet with star ✵ */
+  padding-right: 8px;
+}
+
+.clients span,
+.clients a {
+  color: #fff;
+  padding-left: 1em;
+  /*color: #333;*/
+  padding-right: 1em;
+  //color: #2c424e;
+  /* darken header blue */
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s;
+  margin: 0;
+}
+
+.clients a:visited {
+
+  color: #fff;
+}
+
+.clients span {
+  font-size: 14px;
+}
+
+.clients span::before,
+.clients a::before {
+  background: transparent;
+  content: " ";
+  height: 26px;
+  left: 0;
+  position: absolute;
+  transform: skew(-12deg);
+  transition: all 0.3s;
+  width: 100%;
+  z-index: -1;
+}
+
+.clients a:hover {
+  color: #2c424e;
+}
+
+.clients a:hover::before {
+  background: #b1ff05;
+}
+
+.clients span:hover {
+  background: blueviolet;
+}
+.clients span:hover::before {
+  background: blueviolet;
+}
+
+@media (min-width: 768px) {
+  .clients ul {
+    list-style: none;
+    margin-left: -20px;
+    padding-left: 0;
+    position: relative;
+  }
+  .clients ul:before {
+    background: black;
+    content: " ";
+    height: 100%;
+    margin-left: -20px; /* match margin-left of .clients ul */
+    position: absolute;
+    width: 20px; /* just wider than bullets */
+  }
+  .clients li {
+    display: inline-block;
+    padding-left: 0;
+  }
+}
+
+.clients h1 {
+  font-size: 2.25em;
+  line-height: 1.2;
+}
+
+.more h2 {
+  font-size: 1.5em;
+  line-height: 1.2;
+}
+
+/*------------------\\\ CONTACT ///------------------*/
+
+ul.social {
+  padding: 0;
+  text-align: center;
+}
+
+.social li {
+  display: inline;
+  list-style-type: none;
+  padding: 10px;
+}
+
+.social a {
+  text-decoration: none;
+}
+
+.social span {
+  display: none;
+}
+
+.social svg {
+  fill: Gray;
+  max-width: 3em;
+  min-width: 30px;
+  transition: fill 0.25s;
+}
+
+.social svg:hover {
+  fill: #b3d4fc;
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 480px) {
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1140px) {
+  /* ===============
+    Maximal Width
+   =============== */
+
+  .wrapper {
+    margin: 0 auto;
+    width: 1026px; /* 1140px - 10% for margins */
+  }
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  .hello {
+    border-bottom: none;
+    color: gray !important;
+    margin: 0.2em 0;
+  }
+}
