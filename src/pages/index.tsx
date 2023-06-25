@@ -1,13 +1,17 @@
-import React from "react"
-import Layout from "../components/Layout/Layout"
-import SEO from "../components/Seo/Seo"
-import Article from "../components/Article/Article"
+import * as React from "react"
+import type { HeadFC, PageProps } from "gatsby"
+import Layout from "../components/Layout/Layout";
+import Article from "../components/Article/Article";
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <Article />
-  </Layout>
-)
+const IndexPage: React.FC<PageProps> = () => {
+  return (
+    <Layout>
+      <Article />
+    </Layout>
+  )
+}
 
 export default IndexPage
+
+
+export { Head } from "../components/Head/Head";

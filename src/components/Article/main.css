@@ -220,7 +220,7 @@ section h2 {
 }
 
 .clients a:visited {
-  // color: #547e96; /* a bit lighter */
+
   color: #fff;
 }
 
@@ -316,7 +316,6 @@ ul.social {
 }
 
 .social svg:hover {
-  // fill: #77b7d8;
   fill: #b3d4fc;
 }
 

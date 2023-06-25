@@ -1,6 +1,6 @@
 import React from "react"
-import "./animation.scss"
-import "./main.scss"
+import "./animation.css"
+import "./main.css"
 
 import Clients from "./Clients"
 import Contact from "./Contact"
@@ -9,7 +9,7 @@ import More from "./More"
 const Article = () => (
   <article className="cv">
     <section className="question intro">
-      <p>Who the f*** is DLO?</p>
+      <p>Who is DLO?</p>
     </section>
     <header>
       <h1 className="hello">hello</h1>

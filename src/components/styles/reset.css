@@ -1,4 +1,4 @@
-// Source: https://github.com/hankchizljaw/modern-css-reset/blob/master/src/reset.css
+/* Source: https://github.com/hankchizljaw/modern-css-reset/blob/master/src/reset.css */
 
 /* Box sizing rules */
 *,
@@ -39,7 +39,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color: $black;
+  background-color: #000;
 }
 
 /* Remove list styles on ul, ol elements with a class attribute */

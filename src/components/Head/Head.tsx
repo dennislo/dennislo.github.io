@@ -1,46 +1,27 @@
 /**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
+ * Head component
  *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
+ * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
 
 import React from "react"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
 
-interface Seo {
-  description: string
-  lang: string
-  meta: any
-  title: string
-}
+export function Head() {
+  const lang = "en";
+  const title = "Who is DLO?"
 
-function SEO({ description, lang, meta, title }: Seo) {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  )
+  const metaDescription = "My personal homepage";
 
-  const metaDescription = description || site.siteMetadata.description
+  const author = "@dlo"
 
   return (
-    <Helmet
+    <head
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${title}`}
       meta={[
         {
           name: `description`,
@@ -64,7 +45,7 @@ function SEO({ description, lang, meta, title }: Seo) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: author,
         },
         {
           name: `twitter:title`,
@@ -74,7 +55,7 @@ function SEO({ description, lang, meta, title }: Seo) {
           name: `twitter:description`,
           content: metaDescription,
         },
-      ].concat(meta)}
+      ].concat([])}
     >
       <link
         rel="apple-touch-icon"
@@ -93,22 +74,22 @@ function SEO({ description, lang, meta, title }: Seo) {
         sizes="16x16"
         href="/favicon//favicon-16x16.png"
       />
-      <link rel="manifest" href="/favicon/site.webmanifest" />
-    </Helmet>
+      <link rel="manifest" href="/favicon/site.webmanifest"/>
+    </head>
   )
 }
 
-SEO.defaultProps = {
+Head.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
 }
 
-SEO.propTypes = {
+Head.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
 }
 
-export default SEO
+export default Head
