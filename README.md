@@ -32,7 +32,7 @@ is useful for larger changes.
 
 ## 🚀 Deployment
 
-## Deploying latest
+### Deploying latest
 **NOTE:** Do not commit directly to the `master` branch
 as this is the production branch for github pages.
 
