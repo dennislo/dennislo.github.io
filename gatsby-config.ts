@@ -16,6 +16,40 @@ const config: GatsbyConfig = {
       "path": "./src/images/"
     },
     __key: "images"
+  },
+  {
+    resolve: `gatsby-plugin-segment-js`,
+    options: {
+      // your segment write key for your production environment
+      // when process.env.NODE_ENV === 'production'
+      // required; non-empty string
+      prodKey: `N6Rz9B3AkToctyEBDMcGGmD7z8pkSHLo`,
+
+      // if you have a development env for your segment account, paste that key here
+      // when process.env.NODE_ENV === 'development'
+      // optional; non-empty string
+      devKey: 'SEGMENT_DEV_WRITE_KEY',
+
+      // Boolean indicating if you want this plugin to perform any automated analytics.page() calls
+      // at all, or not.
+      // If set to false, see below on how to track pageviews manually.
+      //
+      // This plugin will attempt to intelligently prevent duplicate page() calls.
+      //
+      // Default: true
+      trackPage: true,
+
+      // Boolean indicating if you want this plugin to perform a page() call immediately once the snippet
+      // is loaded.
+      //
+      // You might want to disable this if you *only* want page() calls to occur upon Client-side routing
+      // updates. See `trackPageOnRouteUpdate` option.
+      //
+      // This plugin will still attempt to intelligently prevent duplicate page() calls.
+      //
+      // Default: true
+      trackPageImmediately: true,
+    }
   }]
 };
 
