@@ -16,6 +16,7 @@
 
     ```shell
     cd gatsby-site/
+    nvm use v18
     npm run develop
     ```
 
@@ -35,8 +36,9 @@ is useful for larger changes.
 **NOTE:** Do not commit directly to the `master` branch
 as this is the production branch for github pages.
 
-Run the following to deploy the latest changes to production.
-```
+Run the following to deploy the latest changes to production:
+
+```shell
 git checkout develop
 npm run deploy
 ```
