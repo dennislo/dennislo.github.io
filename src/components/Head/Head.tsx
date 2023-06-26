@@ -76,7 +76,7 @@ export function Head() {
       />
       <link rel="manifest" href="/favicon/site.webmanifest"/>
       <title>{title}</title>
-      <meta name="description">{metaDescription}</meta>
+      <meta name="description" content={metaDescription} />
     </head>
   )
 }
