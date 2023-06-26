@@ -11,7 +11,7 @@ export function Head() {
   const lang = "en";
   const title = "Who is DLO?"
 
-  const metaDescription = "My personal homepage";
+  const metaDescription = `${title} - My personal homepage`;
 
   const author = "@dlo"
 
@@ -75,6 +75,8 @@ export function Head() {
         href="/favicon//favicon-16x16.png"
       />
       <link rel="manifest" href="/favicon/site.webmanifest"/>
+      <title>{title}</title>
+      <meta name="description">{metaDescription}</meta>
     </head>
   )
 }
