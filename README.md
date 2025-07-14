@@ -10,9 +10,10 @@
 ## 💻 Development
 
 ### Running locally
+
 1. **Run server**
 
-    Navigate into your new site’s directory and start it up.
+   Navigate into your new site’s directory and start it up.
 
     ```shell
     cd gatsby-site/
@@ -21,17 +22,19 @@
 
 2. **Open the code and start customizing!**
 
-    Your site is now running at http://localhost:8000!
+   Your site is now running at http://localhost:8000!
 
-    Edit `src/pages/index.tsx` to see your site update in real-time!
+   Edit `src/pages/index.tsx` to see your site update in real-time!
 
 ### Making changes
+
 All edits to be committed to the `develop` branch. Creating features branches
 is useful for larger changes.
 
 ## 🚀 Deployment
 
 ### Deploying latest
+
 **NOTE:** Do not commit directly to the `master` branch
 as this is the production branch for github pages.
 
@@ -41,5 +44,7 @@ Run the following to deploy the latest changes to production:
 git checkout develop
 npm run deploy
 ```
+
+Your site will be built and deployed using the latest `master` branch. This is served by GitHub Pages at https://dlo.wtf/
 
 
