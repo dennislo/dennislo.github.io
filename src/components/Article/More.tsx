@@ -17,9 +17,6 @@ const More = () => (
       <li>
         <span>😍 Enjoys Snowboarding & Bike Riding</span>
       </li>
-      <li>
-        <span>♂ Pronouns: He/Him/His</span>
-      </li>
     </ul>
   </section>
 )
