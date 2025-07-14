@@ -1,3 +1,4 @@
+<div style="margin: 0 auto;">
 <p style="text-align: center;">
   <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
@@ -6,13 +7,16 @@
 <h1 style="text-align: center;">
   Personal homepage: Who is DLO?
 </h1>
+</div>
 
 <!-- TOC -->
-  * [💻 Development](#development)
+
+* [💻 Development](#development)
     * [Running locally](#running-locally)
     * [Making changes](#making-changes)
-  * [🚀 Deployment](#-deployment)
+* [🚀 Deployment](#-deployment)
     * [Deploying latest](#deploying-latest)
+
 <!-- TOC -->
 
 ## [💻 Development](#development)
@@ -53,6 +57,7 @@ git checkout develop
 npm run deploy
 ```
 
-Your site will be built and deployed using the latest `master` branch. This is served by GitHub Pages at https://dlo.wtf/
+Your site will be built and deployed using the latest `master` branch. This is served by GitHub Pages
+at https://dlo.wtf/
 
 
