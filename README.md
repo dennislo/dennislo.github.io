@@ -1,13 +1,12 @@
-<div style="margin: 0 auto;">
-<p style="text-align: center;">
+<p align="center">
   <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
-<h1 style="text-align: center;">
+<h1 align="center">
   Personal homepage: Who is DLO?
 </h1>
-</div>
+
 
 <!-- TOC -->
 
