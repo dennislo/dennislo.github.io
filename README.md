@@ -1,15 +1,23 @@
-<p align="center">
+<p style="text-align: center;">
   <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
-<h1 align="center">
+<h1 style="text-align: center;">
   Personal homepage: Who is DLO?
 </h1>
 
-## 💻 Development
+<!-- TOC -->
+  * [💻 Development](#development)
+    * [Running locally](#running-locally)
+    * [Making changes](#making-changes)
+  * [🚀 Deployment](#-deployment)
+    * [Deploying latest](#deploying-latest)
+<!-- TOC -->
 
-### Running locally
+## [💻 Development](#development)
+
+### [Running locally](#running-locally)
 
 1. **Run server**
 
@@ -26,14 +34,14 @@
 
    For example, you can edit `src/pages/index.tsx` to see your site update in real-time.
 
-### Making changes
+### [Making changes](#making-changes)
 
 All edits to be committed to the `develop` branch. Creating features branches
 is useful for larger changes.
 
-## 🚀 Deployment
+## [🚀 Deployment](#deployment)
 
-### Deploying latest
+### [Deploying latest](#deploying-latest)
 
 **NOTE:** Do not commit directly to the `master` branch
 as this is the production branch for github pages.
