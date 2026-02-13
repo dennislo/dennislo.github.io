@@ -16,17 +16,21 @@ const Article = () => (
     </header>
     <section className="intro">
       <p>
-        I'm Dennis Lo, a IT consultant & software engineer making elegant and
-        useful things with code. I enjoy working in professional, exciting and
-        challenging environments with great people locally or internationally.
+        I&apos;m Dennis Lo, an IT consultant and software engineer who crafts
+        robust, scalable solutions that solve real problems. I have deep expertise
+        across the full stack, I thrive in fast-paced, collaborative
+        environments and have a proven track record of delivering high-impact
+        projects for clients both locally and internationally.
       </p>
     </section>
     <section className="intro">
       <h2>Agile IT & Software Limited</h2>
       <p>
-        We provide IT consultancy services, specialising in Javascript, C#, Java
-        and Bash/Shell. We have experience in assisting clients with a wide
-        range of projects.{" "}
+        We deliver enterprise-grade IT consultancy and software engineering
+        services, with specialized expertise in JavaScript, C#, Java, and
+        Bash/Shell. Our proven experience spans diverse industries and complex
+        technical challenges, from system architecture and full-stack development
+        to DevOps automation and legacy system modernization.{" "}
         <a
           href="mailto:dennis@dlo.wtf"
           title="email Dennis Lo via dennis@dlo.wtf"
