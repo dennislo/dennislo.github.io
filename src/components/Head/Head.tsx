@@ -16,47 +16,17 @@ export function Head() {
   const author = "@dlo";
 
   return (
-    <head
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={`%s | ${title}`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: author,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-      ].concat([])}
-    >
+    <>
+      <html lang={lang} />
+      <title>{title}</title>
+      <meta name="description" content={metaDescription} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:creator" content={author} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDescription} />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -75,9 +45,7 @@ export function Head() {
         href="/favicon//favicon-16x16.png"
       />
       <link rel="manifest" href="/favicon/site.webmanifest" />
-      <title>{title}</title>
-      <meta name="description" content={metaDescription} />
-    </head>
+    </>
   );
 }
 
