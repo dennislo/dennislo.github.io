@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const More = () => (
   <section className="clients more">
@@ -19,6 +19,6 @@ const More = () => (
       </li>
     </ul>
   </section>
-)
+);
 
-export default More
+export default More;

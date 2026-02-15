@@ -7,14 +7,13 @@
   Personal homepage: Who is DLO?
 </h1>
 
-
 <!-- TOC -->
 
-* [💻 Development](#development)
-    * [Running locally](#running-locally)
-    * [Making changes](#making-changes)
-* [🚀 Deployment](#-deployment)
-    * [Deploying latest](#deploying-latest)
+- [💻 Development](#development)
+  - [Running locally](#running-locally)
+  - [Making changes](#making-changes)
+- [🚀 Deployment](#-deployment)
+  - [Deploying latest](#deploying-latest)
 
 <!-- TOC -->
 
@@ -26,10 +25,10 @@
 
    Navigate into your new site’s directory and start it up.
 
-    ```shell
-    cd gatsby-site/
-    npm run develop
-    ```
+   ```shell
+   cd gatsby-site/
+   npm run develop
+   ```
 
 2. **Open the code and start customizing!**
 
@@ -58,5 +57,3 @@ npm run deploy
 
 Your site will be built and deployed using the latest `master` branch. This is served by GitHub Pages
 at https://dlo.wtf/
-
-

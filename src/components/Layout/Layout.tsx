@@ -1,21 +1,21 @@
-import React from "react"
-import PropTypes from "prop-types"
-import {Link} from "gatsby"
-import "../styles/index.css"
-import "../../styles/theme.css"
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "gatsby";
+import "../styles/index.css";
+import "../../styles/theme.css";
 import styled from "styled-components";
-import {ThemeProvider} from "../../context/ThemeContext"
-import ThemeToggle from "../ThemeToggle/ThemeToggle"
+import { ThemeProvider } from "../../context/ThemeContext";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Footer = styled.footer`
   color: var(--text-color);
   margin: 55px 0;
   text-align: center;
-`
+`;
 
 const Layout = ({ children }: LayoutProps) => {
   return (
@@ -27,11 +27,11 @@ const Layout = ({ children }: LayoutProps) => {
         <Link to="https://www.gatsbyjs.org/">Gatsby.js</Link>
       </Footer>
     </ThemeProvider>
-  )
-}
+  );
+};
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default Layout;

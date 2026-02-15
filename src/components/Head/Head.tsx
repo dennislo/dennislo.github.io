@@ -4,16 +4,16 @@
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
 export function Head() {
   const lang = "en";
-  const title = "Who is DLO?"
+  const title = "Who is DLO?";
 
   const metaDescription = `${title} - My personal homepage`;
 
-  const author = "@dlo"
+  const author = "@dlo";
 
   return (
     <head
@@ -74,24 +74,24 @@ export function Head() {
         sizes="16x16"
         href="/favicon//favicon-16x16.png"
       />
-      <link rel="manifest" href="/favicon/site.webmanifest"/>
+      <link rel="manifest" href="/favicon/site.webmanifest" />
       <title>{title}</title>
       <meta name="description" content={metaDescription} />
     </head>
-  )
+  );
 }
 
 Head.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
-}
+};
 
 Head.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
-}
+};
 
-export default Head
+export default Head;

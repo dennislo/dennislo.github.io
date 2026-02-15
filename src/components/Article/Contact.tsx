@@ -1,8 +1,8 @@
-import React from "react"
-import Github from "../icons/Github"
-import Email from "../icons/Email"
-import Linkedin from "../icons/Linkedin"
-import Instagram from "../icons/Instagram"
+import React from "react";
+import Github from "../icons/Github";
+import Email from "../icons/Email";
+import Linkedin from "../icons/Linkedin";
+import Instagram from "../icons/Instagram";
 
 const Contact = () => (
   <section className="contact">
@@ -47,6 +47,6 @@ const Contact = () => (
       </li>
     </ul>
   </section>
-)
+);
 
-export default Contact
+export default Contact;

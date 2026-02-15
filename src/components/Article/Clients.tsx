@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Clients = () => (
   <section className="clients">
@@ -26,6 +26,6 @@ const Clients = () => (
       </li>
     </ul>
   </section>
-)
+);
 
-export default Clients
+export default Clients;

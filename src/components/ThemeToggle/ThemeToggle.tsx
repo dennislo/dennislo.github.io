@@ -1,9 +1,9 @@
-import React from "react"
-import { useTheme } from "../../context/ThemeContext"
-import "./ThemeToggle.css"
+import React from "react";
+import { useTheme } from "../../context/ThemeContext";
+import "./ThemeToggle.css";
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button
@@ -50,7 +50,7 @@ const ThemeToggle = () => {
         </svg>
       )}
     </button>
-  )
-}
+  );
+};
 
-export default ThemeToggle
+export default ThemeToggle;

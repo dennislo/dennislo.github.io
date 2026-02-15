@@ -38,9 +38,13 @@
 }
 
 .hello:before {
-  animation: prep 1s, shadowSquiggle 1.5s ease-in-out 1s;
+  animation:
+    prep 1s,
+    shadowSquiggle 1.5s ease-in-out 1s;
 }
 
 .hello {
-  animation: prep 1s, slide 1.5s ease-in-out 1s;
+  animation:
+    prep 1s,
+    slide 1.5s ease-in-out 1s;
 }

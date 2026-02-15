@@ -54,7 +54,10 @@ textarea {
    ========================================================================== */
 
 body {
-  font: 16px/26px Helvetica, Helvetica Neue, Arial;
+  font:
+    16px/26px Helvetica,
+    Helvetica Neue,
+    Arial;
 }
 
 .wrapper {
@@ -92,12 +95,18 @@ section h2 {
   /*font-family: NW;*/
   /* Norwester; */
   color: var(--heading-color);
-  font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
+  font-family:
+    Helvetica,
+    Helvetica Neue,
+    Arial,
+    sans-serif;
 }
 
 @font-face {
   font-family: "NW";
-  src: url("nw.woff2") format("woff2"), url("nw.woff") format("woff");
+  src:
+    url("nw.woff2") format("woff2"),
+    url("nw.woff") format("woff");
 }
 
 /*------------------\\\ INTRO ///------------------*/
@@ -136,8 +145,9 @@ section h2 {
 
 .intro p {
   color: var(--text-color-secondary);
-  font-family: palatino, Baskerville, "Hoefler Text", Garamond,
-    "Times New Roman", Georgia, serif;
+  font-family:
+    palatino, Baskerville, "Hoefler Text", Garamond, "Times New Roman", Georgia,
+    serif;
   font-size: 21px;
 
   /* min/default font size + line height for browsers sans media queries or calc(): */
@@ -221,7 +231,6 @@ section h2 {
 }
 
 .clients a:visited {
-
   color: var(--text-color-secondary);
 }
 
