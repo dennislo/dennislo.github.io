@@ -263,8 +263,8 @@ section h2 {
     padding-left: 0;
     position: relative;
   }
+
   .clients ul:before {
-    background: var(--client-bar-bg);
     content: " ";
     height: 100%;
     margin-left: -20px; /* match margin-left of .clients ul */

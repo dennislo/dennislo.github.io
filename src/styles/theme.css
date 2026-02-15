@@ -16,7 +16,6 @@
   --svg-fill: Gray;
   --svg-hover: #b3d4fc;
   --bullet-color: #fff;
-  --client-bar-bg: black;
 }
 
 :root[data-theme="light"] {
@@ -35,7 +34,6 @@
   --svg-fill: #666;
   --svg-hover: #0066a1;
   --bullet-color: #0066a1;
-  --client-bar-bg: #ddd;
 }
 
 /* Apply background color to body */

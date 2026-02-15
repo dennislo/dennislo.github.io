@@ -27,11 +27,6 @@
   height: 24px;
 }
 
-.theme-toggle:focus {
-  outline: 2px solid var(--link-hover-bg);
-  outline-offset: 2px;
-}
-
 @media (max-width: 768px) {
   .theme-toggle {
     width: 45px;
