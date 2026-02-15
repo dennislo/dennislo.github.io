@@ -191,12 +191,13 @@ section h2 {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
+  text-align: left;
 }
 
 .clients li {
-  padding-left: 1em;
+  padding-left: 0;
   padding-right: 1em;
-  text-indent: -1em;
+  text-indent: 0;
 }
 
 .clients li:before {

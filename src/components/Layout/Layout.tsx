@@ -1,11 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import {Link} from "gatsby"
 import "../styles/index.css"
 import "../../styles/theme.css"
 import styled from "styled-components";
-import { WHITE } from "../../constants/colours";
-import { ThemeProvider } from "../../context/ThemeContext"
+import {ThemeProvider} from "../../context/ThemeContext"
 import ThemeToggle from "../ThemeToggle/ThemeToggle"
 
 interface LayoutProps {
@@ -13,7 +12,7 @@ interface LayoutProps {
 }
 
 const Footer = styled.footer`
-  color: ${WHITE};
+  color: var(--text-color);
   margin: 55px 0;
   text-align: center;
 `
