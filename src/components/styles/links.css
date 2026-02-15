@@ -1,5 +1,5 @@
 a {
-  color: #fff;
+  color: var(--link-color);
   text-decoration: none;
 }
 

@@ -1,22 +1,22 @@
 html {
-  color: #222;
+  color: var(--text-color);
   font-size: 1em;
   line-height: 1.4;
 }
 
 ::-moz-selection {
-  background: #b3d4fc;
+  background: var(--selection-bg);
   text-shadow: none;
 }
 
 ::selection {
-  background: #b3d4fc;
+  background: var(--selection-bg);
   text-shadow: none;
 }
 
 hr {
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--hr-border);
   display: block;
   height: 1px;
   margin: 1em 0;
@@ -91,7 +91,7 @@ section h1,
 section h2 {
   /*font-family: NW;*/
   /* Norwester; */
-  color: #77b7d8;
+  color: var(--heading-color);
   font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
 }
 
@@ -108,16 +108,16 @@ section h2 {
 }
 
 .hello:before {
-  color: red;
+  color: var(--hello-shadow);
   content: "hello";
   position: absolute;
   z-index: -1;
 }
 
 .hello {
-  border-bottom: 40px solid yellow;
-  border-bottom: 0.36em solid yellow;
-  color: #77b7d8;
+  border-bottom: 40px solid var(--hello-border);
+  border-bottom: 0.36em solid var(--hello-border);
+  color: var(--hello-color);
   display: inline-block;
   font-family: NW, sans-serif;
   /*text-shadow: 0px 0px 1px #08212f;*/
@@ -135,7 +135,7 @@ section h2 {
 }
 
 .intro p {
-  color: #fff;
+  color: var(--text-color-secondary);
   font-family: palatino, Baskerville, "Hoefler Text", Garamond,
     "Times New Roman", Georgia, serif;
   font-size: 21px;
@@ -200,14 +200,14 @@ section h2 {
 }
 
 .clients li:before {
-  color: #fff;
+  color: var(--bullet-color);
   content: "\2735"; /* replace bullet with star ✵ */
   padding-right: 8px;
 }
 
 .clients span,
 .clients a {
-  color: #fff;
+  color: var(--text-color-secondary);
   padding-left: 1em;
   /*color: #333;*/
   padding-right: 1em;
@@ -221,7 +221,7 @@ section h2 {
 
 .clients a:visited {
 
-  color: #fff;
+  color: var(--text-color-secondary);
 }
 
 .clients span {
@@ -242,11 +242,11 @@ section h2 {
 }
 
 .clients a:hover {
-  color: #2c424e;
+  color: var(--link-hover-color);
 }
 
 .clients a:hover::before {
-  background: #b1ff05;
+  background: var(--link-hover-bg);
 }
 
 .clients span:hover {
@@ -264,7 +264,7 @@ section h2 {
     position: relative;
   }
   .clients ul:before {
-    background: black;
+    background: var(--client-bar-bg);
     content: " ";
     height: 100%;
     margin-left: -20px; /* match margin-left of .clients ul */
@@ -309,14 +309,14 @@ ul.social {
 }
 
 .social svg {
-  fill: Gray;
+  fill: var(--svg-fill);
   max-width: 3em;
   min-width: 30px;
   transition: fill 0.25s;
 }
 
 .social svg:hover {
-  fill: #b3d4fc;
+  fill: var(--svg-hover);
 }
 
 /* ==========================================================================

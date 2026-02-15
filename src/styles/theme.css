@@ -1,0 +1,45 @@
+/* Theme CSS Variables */
+
+:root[data-theme="dark"] {
+  --bg-color: #000;
+  --text-color: #fff;
+  --text-color-secondary: #fff;
+  --heading-color: #77b7d8;
+  --hello-color: #77b7d8;
+  --hello-shadow: red;
+  --hello-border: yellow;
+  --link-color: #fff;
+  --link-hover-bg: #b1ff05;
+  --link-hover-color: #2c424e;
+  --selection-bg: #b3d4fc;
+  --hr-border: #ccc;
+  --svg-fill: Gray;
+  --svg-hover: #b3d4fc;
+  --bullet-color: #fff;
+  --client-bar-bg: black;
+}
+
+:root[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --text-color: #222;
+  --text-color-secondary: #333;
+  --heading-color: #0066a1;
+  --hello-color: #0066a1;
+  --hello-shadow: #ff6b6b;
+  --hello-border: #ffd700;
+  --link-color: #0066a1;
+  --link-hover-bg: #b1ff05;
+  --link-hover-color: #2c424e;
+  --selection-bg: #b3d4fc;
+  --hr-border: #ccc;
+  --svg-fill: #666;
+  --svg-hover: #0066a1;
+  --bullet-color: #0066a1;
+  --client-bar-bg: #ddd;
+}
+
+/* Apply background color to body */
+body {
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
