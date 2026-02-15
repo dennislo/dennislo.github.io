@@ -1,5 +1,5 @@
 import * as React from "react";
-import type {PageProps} from "gatsby";
+import type { PageProps } from "gatsby";
 import Layout from "../components/Layout/Layout";
 import Article from "../components/Article/Article";
 
