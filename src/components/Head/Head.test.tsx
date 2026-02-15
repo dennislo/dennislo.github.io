@@ -30,7 +30,7 @@ describe("Head", () => {
     render(<Head title="Test" />);
     const twitterCard = document.querySelector('meta[name="twitter:card"]');
     const twitterCreator = document.querySelector(
-      'meta[name="twitter:creator"]'
+      'meta[name="twitter:creator"]',
     );
     expect(twitterCard?.getAttribute("content")).toBe("summary");
     expect(twitterCreator?.getAttribute("content")).toBe("@dlo");

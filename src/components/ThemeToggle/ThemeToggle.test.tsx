@@ -8,7 +8,7 @@ describe("ThemeToggle", () => {
     render(
       <ThemeProvider>
         <ThemeToggle />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe("ThemeToggle", () => {
     render(
       <ThemeProvider>
         <ThemeToggle />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("aria-label", "Switch to light mode");
@@ -31,7 +31,7 @@ describe("ThemeToggle", () => {
     render(
       <ThemeProvider>
         <ThemeToggle />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const button = screen.getByRole("button");
     const svg = button.querySelector("svg");

@@ -1,5 +1,5 @@
 import React from "react";
-import {render, screen} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Article from "./Article";
 
 jest.mock("./Clients", () => () => <div data-testid="clients">Clients</div>);
@@ -8,24 +8,24 @@ jest.mock("./Contact", () => () => <div data-testid="contact">Contact</div>);
 
 describe("Article", () => {
   it("renders the article with main sections", () => {
-    render(<Article/>);
+    render(<Article />);
     expect(screen.getByText("Who is DLO?")).toBeInTheDocument();
     expect(screen.getByText("hello")).toBeInTheDocument();
     expect(
-      screen.getByText(/I'm Dennis Lo, an IT consultant/)
+      screen.getByText(/I'm Dennis Lo, an IT consultant/),
     ).toBeInTheDocument();
   });
 
   it("renders Agile IT & Software Limited section", () => {
-    render(<Article/>);
+    render(<Article />);
     expect(screen.getByText("Agile IT & Software Limited")).toBeInTheDocument();
     expect(
-      screen.getByText(/We deliver enterprise-grade IT consultancy/)
+      screen.getByText(/We deliver enterprise-grade IT consultancy/),
     ).toBeInTheDocument();
   });
 
   it("renders contact email link", () => {
-    render(<Article/>);
+    render(<Article />);
     const link = screen.getByRole("link", {
       name: /Please contact us for further information/,
     });
@@ -33,16 +33,16 @@ describe("Article", () => {
   });
 
   it("renders child components", () => {
-    render(<Article/>);
+    render(<Article />);
     expect(screen.getByTestId("clients")).toBeInTheDocument();
     expect(screen.getByTestId("more")).toBeInTheDocument();
     expect(screen.getByTestId("contact")).toBeInTheDocument();
   });
 
   it("renders design credit", () => {
-    render(<Article/>);
+    render(<Article />);
     expect(
-      screen.getByText("Page design credit: Peter W @techieshark")
+      screen.getByText("Page design credit: Peter W @techieshark"),
     ).toBeInTheDocument();
   });
 });

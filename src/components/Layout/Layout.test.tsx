@@ -18,7 +18,7 @@ describe("Layout", () => {
     render(
       <Layout>
         <div>Test Content</div>
-      </Layout>
+      </Layout>,
     );
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
@@ -27,7 +27,7 @@ describe("Layout", () => {
     render(
       <Layout>
         <div>Test Content</div>
-      </Layout>
+      </Layout>,
     );
     expect(screen.getByTestId("theme-toggle")).toBeInTheDocument();
   });
@@ -36,7 +36,7 @@ describe("Layout", () => {
     render(
       <Layout>
         <div>Test Content</div>
-      </Layout>
+      </Layout>,
     );
     const currentYear = new Date().getFullYear();
     expect(
@@ -44,7 +44,7 @@ describe("Layout", () => {
         return (
           element?.tagName === "FOOTER" && content.includes(`© ${currentYear}`)
         );
-      })
+      }),
     ).toBeInTheDocument();
   });
 
@@ -52,7 +52,7 @@ describe("Layout", () => {
     render(
       <Layout>
         <div>Test Content</div>
-      </Layout>
+      </Layout>,
     );
     const link = screen.getByRole("link", { name: "Gatsby.js" });
     expect(link).toBeInTheDocument();

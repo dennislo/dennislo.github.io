@@ -6,7 +6,7 @@ describe("Clients", () => {
   it("renders the clients section header", () => {
     render(<Clients />);
     expect(
-      screen.getByText("I've worked with clients from:")
+      screen.getByText("I've worked with clients from:"),
     ).toBeInTheDocument();
   });
 

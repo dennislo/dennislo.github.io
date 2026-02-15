@@ -21,7 +21,7 @@ describe("ThemeContext", () => {
     render(
       <ThemeProvider>
         <TestComponent />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     expect(screen.getByTestId("theme")).toHaveTextContent("dark");
   });
@@ -30,7 +30,7 @@ describe("ThemeContext", () => {
     render(
       <ThemeProvider>
         <TestComponent />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const button = screen.getByRole("button");
     fireEvent.click(button);
@@ -40,7 +40,7 @@ describe("ThemeContext", () => {
   it("throws error when useTheme is used outside ThemeProvider", () => {
     const spy = jest.spyOn(console, "error").mockImplementation(() => {});
     expect(() => render(<TestComponent />)).toThrow(
-      "useTheme must be used within a ThemeProvider"
+      "useTheme must be used within a ThemeProvider",
     );
     spy.mockRestore();
   });

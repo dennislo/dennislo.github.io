@@ -12,22 +12,22 @@ describe("More", () => {
     render(<More />);
     expect(
       screen.getByText(
-        /I'm learning Cloud Computing & Optimising Software Delivery/
-      )
+        /I'm learning Cloud Computing & Optimising Software Delivery/,
+      ),
     ).toBeInTheDocument();
   });
 
   it("renders ask me about fact", () => {
     render(<More />);
     expect(
-      screen.getByText(/Ask me about Entrepreneurship & Web Development/)
+      screen.getByText(/Ask me about Entrepreneurship & Web Development/),
     ).toBeInTheDocument();
   });
 
   it("renders hobbies fact", () => {
     render(<More />);
     expect(
-      screen.getByText(/Enjoys Snowboarding & Bike Riding/)
+      screen.getByText(/Enjoys Snowboarding & Bike Riding/),
     ).toBeInTheDocument();
   });
 

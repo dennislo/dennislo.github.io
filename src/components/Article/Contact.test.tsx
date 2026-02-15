@@ -35,7 +35,7 @@ describe("Contact", () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
-      "https://www.linkedin.com/in/dennis-lo-profile"
+      "https://www.linkedin.com/in/dennis-lo-profile",
     );
   });
 
