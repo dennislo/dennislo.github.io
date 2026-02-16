@@ -1,6 +1,7 @@
 # Jest Unit Testing Best Practices
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Configuration](#configuration)
 - [Test Structure](#test-structure)
@@ -17,17 +18,20 @@ This project uses Jest with React Testing Library for unit testing. Tests are wr
 ## Configuration
 
 ### Configuration Files
+
 - [jest.config.js](../../jest.config.js) - Jest configuration
 - [jest.setup.js](../../jest.setup.js) - Jest setup and global test configuration
 
 ## Test Structure
 
 ### File Naming
+
 - Place test files adjacent to the code they test
 - Use `.test.tsx` or `.test.ts` extension
 - Example: `Component.tsx` → `Component.test.tsx`
 
 ### Test Organization
+
 ```typescript
 describe("ComponentName", () => {
   // Group related tests
@@ -48,6 +52,7 @@ describe("ComponentName", () => {
 ## Best Practices
 
 ### 1. Use Descriptive Test Names
+
 ```typescript
 // ✅ Good
 it("renders error message when form validation fails", () => {});
@@ -57,6 +62,7 @@ it("test 1", () => {});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
+
 ```typescript
 it("updates counter when button is clicked", () => {
   // Arrange
@@ -72,6 +78,7 @@ it("updates counter when button is clicked", () => {
 ```
 
 ### 3. Test User Behavior, Not Implementation
+
 ```typescript
 // ✅ Good - tests what the user sees
 it("displays error message for invalid email", () => {
@@ -90,6 +97,7 @@ it("sets error state to true", () => {
 ```
 
 ### 4. Use Queries in Order of Priority
+
 1. `getByRole` - Accessible to everyone
 2. `getByLabelText` - Form elements
 3. `getByPlaceholderText` - Forms without labels
@@ -97,6 +105,7 @@ it("sets error state to true", () => {
 5. `getByTestId` - Last resort
 
 ### 5. Avoid Testing Implementation Details
+
 ```typescript
 // ✅ Good
 expect(screen.getByRole("button")).toBeDisabled();
@@ -108,6 +117,7 @@ expect(component.state.isDisabled).toBe(true);
 ## Template Tests
 
 ### Basic React Component Test
+
 ```typescript
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -133,6 +143,7 @@ describe("Button", () => {
 ```
 
 ### Component with Props Test
+
 ```typescript
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -160,6 +171,7 @@ describe("Alert", () => {
 ```
 
 ### User Interaction Test
+
 ```typescript
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -191,6 +203,7 @@ describe("Counter", () => {
 ```
 
 ### Async/Await Test
+
 ```typescript
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -223,6 +236,7 @@ describe("UserProfile", () => {
 ```
 
 ### Form Submission Test
+
 ```typescript
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
@@ -263,6 +277,7 @@ describe("LoginForm", () => {
 ## Common Patterns
 
 ### Testing with Mocked Components
+
 ```typescript
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -282,6 +297,7 @@ describe("Article", () => {
 ```
 
 ### Testing Links and Navigation
+
 ```typescript
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -301,6 +317,7 @@ describe("Navigation", () => {
 ```
 
 ### Testing Conditional Rendering
+
 ```typescript
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -322,6 +339,7 @@ describe("Message", () => {
 ## Mocking
 
 ### Mocking Modules
+
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
@@ -336,6 +354,7 @@ jest.mock("./utils", () => ({
 ```
 
 ### Mocking Functions
+
 ```typescript
 const mockCallback = jest.fn();
 
@@ -349,6 +368,7 @@ it("calls callback with correct arguments", () => {
 ```
 
 ### Mocking API Calls
+
 ```typescript
 beforeEach(() => {
   global.fetch = jest.fn(() =>
@@ -376,6 +396,7 @@ it("fetches data successfully", async () => {
 ## Coverage
 
 ### Running Coverage
+
 ```bash
 # Run tests with coverage
 npm test -- --coverage
@@ -385,7 +406,9 @@ npm test -- --coverage --collectCoverageFrom="src/components/**/*.{ts,tsx}"
 ```
 
 ### Coverage Thresholds
+
 Add to `jest.config.js`:
+
 ```javascript
 coverageThreshold: {
   global: {
@@ -400,6 +423,7 @@ coverageThreshold: {
 ## Quick Reference
 
 ### Common Matchers
+
 ```typescript
 expect(element).toBeInTheDocument();
 expect(element).toHaveTextContent("text");
@@ -414,6 +438,7 @@ expect(mockFn).toHaveBeenCalledWith(arg1, arg2);
 ```
 
 ### Useful Testing Library Queries
+
 ```typescript
 // By Role (Preferred)
 screen.getByRole("button", { name: /submit/i });
@@ -435,6 +460,7 @@ screen.getAllBy*() // Returns array
 ```
 
 ## Resources
+
 - [Jest Documentation](https://jestjs.io/docs/getting-started)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Testing Library Queries](https://testing-library.com/docs/queries/about)
