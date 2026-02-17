@@ -1,4 +1,5 @@
 import React from "react";
+import ExternalLink from "../ExternalLink";
 import Github from "../icons/Github";
 import Email from "../icons/Email";
 import Linkedin from "../icons/Linkedin";
@@ -12,10 +13,13 @@ const Contact = () => (
 
     <ul className="social">
       <li className="github">
-        <a href="https://github.com/dennislo" title="Dennis Lo on GitHub">
+        <ExternalLink
+          href="https://github.com/dennislo"
+          title="Dennis Lo on GitHub"
+        >
           <Github />
           <span className="visuallyhidden">Dennis Lo on GitHub</span>
-        </a>
+        </ExternalLink>
       </li>
       <li className="mail">
         <a
@@ -30,20 +34,23 @@ const Contact = () => (
       </li>
 
       <li className="linkedin">
-        <a
+        <ExternalLink
           href="https://www.linkedin.com/in/dennis-lo-profile"
           title="Dennis Lo on LinkedIn"
         >
           <Linkedin />
           <span className="visuallyhidden">Dennis Lo on LinkedIn</span>
-        </a>
+        </ExternalLink>
       </li>
 
       <li className="instagram">
-        <a href="https://www.instagram.com/dlo" title="Dennis Lo on Instagram">
+        <ExternalLink
+          href="https://www.instagram.com/dlo"
+          title="Dennis Lo on Instagram"
+        >
           <Instagram />
           <span className="visuallyhidden">Dennis Lo on Instagram</span>
-        </a>
+        </ExternalLink>
       </li>
     </ul>
   </section>

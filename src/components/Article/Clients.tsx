@@ -1,4 +1,5 @@
 import React from "react";
+import ExternalLink from "../ExternalLink";
 
 const Clients = () => (
   <section className="clients">
@@ -7,22 +8,24 @@ const Clients = () => (
     </header>
     <ul>
       <li>
-        <a href="https://dlo.wtf">Advertising & Media</a>
+        <ExternalLink href="https://dlo.wtf">Advertising & Media</ExternalLink>
       </li>
       <li>
-        <a href="https://dlo.wtf">HR & Recruitment</a>
+        <ExternalLink href="https://dlo.wtf">HR & Recruitment</ExternalLink>
       </li>
       <li>
-        <a href="https://dlo.wtf">Retail & Consumer</a>
+        <ExternalLink href="https://dlo.wtf">Retail & Consumer</ExternalLink>
       </li>
       <li>
-        <a href="https://dlo.wtf">Science & Education</a>
+        <ExternalLink href="https://dlo.wtf">Science & Education</ExternalLink>
       </li>
       <li>
-        <a href="https://dlo.wtf">Finance & Banking</a>
+        <ExternalLink href="https://dlo.wtf">Finance & Banking</ExternalLink>
       </li>
       <li>
-        <a href="https://dlo.wtf">IT & Telecommunications</a>
+        <ExternalLink href="https://dlo.wtf">
+          IT & Telecommunications
+        </ExternalLink>
       </li>
     </ul>
   </section>
