@@ -13,14 +13,15 @@
 
 ## Overview
 
-This project uses Jest with React Testing Library for unit testing. Tests are written in TypeScript and colocated with the components they test.
+This project uses Jest with React Testing Library for unit testing. Tests are written in TypeScript and colocated with
+the components they test.
 
 ## Configuration
 
 ### Configuration Files
 
-- [jest.config.js](../../jest.config.js) - Jest configuration
-- [jest.setup.js](../../jest.setup.js) - Jest setup and global test configuration
+- [jest.config.js](../../../jest.config.js) - Jest configuration
+- [jest.setup.js](../../../jest.setup.js) - Jest setup and global test configuration
 
 ## Test Structure
 
@@ -55,10 +56,12 @@ describe("ComponentName", () => {
 
 ```typescript
 // ✅ Good
-it("renders error message when form validation fails", () => {});
+it("renders error message when form validation fails", () => {
+});
 
 // ❌ Bad
-it("test 1", () => {});
+it("test 1", () => {
+});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
@@ -66,10 +69,11 @@ it("test 1", () => {});
 ```typescript
 it("updates counter when button is clicked", () => {
   // Arrange
-  render(<Counter initialCount={0} />);
+  render(<Counter initialCount = {0}
+  />);
 
   // Act
-  const button = screen.getByRole("button", { name: /increment/i });
+  const button = screen.getByRole("button", {name: /increment/i});
   fireEvent.click(button);
 
   // Assert
@@ -82,16 +86,16 @@ it("updates counter when button is clicked", () => {
 ```typescript
 // ✅ Good - tests what the user sees
 it("displays error message for invalid email", () => {
-  render(<LoginForm />);
+  render(<LoginForm / >);
   const emailInput = screen.getByLabelText(/email/i);
-  fireEvent.change(emailInput, { target: { value: "invalid" } });
+  fireEvent.change(emailInput, {target: {value: "invalid"}});
   fireEvent.blur(emailInput);
   expect(screen.getByText(/invalid email/i)).toBeInTheDocument();
 });
 
 // ❌ Bad - tests internal state
 it("sets error state to true", () => {
-  const { container } = render(<LoginForm />);
+  const {container} = render(<LoginForm / >);
   // Don't test component internal state
 });
 ```
@@ -120,23 +124,25 @@ expect(component.state.isDisabled).toBe(true);
 
 ```typescript
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Button } from "./Button";
+import {render, screen} from "@testing-library/react";
+import {Button} from "./Button";
 
 describe("Button", () => {
   it("renders without crashing", () => {
-    const { container } = render(<Button>Click me</Button>);
+    const {container} = render(<Button>Click
+    me < /Button>);
     expect(container).toBeTruthy();
   });
 
   it("displays the correct text", () => {
-    render(<Button>Click me</Button>);
+    render(<Button>Click
+    me < /Button>);
     expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 
   it("is accessible", () => {
-    render(<Button>Submit</Button>);
-    const button = screen.getByRole("button", { name: /submit/i });
+    render(<Button>Submit < /Button>);
+    const button = screen.getByRole("button", {name: /submit/i});
     expect(button).toBeInTheDocument();
   });
 });
@@ -146,24 +152,26 @@ describe("Button", () => {
 
 ```typescript
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Alert } from "./Alert";
+import {render, screen} from "@testing-library/react";
+import {Alert} from "./Alert";
 
 describe("Alert", () => {
   it("renders with success variant", () => {
-    render(<Alert variant="success">Success message</Alert>);
+    render(<Alert variant = "success" > Success
+    message < /Alert>);
     const alert = screen.getByRole("alert");
     expect(alert).toHaveClass("alert-success");
   });
 
   it("renders with error variant", () => {
-    render(<Alert variant="error">Error message</Alert>);
+    render(<Alert variant = "error" > Error
+    message < /Alert>);
     expect(screen.getByText("Error message")).toBeInTheDocument();
   });
 
   it("renders with custom className", () => {
-    const { container } = render(
-      <Alert className="custom-class">Message</Alert>
+    const {container} = render(
+      <Alert className = "custom-class" > Message < /Alert>
     );
     expect(container.firstChild).toHaveClass("custom-class");
   });
@@ -174,14 +182,15 @@ describe("Alert", () => {
 
 ```typescript
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {render, screen, fireEvent} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Counter } from "./Counter";
+import {Counter} from "./Counter";
 
 describe("Counter", () => {
   it("increments counter on button click", () => {
-    render(<Counter initialCount={0} />);
-    const button = screen.getByRole("button", { name: /increment/i });
+    render(<Counter initialCount = {0}
+    />);
+    const button = screen.getByRole("button", {name: /increment/i});
 
     fireEvent.click(button);
 
@@ -190,8 +199,9 @@ describe("Counter", () => {
 
   it("handles multiple clicks", async () => {
     const user = userEvent.setup();
-    render(<Counter initialCount={0} />);
-    const button = screen.getByRole("button", { name: /increment/i });
+    render(<Counter initialCount = {0}
+    />);
+    const button = screen.getByRole("button", {name: /increment/i});
 
     await user.click(button);
     await user.click(button);
@@ -206,12 +216,12 @@ describe("Counter", () => {
 
 ```typescript
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { UserProfile } from "./UserProfile";
+import {render, screen, waitFor} from "@testing-library/react";
+import {UserProfile} from "./UserProfile";
 
 describe("UserProfile", () => {
   it("loads and displays user data", async () => {
-    render(<UserProfile userId="123" />);
+    render(<UserProfile userId = "123" / >);
 
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
@@ -226,7 +236,7 @@ describe("UserProfile", () => {
       Promise.reject(new Error("API Error"))
     );
 
-    render(<UserProfile userId="123" />);
+    render(<UserProfile userId = "123" / >);
 
     await waitFor(() => {
       expect(screen.getByText(/error loading user/i)).toBeInTheDocument();
@@ -239,20 +249,21 @@ describe("UserProfile", () => {
 
 ```typescript
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {render, screen, fireEvent, waitFor} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LoginForm } from "./LoginForm";
+import {LoginForm} from "./LoginForm";
 
 describe("LoginForm", () => {
   it("submits form with valid credentials", async () => {
     const handleSubmit = jest.fn();
     const user = userEvent.setup();
 
-    render(<LoginForm onSubmit={handleSubmit} />);
+    render(<LoginForm onSubmit = {handleSubmit}
+    />);
 
     await user.type(screen.getByLabelText(/email/i), "user@example.com");
     await user.type(screen.getByLabelText(/password/i), "password123");
-    await user.click(screen.getByRole("button", { name: /submit/i }));
+    await user.click(screen.getByRole("button", {name: /submit/i}));
 
     await waitFor(() => {
       expect(handleSubmit).toHaveBeenCalledWith({
@@ -264,9 +275,10 @@ describe("LoginForm", () => {
 
   it("displays validation errors for empty fields", async () => {
     const user = userEvent.setup();
-    render(<LoginForm onSubmit={jest.fn()} />);
+    render(<LoginForm onSubmit = {jest.fn()}
+    />);
 
-    await user.click(screen.getByRole("button", { name: /submit/i }));
+    await user.click(screen.getByRole("button", {name: /submit/i}));
 
     expect(screen.getByText(/email is required/i)).toBeInTheDocument();
     expect(screen.getByText(/password is required/i)).toBeInTheDocument();
@@ -280,16 +292,16 @@ describe("LoginForm", () => {
 
 ```typescript
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import Article from "./Article";
 
 // Mock child components
-jest.mock("./Header", () => () => <div data-testid="header">Header</div>);
-jest.mock("./Footer", () => () => <div data-testid="footer">Footer</div>);
+jest.mock("./Header", () => () => <div data - testid = "header" > Header < /div>);
+jest.mock("./Footer", () => () => <div data - testid = "footer" > Footer < /div>);
 
 describe("Article", () => {
   it("renders with mocked child components", () => {
-    render(<Article />);
+    render(<Article / >);
     expect(screen.getByTestId("header")).toBeInTheDocument();
     expect(screen.getByTestId("footer")).toBeInTheDocument();
   });
@@ -300,17 +312,17 @@ describe("Article", () => {
 
 ```typescript
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Navigation } from "./Navigation";
+import {render, screen} from "@testing-library/react";
+import {Navigation} from "./Navigation";
 
 describe("Navigation", () => {
   it("renders navigation links with correct hrefs", () => {
-    render(<Navigation />);
+    render(<Navigation / >);
 
-    const homeLink = screen.getByRole("link", { name: /home/i });
+    const homeLink = screen.getByRole("link", {name: /home/i});
     expect(homeLink).toHaveAttribute("href", "/");
 
-    const aboutLink = screen.getByRole("link", { name: /about/i });
+    const aboutLink = screen.getByRole("link", {name: /about/i});
     expect(aboutLink).toHaveAttribute("href", "/about");
   });
 });
@@ -320,17 +332,23 @@ describe("Navigation", () => {
 
 ```typescript
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Message } from "./Message";
+import {render, screen} from "@testing-library/react";
+import {Message} from "./Message";
 
 describe("Message", () => {
   it("renders message when isVisible is true", () => {
-    render(<Message isVisible={true} text="Hello" />);
+    render(<Message isVisible = {true}
+    text = "Hello" / >
+  )
+    ;
     expect(screen.getByText("Hello")).toBeInTheDocument();
   });
 
   it("does not render message when isVisible is false", () => {
-    render(<Message isVisible={false} text="Hello" />);
+    render(<Message isVisible = {false}
+    text = "Hello" / >
+  )
+    ;
     expect(screen.queryByText("Hello")).not.toBeInTheDocument();
   });
 });
@@ -343,7 +361,7 @@ describe("Message", () => {
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
-  fetchUser: jest.fn(() => Promise.resolve({ name: "John" })),
+  fetchUser: jest.fn(() => Promise.resolve({name: "John"})),
 }));
 
 // Mock specific exports
@@ -359,7 +377,7 @@ jest.mock("./utils", () => ({
 const mockCallback = jest.fn();
 
 it("calls callback with correct arguments", () => {
-  render(<Button onClick={mockCallback}>Click</Button>);
+  render(<Button onClick = {mockCallback} > Click < /Button>);
   fireEvent.click(screen.getByRole("button"));
 
   expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -373,7 +391,7 @@ it("calls callback with correct arguments", () => {
 beforeEach(() => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
-      json: () => Promise.resolve({ data: "mocked data" }),
+      json: () => Promise.resolve({data: "mocked data"}),
     })
   ) as jest.Mock;
 });
@@ -383,7 +401,7 @@ afterEach(() => {
 });
 
 it("fetches data successfully", async () => {
-  render(<DataComponent />);
+  render(<DataComponent / >);
 
   await waitFor(() => {
     expect(screen.getByText("mocked data")).toBeInTheDocument();
@@ -411,12 +429,19 @@ Add to `jest.config.js`:
 
 ```javascript
 coverageThreshold: {
-  global: {
-    branches: 80,
-    functions: 80,
-    lines: 80,
-    statements: 80,
-  },
+    global: {
+        branches: 80,
+            functions
+    :
+        80,
+            lines
+    :
+        80,
+            statements
+    :
+        80,
+    }
+,
 }
 ```
 
@@ -441,8 +466,8 @@ expect(mockFn).toHaveBeenCalledWith(arg1, arg2);
 
 ```typescript
 // By Role (Preferred)
-screen.getByRole("button", { name: /submit/i });
-screen.getByRole("textbox", { name: /email/i });
+screen.getByRole("button", {name: /submit/i});
+screen.getByRole("textbox", {name: /email/i});
 
 // By Label
 screen.getByLabelText(/email address/i);
@@ -454,9 +479,9 @@ screen.getByText(/welcome/i);
 screen.getByTestId("custom-element");
 
 // Query variants
-screen.queryBy*() // Returns null if not found
-screen.findBy*()  // Returns promise (for async)
-screen.getAllBy*() // Returns array
+screen.queryBy * () // Returns null if not found
+screen.findBy * ()  // Returns promise (for async)
+screen.getAllBy * () // Returns array
 ```
 
 ## Resources
