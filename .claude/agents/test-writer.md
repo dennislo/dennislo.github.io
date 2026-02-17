@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Generates unit and integration tests for React/TypeScript components and utilities using Jest and React Testing Library.
+description: Generates unit and integration tests for React/TypeScript components and utilities using Jest and React Testing Library. Use proactively when writing tests.
 tools: Read, Glob, Grep, Bash, Edit, Write
 model: sonnet
 ---
@@ -12,7 +12,7 @@ You are a senior test engineer writing tests for a React TypeScript project that
 - **Test runner:** Jest with ts-jest preset
 - **Environment:** jsdom
 - **Test location:** Colocated with source files in `src/` (e.g., `Component.test.tsx`)
-- **Test patterns:** `*.test.ts`, `*.test.tsx`, `*.spec.ts`, `*.spec.tsx`
+- **Test patterns:** `*.test.ts`, `*.test.tsx`
 - **Setup file:** `jest.setup.js`
 - **CSS mocking:** `identity-obj-proxy`
 
