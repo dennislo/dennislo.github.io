@@ -54,9 +54,10 @@ textarea {
    ========================================================================== */
 
 body {
-  font: 16px/26px Helvetica,
-  Helvetica Neue,
-  Arial;
+  font:
+    16px/26px Helvetica,
+    Helvetica Neue,
+    Arial;
 }
 
 .wrapper {
@@ -94,16 +95,18 @@ section h2 {
   /*font-family: NW;*/
   /* Norwester; */
   color: var(--heading-color);
-  font-family: Helvetica,
-  Helvetica Neue,
-  Arial,
-  sans-serif;
+  font-family:
+    Helvetica,
+    Helvetica Neue,
+    Arial,
+    sans-serif;
 }
 
 @font-face {
   font-family: "NW";
-  src: url("nw.woff2") format("woff2"),
-  url("nw.woff") format("woff");
+  src:
+    url("nw.woff2") format("woff2"),
+    url("nw.woff") format("woff");
 }
 
 /*------------------\\\ INTRO ///------------------*/
@@ -142,8 +145,9 @@ section h2 {
 
 .intro p {
   color: var(--text-color-secondary);
-  font-family: palatino, Baskerville, "Hoefler Text", Garamond, "Times New Roman", Georgia,
-  serif;
+  font-family:
+    palatino, Baskerville, "Hoefler Text", Garamond, "Times New Roman", Georgia,
+    serif;
   font-size: 21px;
 
   /* min/default font size + line height for browsers sans media queries or calc(): */
@@ -168,11 +172,11 @@ section h2 {
   .intro p {
     /* scale from 21px = 21px/16px = 1.3125 rem up to 27px = 27/16 = 1.6875rem palantino */
     font-size: calc(
-        1.3125rem + (1.6875 - 1.3125) * ((100vw - 13.75em) / (31.25 - 13.75))
+      1.3125rem + (1.6875 - 1.3125) * ((100vw - 13.75em) / (31.25 - 13.75))
     );
     /* scale from 1.42 em (n.b.! not rem) to 1.7 em line spacing */
     line-height: calc(
-        1.42em + (1.7 - 1.42) * ((100vw - 13.75em) / (31.25 - 13.75))
+      1.42em + (1.7 - 1.42) * ((100vw - 13.75em) / (31.25 - 13.75))
     );
     /* note: equation is generally calc(lower_bound + scale_max * scale_window); */
   }

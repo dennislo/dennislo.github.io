@@ -31,6 +31,7 @@ When reviewing tests or identifying missing test coverage, apply these standards
 - Avoid testing internal component state directly
 
 ### Flag these test issues:
+
 - Using `container.querySelector` instead of Testing Library queries
 - Testing implementation details (internal state, private methods)
 - Missing async handling (`waitFor`, `findBy*`)
@@ -46,6 +47,7 @@ Organize findings by severity:
 - **Suggestion** — Nice to have (style, minor improvements)
 
 For each finding, include:
+
 - File path and line number
 - Description of the issue
 - Suggested fix with a code example when helpful
