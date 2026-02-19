@@ -11,6 +11,8 @@ const Contact = () => (
       <h1>Contact Dennis Lo:</h1>
     </header>
 
+    <p>Feel free to reach out through any of the following channels:</p>
+
     <ul className="social">
       <li className="github">
         <ExternalLink
