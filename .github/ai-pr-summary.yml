@@ -1,0 +1,3 @@
+- uses: anthropics/anthropic-code-review-action@beta
+  with:
+    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
