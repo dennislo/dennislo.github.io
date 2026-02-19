@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import ThemeToggle from "./ThemeToggle";
 import { ThemeProvider } from "../../context/ThemeContext";
 
@@ -14,7 +15,8 @@ describe("ThemeToggle", () => {
     expect(button).toBeInTheDocument();
   });
 
-  it("toggles theme when clicked", () => {
+  it("toggles theme when clicked", async () => {
+    const user = userEvent.setup();
     render(
       <ThemeProvider>
         <ThemeToggle />
@@ -23,7 +25,7 @@ describe("ThemeToggle", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("aria-label", "Switch to light mode");
 
-    fireEvent.click(button);
+    await user.click(button);
     expect(button).toHaveAttribute("aria-label", "Switch to dark mode");
   });
 

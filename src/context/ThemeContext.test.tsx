@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ThemeProvider, useTheme } from "./ThemeContext";
 
 const TestComponent = () => {
@@ -26,14 +27,15 @@ describe("ThemeContext", () => {
     expect(screen.getByTestId("theme")).toHaveTextContent("dark");
   });
 
-  it("toggles theme from dark to light", () => {
+  it("toggles theme from dark to light", async () => {
+    const user = userEvent.setup();
     render(
       <ThemeProvider>
         <TestComponent />
       </ThemeProvider>,
     );
     const button = screen.getByRole("button");
-    fireEvent.click(button);
+    await user.click(button);
     expect(screen.getByTestId("theme")).toHaveTextContent("light");
   });
 

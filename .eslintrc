@@ -1,21 +1,36 @@
 {
-  "parser": "babel-eslint", // uses babel-eslint transforms
+  "parser": "babel-eslint",
+  // uses babel-eslint transforms
   "settings": {
     "react": {
-      "version": "detect" // detect react version
+      "version": "detect"
+      // detect react version
     }
   },
   "env": {
-    "node": true // defines things like process.env when generating through node
+    "node": true
+    // defines things like process.env when generating through node
   },
   "extends": [
-    "eslint:recommended", // use recommended configs
+    "eslint:recommended",
+    // use recommended configs
     "plugin:react/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "no-anonymous-exports-page-templates": "warn",
-    "limited-exports-page-templates": "warn"
-  }
+    "no-anonymous-exports-page-templates": "off",
+    "limited-exports-page-templates": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.tsx",
+        "**/*.test.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off"
+      }
+    }
+  ]
 }
