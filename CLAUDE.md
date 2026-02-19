@@ -15,6 +15,7 @@ npm run testwatch    # Run Jest in watch mode
 ```
 
 Run a single test file:
+
 ```bash
 npx jest src/components/Article/Article.test.tsx
 ```

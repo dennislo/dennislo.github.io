@@ -1,6 +1,7 @@
 ---
 name: unit-testing
-description: Best practices and templates for writing unit tests in this Gatsby/React project using Jest and React
+description:
+  Best practices and templates for writing unit tests in this Gatsby/React project using Jest and React
   Testing Library. Covers test structure, AAA pattern, mocking strategies, async testing, form testing, coverage
   configuration, and common query patterns. Trigger words are "unit test, write test, add test, create test, update
   test, replace test, jest, testing library, test coverage, mock, spec, test"
@@ -64,12 +65,10 @@ describe("ComponentName", () => {
 
 ```typescript
 // ✅ Good
-it("renders error message when form validation fails", () => {
-});
+it("renders error message when form validation fails", () => {});
 
 // ❌ Bad
-it("test 1", () => {
-});
+it("test 1", () => {});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
@@ -369,7 +368,7 @@ describe("Message", () => {
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
-  fetchUser: jest.fn(() => Promise.resolve({name: "John"})),
+  fetchUser: jest.fn(() => Promise.resolve({ name: "John" })),
 }));
 
 // Mock specific exports
