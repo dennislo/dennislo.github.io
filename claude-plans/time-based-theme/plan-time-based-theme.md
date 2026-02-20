@@ -23,15 +23,18 @@ function getTimeBasedTheme(): Theme {
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const timeInMinutes = hours * 60 + minutes;
-  const startLight = 7 * 60 + 30;  // 7:30 AM = 450 minutes
-  const endLight = 19 * 60 + 30;   // 7:30 PM = 1170 minutes
-  return timeInMinutes >= startLight && timeInMinutes < endLight ? "light" : "dark";
+  const startLight = 7 * 60 + 30; // 7:30 AM = 450 minutes
+  const endLight = 19 * 60 + 30; // 7:30 PM = 1170 minutes
+  return timeInMinutes >= startLight && timeInMinutes < endLight
+    ? "light"
+    : "dark";
 }
 ```
 
 ### 2. Modify `ThemeProvider` initialization logic
 
 **New behavior:**
+
 - Track whether the user has manually overridden the theme via a separate `localStorage` key: `"theme-source"` (`"auto"` | `"manual"`)
 - On mount:
   - If `theme-source` is `"manual"` and a saved `theme` exists in `localStorage`, use it
@@ -43,10 +46,10 @@ function getTimeBasedTheme(): Theme {
 
 ### 3. Files to modify
 
-| File | Change |
-|------|--------|
-| `src/context/ThemeContext.tsx` | Add `getTimeBasedTheme()`, update `ThemeProvider` init logic, update `toggleTheme` to mark source as `"manual"` |
-| `src/context/ThemeContext.test.tsx` | Add tests for time-based default, manual override persistence, and auto mode |
+| File                                | Change                                                                                                          |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `src/context/ThemeContext.tsx`      | Add `getTimeBasedTheme()`, update `ThemeProvider` init logic, update `toggleTheme` to mark source as `"manual"` |
+| `src/context/ThemeContext.test.tsx` | Add tests for time-based default, manual override persistence, and auto mode                                    |
 
 No changes needed to `ThemeToggle.tsx`, `theme.css`, or any other files — the toggle already calls `toggleTheme()` which we'll enhance.
 

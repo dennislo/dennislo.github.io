@@ -20,9 +20,9 @@ function mockDate(hours: number, minutes: number) {
     getHours: () => hours,
     getMinutes: () => minutes,
   };
-  jest.spyOn(global, "Date").mockImplementation(
-    () => mockDateInstance as unknown as Date,
-  );
+  jest
+    .spyOn(global, "Date")
+    .mockImplementation(() => mockDateInstance as unknown as Date);
 }
 
 function restoreDate() {
