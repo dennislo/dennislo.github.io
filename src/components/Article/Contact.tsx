@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 import ExternalLink from "../ExternalLink";
 import Github from "../icons/Github";
 import Email from "../icons/Email";
@@ -10,6 +11,8 @@ const Contact = () => (
     <header className="visuallyhidden">
       <h1>Contact Dennis Lo:</h1>
     </header>
+
+    <p>Feel free to reach out through any of the following channels:</p>
 
     <ul className="social">
       <li className="github">
@@ -53,6 +56,11 @@ const Contact = () => (
         </ExternalLink>
       </li>
     </ul>
+
+    <p>
+      Or use the <Link to="/contact-form">contact form</Link> to send a message
+      directly.
+    </p>
   </section>
 );
 

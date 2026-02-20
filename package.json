@@ -21,6 +21,7 @@
     "testwatch": "jest --watch"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "babel-plugin-styled-components": "^2.1.4",
     "gatsby": "^5.14.0",
     "gatsby-plugin-image": "^3.14.0",

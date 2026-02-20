@@ -2,6 +2,13 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Contact from "./Contact";
 
+// Contact.tsx uses Gatsby's <Link> for the contact-form navigation link
+jest.mock("gatsby", () => ({
+  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <a href={to}>{children}</a>
+  ),
+}));
+
 jest.mock("../icons/Github", () => () => <svg data-testid="github-icon" />);
 jest.mock("../icons/Email", () => () => <svg data-testid="email-icon" />);
 jest.mock("../icons/Linkedin", () => () => <svg data-testid="linkedin-icon" />);
@@ -52,5 +59,12 @@ describe("Contact", () => {
     expect(screen.getByTestId("email-icon")).toBeInTheDocument();
     expect(screen.getByTestId("linkedin-icon")).toBeInTheDocument();
     expect(screen.getByTestId("instagram-icon")).toBeInTheDocument();
+  });
+
+  it("renders a link to the contact form", () => {
+    render(<Contact />);
+    const link = screen.getByRole("link", { name: /contact form/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/contact-form");
   });
 });
