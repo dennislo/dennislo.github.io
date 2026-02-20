@@ -4,7 +4,27 @@ import userEvent from "@testing-library/user-event";
 import ThemeToggle from "./ThemeToggle";
 import { ThemeProvider } from "../../context/ThemeContext";
 
+// Pin clock to nighttime (10 PM) so initial theme is deterministically "dark"
+function mockDate(hours: number, minutes: number) {
+  const mockDateInstance = {
+    getHours: () => hours,
+    getMinutes: () => minutes,
+  };
+  jest.spyOn(global, "Date").mockImplementation(
+    () => mockDateInstance as unknown as Date,
+  );
+}
+
 describe("ThemeToggle", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    mockDate(22, 0); // 10 PM — dark
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("renders the theme toggle button", () => {
     render(
       <ThemeProvider>
@@ -29,14 +49,14 @@ describe("ThemeToggle", () => {
     expect(button).toHaveAttribute("aria-label", "Switch to dark mode");
   });
 
-  it("displays moon icon in light mode", () => {
+  it("shows aria-label offering to switch to light mode when theme is dark", () => {
     render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>,
     );
-    const button = screen.getByRole("button");
-    const svg = button.querySelector("svg");
-    expect(svg).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Switch to light mode" }),
+    ).toBeInTheDocument();
   });
 });
