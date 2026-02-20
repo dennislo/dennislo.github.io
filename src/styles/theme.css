@@ -16,6 +16,13 @@
   --svg-fill: Gray;
   --svg-hover: #b3d4fc;
   --bullet-color: #fff;
+  --input-border: #555;
+  --input-bg: #1a1a1a;
+  --input-focus-border: #77b7d8;
+  --error-color: #ff6b6b;
+  --success-color: #81c784;
+  --button-bg: #1a5f7a;
+  --button-color: #fff;
 }
 
 :root[data-theme="light"] {
@@ -34,6 +41,13 @@
   --svg-fill: #666;
   --svg-hover: #0066a1;
   --bullet-color: #0066a1;
+  --input-border: #ccc;
+  --input-bg: #fff;
+  --input-focus-border: #0066a1;
+  --error-color: #d32f2f;
+  --success-color: #2e7d32;
+  --button-bg: #0066a1;
+  --button-color: #fff;
 }
 
 /* Apply background color to body */

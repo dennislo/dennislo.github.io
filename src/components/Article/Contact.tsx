@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 import ExternalLink from "../ExternalLink";
 import Github from "../icons/Github";
 import Email from "../icons/Email";
@@ -55,6 +56,12 @@ const Contact = () => (
         </ExternalLink>
       </li>
     </ul>
+
+    <p>
+      Or use the{" "}
+      <Link to="/contact-form">contact form</Link>{" "}
+      to send a message directly.
+    </p>
   </section>
 );
 
