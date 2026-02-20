@@ -58,9 +58,8 @@ const Contact = () => (
     </ul>
 
     <p>
-      Or use the{" "}
-      <Link to="/contact-form">contact form</Link>{" "}
-      to send a message directly.
+      Or use the <Link to="/contact-form">contact form</Link> to send a message
+      directly.
     </p>
   </section>
 );

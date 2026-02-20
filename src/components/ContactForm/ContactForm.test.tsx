@@ -5,7 +5,15 @@ import ContactForm from "./ContactForm";
 
 // Mock Gatsby's Link as a plain anchor so we don't need a Gatsby runtime
 jest.mock("gatsby", () => ({
-  Link: ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => (
+  Link: ({
+    to,
+    children,
+    className,
+  }: {
+    to: string;
+    children: React.ReactNode;
+    className?: string;
+  }) => (
     <a href={to} className={className}>
       {children}
     </a>
@@ -39,7 +47,10 @@ async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText("Last Name"), "Doe");
   await user.type(screen.getByLabelText("Mobile Number"), "+61 400 123 456");
   await user.type(screen.getByLabelText("Email Address"), "jane@example.com");
-  await user.type(screen.getByLabelText("Message"), "Hello, this is a test message.");
+  await user.type(
+    screen.getByLabelText("Message"),
+    "Hello, this is a test message.",
+  );
 }
 
 beforeEach(() => {
@@ -52,7 +63,9 @@ describe("ContactForm", () => {
   describe("initial rendering", () => {
     it('renders the "Contact Me" heading', () => {
       setup();
-      expect(screen.getByRole("heading", { name: "Contact Me" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Contact Me" }),
+      ).toBeInTheDocument();
     });
 
     it("renders all five fields with correct labels", () => {
@@ -66,7 +79,9 @@ describe("ContactForm", () => {
 
     it('renders the submit button with text "Send Message"', () => {
       setup();
-      expect(screen.getByRole("button", { name: "Send Message" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Send Message" }),
+      ).toBeInTheDocument();
     });
 
     it("renders a back link pointing to /", () => {
@@ -96,7 +111,9 @@ describe("ContactForm", () => {
         screen.getByText(/thank you for your message/i),
       ).toBeInTheDocument();
       // The form itself should not be present
-      expect(screen.queryByRole("button", { name: /send message/i })).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: /send message/i }),
+      ).not.toBeInTheDocument();
     });
 
     it("shows a back-to-homepage link in the success state", () => {
@@ -139,7 +156,12 @@ describe("ContactForm", () => {
           succeeded: false,
           submitting: false,
           // Non-null errors object simulates a SubmissionError from Formspree
-          errors: { kind: "error", getFormErrors: () => [], getFieldErrors: () => [], getAllFieldErrors: () => [] },
+          errors: {
+            kind: "error",
+            getFormErrors: () => [],
+            getFieldErrors: () => [],
+            getAllFieldErrors: () => [],
+          },
         },
         mockHandleSubmit,
       ]);
@@ -158,11 +180,17 @@ describe("ContactForm", () => {
       await user.click(screen.getByRole("button", { name: "Send Message" }));
 
       // firstName and lastName both show "This field is required."
-      const requiredErrors = await screen.findAllByText("This field is required.");
+      const requiredErrors = await screen.findAllByText(
+        "This field is required.",
+      );
       expect(requiredErrors).toHaveLength(2);
 
-      expect(screen.getByText("Mobile number is required.")).toBeInTheDocument();
-      expect(screen.getByText("Email address is required.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Mobile number is required."),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("Email address is required."),
+      ).toBeInTheDocument();
       expect(screen.getByText("Message is required.")).toBeInTheDocument();
     });
 
@@ -181,11 +209,26 @@ describe("ContactForm", () => {
 
       await screen.findAllByText("This field is required.");
 
-      expect(screen.getByLabelText("First Name")).toHaveAttribute("aria-invalid", "true");
-      expect(screen.getByLabelText("Last Name")).toHaveAttribute("aria-invalid", "true");
-      expect(screen.getByLabelText("Mobile Number")).toHaveAttribute("aria-invalid", "true");
-      expect(screen.getByLabelText("Email Address")).toHaveAttribute("aria-invalid", "true");
-      expect(screen.getByLabelText("Message")).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByLabelText("First Name")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      expect(screen.getByLabelText("Last Name")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      expect(screen.getByLabelText("Mobile Number")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      expect(screen.getByLabelText("Email Address")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      expect(screen.getByLabelText("Message")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
     });
   });
 
@@ -197,7 +240,9 @@ describe("ContactForm", () => {
       await user.type(screen.getByLabelText("Email Address"), "not-an-email");
       await user.tab(); // move focus away to trigger blur
 
-      expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Enter a valid email address."),
+      ).toBeInTheDocument();
     });
 
     it("shows a mobile error when an invalid phone number is entered and the field is blurred", async () => {
@@ -240,12 +285,19 @@ describe("ContactForm", () => {
       // Trigger an email error
       await user.type(screen.getByLabelText("Email Address"), "bad");
       await user.tab();
-      expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Enter a valid email address."),
+      ).toBeInTheDocument();
 
       // Fix the email — error should disappear
       await user.clear(screen.getByLabelText("Email Address"));
-      await user.type(screen.getByLabelText("Email Address"), "good@example.com");
-      expect(screen.queryByText("Enter a valid email address.")).not.toBeInTheDocument();
+      await user.type(
+        screen.getByLabelText("Email Address"),
+        "good@example.com",
+      );
+      expect(
+        screen.queryByText("Enter a valid email address."),
+      ).not.toBeInTheDocument();
     });
   });
 });

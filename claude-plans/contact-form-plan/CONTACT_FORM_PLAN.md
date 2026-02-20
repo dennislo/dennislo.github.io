@@ -42,13 +42,16 @@ function ContactForm() {
       <ValidationError prefix="Email" field="email" errors={state.errors} />
       <textarea id="message" name="message" />
       <ValidationError prefix="Message" field="message" errors={state.errors} />
-      <button type="submit" disabled={state.submitting}>Submit</button>
+      <button type="submit" disabled={state.submitting}>
+        Submit
+      </button>
     </form>
   );
 }
 ```
 
 **What to keep from the example:**
+
 - `useForm("xykddnzg")` — the hook and form ID
 - `state.succeeded` — for showing the success message
 - `state.submitting` — for disabling the submit button during submission
@@ -56,6 +59,7 @@ function ContactForm() {
 - `<ValidationError>` — for displaying per-field server-side errors from Formspree
 
 **What to extend:**
+
 - Add the 5 required fields (first name, last name, mobile, email, message) instead of just email + message
 - Add client-side validation _before_ submission (the example has no client-side validation)
 - Add proper `<label>` elements, accessibility attributes, and themed styling
@@ -308,27 +312,32 @@ Use the custom Claude agents defined in `.claude/agents/` as subagents during im
 
 ### Available Agents
 
-| Agent | Path | Role | Tools |
-|-------|------|------|-------|
-| **test-writer** | `.claude/agents/test-writer.md` | Writes unit/integration tests using Jest + React Testing Library | Read, Glob, Grep, Bash, Edit, Write |
-| **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash |
-| **debugger** | `.claude/agents/debugger.md` | Investigates and fixes test failures, TypeScript errors, runtime bugs | Read, Glob, Grep, Bash, Edit |
+| Agent             | Path                              | Role                                                                  | Tools                               |
+| ----------------- | --------------------------------- | --------------------------------------------------------------------- | ----------------------------------- |
+| **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library      | Read, Glob, Grep, Bash, Edit, Write |
+| **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage     | Read, Glob, Grep, Bash              |
+| **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, runtime bugs | Read, Glob, Grep, Bash, Edit        |
 
 ### Agent Usage Per Implementation Step
 
 #### Step 0 — Install `@formspree/react`
+
 - **Do it yourself** (main agent). Run `npm install @formspree/react`.
 
 #### Step 1 — Theme CSS variables + ContactForm.css
+
 - **Do it yourself** (main agent). These are straightforward CSS additions.
 
 #### Step 2 — Create `ContactForm.tsx`
+
 - **Do it yourself** (main agent). Create `src/components/ContactForm/ContactForm.tsx` using `useForm` and `ValidationError` from `@formspree/react` (form ID: `xykddnzg`), with client-side validation. Reference `formspree-example-contact-form.tsx` for the basic pattern.
 
 #### Step 3 — Create the page + update Contact.tsx
+
 - **Do it yourself** (main agent). Create `src/pages/contact-form.tsx` wrapping `<ContactForm />` in `<Layout>`. Add a Gatsby `<Link to="/contact-form">` in `Contact.tsx`.
 
 #### Step 4 — Code Review (after writing the component)
+
 - **Delegate to `code-reviewer`** via the Task tool:
   ```
   Task(subagent_type="code-reviewer", prompt="Review the new contact form page and component for this feature. The form uses @formspree/react (useForm hook, ValidationError component) with form ID xykddnzg. Check: src/pages/contact-form.tsx, src/components/ContactForm/ContactForm.tsx, src/components/ContactForm/ContactForm.css, src/components/Article/Contact.tsx, src/styles/theme.css. Focus on security (XSS in form inputs, safe fetch usage), React best practices (hooks, controlled inputs), accessibility (labels, aria attributes, focus management), CSS theming correctness, correct Gatsby page/Link usage, and proper @formspree/react integration.")
@@ -336,15 +345,18 @@ Use the custom Claude agents defined in `.claude/agents/` as subagents during im
 - Address any Critical or Warning findings before proceeding.
 
 #### Step 5 — Write Tests
+
 - **Delegate to `test-writer`** via the Task tool:
   ```
   Task(subagent_type="test-writer", prompt="Write comprehensive tests for the new ContactForm component at src/components/ContactForm/ContactForm.tsx. The component uses @formspree/react (useForm hook, ValidationError component). Create src/components/ContactForm/ContactForm.test.tsx. Also update src/components/Article/Contact.test.tsx to add a test for the new Gatsby Link to /contact-form. Cover: rendering all fields and labels, back link to /, required field validation (empty submit), individual field validation (bad email, bad phone, short message), successful submission (mock @formspree/react useForm), error state (submission failure), honeypot field, aria-invalid/aria-describedby attributes, success message display. Use userEvent for interactions. Mock @formspree/react module (useForm returns [state, handleSubmit]). Mock gatsby Link as needed.")
   ```
 
 #### Step 6 — Run Typecheck + Tests
+
 - Run `npm run typecheck` and `npm test` from the main agent.
 
 #### Step 7 — Debug Failures (if any)
+
 - **Delegate to `debugger`** via the Task tool (only if step 6 fails):
   ```
   Task(subagent_type="debugger", prompt="Investigate and fix the following test/typecheck failures: <paste error output>. The new ContactForm component is at src/components/ContactForm/ContactForm.tsx with tests at src/components/ContactForm/ContactForm.test.tsx. The new page is at src/pages/contact-form.tsx.")
@@ -352,12 +364,14 @@ Use the custom Claude agents defined in `.claude/agents/` as subagents during im
 - Re-run typecheck + tests after fixes.
 
 #### Step 8 — Final Code Review
+
 - **Delegate to `code-reviewer`** for a final pass after all fixes are applied:
   ```
   Task(subagent_type="code-reviewer", prompt="Final review of the complete contact form feature. Check all new/modified files: src/pages/contact-form.tsx, src/components/ContactForm/ContactForm.tsx, src/components/ContactForm/ContactForm.css, src/components/ContactForm/ContactForm.test.tsx, src/components/Article/Contact.tsx, src/components/Article/Contact.test.tsx, src/styles/theme.css. Verify test coverage is adequate, no security issues remain, and the implementation matches the plan in CONTACT_FORM_PLAN.md.")
   ```
 
 #### Step 9 — Manual Testing
+
 - Run `npm run develop` and test the form in the browser at `http://localhost:8000/contact-form`.
 
 ### Parallelization Opportunities

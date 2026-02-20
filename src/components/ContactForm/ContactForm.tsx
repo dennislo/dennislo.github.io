@@ -54,7 +54,8 @@ function validateField(name: FieldName, value: string): string | null {
       const trimmed = value.trim();
       if (trimmed.length === 0) return "Message is required.";
       if (trimmed.length < 10) return "Message must be at least 10 characters.";
-      if (trimmed.length > 500) return "Message must be 500 characters or fewer.";
+      if (trimmed.length > 500)
+        return "Message must be 500 characters or fewer.";
       return null;
     }
     default:
@@ -103,7 +104,9 @@ const ContactForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  const fieldRefs = useMemo<Record<FieldName, React.RefObject<HTMLInputElement | HTMLTextAreaElement>>>(
+  const fieldRefs = useMemo<
+    Record<FieldName, React.RefObject<HTMLInputElement | HTMLTextAreaElement>>
+  >(
     () => ({
       firstName: firstNameRef,
       lastName: lastNameRef,
@@ -111,11 +114,11 @@ const ContactForm: React.FC = () => {
       email: emailRef,
       message: messageRef,
     }),
-    [] // refs are stable
+    [], // refs are stable
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const fieldName = name as FieldName;
@@ -129,7 +132,7 @@ const ContactForm: React.FC = () => {
   };
 
   const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const fieldName = name as FieldName;
@@ -192,11 +195,7 @@ const ContactForm: React.FC = () => {
         &larr; Back
       </Link>
       <h1>Contact Me</h1>
-      <form
-        className="contact-form"
-        onSubmit={onSubmit}
-        noValidate
-      >
+      <form className="contact-form" onSubmit={onSubmit} noValidate>
         {/* Honeypot field for spam protection */}
         <input
           type="text"
@@ -295,11 +294,7 @@ const ContactForm: React.FC = () => {
             autoComplete="tel"
           />
           {errors.mobile && (
-            <span
-              id="mobile-error"
-              className="contact-form-error"
-              role="alert"
-            >
+            <span id="mobile-error" className="contact-form-error" role="alert">
               {errors.mobile}
             </span>
           )}
@@ -323,25 +318,15 @@ const ContactForm: React.FC = () => {
             onBlur={handleBlur}
             required
             aria-invalid={errors.email !== null ? "true" : undefined}
-            aria-describedby={
-              errors.email !== null ? "email-error" : undefined
-            }
+            aria-describedby={errors.email !== null ? "email-error" : undefined}
             autoComplete="email"
           />
           {errors.email && (
-            <span
-              id="email-error"
-              className="contact-form-error"
-              role="alert"
-            >
+            <span id="email-error" className="contact-form-error" role="alert">
               {errors.email}
             </span>
           )}
-          <ValidationError
-            prefix="Email"
-            field="email"
-            errors={state.errors}
-          />
+          <ValidationError prefix="Email" field="email" errors={state.errors} />
         </div>
 
         {/* Message */}
