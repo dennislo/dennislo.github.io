@@ -9,7 +9,3 @@ export function mockDate(hours: number, minutes: number) {
     .spyOn(global, "Date")
     .mockImplementation(() => mockDateInstance as unknown as Date);
 }
-
-export function restoreDate() {
-  jest.restoreAllMocks();
-}

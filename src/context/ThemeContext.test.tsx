@@ -1,8 +1,8 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ThemeProvider, useTheme, getTimeBasedTheme } from "./ThemeContext";
-import { mockDate, restoreDate } from "../test/test-utils";
+import {getTimeBasedTheme, ThemeProvider, useTheme} from "./ThemeContext";
+import {mockDate} from "../test/test-utils";
 
 const TestComponent = () => {
   const { theme, toggleTheme } = useTheme();
@@ -16,7 +16,7 @@ const TestComponent = () => {
 
 describe("getTimeBasedTheme", () => {
   afterEach(() => {
-    restoreDate();
+    jest.restoreAllMocks();
   });
 
   it("returns 'light' during daytime (12:00 PM)", () => {
@@ -48,7 +48,7 @@ describe("ThemeContext", () => {
   });
 
   afterEach(() => {
-    restoreDate();
+    jest.restoreAllMocks();
   });
 
   it("provides default theme as dark", () => {
@@ -82,7 +82,7 @@ describe("ThemeContext", () => {
 
   it("uses time-based theme when no localStorage is set (daytime → light)", async () => {
     // Override the default nighttime mock with daytime.
-    restoreDate();
+    jest.restoreAllMocks();
     mockDate(12, 0);
 
     render(
@@ -115,7 +115,7 @@ describe("ThemeContext", () => {
   it("uses saved manual theme from localStorage instead of time-based theme", async () => {
     // Daytime mock would normally produce 'light', but the saved manual
     // theme is 'dark' — the saved preference should win.
-    restoreDate();
+    jest.restoreAllMocks();
     mockDate(12, 0);
 
     localStorage.setItem("theme-source", "manual");

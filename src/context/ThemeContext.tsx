@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -24,11 +24,9 @@ const VALID_THEMES: Theme[] = ["light", "dark"];
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  // Initialize to "dark" for SSR safety — useEffect applies the real value client-side
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // Use saved manual preference if set, otherwise use time-based theme
     const themeSource = localStorage.getItem("theme-source");
     const rawSavedTheme = localStorage.getItem("theme");
     const savedTheme: Theme | null =
@@ -43,7 +41,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    // Apply theme to document root
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
