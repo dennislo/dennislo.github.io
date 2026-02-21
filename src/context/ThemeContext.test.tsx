@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider, useTheme, getTimeBasedTheme } from "./ThemeContext";
+import { mockDate, restoreDate } from "../test/test-utils";
 
 const TestComponent = () => {
   const { theme, toggleTheme } = useTheme();
@@ -12,22 +13,6 @@ const TestComponent = () => {
     </div>
   );
 };
-
-// Helper: mock the Date constructor so getHours() and getMinutes() return
-// values derived from the provided hour and minute.
-function mockDate(hours: number, minutes: number) {
-  const mockDateInstance = {
-    getHours: () => hours,
-    getMinutes: () => minutes,
-  };
-  jest
-    .spyOn(global, "Date")
-    .mockImplementation(() => mockDateInstance as unknown as Date);
-}
-
-function restoreDate() {
-  jest.restoreAllMocks();
-}
 
 describe("getTimeBasedTheme", () => {
   afterEach(() => {

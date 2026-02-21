@@ -3,17 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ThemeToggle from "./ThemeToggle";
 import { ThemeProvider } from "../../context/ThemeContext";
-
-// Pin clock to nighttime (10 PM) so initial theme is deterministically "dark"
-function mockDate(hours: number, minutes: number) {
-  const mockDateInstance = {
-    getHours: () => hours,
-    getMinutes: () => minutes,
-  };
-  jest
-    .spyOn(global, "Date")
-    .mockImplementation(() => mockDateInstance as unknown as Date);
-}
+import { mockDate } from "../../test/test-utils";
 
 describe("ThemeToggle", () => {
   beforeEach(() => {
