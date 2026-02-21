@@ -30,39 +30,29 @@ test.describe("Theme Toggle", () => {
   test("clicking toggle switches from light to dark", async ({ page }) => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
-    await page
-      .getByRole("button", { name: /switch to dark mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
 
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
 
   test("clicking toggle switches from dark back to light", async ({ page }) => {
     // First switch to dark
-    await page
-      .getByRole("button", { name: /switch to dark mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Then switch back to light
-    await page
-      .getByRole("button", { name: /switch to light mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to light mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   });
 
   test("theme is persisted to localStorage after toggle", async ({ page }) => {
-    await page
-      .getByRole("button", { name: /switch to dark mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     const source = await page.evaluate(() =>
       localStorage.getItem("theme-source"),
     );
-    const savedTheme = await page.evaluate(() =>
-      localStorage.getItem("theme"),
-    );
+    const savedTheme = await page.evaluate(() => localStorage.getItem("theme"));
 
     expect(source).toBe("manual");
     expect(savedTheme).toBe("dark");
@@ -71,9 +61,7 @@ test.describe("Theme Toggle", () => {
   test("persisted manual theme is restored after page reload", async ({
     page,
   }) => {
-    await page
-      .getByRole("button", { name: /switch to dark mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     await page.reload();
@@ -93,9 +81,7 @@ test.describe("Theme Toggle", () => {
   test("toggle button shows sun icon in dark mode (switch to light)", async ({
     page,
   }) => {
-    await page
-      .getByRole("button", { name: /switch to dark mode/i })
-      .click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
 
     // In dark mode the button label is "Switch to light mode"
     await expect(

@@ -44,9 +44,7 @@ test.describe("Contact Form", () => {
     await page.getByLabel("Email Address").fill("not-an-email");
     await page.getByLabel("Email Address").blur();
 
-    await expect(
-      page.getByText(/enter a valid email address/i),
-    ).toBeVisible();
+    await expect(page.getByText(/enter a valid email address/i)).toBeVisible();
   });
 
   test("invalid mobile format shows validation error on blur", async ({
@@ -55,9 +53,7 @@ test.describe("Contact Form", () => {
     await page.getByLabel("Mobile Number").fill("abc");
     await page.getByLabel("Mobile Number").blur();
 
-    await expect(
-      page.getByText(/enter a valid phone number/i),
-    ).toBeVisible();
+    await expect(page.getByText(/enter a valid phone number/i)).toBeVisible();
   });
 
   test("message shorter than 10 characters shows length error on blur", async ({

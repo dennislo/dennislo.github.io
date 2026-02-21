@@ -27,14 +27,14 @@ tests and shuts it down after.
 
 ### Key differences from Jest unit tests
 
-| Concern         | Jest (unit)                  | Playwright (E2E)                    |
-| --------------- | ---------------------------- | ----------------------------------- |
-| Runs in         | jsdom (simulated browser)    | Real Chromium browser               |
-| Tests           | Components in isolation      | Full pages end-to-end               |
-| Locators        | `getByRole`, `getByText`     | `page.getByRole`, `page.getByLabel` |
-| Async           | `waitFor` (React state)      | All actions are async / auto-wait   |
-| File location   | `src/**/*.test.tsx`          | `src/test-e2e/*.spec.ts`            |
-| Run command     | `npm test`                   | `npm run test:e2e`                  |
+| Concern       | Jest (unit)               | Playwright (E2E)                    |
+| ------------- | ------------------------- | ----------------------------------- |
+| Runs in       | jsdom (simulated browser) | Real Chromium browser               |
+| Tests         | Components in isolation   | Full pages end-to-end               |
+| Locators      | `getByRole`, `getByText`  | `page.getByRole`, `page.getByLabel` |
+| Async         | `waitFor` (React state)   | All actions are async / auto-wait   |
+| File location | `src/**/*.test.tsx`       | `src/test-e2e/*.spec.ts`            |
+| Run command   | `npm test`                | `npm run test:e2e`                  |
 
 ## Configuration
 
@@ -67,9 +67,7 @@ export default defineConfig({
     baseURL: "http://localhost:8000",
     trace: "on-first-retry",
   },
-  projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-  ],
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
     command: "npm run develop",
     url: "http://localhost:8000",
@@ -111,19 +109,19 @@ test.describe("Feature Name", () => {
 
 ```typescript
 // ✅ Preferred — accessible, robust
-page.getByRole("button", { name: /switch to dark mode/i })
-page.getByRole("textbox", { name: /email address/i })
-page.getByRole("link", { name: /back/i })
+page.getByRole("button", { name: /switch to dark mode/i });
+page.getByRole("textbox", { name: /email address/i });
+page.getByRole("link", { name: /back/i });
 
 // ✅ Also good — label-based for form fields
-page.getByLabel("First Name")
+page.getByLabel("First Name");
 
 // ⚠️ OK when role isn't available
-page.getByText("Contact Me")
+page.getByText("Contact Me");
 
 // ❌ Avoid — brittle, couples tests to CSS
-page.locator(".contact-form-submit")
-page.locator("#firstName")
+page.locator(".contact-form-submit");
+page.locator("#firstName");
 ```
 
 ### 2. Use Web-First Assertions (Auto-Waiting)
@@ -226,7 +224,9 @@ const theme = await page.locator("html").getAttribute("data-theme");
 await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
 // Click toggle and assert theme flipped
-const toggleBtn = page.getByRole("button", { name: /switch to (dark|light) mode/i });
+const toggleBtn = page.getByRole("button", {
+  name: /switch to (dark|light) mode/i,
+});
 await toggleBtn.click();
 await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
@@ -241,7 +241,9 @@ expect(source).toBe("manual");
 // Fill a field and blur to trigger validation
 await page.getByLabel("Email Address").fill("bad-email");
 await page.getByLabel("Email Address").blur();
-await expect(page.getByRole("alert", { name: /enter a valid email/i })).toBeVisible();
+await expect(
+  page.getByRole("alert", { name: /enter a valid email/i }),
+).toBeVisible();
 
 // Submit an empty form and check all errors appear
 await page.getByRole("button", { name: /send message/i }).click();
@@ -357,13 +359,13 @@ npx playwright show-trace test-results/...trace.zip
 
 ### Common Issues
 
-| Symptom | Cause | Fix |
-| ------- | ----- | --- |
-| `net::ERR_CONNECTION_REFUSED` | Dev server not ready | Increase `webServer.timeout` or check `gatsby develop` |
-| Locator not found | Wrong selector or page hasn't loaded | Use `await expect(locator).toBeVisible()` before interacting |
-| Flaky `data-theme` tests | Theme set by time-of-day logic | Always set `localStorage` in `beforeEach` for a deterministic start |
-| Reload resets `localStorage` | `addInitScript` runs on every load, including `page.reload()` | Wrap init writes in a `sessionStorage` guard so they only apply on first navigation |
-| `waitForTimeout` needed | State change not awaited | Use web-first assertions (`await expect(...).toHaveAttribute(...)`) |
+| Symptom                       | Cause                                                         | Fix                                                                                 |
+| ----------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `net::ERR_CONNECTION_REFUSED` | Dev server not ready                                          | Increase `webServer.timeout` or check `gatsby develop`                              |
+| Locator not found             | Wrong selector or page hasn't loaded                          | Use `await expect(locator).toBeVisible()` before interacting                        |
+| Flaky `data-theme` tests      | Theme set by time-of-day logic                                | Always set `localStorage` in `beforeEach` for a deterministic start                 |
+| Reload resets `localStorage`  | `addInitScript` runs on every load, including `page.reload()` | Wrap init writes in a `sessionStorage` guard so they only apply on first navigation |
+| `waitForTimeout` needed       | State change not awaited                                      | Use web-first assertions (`await expect(...).toHaveAttribute(...)`)                 |
 
 ## Resources
 
