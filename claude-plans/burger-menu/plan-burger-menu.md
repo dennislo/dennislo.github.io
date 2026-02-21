@@ -93,10 +93,14 @@ const BurgerMenu: React.FC = () => {
         </button>
         <ul className="burger-nav">
           <li>
-            <Link to="/" onClick={() => setIsOpen(false)}>Homepage</Link>
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              Homepage
+            </Link>
           </li>
           <li>
-            <Link to="/contact-form" onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link to="/contact-form" onClick={() => setIsOpen(false)}>
+              Contact
+            </Link>
           </li>
         </ul>
       </nav>
@@ -123,13 +127,13 @@ const BurgerMenu: React.FC = () => {
   left: 0;
   height: 100%;
   width: 280px;
-  transform: translateX(-100%);  /* hidden off-screen */
+  transform: translateX(-100%); /* hidden off-screen */
   transition: transform 0.3s ease;
   z-index: 1001;
 }
 
 .burger-panel--open {
-  transform: translateX(0);      /* slide in */
+  transform: translateX(0); /* slide in */
 }
 
 .burger-overlay {
@@ -146,8 +150,13 @@ const BurgerMenu: React.FC = () => {
 
 /* Desktop adjustments */
 @media (min-width: 768px) {
-  .burger-button { top: 20px; left: 20px; }
-  .burger-panel  { width: 320px; }
+  .burger-button {
+    top: 20px;
+    left: 20px;
+  }
+  .burger-panel {
+    width: 320px;
+  }
 }
 ```
 

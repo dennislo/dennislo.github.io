@@ -38,6 +38,7 @@ claude-plans/
 ```
 
 Use kebab-case for both the directory and filename. Examples:
+
 - `claude-plans/contact-form/plan-contact-form.md`
 - `claude-plans/time-based-theme/plan-time-based-theme.md`
 - `claude-plans/dark-mode-toggle/plan-dark-mode-toggle.md`
@@ -73,6 +74,7 @@ Use this template, filling in the `<PLACEHOLDER>` sections with feature-specific
 ## Architecture
 
 <Describe the technical approach. Include:
+
 - Which existing files are affected and why
 - New files that will be created
 - Any new dependencies
