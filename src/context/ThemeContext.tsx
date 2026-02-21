@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -9,27 +9,48 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+export function getTimeBasedTheme(): Theme {
+  const now = new Date();
+  const timeInMinutes = now.getHours() * 60 + now.getMinutes();
+  const startLight = 7 * 60 + 30; // 7:30 AM = 450 minutes
+  const endLight = 19 * 60 + 30; // 7:30 PM = 1170 minutes
+  return timeInMinutes >= startLight && timeInMinutes < endLight
+    ? "light"
+    : "dark";
+}
+
+const VALID_THEMES: Theme[] = ["light", "dark"];
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // Check for saved theme preference or default to dark
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
+    const themeSource = localStorage.getItem("theme-source");
+    const rawSavedTheme = localStorage.getItem("theme");
+    const savedTheme: Theme | null =
+      rawSavedTheme && VALID_THEMES.includes(rawSavedTheme as Theme)
+        ? (rawSavedTheme as Theme)
+        : null;
+    if (themeSource === "manual" && savedTheme) {
       setTheme(savedTheme);
+    } else {
+      setTheme(getTimeBasedTheme());
     }
   }, []);
 
   useEffect(() => {
-    // Apply theme to document root
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+      localStorage.setItem("theme-source", "manual");
+      localStorage.setItem("theme", newTheme);
+      return newTheme;
+    });
   };
 
   return (
