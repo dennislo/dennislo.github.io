@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+env:
+  NPM_CONFIG_CACHE: ~/.npm
+
 jobs:
   format:
     name: Format
@@ -18,7 +21,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - run: npm ci
+          cache-dependency-path: "package-lock.json"
+      - run: npm ci --prefer-offline
       - run: npx prettier --check .
 
   lint:
@@ -30,7 +34,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - run: npm ci
+          cache-dependency-path: "package-lock.json"
+      - run: npm ci --prefer-offline
       - run: npm run lint
 
   typecheck:
@@ -42,7 +47,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - run: npm ci
+          cache-dependency-path: "package-lock.json"
+      - run: npm ci --prefer-offline
       - run: npm run typecheck
 
   unit-tests:
@@ -54,7 +60,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - run: npm ci
+          cache-dependency-path: "package-lock.json"
+      - run: npm ci --prefer-offline
       - run: npm test
 
   e2e-tests:
@@ -66,7 +73,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - run: npm ci
+          cache-dependency-path: "package-lock.json"
+      - run: npm ci --prefer-offline
       - name: Cache Playwright browsers
         id: playwright-cache
         uses: actions/cache@v4
