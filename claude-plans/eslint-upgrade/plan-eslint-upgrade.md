@@ -10,11 +10,11 @@ Audit and update the ESLint ecosystem packages to the latest compatible versions
 
 ### Our devDependencies (what we control)
 
-| Package              | Currently Installed | Latest Available | Latest Compatible | Notes                                                                                       |
-| -------------------- | ------------------- | ---------------- | ----------------- | ------------------------------------------------------------------------------------------- |
-| `eslint`             | 9.39.3              | 10.0.1           | **9.39.3**        | ESLint 10 breaks `eslint-plugin-react` (`getFilename` API removed). Stay on v9.             |
-| `typescript-eslint`  | 8.56.0              | 8.56.0           | **8.56.0**        | Supports ESLint ^8.57 \|\| ^9 \|\| ^10. Already at latest.                                 |
-| `eslint-plugin-react`| 7.37.5              | 7.37.5           | **7.37.5**        | Supports ESLint up to ^9.7. No ESLint 10 support yet (issue [#3977][react-issue]). Already at latest. |
+| Package               | Currently Installed | Latest Available | Latest Compatible | Notes                                                                                                 |
+| --------------------- | ------------------- | ---------------- | ----------------- | ----------------------------------------------------------------------------------------------------- |
+| `eslint`              | 9.39.3              | 10.0.1           | **9.39.3**        | ESLint 10 breaks `eslint-plugin-react` (`getFilename` API removed). Stay on v9.                       |
+| `typescript-eslint`   | 8.56.0              | 8.56.0           | **8.56.0**        | Supports ESLint ^8.57 \|\| ^9 \|\| ^10. Already at latest.                                            |
+| `eslint-plugin-react` | 7.37.5              | 7.37.5           | **7.37.5**        | Supports ESLint up to ^9.7. No ESLint 10 support yet (issue [#3977][react-issue]). Already at latest. |
 
 [react-issue]: https://github.com/jsx-eslint/eslint-plugin-react/issues/3977
 
