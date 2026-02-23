@@ -34,7 +34,11 @@ const BurgerMenu = () => {
         className={`burger-panel ${isOpen ? "burger-panel--open" : ""}`}
         aria-label="Main navigation"
       >
-        <button className="burger-close" onClick={closeMenu} aria-label="Close menu">
+        <button
+          className="burger-close"
+          onClick={closeMenu}
+          aria-label="Close menu"
+        >
           ×
         </button>
         <ul className="burger-nav">

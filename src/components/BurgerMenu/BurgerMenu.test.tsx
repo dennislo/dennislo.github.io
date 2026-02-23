@@ -24,7 +24,9 @@ jest.mock("gatsby", () => ({
 describe("BurgerMenu", () => {
   it("renders the hamburger button with the correct aria-label", () => {
     render(<BurgerMenu />);
-    expect(screen.getByRole("button", { name: "Open menu" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Open menu" }),
+    ).toBeInTheDocument();
   });
 
   it("keeps the panel closed by default", () => {
@@ -112,6 +114,8 @@ describe("BurgerMenu", () => {
 
   it('has a nav landmark with aria-label "Main navigation"', () => {
     render(<BurgerMenu />);
-    expect(screen.getByRole("navigation", { name: "Main navigation" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Main navigation" }),
+    ).toBeInTheDocument();
   });
 });

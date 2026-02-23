@@ -63,8 +63,8 @@ Layout (Layout.tsx)
 
 ```tsx
 // BurgerMenu.tsx
-import React, {useState} from "react";
-import {Link} from "gatsby";
+import React, { useState } from "react";
+import { Link } from "gatsby";
 import "./BurgerMenu.css";
 
 const BurgerMenu: React.FC = () => {
@@ -201,7 +201,7 @@ focused on orchestration while delegating specialized work.
 ### Available Agents
 
 | Agent             | Path                              | Role                                                              | Tools                               |
-|-------------------|-----------------------------------|-------------------------------------------------------------------|-------------------------------------|
+| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
 | **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
 | **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
 | **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
@@ -280,9 +280,9 @@ Main Agent (orchestrator)
 
 1. [ ] Main agent: create `BurgerMenu.tsx`, `BurgerMenu.css`, and update `Layout.tsx` to render the menu.
 2. [ ] **Agent: code-reviewer** — Review BurgerMenu component, CSS, and Layout changes for accessibility, theming, and best
-   practices. _(Run in parallel with step 3.)_
+       practices. _(Run in parallel with step 3.)_
 3. [ ] **Agent: test-writer** — Create `BurgerMenu.test.tsx` and update `Layout.test.tsx` with burger menu mock + test. _(
-   Run in parallel with step 2.)_
+       Run in parallel with step 2.)_
 4. [ ] Run `npm run typecheck` and `npm test`.
 5. [ ] **Agent: debugger** — Fix any failures from step 4. _(Only if needed.)_
 6. [ ] **Agent: code-reviewer** — Final review pass.
