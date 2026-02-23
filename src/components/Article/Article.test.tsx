@@ -4,21 +4,21 @@ import Article from "./Article";
 
 jest.mock("./Clients", () => {
   function MockClients() {
-    return <div data-testid="clients">Clients</div>;
+    return <div>Clients</div>;
   }
   return MockClients;
 });
 
 jest.mock("./More", () => {
   function MockMore() {
-    return <div data-testid="more">More</div>;
+    return <div>More</div>;
   }
   return MockMore;
 });
 
 jest.mock("./Contact", () => {
   function MockContact() {
-    return <div data-testid="contact">Contact</div>;
+    return <div>Contact</div>;
   }
   return MockContact;
 });
@@ -51,9 +51,9 @@ describe("Article", () => {
 
   it("renders child components", () => {
     render(<Article />);
-    expect(screen.getByTestId("clients")).toBeInTheDocument();
-    expect(screen.getByTestId("more")).toBeInTheDocument();
-    expect(screen.getByTestId("contact")).toBeInTheDocument();
+    expect(screen.getByText("Clients")).toBeInTheDocument();
+    expect(screen.getByText("More")).toBeInTheDocument();
+    expect(screen.getByText("Contact")).toBeInTheDocument();
   });
 
   it("renders design credit", () => {

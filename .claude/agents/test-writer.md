@@ -26,7 +26,10 @@ You are a senior test engineer writing tests for a React TypeScript project that
 
 ### React Testing Library Best Practices
 
-- **Query priority:** `getByRole` > `getByLabelText` > `getByText` > `getByTestId`
+- **Query priority:** `getByRole` > `getByLabelText` > `getByText` > `querySelector`
+- **No `data-testid`:** Do not use `data-testid` attributes or `*ByTestId` queries. Prefer accessible roles/labels/text.
+  If no accessible hook exists, use `container.querySelector` with a stable class
+  or attribute instead.
 - **User interactions:** Prefer `userEvent` over `fireEvent`
 - **Async:** Use `waitFor` or `findBy*` queries for async behavior
 - **Test behavior, not implementation:** Never test internal state or private methods directly

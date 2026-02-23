@@ -65,9 +65,7 @@ describe("BurgerMenu", () => {
     await user.click(screen.getByRole("button", { name: "Open menu" }));
     const overlay = container.querySelector(".burger-overlay");
     expect(overlay).not.toBeNull();
-    if (overlay) {
-      await user.click(overlay);
-    }
+    await user.click(overlay as HTMLElement);
 
     expect(screen.getByLabelText("Main navigation")).not.toHaveClass(
       "burger-panel--open",
@@ -110,6 +108,33 @@ describe("BurgerMenu", () => {
 
     await user.click(screen.getByRole("button", { name: "Close menu" }));
     expect(openButton).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes the panel when pressing Escape", async () => {
+    const user = userEvent.setup();
+    render(<BurgerMenu />);
+
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
+    expect(screen.getByLabelText("Main navigation")).toHaveClass(
+      "burger-panel--open",
+    );
+
+    await user.keyboard("{Escape}");
+    expect(screen.getByLabelText("Main navigation")).not.toHaveClass(
+      "burger-panel--open",
+    );
+  });
+
+  it("moves focus to close button when opened and back to trigger when closed", async () => {
+    const user = userEvent.setup();
+    render(<BurgerMenu />);
+
+    const openButton = screen.getByRole("button", { name: "Open menu" });
+    await user.click(openButton);
+    expect(screen.getByRole("button", { name: "Close menu" })).toHaveFocus();
+
+    await user.click(screen.getByRole("button", { name: "Close menu" }));
+    expect(openButton).toHaveFocus();
   });
 
   it('has a nav landmark with aria-label "Main navigation"', () => {

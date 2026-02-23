@@ -6,14 +6,14 @@ import IndexPage from "./index";
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
   default: function MockLayout({ children }: { children: React.ReactNode }) {
-    return <div data-testid="layout">{children}</div>;
+    return <div aria-label="Layout">{children}</div>;
   },
 }));
 
 jest.mock("../components/Article/Article", () => ({
   __esModule: true,
   default: function MockArticle() {
-    return <div data-testid="article">Article Content</div>;
+    return <div aria-label="Article">Article Content</div>;
   },
 }));
 
@@ -64,11 +64,11 @@ const mockPageProps: PageProps = {
 describe("IndexPage", () => {
   it("renders the Layout component", () => {
     render(<IndexPage {...mockPageProps} />);
-    expect(screen.getByTestId("layout")).toBeInTheDocument();
+    expect(screen.getByLabelText("Layout")).toBeInTheDocument();
   });
 
   it("renders the Article component", () => {
     render(<IndexPage {...mockPageProps} />);
-    expect(screen.getByTestId("article")).toBeInTheDocument();
+    expect(screen.getByLabelText("Article")).toBeInTheDocument();
   });
 });

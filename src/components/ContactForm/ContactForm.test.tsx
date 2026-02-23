@@ -92,8 +92,12 @@ describe("ContactForm", () => {
     });
 
     it("renders the hidden honeypot field", () => {
-      setup();
-      const honeypot = screen.getByTestId("honeypot");
+      const { container } = setup();
+      const honeypot = container.querySelector('input[name="_gotcha"]');
+      expect(honeypot).not.toBeNull();
+      if (!honeypot) {
+        throw new Error("Honeypot field not found");
+      }
       expect(honeypot).toBeInTheDocument();
       expect(honeypot).toHaveAttribute("aria-hidden", "true");
     });

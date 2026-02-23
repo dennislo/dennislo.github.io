@@ -10,12 +10,12 @@ jest.mock("gatsby", () => ({
 
 jest.mock("../ThemeToggle/ThemeToggle", () => ({
   __esModule: true,
-  default: () => <button data-testid="theme-toggle">Theme Toggle</button>,
+  default: () => <button>Theme Toggle</button>,
 }));
 
 jest.mock("../BurgerMenu/BurgerMenu", () => ({
   __esModule: true,
-  default: () => <button data-testid="burger-menu">Burger Menu</button>,
+  default: () => <button>Burger Menu</button>,
 }));
 
 describe("Layout", () => {
@@ -34,7 +34,9 @@ describe("Layout", () => {
         <div>Test Content</div>
       </Layout>,
     );
-    expect(screen.getByTestId("theme-toggle")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Theme Toggle" }),
+    ).toBeInTheDocument();
   });
 
   it("renders BurgerMenu component", () => {
@@ -43,7 +45,9 @@ describe("Layout", () => {
         <div>Test Content</div>
       </Layout>,
     );
-    expect(screen.getByTestId("burger-menu")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Burger Menu" }),
+    ).toBeInTheDocument();
   });
 
   it("renders footer with copyright", () => {

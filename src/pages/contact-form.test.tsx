@@ -5,26 +5,26 @@ import ContactFormPage, { Head } from "./contact-form";
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
   default: function MockLayout({ children }: { children: React.ReactNode }) {
-    return <div data-testid="layout">{children}</div>;
+    return <div aria-label="Layout">{children}</div>;
   },
 }));
 
 jest.mock("../components/ContactForm/ContactForm", () => ({
   __esModule: true,
   default: function MockContactForm() {
-    return <div data-testid="contact-form">Contact Form</div>;
+    return <div aria-label="Contact Form">Contact Form</div>;
   },
 }));
 
 describe("ContactFormPage", () => {
   it("renders the layout", () => {
     render(<ContactFormPage />);
-    expect(screen.getByTestId("layout")).toBeInTheDocument();
+    expect(screen.getByLabelText("Layout")).toBeInTheDocument();
   });
 
   it("renders the contact form component", () => {
     render(<ContactFormPage />);
-    expect(screen.getByTestId("contact-form")).toBeInTheDocument();
+    expect(screen.getByLabelText("Contact Form")).toBeInTheDocument();
   });
 });
 

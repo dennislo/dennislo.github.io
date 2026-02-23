@@ -1,15 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "gatsby";
 import "./BurgerMenu.css";
 
 const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      closeRef.current?.focus();
+    } else if (wasOpenRef.current) {
+      triggerRef.current?.focus();
+    }
+
+    wasOpenRef.current = isOpen;
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   return (
     <>
       <button
+        ref={triggerRef}
         className="burger-button"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
@@ -35,6 +60,7 @@ const BurgerMenu = () => {
         aria-label="Main navigation"
       >
         <button
+          ref={closeRef}
           className="burger-close"
           onClick={closeMenu}
           aria-label="Close menu"

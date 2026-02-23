@@ -278,11 +278,11 @@ Main Agent (orchestrator)
 
 ## Implementation Steps (Summary)
 
-1. [ ] Main agent: create `BurgerMenu.tsx`, `BurgerMenu.css`, and update `Layout.tsx` to render the menu.
-2. [ ] **Agent: code-reviewer** — Review BurgerMenu component, CSS, and Layout changes for accessibility, theming, and best
-       practices. _(Run in parallel with step 3.)_
-3. [ ] **Agent: test-writer** — Create `BurgerMenu.test.tsx` and update `Layout.test.tsx` with burger menu mock + test. _(
-       Run in parallel with step 2.)_
-4. [ ] Run `npm run typecheck` and `npm test`.
-5. [ ] **Agent: debugger** — Fix any failures from step 4. _(Only if needed.)_
-6. [ ] **Agent: code-reviewer** — Final review pass.
+1. [x] Main agent: create `BurgerMenu.tsx`, `BurgerMenu.css`, and update `Layout.tsx` to render the menu.
+2. [x] **Agent: code-reviewer** — Reviewed BurgerMenu component, CSS, and Layout changes for accessibility, theming, and
+       best practices. _(Fallback: local review checklist used because agent delegation is unavailable in this runtime.)_
+3. [x] **Agent: test-writer** — Created `BurgerMenu.test.tsx` and updated `Layout.test.tsx` with burger menu mock + test.
+       _(Executed by main agent using test-writer standards.)_
+4. [x] Ran `npm run typecheck` and full `npm test`.
+5. [x] **Agent: debugger** — Not needed; no failures from step 4.
+6. [x] **Agent: code-reviewer** — Final review pass completed. _(Fallback: local final review checklist used.)_
