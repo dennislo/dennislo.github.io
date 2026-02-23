@@ -5,19 +5,27 @@
  */
 
 import React from "react";
-import PropTypes from "prop-types";
 
-export function Head() {
-  const lang = "en";
-  const title = "Who is DLO?";
+type HeadProps = {
+  title?: string;
+  description?: string;
+  lang?: string;
+  author?: string;
+};
 
-  const metaDescription = `${title} - My personal homepage`;
-
-  const author = "@dlo";
+export function Head({
+  title = "Who is DLO?",
+  description,
+  lang = "en",
+  author = "@dlo",
+}: HeadProps) {
+  const metaDescription = description ?? `${title} - My personal homepage`;
+  React.useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   return (
     <>
-      <html lang={lang} />
       <title>{title}</title>
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
@@ -42,24 +50,11 @@ export function Head() {
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/favicon//favicon-16x16.png"
+        href="/favicon/favicon-16x16.png"
       />
       <link rel="manifest" href="/favicon/site.webmanifest" />
     </>
   );
 }
-
-Head.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``,
-};
-
-Head.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
-};
 
 export default Head;
