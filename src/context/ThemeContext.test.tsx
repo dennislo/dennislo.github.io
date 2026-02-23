@@ -8,7 +8,9 @@ const TestComponent = () => {
   const { theme, toggleTheme } = useTheme();
   return (
     <div>
-      <span data-testid="theme">{theme}</span>
+      <span role="status" aria-live="polite">
+        {theme}
+      </span>
       <button onClick={toggleTheme}>Toggle</button>
     </div>
   );
@@ -57,7 +59,7 @@ describe("ThemeContext", () => {
         <TestComponent />
       </ThemeProvider>,
     );
-    expect(screen.getByTestId("theme")).toHaveTextContent("dark");
+    expect(screen.getByRole("status")).toHaveTextContent("dark");
   });
 
   it("toggles theme from dark to light", async () => {
@@ -69,7 +71,7 @@ describe("ThemeContext", () => {
     );
     const button = screen.getByRole("button");
     await user.click(button);
-    expect(screen.getByTestId("theme")).toHaveTextContent("light");
+    expect(screen.getByRole("status")).toHaveTextContent("light");
   });
 
   it("throws error when useTheme is used outside ThemeProvider", () => {
@@ -93,7 +95,7 @@ describe("ThemeContext", () => {
 
     // After mount the useEffect runs and calls getTimeBasedTheme() again.
     await waitFor(() => {
-      expect(screen.getByTestId("theme")).toHaveTextContent("light");
+      expect(screen.getByRole("status")).toHaveTextContent("light");
     });
   });
 
@@ -128,7 +130,7 @@ describe("ThemeContext", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("theme")).toHaveTextContent("dark");
+      expect(screen.getByRole("status")).toHaveTextContent("dark");
     });
   });
 
@@ -146,7 +148,7 @@ describe("ThemeContext", () => {
     // VALID_THEMES guard rejects 'invalid-value', falls back to getTimeBasedTheme()
     // Nighttime mock (22:00) is active → should resolve to 'dark'
     await waitFor(() => {
-      expect(screen.getByTestId("theme")).toHaveTextContent("dark");
+      expect(screen.getByRole("status")).toHaveTextContent("dark");
     });
   });
 
@@ -164,7 +166,7 @@ describe("ThemeContext", () => {
     // Even though a 'theme' value is stored, without theme-source === 'manual'
     // the provider ignores it and uses time-based (dark at 22:00).
     await waitFor(() => {
-      expect(screen.getByTestId("theme")).toHaveTextContent("dark");
+      expect(screen.getByRole("status")).toHaveTextContent("dark");
     });
   });
 });

@@ -12,7 +12,6 @@ export default ContactFormPage;
 
 export const Head = () => (
   <>
-    <html lang="en" />
     <title>Contact — DLO</title>
     <meta name="description" content="Send a message to Dennis Lo" />
   </>

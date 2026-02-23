@@ -201,7 +201,6 @@ const ContactForm: React.FC = () => {
           type="text"
           name="_gotcha"
           className="contact-form-honeypot"
-          data-testid="honeypot"
           tabIndex={-1}
           aria-hidden="true"
           autoComplete="off"

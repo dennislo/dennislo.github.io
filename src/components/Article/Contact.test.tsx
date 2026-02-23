@@ -17,28 +17,28 @@ jest.mock("gatsby", () => ({
 
 jest.mock("../icons/Github", () => {
   function MockGithubIcon() {
-    return <svg data-testid="github-icon" />;
+    return <svg aria-label="GitHub icon" />;
   }
   return MockGithubIcon;
 });
 
 jest.mock("../icons/Email", () => {
   function MockEmailIcon() {
-    return <svg data-testid="email-icon" />;
+    return <svg aria-label="Email icon" />;
   }
   return MockEmailIcon;
 });
 
 jest.mock("../icons/Linkedin", () => {
   function MockLinkedinIcon() {
-    return <svg data-testid="linkedin-icon" />;
+    return <svg aria-label="LinkedIn icon" />;
   }
   return MockLinkedinIcon;
 });
 
 jest.mock("../icons/Instagram", () => {
   function MockInstagramIcon() {
-    return <svg data-testid="instagram-icon" />;
+    return <svg aria-label="Instagram icon" />;
   }
   return MockInstagramIcon;
 });
@@ -82,10 +82,10 @@ describe("Contact", () => {
 
   it("renders all social media icons", () => {
     render(<Contact />);
-    expect(screen.getByTestId("github-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("email-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("linkedin-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("instagram-icon")).toBeInTheDocument();
+    expect(screen.getByLabelText("GitHub icon")).toBeInTheDocument();
+    expect(screen.getByLabelText("Email icon")).toBeInTheDocument();
+    expect(screen.getByLabelText("LinkedIn icon")).toBeInTheDocument();
+    expect(screen.getByLabelText("Instagram icon")).toBeInTheDocument();
   });
 
   it("renders a link to the contact form", () => {
