@@ -2,9 +2,26 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Article from "./Article";
 
-jest.mock("./Clients", () => () => <div data-testid="clients">Clients</div>);
-jest.mock("./More", () => () => <div data-testid="more">More</div>);
-jest.mock("./Contact", () => () => <div data-testid="contact">Contact</div>);
+jest.mock("./Clients", () => {
+  function MockClients() {
+    return <div data-testid="clients">Clients</div>;
+  }
+  return MockClients;
+});
+
+jest.mock("./More", () => {
+  function MockMore() {
+    return <div data-testid="more">More</div>;
+  }
+  return MockMore;
+});
+
+jest.mock("./Contact", () => {
+  function MockContact() {
+    return <div data-testid="contact">Contact</div>;
+  }
+  return MockContact;
+});
 
 describe("Article", () => {
   it("renders the article with main sections", () => {

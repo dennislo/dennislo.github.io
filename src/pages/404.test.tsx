@@ -1,30 +1,60 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import type { PageProps } from "gatsby";
 import NotFoundPage from "./404";
 
 jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
-  ),
+  Link: function MockLink({
+    to,
+    children,
+  }: {
+    to: string;
+    children: React.ReactNode;
+  }) {
+    return <a href={to}>{children}</a>;
+  },
 }));
 
-const mockPageProps: any = {
+const mockLocation: PageProps["location"] = {
+  pathname: "/404/",
+  search: "",
+  hash: "",
+  href: "",
+  origin: "",
+  protocol: "",
+  host: "",
+  hostname: "",
+  port: "",
+  state: null,
+  key: "",
+  ancestorOrigins: {} as DOMStringList,
+  assign: jest.fn(),
+  reload: jest.fn(),
+  replace: jest.fn(),
+};
+
+class MockPageComponent extends React.Component {
+  render() {
+    return null;
+  }
+}
+
+const mockPageProps: PageProps = {
   path: "/404/",
   uri: "/404/",
-  location: {
-    pathname: "/404/",
-    search: "",
-    hash: "",
-    href: "",
-    origin: "",
-    protocol: "",
-    host: "",
-    hostname: "",
-    port: "",
-    state: null,
-    key: "",
+  location: mockLocation,
+  children: undefined,
+  params: {},
+  serverData: {},
+  pageResources: {
+    component: new MockPageComponent({}),
+    json: { data: {}, pageContext: {} },
+    page: {
+      componentChunkName: "component---src-pages-404-tsx",
+      path: "/404/",
+      webpackCompilationHash: "test-hash",
+    },
   },
-  pageResources: {},
   data: {},
   pageContext: {},
 };
