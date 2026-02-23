@@ -2,21 +2,28 @@
 
 ## Overview
 
-Add a slide-in/out hamburger menu on the left side of the page. The menu contains two items: "Homepage" (links to `/`) and "Contact" (links to `/contact-form`). The CSS follows mobile-first responsive design, consistent with the project's existing patterns.
+Add a slide-in/out hamburger menu on the left side of the page. The menu contains two items: "Homepage" (links to `/`)
+and "Contact" (links to `/contact-form`). The CSS follows mobile-first responsive design, consistent with the project's
+existing patterns.
 
 ---
 
 ## Architecture
 
-The burger menu is a new standalone component rendered inside `Layout`, alongside the existing `ThemeToggle`. It consists of three parts:
+The burger menu is a new standalone component rendered inside `Layout`, alongside the existing `ThemeToggle`. It
+consists of three parts:
 
 1. **A hamburger button** — fixed-position trigger in the top-left corner (mirroring the ThemeToggle in the top-right).
-2. **A slide-out panel** — a `<nav>` sidebar that slides in from the left when open, with CSS `transform: translateX()` transitions.
+2. **A slide-out panel** — a `<nav>` sidebar that slides in from the left when open, with CSS `transform: translateX()`
+   transitions.
 3. **An overlay backdrop** — a semi-transparent layer behind the panel that closes the menu on click.
 
-State (`isOpen`) is managed locally with `useState` inside the component — no context needed since only the menu itself cares about open/closed state.
+State (`isOpen`) is managed locally with `useState` inside the component — no context needed since only the menu itself
+cares about open/closed state.
 
-CSS uses plain CSS (a `.css` file imported directly), matching the ThemeToggle pattern. All theme-aware colours use existing CSS variables from `theme.css`. The CSS is written mobile-first: base styles target small screens, with `@media (min-width: 768px)` for desktop adjustments.
+CSS uses plain CSS (a `.css` file imported directly), matching the ThemeToggle pattern. All theme-aware colours use
+existing CSS variables from `theme.css`. The CSS is written mobile-first: base styles target small screens, with
+`@media (min-width: 768px)` for desktop adjustments.
 
 Navigation uses Gatsby's `<Link>` component for internal routes.
 
@@ -25,11 +32,13 @@ Navigation uses Gatsby's `<Link>` component for internal routes.
 #### New files:
 
 1. **`src/components/BurgerMenu/BurgerMenu.tsx`** — The burger menu component (button + panel + overlay).
-2. **`src/components/BurgerMenu/BurgerMenu.css`** — Mobile-first styles for the burger menu, panel, overlay, and menu items.
+2. **`src/components/BurgerMenu/BurgerMenu.css`** — Mobile-first styles for the burger menu, panel, overlay, and menu
+   items.
 
 #### Modified files:
 
-3. **`src/components/Layout/Layout.tsx`** — Import and render `<BurgerMenu />` inside `<ThemeProvider>`, above `<ThemeToggle />`.
+3. **`src/components/Layout/Layout.tsx`** — Import and render `<BurgerMenu />` inside `<ThemeProvider>`, above
+   `<ThemeToggle />`.
 
 ---
 
@@ -54,8 +63,8 @@ Layout (Layout.tsx)
 
 ```tsx
 // BurgerMenu.tsx
-import React, { useState } from "react";
-import { Link } from "gatsby";
+import React, {useState} from "react";
+import {Link} from "gatsby";
 import "./BurgerMenu.css";
 
 const BurgerMenu: React.FC = () => {
@@ -154,6 +163,7 @@ const BurgerMenu: React.FC = () => {
     top: 20px;
     left: 20px;
   }
+
   .burger-panel {
     width: 320px;
   }
@@ -185,12 +195,13 @@ const BurgerMenu: React.FC = () => {
 
 ## Agent Orchestration
 
-Use the custom Claude agents defined in `.claude/agents/` as subagents during implementation. This keeps the main context focused on orchestration while delegating specialized work.
+Use the custom agents defined in `.claude/agents/` as subagents during implementation. This keeps the main context
+focused on orchestration while delegating specialized work.
 
 ### Available Agents
 
 | Agent             | Path                              | Role                                                              | Tools                               |
-| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
+|-------------------|-----------------------------------|-------------------------------------------------------------------|-------------------------------------|
 | **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
 | **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
 | **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
@@ -199,7 +210,8 @@ Use the custom Claude agents defined in `.claude/agents/` as subagents during im
 
 #### Step 1 — Implement BurgerMenu component + CSS + Layout integration (main agent)
 
-- **Do it yourself** (main agent). Create `BurgerMenu.tsx` and `BurgerMenu.css`. Update `Layout.tsx` to render `<BurgerMenu />`.
+- **Do it yourself** (main agent). Create `BurgerMenu.tsx` and `BurgerMenu.css`. Update `Layout.tsx` to render
+  `<BurgerMenu />`.
 
 #### Step 2 — Code Review
 
@@ -237,7 +249,8 @@ Use the custom Claude agents defined in `.claude/agents/` as subagents during im
 
 ### Parallelization Opportunities
 
-- Steps 2 (code review) and 3 (test writing) can be launched **in parallel** since the code-reviewer is read-only and the test-writer writes to a separate file.
+- Steps 2 (code review) and 3 (test writing) can be launched **in parallel** since the code-reviewer is read-only and
+  the test-writer writes to a separate file.
 - If the debugger fixes code in step 5, re-run both code-reviewer and the test suite afterward.
 
 ### Agent Escalation Flow
@@ -265,9 +278,11 @@ Main Agent (orchestrator)
 
 ## Implementation Steps (Summary)
 
-1. Main agent: create `BurgerMenu.tsx`, `BurgerMenu.css`, and update `Layout.tsx` to render the menu.
-2. **Agent: code-reviewer** — Review BurgerMenu component, CSS, and Layout changes for accessibility, theming, and best practices. _(Run in parallel with step 3.)_
-3. **Agent: test-writer** — Create `BurgerMenu.test.tsx` and update `Layout.test.tsx` with burger menu mock + test. _(Run in parallel with step 2.)_
-4. Run `npm run typecheck` and `npm test`.
-5. **Agent: debugger** — Fix any failures from step 4. _(Only if needed.)_
-6. **Agent: code-reviewer** — Final review pass.
+1. [ ] Main agent: create `BurgerMenu.tsx`, `BurgerMenu.css`, and update `Layout.tsx` to render the menu.
+2. [ ] **Agent: code-reviewer** — Review BurgerMenu component, CSS, and Layout changes for accessibility, theming, and best
+   practices. _(Run in parallel with step 3.)_
+3. [ ] **Agent: test-writer** — Create `BurgerMenu.test.tsx` and update `Layout.test.tsx` with burger menu mock + test. _(
+   Run in parallel with step 2.)_
+4. [ ] Run `npm run typecheck` and `npm test`.
+5. [ ] **Agent: debugger** — Fix any failures from step 4. _(Only if needed.)_
+6. [ ] **Agent: code-reviewer** — Final review pass.

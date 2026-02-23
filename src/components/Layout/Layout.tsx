@@ -6,6 +6,7 @@ import "../../styles/theme.css";
 import styled from "styled-components";
 import { ThemeProvider } from "../../context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,6 +21,7 @@ const Footer = styled.footer`
 const Layout = ({ children }: LayoutProps) => {
   return (
     <ThemeProvider>
+      <BurgerMenu />
       <ThemeToggle />
       <main>{children}</main>
       <Footer>

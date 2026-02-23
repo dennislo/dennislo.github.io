@@ -1,0 +1,122 @@
+.burger-button {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 45px;
+  height: 45px;
+  border: 2px solid var(--text-color);
+  border-radius: 50%;
+  background: var(--heading-color);
+  color: var(--bg-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.burger-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--heading-color);
+}
+
+.burger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.burger-icon span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--bg-color);
+  border-radius: 2px;
+}
+
+.burger-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.burger-overlay--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.burger-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  max-width: 85vw;
+  height: 100%;
+  background: var(--bg-color);
+  border-right: 2px solid var(--text-color);
+  box-shadow: 8px 0 24px rgb(0 0 0 / 25%);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  padding: 20px;
+}
+
+.burger-panel--open {
+  transform: translateX(0);
+}
+
+.burger-close {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--text-color);
+  border-radius: 50%;
+  background: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 0;
+}
+
+.burger-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.burger-nav a {
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .burger-button {
+    width: 50px;
+    height: 50px;
+    top: 20px;
+    left: 20px;
+  }
+
+  .burger-icon span {
+    width: 20px;
+  }
+
+  .burger-panel {
+    width: 320px;
+  }
+}

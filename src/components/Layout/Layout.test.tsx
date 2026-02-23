@@ -13,6 +13,11 @@ jest.mock("../ThemeToggle/ThemeToggle", () => ({
   default: () => <button data-testid="theme-toggle">Theme Toggle</button>,
 }));
 
+jest.mock("../BurgerMenu/BurgerMenu", () => ({
+  __esModule: true,
+  default: () => <button data-testid="burger-menu">Burger Menu</button>,
+}));
+
 describe("Layout", () => {
   it("renders children content", () => {
     render(
@@ -30,6 +35,15 @@ describe("Layout", () => {
       </Layout>,
     );
     expect(screen.getByTestId("theme-toggle")).toBeInTheDocument();
+  });
+
+  it("renders BurgerMenu component", () => {
+    render(
+      <Layout>
+        <div>Test Content</div>
+      </Layout>,
+    );
+    expect(screen.getByTestId("burger-menu")).toBeInTheDocument();
   });
 
   it("renders footer with copyright", () => {
