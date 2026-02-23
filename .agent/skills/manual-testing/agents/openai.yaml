@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manual Testing"
+  short_description: "Run and document manual web app tests"
+  default_prompt: "Use $manual-testing to perform a manual QA pass and log issues."
