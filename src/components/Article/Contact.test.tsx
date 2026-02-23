@@ -4,17 +4,44 @@ import Contact from "./Contact";
 
 // Contact.tsx uses Gatsby's <Link> for the contact-form navigation link
 jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
-  ),
+  Link: function MockLink({
+    to,
+    children,
+  }: {
+    to: string;
+    children: React.ReactNode;
+  }) {
+    return <a href={to}>{children}</a>;
+  },
 }));
 
-jest.mock("../icons/Github", () => () => <svg data-testid="github-icon" />);
-jest.mock("../icons/Email", () => () => <svg data-testid="email-icon" />);
-jest.mock("../icons/Linkedin", () => () => <svg data-testid="linkedin-icon" />);
-jest.mock("../icons/Instagram", () => () => (
-  <svg data-testid="instagram-icon" />
-));
+jest.mock("../icons/Github", () => {
+  function MockGithubIcon() {
+    return <svg data-testid="github-icon" />;
+  }
+  return MockGithubIcon;
+});
+
+jest.mock("../icons/Email", () => {
+  function MockEmailIcon() {
+    return <svg data-testid="email-icon" />;
+  }
+  return MockEmailIcon;
+});
+
+jest.mock("../icons/Linkedin", () => {
+  function MockLinkedinIcon() {
+    return <svg data-testid="linkedin-icon" />;
+  }
+  return MockLinkedinIcon;
+});
+
+jest.mock("../icons/Instagram", () => {
+  function MockInstagramIcon() {
+    return <svg data-testid="instagram-icon" />;
+  }
+  return MockInstagramIcon;
+});
 
 describe("Contact", () => {
   it("renders the contact section", () => {

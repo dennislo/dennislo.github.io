@@ -8,7 +8,7 @@ const More = () => (
     <ul>
       <li>
         <span>
-          🤓 I'm learning Cloud Computing & Optimising Software Delivery
+          🤓 I&apos;m learning Cloud Computing & Optimising Software Delivery
         </span>
       </li>
       <li>

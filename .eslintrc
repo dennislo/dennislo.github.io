@@ -1,6 +1,5 @@
 {
-  "parser": "babel-eslint",
-  // uses babel-eslint transforms
+  "parser": "@typescript-eslint/parser",
   "settings": {
     "react": {
       "version": "detect"
@@ -8,19 +7,28 @@
     }
   },
   "env": {
+    "browser": true,
     "node": true
     // defines things like process.env when generating through node
   },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
   "extends": [
     "eslint:recommended",
     // use recommended configs
     "plugin:react/recommended",
-    "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "no-anonymous-exports-page-templates": "off",
-    "limited-exports-page-templates": "off"
   },
   "overrides": [
     {

@@ -4,7 +4,7 @@ import ExternalLink from "../ExternalLink";
 const Clients = () => (
   <section className="clients">
     <header>
-      <h2>I've worked with clients from:</h2>
+      <h2>I&apos;ve worked with clients from:</h2>
     </header>
     <ul>
       <li>
