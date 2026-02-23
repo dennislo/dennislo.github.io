@@ -4,11 +4,7 @@ import ContactFormPage, { Head } from "./contact-form";
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
-  default: function MockLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
+  default: function MockLayout({ children }: { children: React.ReactNode }) {
     return <div data-testid="layout">{children}</div>;
   },
 }));

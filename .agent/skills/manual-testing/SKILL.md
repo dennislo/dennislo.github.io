@@ -30,11 +30,11 @@ description: Manual QA workflow for web apps. Use when asked to start the app, o
 
 - Provide a short summary of the pass.
 - List issues as separate bullets using the following fields:
-Title: short issue name.
-Steps: minimal reproduction steps.
-Expected: expected behavior.
-Actual: observed behavior.
-Evidence: screenshot name, console error text, or request URL.
+  Title: short issue name.
+  Steps: minimal reproduction steps.
+  Expected: expected behavior.
+  Actual: observed behavior.
+  Evidence: screenshot name, console error text, or request URL.
 
 ## If execution is blocked
 
