@@ -12,6 +12,7 @@ description:
 ## Table of Contents
 
 - [Overview](#overview)
+- [Workflow](#workflow)
 - [Configuration](#configuration)
 - [Test Structure](#test-structure)
 - [Best Practices](#best-practices)
@@ -25,22 +26,23 @@ This project uses Playwright for end-to-end tests. Tests live in `src/test-e2e/`
 server on `http://localhost:8000`. The Playwright config at `playwright.config.ts` auto-starts the server before
 tests and shuts it down after.
 
-### Key differences from Jest unit tests
+## Workflow
 
-| Concern       | Jest (unit)               | Playwright (E2E)                    |
-| ------------- | ------------------------- | ----------------------------------- |
-| Runs in       | jsdom (simulated browser) | Real Chromium browser               |
-| Tests         | Components in isolation   | Full pages end-to-end               |
-| Locators      | `getByRole`, `getByText`  | `page.getByRole`, `page.getByLabel` |
-| Async         | `waitFor` (React state)   | All actions are async / auto-wait   |
-| File location | `src/**/*.test.tsx`       | `src/test-e2e/*.spec.ts`            |
-| Run command   | `npm test`                | `npm run test:e2e`                  |
+1. **Choose the user journey.** Define the smallest end-to-end path that proves the behavior.
+2. **Stabilize preconditions.** Set deterministic state in `beforeEach` (route, storage, auth/session fixtures).
+3. **Use resilient locators.** Prefer `getByRole` and label-based selectors over CSS or brittle text chains.
+4. **Execute actions like a user.** Navigate, click, type, and submit in the same order users would.
+5. **Assert outcomes with web-first expectations.** Use `await expect(...)` checks instead of fixed delays.
+6. **Keep tests isolated.** Ensure each spec can run independently and does not rely on execution order.
+7. **Run focused Playwright commands.** Validate the changed spec first, then run broader suites when needed.
+8. **Debug with traces/reports.** Use headed mode, Inspector, and trace viewer to resolve flaky or timing issues.
 
 ## Configuration
 
 ### Configuration Files
 
-- [playwright.config.ts](../../../playwright.config.ts) — Playwright configuration (testDir, webServer, browser projects, timeouts)
+- [playwright.config.ts](../../../playwright.config.ts) — Playwright configuration (testDir, webServer, browser
+  projects, timeouts)
 
 ### npm Scripts
 
@@ -48,33 +50,6 @@ tests and shuts it down after.
 npm run test:e2e          # Run all E2E tests (headless Chromium)
 npm run test:e2e:headed   # Run with visible browser window
 npm run test:e2e:ui       # Open Playwright UI mode (interactive test runner)
-```
-
-### Config Shape
-
-```typescript
-// playwright.config.ts
-import { defineConfig, devices } from "@playwright/test";
-
-export default defineConfig({
-  testDir: "./src/test-e2e",
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: "html",
-  use: {
-    baseURL: "http://localhost:8000",
-    trace: "on-first-retry",
-  },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: {
-    command: "npm run develop",
-    url: "http://localhost:8000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
-});
 ```
 
 ## Test Structure

@@ -58,165 +58,22 @@ implementation (not during planning). Reference them in the plan's Agent Orchest
 
 ---
 
-## Plan Template
-
-Use this template, filling in the `<PLACEHOLDER>` sections with feature-specific content.
-
-````markdown
-# Plan: <Feature Title>
-
-## Overview
-
-<1–3 sentence description of the feature: what it does, why it's needed, and any key constraints.>
-
----
-
-## Architecture
-
-<Describe the technical approach. Include:
-
-- Which existing files are affected and why
-- New files that will be created
-- Any new dependencies
-- Key design decisions (e.g. why a particular library or pattern was chosen)
-- Data flow or state management approach if relevant>
-
-### Files to Create / Modify
-
-#### New files:
-
-1. **`<path>`** — <what it does>
-
-#### Modified files:
-
-2. **`<path>`** — <what changes and why>
-
----
-
-## Component / Module Structure
-
-```
-<ASCII tree or pseudocode showing the structure of new/modified components>
-```
-
-<Optionally include representative code snippets for key interfaces, types, or component signatures.>
-
----
-
-## Testing Plan
-
-<List the test cases that should be covered. Group by file if multiple test files are involved.>
-
-### `<TestFile>.test.tsx`
-
-1. <Test case description>
-2. <Test case description>
-
----
-
-## Agent Orchestration
-
-Use the custom Claude agents defined in `.claude/agents/` as subagents during implementation. This
-keeps the main context focused on orchestration while delegating specialized work.
-
-### Available Agents
-
-| Agent             | Path                              | Role                                                              | Tools                               |
-| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
-| **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
-| **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
-| **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
-
-### Agent Usage Per Implementation Step
-
-#### Step 1 — <Step name> (main agent)
-
-- **Do it yourself** (main agent). <What the main agent implements.>
-
-#### Step 2 — Code Review
-
-- **Delegate to `code-reviewer`** via the Task tool:
-  ```
-  Task(subagent_type="code-reviewer", prompt="Review <files> for the <feature> feature. Focus on: <specific concerns>.")
-  ```
-- Address any Critical or Warning findings before proceeding.
-
-#### Step 3 — Write Tests
-
-- **Delegate to `test-writer`** via the Task tool:
-  ```
-  Task(subagent_type="test-writer", prompt="Write tests for <ComponentName> at <src/path/Component.tsx>. Create <src/path/Component.test.tsx>. Cover: <list of test cases>. Mock: <external modules>.")
-  ```
-
-#### Step 4 — Run Typecheck + Tests
-
-- Run `npm run typecheck` and `npm test` from the main agent.
-
-#### Step 5 — Debug Failures (if any)
-
-- **Delegate to `debugger`** via the Task tool (only if step 4 fails):
-  ```
-  Task(subagent_type="debugger", prompt="Investigate and fix the following failures: <paste error output>. <Context about what changed and where.>")
-  ```
-- Re-run typecheck + tests after fixes.
-
-#### Step 6 — Final Code Review
-
-- **Delegate to `code-reviewer`** for a final pass after all fixes:
-  ```
-  Task(subagent_type="code-reviewer", prompt="Final review of the complete <feature name> feature. Check all new/modified files: <list files>. Verify test coverage is adequate, no security issues remain, and the implementation matches the plan.")
-  ```
-
-### Parallelization Opportunities
-
-- Steps 2 (code review) and 3 (test writing) can be launched **in parallel** since the
-  code-reviewer is read-only and the test-writer writes to a separate file.
-- If the debugger fixes code in step 5, re-run both code-reviewer and the test suite afterward.
-
-### Agent Escalation Flow
-
-```
-Main Agent (orchestrator)
-│
-├─ Writes code (Step 1)
-│   ├─ <file or change 1>
-│   └─ <file or change 2>
-│
-├─ Delegates in parallel:
-│   ├─ code-reviewer → <what it reviews> (Step 2)
-│   └─ test-writer → <what it writes> (Step 3)
-│
-├─ Runs typecheck + tests (Step 4)
-│
-├─ If failures → debugger (Step 5) → re-run Step 4
-│
-└─ Final code-reviewer pass (Step 6)
-```
-
----
-
-## Implementation Steps (Summary)
-
-0. <Optional: install dependencies, e.g. `npm install <package>`>
-1. <Main agent: implement X — one sentence describing what is written.>
-2. **Agent: code-reviewer** — <what it reviews>. _(Run in parallel with step 3.)_
-3. **Agent: test-writer** — <what it writes>. _(Run in parallel with step 2.)_
-4. Run `npm run typecheck` and `npm test`.
-5. **Agent: debugger** — Fix any failures from step 4. _(Only if needed.)_
-6. **Agent: code-reviewer** — Final review pass.
-````
-
----
-
 ## Key Rules for Plans
 
-1. **Agent Orchestration** — always include the table of available agents and a step-by-step breakdown of who does what, with concrete `Task(...)` prompts.
-2. **Agent Escalation Flow** — always include the ASCII tree diagram showing the orchestration hierarchy from main agent down through subagents.
-3. **Implementation Steps (Summary)** — always include the numbered summary list at the end with agent labels and parallelization notes.
-4. **Main agent writes code** — the main agent handles implementation directly; subagents handle review, testing, and debugging only.
-5. **Parallel execution** — code review and test writing run in parallel whenever possible (code-reviewer is read-only; test-writer writes to separate test files).
-6. **Debugger is conditional** — only invoke the debugger if typecheck or tests fail; mark it _(Only if needed.)_ in the summary.
-7. **Self-contained Task prompts** — every agent delegation must include a detailed, self-contained prompt so the subagent has full context without needing to read the plan file.
+1. **Agent Orchestration** — always include the table of available agents and a step-by-step breakdown of who does what,
+   with concrete `Task(...)` prompts.
+2. **Agent Escalation Flow** — always include the ASCII tree diagram showing the orchestration hierarchy from main agent
+   down through subagents.
+3. **Implementation Steps (Summary)** — always include the numbered summary list at the end with agent labels and
+   parallelization notes.
+4. **Main agent writes code** — the main agent handles implementation directly; subagents handle review, testing, and
+   debugging only.
+5. **Parallel execution** — code review and test writing run in parallel whenever possible (code-reviewer is read-only;
+   test-writer writes to separate test files).
+6. **Debugger is conditional** — only invoke the debugger if typecheck or tests fail; mark it _(Only if needed.)_ in the
+   summary.
+7. **Self-contained Task prompts** — every agent delegation must include a detailed, self-contained prompt so the
+   subagent has full context without needing to read the plan file.
 
 ---
 
