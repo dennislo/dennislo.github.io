@@ -12,6 +12,7 @@ description:
 ## Table of Contents
 
 - [Overview](#overview)
+- [Workflow](#workflow)
 - [Configuration](#configuration)
 - [Test Structure](#test-structure)
 - [Best Practices](#best-practices)
@@ -25,6 +26,17 @@ description:
 This project uses Jest with React Testing Library for unit testing. Tests are written in TypeScript and colocated with
 the components they test.
 
+## Workflow
+
+1. **Identify test scope.** Read the target component/module and list the user-visible behaviors to verify.
+2. **Check existing coverage first.** Extend nearby tests when possible before creating a new test file.
+3. **Write tests using AAA.** Structure each test as Arrange, Act, Assert with behavior-focused test names.
+4. **Prefer accessible queries.** Use `getByRole` and labels before text or test IDs.
+5. **Handle async deterministically.** Use `findBy*` or `waitFor`; avoid arbitrary timers.
+6. **Mock only boundaries.** Mock API/network and external modules, not internal implementation details.
+7. **Run targeted tests.** Execute the smallest relevant Jest command first, then broaden if needed.
+8. **Harden and clean up.** Remove duplication, reset mocks, and confirm edge/error states are covered.
+
 ## Configuration
 
 ### Configuration Files
@@ -32,13 +44,14 @@ the components they test.
 - [jest.config.js](../../../jest.config.js) - Jest configuration
 - [jest.setup.js](../../../jest.setup.js) - Jest setup and global test configuration
 
+### npm Scripts
+
+```bash
+npm test              # Run all Jest unit tests
+npm run test:watch    # Run Jest in watch mode
+```
+
 ## Test Structure
-
-### File Naming
-
-- Place test files adjacent to the code they test
-- Use `.test.tsx` or `.test.ts` extension
-- Example: `Component.tsx` → `Component.test.tsx`
 
 ### Test Organization
 
@@ -65,10 +78,12 @@ describe("ComponentName", () => {
 
 ```typescript
 // ✅ Good
-it("renders error message when form validation fails", () => {});
+it("renders error message when form validation fails", () => {
+});
 
 // ❌ Bad
-it("test 1", () => {});
+it("test 1", () => {
+});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
@@ -368,7 +383,7 @@ describe("Message", () => {
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
-  fetchUser: jest.fn(() => Promise.resolve({ name: "John" })),
+  fetchUser: jest.fn(() => Promise.resolve({name: "John"})),
 }));
 
 // Mock specific exports
@@ -450,45 +465,6 @@ coverageThreshold: {
     }
 ,
 }
-```
-
-## Quick Reference
-
-### Common Matchers
-
-```typescript
-expect(element).toBeInTheDocument();
-expect(element).toHaveTextContent("text");
-expect(element).toHaveClass("class-name");
-expect(element).toHaveAttribute("href", "/path");
-expect(element).toBeDisabled();
-expect(element).toBeEnabled();
-expect(element).toBeVisible();
-expect(mockFn).toHaveBeenCalled();
-expect(mockFn).toHaveBeenCalledTimes(1);
-expect(mockFn).toHaveBeenCalledWith(arg1, arg2);
-```
-
-### Useful Testing Library Queries
-
-```typescript
-// By Role (Preferred)
-screen.getByRole("button", {name: /submit/i});
-screen.getByRole("textbox", {name: /email/i});
-
-// By Label
-screen.getByLabelText(/email address/i);
-
-// By Text
-screen.getByText(/welcome/i);
-
-// By Test ID (Last Resort)
-screen.getByTestId("custom-element");
-
-// Query variants
-screen.queryBy * () // Returns null if not found
-screen.findBy * ()  // Returns promise (for async)
-screen.getAllBy * () // Returns array
 ```
 
 ## Resources

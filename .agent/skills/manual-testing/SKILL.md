@@ -7,12 +7,15 @@ description: Manual QA workflow for web apps. Use when asked to start the app, o
 
 ## Workflow
 
-- Start the app with `npm run develop` and wait for a ready/healthy state.
-- Open Chrome to `http://localhost:8000`.
-- Perform the manual test scenarios listed below.
-- Use DevTools to inspect Console, Network, Elements, and Performance as needed.
-- Capture screenshots for visible issues and record console/network errors.
-- Write a concise issue log with reproduction steps, expected vs actual behavior, and evidence.
+1. **Start the application.** Run `npm run develop` and wait for the local app to report a ready/healthy state.
+2. **Open the target environment.** Launch Chrome and navigate to `http://localhost:8000`.
+3. **Execute core scenarios.** Run the manual test scenarios listed below in a consistent order.
+4. **Inspect with DevTools.** Check Console, Network, Elements, and Performance for visible and hidden issues.
+5. **Capture evidence immediately.** Save screenshots for UI defects and record relevant console or network errors.
+6. **Document findings clearly.** Log reproduction steps, expected vs actual behavior, and supporting evidence for each
+   issue.
+7. **Report pass/fail status.** Summarize what was covered, what failed, and what could not be validated.
+8. **Escalate blockers.** If execution is blocked, request the missing environment setup, credentials, or test data.
 
 ## Test scenarios
 

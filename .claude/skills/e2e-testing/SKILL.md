@@ -12,6 +12,7 @@ description:
 ## Table of Contents
 
 - [Overview](#overview)
+- [Workflow](#workflow)
 - [Configuration](#configuration)
 - [Test Structure](#test-structure)
 - [Best Practices](#best-practices)
@@ -25,22 +26,23 @@ This project uses Playwright for end-to-end tests. Tests live in `src/test-e2e/`
 server on `http://localhost:8000`. The Playwright config at `playwright.config.ts` auto-starts the server before
 tests and shuts it down after.
 
-### Key differences from Jest unit tests
+## Workflow
 
-| Concern       | Jest (unit)               | Playwright (E2E)                    |
-| ------------- | ------------------------- | ----------------------------------- |
-| Runs in       | jsdom (simulated browser) | Real Chromium browser               |
-| Tests         | Components in isolation   | Full pages end-to-end               |
-| Locators      | `getByRole`, `getByText`  | `page.getByRole`, `page.getByLabel` |
-| Async         | `waitFor` (React state)   | All actions are async / auto-wait   |
-| File location | `src/**/*.test.tsx`       | `src/test-e2e/*.spec.ts`            |
-| Run command   | `npm test`                | `npm run test:e2e`                  |
+1. **Choose the user journey.** Define the smallest end-to-end path that proves the behavior.
+2. **Stabilize preconditions.** Set deterministic state in `beforeEach` (route, storage, auth/session fixtures).
+3. **Use resilient locators.** Prefer `getByRole` and label-based selectors over CSS or brittle text chains.
+4. **Execute actions like a user.** Navigate, click, type, and submit in the same order users would.
+5. **Assert outcomes with web-first expectations.** Use `await expect(...)` checks instead of fixed delays.
+6. **Keep tests isolated.** Ensure each spec can run independently and does not rely on execution order.
+7. **Run focused Playwright commands.** Validate the changed spec first, then run broader suites when needed.
+8. **Debug with traces/reports.** Use headed mode, Inspector, and trace viewer to resolve flaky or timing issues.
 
 ## Configuration
 
 ### Configuration Files
 
-- [playwright.config.ts](../../../playwright.config.ts) — Playwright configuration (testDir, webServer, browser projects, timeouts)
+- [playwright.config.ts](../../../playwright.config.ts) — Playwright configuration (testDir, webServer, browser
+  projects, timeouts)
 
 ### npm Scripts
 
@@ -48,33 +50,6 @@ tests and shuts it down after.
 npm run test:e2e          # Run all E2E tests (headless Chromium)
 npm run test:e2e:headed   # Run with visible browser window
 npm run test:e2e:ui       # Open Playwright UI mode (interactive test runner)
-```
-
-### Config Shape
-
-```typescript
-// playwright.config.ts
-import { defineConfig, devices } from "@playwright/test";
-
-export default defineConfig({
-  testDir: "./src/test-e2e",
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: "html",
-  use: {
-    baseURL: "http://localhost:8000",
-    trace: "on-first-retry",
-  },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: {
-    command: "npm run develop",
-    url: "http://localhost:8000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
-});
 ```
 
 ## Test Structure
@@ -88,14 +63,14 @@ export default defineConfig({
 ### Test Organization
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import {test, expect} from "@playwright/test";
 
 test.describe("Feature Name", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({page}) => {
     await page.goto("/");
   });
 
-  test("does something visible to the user", async ({ page }) => {
+  test("does something visible to the user", async ({page}) => {
     // Arrange: set up any state
     // Act: interact with the page
     // Assert: verify the outcome
@@ -109,9 +84,9 @@ test.describe("Feature Name", () => {
 
 ```typescript
 // ✅ Preferred — accessible, robust
-page.getByRole("button", { name: /switch to dark mode/i });
-page.getByRole("textbox", { name: /email address/i });
-page.getByRole("link", { name: /back/i });
+page.getByRole("button", {name: /switch to dark mode/i});
+page.getByRole("textbox", {name: /email address/i});
+page.getByRole("link", {name: /back/i});
 
 // ✅ Also good — label-based for form fields
 page.getByLabel("First Name");
@@ -159,7 +134,7 @@ Each test must be independent. Use `test.beforeEach` to reset state (navigate to
 Never rely on test execution order.
 
 ```typescript
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({page}) => {
   // Inject localStorage BEFORE the page loads so ThemeContext reads it on first mount.
   // addInitScript runs before any page script — no reload needed.
   //
@@ -210,7 +185,7 @@ await page.goto("/contact-form");
 await expect(page).toHaveURL(/contact-form/);
 
 // Click a link and wait for navigation
-await page.getByRole("link", { name: /back/i }).click();
+await page.getByRole("link", {name: /back/i}).click();
 await expect(page).toHaveURL("/");
 ```
 
@@ -242,11 +217,11 @@ expect(source).toBe("manual");
 await page.getByLabel("Email Address").fill("bad-email");
 await page.getByLabel("Email Address").blur();
 await expect(
-  page.getByRole("alert", { name: /enter a valid email/i }),
+  page.getByRole("alert", {name: /enter a valid email/i}),
 ).toBeVisible();
 
 // Submit an empty form and check all errors appear
-await page.getByRole("button", { name: /send message/i }).click();
+await page.getByRole("button", {name: /send message/i}).click();
 await expect(page.getByRole("alert").first()).toBeVisible();
 ```
 
@@ -255,7 +230,7 @@ await expect(page.getByRole("alert").first()).toBeVisible();
 ```typescript
 // The theme toggle shows a moon (light mode) or sun (dark mode)
 // Use aria-label on the button instead of asserting SVG internals
-const btn = page.getByRole("button", { name: /switch to dark mode/i });
+const btn = page.getByRole("button", {name: /switch to dark mode/i});
 await expect(btn).toBeVisible(); // implies light mode is active
 ```
 
@@ -264,14 +239,14 @@ await expect(btn).toBeVisible(); // implies light mode is active
 ### Minimal Spec File
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import {test, expect} from "@playwright/test";
 
 test.describe("Page Title", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({page}) => {
     await page.goto("/");
   });
 
-  test("page loads with correct title", async ({ page }) => {
+  test("page loads with correct title", async ({page}) => {
     await expect(page).toHaveTitle(/DLO/);
   });
 });
@@ -280,10 +255,10 @@ test.describe("Page Title", () => {
 ### Theme Toggle Spec Template
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import {test, expect} from "@playwright/test";
 
 test.describe("Theme Toggle", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({page}) => {
     // Inject localStorage BEFORE the page loads so ThemeContext reads it on first mount.
     // addInitScript runs before any page script, so no reload is needed.
     //
@@ -300,10 +275,10 @@ test.describe("Theme Toggle", () => {
     await page.goto("/");
   });
 
-  test("toggle switches theme from light to dark", async ({ page }) => {
+  test("toggle switches theme from light to dark", async ({page}) => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
-    await page.getByRole("button", { name: /switch to dark mode/i }).click();
+    await page.getByRole("button", {name: /switch to dark mode/i}).click();
 
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
@@ -313,16 +288,16 @@ test.describe("Theme Toggle", () => {
 ### Contact Form Spec Template
 
 ```typescript
-import { test, expect } from "@playwright/test";
+import {test, expect} from "@playwright/test";
 
 test.describe("Contact Form", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({page}) => {
     await page.goto("/contact-form");
     await expect(page).toHaveURL(/contact-form/);
   });
 
-  test("shows validation errors on empty submit", async ({ page }) => {
-    await page.getByRole("button", { name: /send message/i }).click();
+  test("shows validation errors on empty submit", async ({page}) => {
+    await page.getByRole("button", {name: /send message/i}).click();
     await expect(page.getByRole("alert").first()).toBeVisible();
   });
 });
@@ -360,7 +335,7 @@ npx playwright show-trace test-results/...trace.zip
 ### Common Issues
 
 | Symptom                       | Cause                                                         | Fix                                                                                 |
-| ----------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+|-------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------|
 | `net::ERR_CONNECTION_REFUSED` | Dev server not ready                                          | Increase `webServer.timeout` or check `gatsby develop`                              |
 | Locator not found             | Wrong selector or page hasn't loaded                          | Use `await expect(locator).toBeVisible()` before interacting                        |
 | Flaky `data-theme` tests      | Theme set by time-of-day logic                                | Always set `localStorage` in `beforeEach` for a deterministic start                 |
