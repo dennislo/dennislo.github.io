@@ -1,33 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
-import "../styles/index.css";
-import "../../styles/theme.css";
-import styled from "styled-components";
 import { ThemeProvider } from "../../context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Footer = styled.footer`
-  color: var(--text-color);
-  margin: 55px 0;
-  text-align: center;
-`;
-
 const Layout = ({ children }: LayoutProps) => {
   return (
     <ThemeProvider>
-      <BurgerMenu />
-      <ThemeToggle />
-      <main>{children}</main>
-      <Footer>
-        © {new Date().getFullYear()}, Built with ❤️ using{" "}
-        <Link to="https://www.gatsbyjs.org/">Gatsby.js</Link>
-      </Footer>
+      <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors duration-300">
+        <ThemeToggle />
+        {children}
+      </div>
     </ThemeProvider>
   );
 };

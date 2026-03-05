@@ -2,20 +2,17 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Layout from "./Layout";
 
-jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
+// Prevent ThemeProvider's localStorage/DOM side-effects from interfering
+jest.mock("../../context/ThemeContext", () => ({
+  ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
   ),
+  useTheme: () => ({ theme: "light", toggleTheme: jest.fn() }),
 }));
 
 jest.mock("../ThemeToggle/ThemeToggle", () => ({
   __esModule: true,
   default: () => <button>Theme Toggle</button>,
-}));
-
-jest.mock("../BurgerMenu/BurgerMenu", () => ({
-  __esModule: true,
-  default: () => <button>Burger Menu</button>,
 }));
 
 describe("Layout", () => {
@@ -28,7 +25,7 @@ describe("Layout", () => {
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("renders ThemeToggle component", () => {
+  it("renders the ThemeToggle component", () => {
     render(
       <Layout>
         <div>Test Content</div>
@@ -39,41 +36,14 @@ describe("Layout", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders BurgerMenu component", () => {
-    render(
+  it("wraps children inside a div container", () => {
+    const { container } = render(
       <Layout>
-        <div>Test Content</div>
+        <p>Inner</p>
       </Layout>,
     );
-    expect(
-      screen.getByRole("button", { name: "Burger Menu" }),
-    ).toBeInTheDocument();
-  });
-
-  it("renders footer with copyright", () => {
-    render(
-      <Layout>
-        <div>Test Content</div>
-      </Layout>,
-    );
-    const currentYear = new Date().getFullYear();
-    expect(
-      screen.getByText((content, element) => {
-        return (
-          element?.tagName === "FOOTER" && content.includes(`© ${currentYear}`)
-        );
-      }),
-    ).toBeInTheDocument();
-  });
-
-  it("renders Gatsby link in footer", () => {
-    render(
-      <Layout>
-        <div>Test Content</div>
-      </Layout>,
-    );
-    const link = screen.getByRole("link", { name: "Gatsby.js" });
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "https://www.gatsbyjs.org/");
+    // The outer ThemeProvider wrapper renders a div; inside it is Layout's own div
+    expect(container.querySelector("div")).toBeInTheDocument();
+    expect(screen.getByText("Inner")).toBeInTheDocument();
   });
 });
