@@ -197,6 +197,8 @@ export const siteConfig = {
 - `src/components/icons/TablerInstagram.tsx`
 - `src/components/icons/TablerTwitter.tsx`
 - `src/components/icons/TablerArrowUpRight.tsx`
+- `src/components/icons/TablerMoon.tsx` — shown in ThemeToggle when theme is `"light"` (click to go dark)
+- `src/components/icons/TablerSun.tsx` — shown in ThemeToggle when theme is `"dark"` (click to go light)
 
 Each icon is a React functional component rendering an inline SVG from Tabler Icons, accepting `className` prop for Tailwind styling. Example:
 
@@ -221,6 +223,10 @@ export default TablerEmail;
 ```
 
 SVG paths sourced from the devportfolio repo (Tabler Icons).
+
+**ThemeToggle icon mapping:**
+- Light mode → show `TablerMoon` (Tabler `icon-moon`, path: `M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z`)
+- Dark mode → show `TablerSun` (Tabler `icon-sun`, center circle + 8 ray lines)
 
 ### Step 4: Build Section Components
 
@@ -263,7 +269,7 @@ Replace `Article.tsx` and its subsections with new section components matching d
 ### Step 6: Restyle Existing Components with Tailwind
 
 **Files to modify:**
-- `src/components/ThemeToggle/ThemeToggle.tsx` — Replace CSS module import with Tailwind classes
+- `src/components/ThemeToggle/ThemeToggle.tsx` — Replace CSS module import with Tailwind classes; replace inline SVGs with `TablerMoon` / `TablerSun` icon components
 - `src/components/ContactForm/ContactForm.tsx` — Replace CSS module import with Tailwind classes
 - `src/components/ExternalLink/ExternalLink.tsx` — Minimal changes (keep as is, just ensure Tailwind link styles work)
 - `src/components/Head/Head.tsx` — No styling changes needed
@@ -383,7 +389,7 @@ Main Agent (implements all code)
 1. **[Main]** Install Tailwind CSS v4, PostCSS, gatsby-plugin-postcss. Remove styled-components.
 2. **[Main]** Create `postcss.config.js` and `src/styles/global.css` with Tailwind import + dark mode config.
 3. **[Main]** Create `src/config.ts` with all site content and placeholder data.
-4. **[Main]** Create Tabler Icon components (6 icons as React SVG components).
+4. **[Main]** Create Tabler Icon components (8 icons as React SVG components): Email, LinkedIn, GitHub, Instagram, Twitter, ArrowUpRight, Moon, Sun.
 5. **[Main]** Build Hero component with gradient overlay, programming symbols SVG, social icons, animations.
 6. **[Main]** Build About component with two-column grid, bio text, skill tags.
 7. **[Main]** Build Projects component with numbered cards.
