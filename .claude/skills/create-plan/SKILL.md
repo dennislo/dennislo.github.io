@@ -10,7 +10,16 @@ description:
 
 # Create Plan Skill
 
-## Purpose
+## Table of Contents
+
+- [Overview](#overview)
+- [Workflow](#workflow)
+- [How to Use This Skill](#how-to-use-this-skill)
+- [Plan File Location](#plan-file-location)
+- [Available Subagents](#available-subagents)
+- [Example Task Prompts](#example-task-prompts)
+
+## Overview
 
 Generate a detailed implementation plan `.md` file inside `claude-plans/<feature-name>/` that follows
 the conventions established in the existing plans. Plans act as orchestration documents — the main
