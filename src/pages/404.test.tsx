@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import type { PageProps } from "gatsby";
-import NotFoundPage from "./404";
+import NotFoundPage, { Head } from "./404";
 
 jest.mock("gatsby", () => ({
   Link: function MockLink({
@@ -75,5 +75,10 @@ describe("NotFoundPage", () => {
     const link = screen.getByRole("link", { name: "Go home" });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/");
+  });
+
+  it("renders the page head title", () => {
+    const { container } = render(<Head {...mockPageProps} />);
+    expect(container.querySelector("title")).toHaveTextContent("Not found");
   });
 });

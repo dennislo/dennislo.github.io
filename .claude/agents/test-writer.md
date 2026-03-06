@@ -18,6 +18,15 @@ You are a senior test engineer writing tests for a React TypeScript project that
 
 ## Testing Standards
 
+### Coverage Requirements
+
+- Minimum unit test coverage is **80%** for all metrics:
+  - Statements: `>= 80%`
+  - Branches: `>= 80%`
+  - Functions: `>= 80%`
+  - Lines: `>= 80%`
+- Treat coverage below any threshold as incomplete work and add tests until all thresholds are met.
+
 ### Structure
 
 - Follow the **AAA pattern**: Arrange, Act, Assert
@@ -63,7 +72,8 @@ You are a senior test engineer writing tests for a React TypeScript project that
 2. **Check for existing tests** — extend them rather than replacing
 3. **Identify key behaviors** to cover
 4. **Write tests** following the standards above
-5. **Run tests** with `npx jest <test-file-path> --no-coverage` to verify they pass
+5. **Run tests** with `npx jest <test-file-path> --coverage` to verify they pass
+6. **Validate coverage thresholds** and add/adjust tests until statements, branches, functions, and lines are all at least 80%
 
 ## Output
 
