@@ -41,16 +41,13 @@ describe("Education", () => {
   });
 
   it("returns null when education array is empty", () => {
-    const actual =
-      jest.requireActual<typeof import("../../config")>("../../config");
-    const originalEducation = actual.siteConfig.education;
-
-    const config = require("../../config");
-    config.siteConfig.education = [];
+    const originalEducation = siteConfig.education;
+    (siteConfig as { education: typeof siteConfig.education }).education = [];
 
     const { container } = render(<Education />);
     expect(container.firstChild).toBeNull();
 
-    config.siteConfig.education = originalEducation;
+    (siteConfig as { education: typeof siteConfig.education }).education =
+      originalEducation;
   });
 });

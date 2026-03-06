@@ -50,7 +50,7 @@ describe("ThemeToggle", () => {
 
   it("renders the moon icon when theme is light", () => {
     mockDate(10, 0); // 10 AM — light
-    const { container } = render(
+    render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>,
@@ -67,7 +67,7 @@ describe("ThemeToggle", () => {
 
   it("renders the sun icon when theme is dark", () => {
     mockDate(22, 0); // 10 PM — dark
-    const { container } = render(
+    render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>,

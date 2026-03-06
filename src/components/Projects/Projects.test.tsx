@@ -45,19 +45,13 @@ describe("Projects", () => {
   });
 
   it("returns null when projects array is empty", () => {
-    // Temporarily replace siteConfig.projects with an empty array
-    const actual =
-      jest.requireActual<typeof import("../../config")>("../../config");
-    const originalProjects = actual.siteConfig.projects;
-
-    // Override via the mocked module reference
-    const config = require("../../config");
-    config.siteConfig.projects = [];
+    const originalProjects = siteConfig.projects;
+    (siteConfig as { projects: typeof siteConfig.projects }).projects = [];
 
     const { container } = render(<Projects />);
     expect(container.firstChild).toBeNull();
 
-    // Restore
-    config.siteConfig.projects = originalProjects;
+    (siteConfig as { projects: typeof siteConfig.projects }).projects =
+      originalProjects;
   });
 });

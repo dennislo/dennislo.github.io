@@ -41,16 +41,14 @@ describe("Experience", () => {
   });
 
   it("returns null when experience array is empty", () => {
-    const actual =
-      jest.requireActual<typeof import("../../config")>("../../config");
-    const originalExperience = actual.siteConfig.experience;
-
-    const config = require("../../config");
-    config.siteConfig.experience = [];
+    const originalExperience = siteConfig.experience;
+    (siteConfig as { experience: typeof siteConfig.experience }).experience =
+      [];
 
     const { container } = render(<Experience />);
     expect(container.firstChild).toBeNull();
 
-    config.siteConfig.experience = originalExperience;
+    (siteConfig as { experience: typeof siteConfig.experience }).experience =
+      originalExperience;
   });
 });
