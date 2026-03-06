@@ -18,6 +18,26 @@ agent writes code itself, then delegates review, testing, and debugging to subag
 
 ---
 
+## Workflow
+
+1. **Define scope and deliverable.** Confirm the feature goal, constraints, and expected plan outcome.
+2. **Inspect relevant context.** Read only the files and docs needed to understand architecture and touchpoints.
+3. **Set naming and path.** Use kebab-case `<feature-name>` and target
+   `claude-plans/<feature-name>/plan-<feature-name>.md`.
+4. **Draft core sections.** Write feature-specific overview, architecture notes, and implementation approach.
+5. **Plan agent orchestration.** Include the available-agent table and concrete, self-contained `Task(...)` prompts.
+6. **Assign ownership boundaries.** Keep implementation with the main agent; use subagents for review, testing, and
+   debugging.
+7. **Set execution order.** Run `code-reviewer` and `test-writer` in parallel when possible; call `debugger` only if
+   typecheck or tests fail.
+8. **Add required output sections.** Include the ASCII agent escalation flow and implementation summary checklist [ ] at
+   the end of the plan,
+   with agent labels and parallelization notes. Ensure each step is clear and actionable. Each step should be marked as
+   complete with [x] once done by the responsible agent.
+9. **Validate and finalize.** Ensure the plan is clear, actionable, and complete, then save it at the required path.
+
+---
+
 ## How to Use This Skill
 
 When invoked, do the following:
@@ -51,29 +71,10 @@ These agents are defined in `.claude/agents/` and must be invoked via the `Task`
 implementation (not during planning). Reference them in the plan's Agent Orchestration section.
 
 | Agent             | Path                              | Role                                                              | Tools                               |
-| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
+|-------------------|-----------------------------------|-------------------------------------------------------------------|-------------------------------------|
 | **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
 | **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
 | **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
-
----
-
-## Key Rules for Plans
-
-1. **Agent Orchestration** — always include the table of available agents and a step-by-step breakdown of who does what,
-   with concrete `Task(...)` prompts.
-2. **Agent Escalation Flow** — always include the ASCII tree diagram showing the orchestration hierarchy from main agent
-   down through subagents.
-3. **Implementation Steps (Summary)** — always include the numbered summary list at the end with agent labels and
-   parallelization notes.
-4. **Main agent writes code** — the main agent handles implementation directly; subagents handle review, testing, and
-   debugging only.
-5. **Parallel execution** — code review and test writing run in parallel whenever possible (code-reviewer is read-only;
-   test-writer writes to separate test files).
-6. **Debugger is conditional** — only invoke the debugger if typecheck or tests fail; mark it _(Only if needed.)_ in the
-   summary.
-7. **Self-contained Task prompts** — every agent delegation must include a detailed, self-contained prompt so the
-   subagent has full context without needing to read the plan file.
 
 ---
 
