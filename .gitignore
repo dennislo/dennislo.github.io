@@ -12,3 +12,6 @@ playwright/.cache/
 
 # Jest
 /coverage/
+
+# Local agent worktrees
+.claude/worktrees/
