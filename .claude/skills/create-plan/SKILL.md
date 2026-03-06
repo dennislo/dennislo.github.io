@@ -71,7 +71,7 @@ These agents are defined in `.claude/agents/` and must be invoked via the `Task`
 implementation (not during planning). Reference them in the plan's Agent Orchestration section.
 
 | Agent             | Path                              | Role                                                              | Tools                               |
-|-------------------|-----------------------------------|-------------------------------------------------------------------|-------------------------------------|
+| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
 | **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
 | **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
 | **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
