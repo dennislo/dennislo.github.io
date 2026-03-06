@@ -1,14 +1,23 @@
 ---
 name: create-plan
 description:
-  Creates a structured implementation plan document in the claude-plans/ directory. Plans include an
-  overview, architecture notes, agent orchestration table, agent escalation flow diagram, and an
-  implementation steps summary. Use this skill when the user asks to plan a feature, create a plan,
-  write a plan, or document an implementation approach. Trigger words are "create plan, write plan,
-  make a plan, plan this feature, plan the implementation, document the approach".
+   Creates a structured implementation plan document in the claude-plans/ directory. Plans include an
+   overview, architecture notes, agent orchestration table, agent escalation flow diagram, and an
+   implementation steps summary. Use this skill when the user asks to plan a feature, create a plan,
+   write a plan, or document an implementation approach. Trigger words are "create plan, write plan,
+   make a plan, plan this feature, plan the implementation, document the approach".
 ---
 
 # Create Plan Skill
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Workflow](#workflow)
+- [How to Use This Skill](#how-to-use-this-skill)
+- [Plan File Location](#plan-file-location)
+- [Available Subagents](#available-subagents)
+- [Example Task Prompts](#example-task-prompts)
 
 ## Overview
 
