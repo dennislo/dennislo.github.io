@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Projects from "./Projects";
 import { siteConfig } from "../../config";
 
+type MutableProjectsConfig = { projects: typeof siteConfig.projects };
+
 // Mock the module so we can override siteConfig.projects in some tests
 jest.mock("../../config", () => ({
   siteConfig: {
@@ -46,12 +48,11 @@ describe("Projects", () => {
 
   it("returns null when projects array is empty", () => {
     const originalProjects = siteConfig.projects;
-    (siteConfig as { projects: typeof siteConfig.projects }).projects = [];
+    (siteConfig as MutableProjectsConfig).projects = [];
 
     const { container } = render(<Projects />);
     expect(container.firstChild).toBeNull();
 
-    (siteConfig as { projects: typeof siteConfig.projects }).projects =
-      originalProjects;
+    (siteConfig as MutableProjectsConfig).projects = originalProjects;
   });
 });

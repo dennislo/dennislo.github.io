@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Experience from "./Experience";
 import { siteConfig } from "../../config";
 
+type MutableExperienceConfig = { experience: typeof siteConfig.experience };
+
 jest.mock("../../config", () => ({
   siteConfig: {
     ...jest.requireActual("../../config").siteConfig,
@@ -42,13 +44,11 @@ describe("Experience", () => {
 
   it("returns null when experience array is empty", () => {
     const originalExperience = siteConfig.experience;
-    (siteConfig as { experience: typeof siteConfig.experience }).experience =
-      [];
+    (siteConfig as MutableExperienceConfig).experience = [];
 
     const { container } = render(<Experience />);
     expect(container.firstChild).toBeNull();
 
-    (siteConfig as { experience: typeof siteConfig.experience }).experience =
-      originalExperience;
+    (siteConfig as MutableExperienceConfig).experience = originalExperience;
   });
 });

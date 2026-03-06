@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Education from "./Education";
 import { siteConfig } from "../../config";
 
+type MutableEducationConfig = { education: typeof siteConfig.education };
+
 jest.mock("../../config", () => ({
   siteConfig: {
     ...jest.requireActual("../../config").siteConfig,
@@ -42,12 +44,11 @@ describe("Education", () => {
 
   it("returns null when education array is empty", () => {
     const originalEducation = siteConfig.education;
-    (siteConfig as { education: typeof siteConfig.education }).education = [];
+    (siteConfig as MutableEducationConfig).education = [];
 
     const { container } = render(<Education />);
     expect(container.firstChild).toBeNull();
 
-    (siteConfig as { education: typeof siteConfig.education }).education =
-      originalEducation;
+    (siteConfig as MutableEducationConfig).education = originalEducation;
   });
 });
