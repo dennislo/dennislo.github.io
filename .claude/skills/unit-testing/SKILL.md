@@ -9,18 +9,6 @@ description:
 
 # Jest Unit Testing Best Practices
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Workflow](#workflow)
-- [Configuration](#configuration)
-- [Test Structure](#test-structure)
-- [Best Practices](#best-practices)
-- [Template Tests](#template-tests)
-- [Common Patterns](#common-patterns)
-- [Mocking](#mocking)
-- [Coverage](#coverage)
-
 ## Overview
 
 This project uses Jest with React Testing Library for unit testing. Tests are written in TypeScript and colocated with
@@ -78,10 +66,12 @@ describe("ComponentName", () => {
 
 ```typescript
 // ✅ Good
-it("renders error message when form validation fails", () => {});
+it("renders error message when form validation fails", () => {
+});
 
 // ❌ Bad
-it("test 1", () => {});
+it("test 1", () => {
+});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
@@ -381,7 +371,7 @@ describe("Message", () => {
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
-  fetchUser: jest.fn(() => Promise.resolve({ name: "John" })),
+  fetchUser: jest.fn(() => Promise.resolve({name: "John"})),
 }));
 
 // Mock specific exports
