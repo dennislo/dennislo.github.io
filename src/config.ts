@@ -1,4 +1,5 @@
 export const siteConfig = {
+  header: "Who is DLO?",
   name: "Dennis Lo",
   title: "IT Consultant & Software Engineer",
   description:
@@ -38,10 +39,10 @@ export const siteConfig = {
   funFacts: [
     {
       emoji: "🤓",
-      text: "Learning Cloud Computing & Optimising Software Delivery",
+      text: "Learning Software Delivery with AI",
     },
     { emoji: "💬", text: "Ask me about Entrepreneurship & Web Development" },
-    { emoji: "😍", text: "Enjoys Snowboarding & Bike Riding" },
+    { emoji: "😍", text: "Enjoys Cooking, Snowboarding & Bike Riding" },
   ],
   projects: [
     {

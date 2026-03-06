@@ -32,7 +32,7 @@ const About: React.FC = () => {
             <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               {siteConfig.agileIT}{" "}
               <a
-                href={`mailto:${siteConfig.social.email}`}
+                href="/contact-form"
                 className="underline transition-colors duration-300"
                 style={{ color: accent }}
               >

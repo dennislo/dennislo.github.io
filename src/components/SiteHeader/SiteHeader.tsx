@@ -32,7 +32,7 @@ const SiteHeader: React.FC = () => {
           href="#hero"
           className="font-bold text-gray-900 dark:text-gray-100 hover:opacity-80 transition-opacity duration-200"
         >
-          {siteConfig.name}
+          {siteConfig.header}
         </a>
         <ul className="flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (

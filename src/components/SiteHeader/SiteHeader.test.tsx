@@ -4,9 +4,9 @@ import SiteHeader from "./SiteHeader";
 import { siteConfig } from "../../config";
 
 describe("SiteHeader", () => {
-  it("renders the site name from siteConfig", () => {
+  it("renders the site header text from siteConfig", () => {
     render(<SiteHeader />);
-    expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
+    expect(screen.getByText(siteConfig.header)).toBeInTheDocument();
   });
 
   it("renders the About nav link", () => {

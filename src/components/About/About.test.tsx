@@ -36,4 +36,10 @@ describe("About", () => {
       expect(screen.getByText(fact.text)).toBeInTheDocument();
     }
   });
+
+  it("renders the contact link pointing to /contact-form", () => {
+    render(<About />);
+    const contactLink = screen.getByRole("link", { name: /contact/i });
+    expect(contactLink).toHaveAttribute("href", "/contact-form");
+  });
 });
