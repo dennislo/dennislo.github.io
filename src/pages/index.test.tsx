@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import type { PageProps } from "gatsby";
-import IndexPage from "./index";
+import IndexPage, { Head } from "./index";
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -142,5 +142,10 @@ describe("IndexPage", () => {
   it("renders the SiteFooter component", () => {
     render(<IndexPage {...mockPageProps} />);
     expect(screen.getByLabelText("SiteFooter")).toBeInTheDocument();
+  });
+
+  it("renders the page head title", () => {
+    const { container } = render(<Head />);
+    expect(container.querySelector("title")).toHaveTextContent("Who is DLO?");
   });
 });
