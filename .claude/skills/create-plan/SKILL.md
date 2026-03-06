@@ -74,6 +74,8 @@ implementation (not during planning). Reference them in the plan's Agent Orchest
    summary.
 7. **Self-contained Task prompts** — every agent delegation must include a detailed, self-contained prompt so the
    subagent has full context without needing to read the plan file.
+8. **Add Implementation Steps (Summary)** — at the end of the plan, include a checkbox [ ] list summarizing the implementation steps with agent labels and
+   parallelization notes. Ensure each step is clear and actionable. Each step should be marked as complete with [x] once done by the responsible agent.
 
 ---
 
