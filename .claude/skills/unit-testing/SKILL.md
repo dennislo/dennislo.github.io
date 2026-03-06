@@ -66,12 +66,10 @@ describe("ComponentName", () => {
 
 ```typescript
 // ✅ Good
-it("renders error message when form validation fails", () => {
-});
+it("renders error message when form validation fails", () => {});
 
 // ❌ Bad
-it("test 1", () => {
-});
+it("test 1", () => {});
 ```
 
 ### 2. Follow AAA Pattern (Arrange-Act-Assert)
@@ -371,7 +369,7 @@ describe("Message", () => {
 ```typescript
 // Mock entire module
 jest.mock("./api", () => ({
-  fetchUser: jest.fn(() => Promise.resolve({name: "John"})),
+  fetchUser: jest.fn(() => Promise.resolve({ name: "John" })),
 }));
 
 // Mock specific exports
