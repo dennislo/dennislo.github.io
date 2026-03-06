@@ -436,28 +436,28 @@ Main Agent (implements all code)
 
 ## Implementation Steps (Summary)
 
-1. **[Main]** Install Tailwind CSS v4, PostCSS, gatsby-plugin-postcss. Remove styled-components.
-2. **[Main]** Create `postcss.config.js` and `src/styles/global.css` with Tailwind import + dark mode config.
-3. **[Main]** Create `src/config.ts` with all site content and placeholder data.
-4. **[Main]** Create Tabler Icon components (8 icons as React SVG components): Email, LinkedIn, GitHub, Instagram, Twitter, ArrowUpRight, Moon, Sun.
-5. **[Main]** Build Hero component with gradient overlay, programming symbols SVG, social icons, animations.
-6. **[Main]** Build About component with two-column grid, bio text, skill tags.
-7. **[Main]** Build Projects component with numbered cards.
-8. **[Main]** Build Experience component with timeline visualization.
-9. **[Main]** Build Education component with cards.
-10. **[Main]** Build Header component with fixed nav + scroll-triggered backdrop blur.
-11. **[Main]** Build Footer component with social icons, nav links, copyright, decorative SVG.
-12. **[Main]** Update Layout component (remove styled-components, add Tailwind classes, remove BurgerMenu).
-13. **[Main]** Restyle ThemeToggle with Tailwind classes (delete old CSS).
-14. **[Main]** Restyle ContactForm with Tailwind classes (delete old CSS).
-15. **[Main]** Update `index.tsx` page to compose new section components.
-16. **[Main]** Update `contact-form.tsx` and `404.tsx` pages.
-17. **[Main]** Update `gatsby-config.ts` (remove styled-components plugin, add postcss plugin).
-18. **[Main]** Update `gatsby-browser.ts` and `gatsby-ssr.ts` for global CSS import.
-19. **[Main]** Add IBM Plex Mono Google Font via Head component.
-20. **[Main]** Delete all old CSS files, old Article subsections, old icon components, BurgerMenu.
-21. **[Main]** Update ThemeContext dark mode to work with Tailwind `@custom-variant`.
-22. **[code-reviewer, parallel]** Review all new/modified files for quality and best practices.
-23. **[test-writer, parallel]** Write tests for all new components; update existing tests.
-24. **[Main]** Run `npm run typecheck`, `npm run format`, `npm test`.
-25. **[debugger]** _(Only if needed.)_ Fix any typecheck or test failures.
+1. [x] **[Main]** Install Tailwind CSS v4, PostCSS, gatsby-plugin-postcss. Remove styled-components.
+2. [x] **[Main]** Create `postcss.config.js` and `src/styles/global.css` with Tailwind import + dark mode config.
+3. [x] **[Main]** Create `src/config.ts` with all site content and placeholder data.
+4. [x] **[Main]** Create Tabler Icon components (8 icons as React SVG components): Email, LinkedIn, GitHub, Instagram, Twitter, ArrowUpRight, Moon, Sun.
+5. [x] **[Main]** Build Hero component with gradient overlay, programming symbols SVG, social icons, animations.
+6. [x] **[Main]** Build About component with two-column grid, bio text, skill tags.
+7. [x] **[Main]** Build Projects component with numbered cards.
+8. [x] **[Main]** Build Experience component with timeline visualization.
+9. [x] **[Main]** Build Education component with cards.
+10. [x] **[Main]** Build SiteHeader component with fixed nav + scroll-triggered backdrop blur.
+11. [x] **[Main]** Build SiteFooter component with social icons, nav links, copyright, decorative SVG.
+12. [x] **[Main]** Update Layout component (remove styled-components, add Tailwind classes, remove BurgerMenu).
+13. [x] **[Main]** Restyle ThemeToggle with Tailwind classes + TablerMoon/TablerSun (delete old CSS).
+14. [x] **[Main]** Restyle ContactForm with Tailwind classes (delete old CSS).
+15. [x] **[Main]** Update `index.tsx` page to compose new section components.
+16. [x] **[Main]** Update `contact-form.tsx` and `404.tsx` pages.
+17. [x] **[Main]** Update `gatsby-config.ts` (remove styled-components plugin, add postcss plugin).
+18. [x] **[Main]** Update `gatsby-browser.ts` and `gatsby-ssr.ts` for global CSS import.
+19. [x] **[Main]** Add IBM Plex Mono Google Font via Head component.
+20. [x] **[Main]** Delete all old CSS files, old Article subsections, old icon components, BurgerMenu (incl. orphaned font files).
+21. [x] **[Main]** Update ThemeContext dark mode to work with Tailwind `@custom-variant`.
+22. [x] **[code-reviewer, parallel]** Review all new/modified files for quality and best practices.
+23. [x] **[test-writer, parallel]** Write tests for all new components; update existing tests.
+24. [x] **[Main]** Run `npm run typecheck`, `npm run format`, `npm test` — all pass (111 tests, 0 type errors).
+25. [x] **[debugger]** _(Only if needed.)_ Fix any typecheck or test failures — ESLint errors in 4 test files fixed post-review.
