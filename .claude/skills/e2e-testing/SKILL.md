@@ -63,14 +63,14 @@ npm run test:e2e:ui       # Open Playwright UI mode (interactive test runner)
 ### Test Organization
 
 ```typescript
-import {test, expect} from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test.describe("Feature Name", () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
-  test("does something visible to the user", async ({page}) => {
+  test("does something visible to the user", async ({ page }) => {
     // Arrange: set up any state
     // Act: interact with the page
     // Assert: verify the outcome
@@ -84,9 +84,9 @@ test.describe("Feature Name", () => {
 
 ```typescript
 // ✅ Preferred — accessible, robust
-page.getByRole("button", {name: /switch to dark mode/i});
-page.getByRole("textbox", {name: /email address/i});
-page.getByRole("link", {name: /back/i});
+page.getByRole("button", { name: /switch to dark mode/i });
+page.getByRole("textbox", { name: /email address/i });
+page.getByRole("link", { name: /back/i });
 
 // ✅ Also good — label-based for form fields
 page.getByLabel("First Name");
@@ -134,7 +134,7 @@ Each test must be independent. Use `test.beforeEach` to reset state (navigate to
 Never rely on test execution order.
 
 ```typescript
-test.beforeEach(async ({page}) => {
+test.beforeEach(async ({ page }) => {
   // Inject localStorage BEFORE the page loads so ThemeContext reads it on first mount.
   // addInitScript runs before any page script — no reload needed.
   //
@@ -185,7 +185,7 @@ await page.goto("/contact-form");
 await expect(page).toHaveURL(/contact-form/);
 
 // Click a link and wait for navigation
-await page.getByRole("link", {name: /back/i}).click();
+await page.getByRole("link", { name: /back/i }).click();
 await expect(page).toHaveURL("/");
 ```
 
@@ -217,11 +217,11 @@ expect(source).toBe("manual");
 await page.getByLabel("Email Address").fill("bad-email");
 await page.getByLabel("Email Address").blur();
 await expect(
-  page.getByRole("alert", {name: /enter a valid email/i}),
+  page.getByRole("alert", { name: /enter a valid email/i }),
 ).toBeVisible();
 
 // Submit an empty form and check all errors appear
-await page.getByRole("button", {name: /send message/i}).click();
+await page.getByRole("button", { name: /send message/i }).click();
 await expect(page.getByRole("alert").first()).toBeVisible();
 ```
 
@@ -230,7 +230,7 @@ await expect(page.getByRole("alert").first()).toBeVisible();
 ```typescript
 // The theme toggle shows a moon (light mode) or sun (dark mode)
 // Use aria-label on the button instead of asserting SVG internals
-const btn = page.getByRole("button", {name: /switch to dark mode/i});
+const btn = page.getByRole("button", { name: /switch to dark mode/i });
 await expect(btn).toBeVisible(); // implies light mode is active
 ```
 
@@ -239,14 +239,14 @@ await expect(btn).toBeVisible(); // implies light mode is active
 ### Minimal Spec File
 
 ```typescript
-import {test, expect} from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test.describe("Page Title", () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
-  test("page loads with correct title", async ({page}) => {
+  test("page loads with correct title", async ({ page }) => {
     await expect(page).toHaveTitle(/DLO/);
   });
 });
@@ -255,10 +255,10 @@ test.describe("Page Title", () => {
 ### Theme Toggle Spec Template
 
 ```typescript
-import {test, expect} from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test.describe("Theme Toggle", () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     // Inject localStorage BEFORE the page loads so ThemeContext reads it on first mount.
     // addInitScript runs before any page script, so no reload is needed.
     //
@@ -275,10 +275,10 @@ test.describe("Theme Toggle", () => {
     await page.goto("/");
   });
 
-  test("toggle switches theme from light to dark", async ({page}) => {
+  test("toggle switches theme from light to dark", async ({ page }) => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
-    await page.getByRole("button", {name: /switch to dark mode/i}).click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
 
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
@@ -288,16 +288,16 @@ test.describe("Theme Toggle", () => {
 ### Contact Form Spec Template
 
 ```typescript
-import {test, expect} from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test.describe("Contact Form", () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("/contact-form");
     await expect(page).toHaveURL(/contact-form/);
   });
 
-  test("shows validation errors on empty submit", async ({page}) => {
-    await page.getByRole("button", {name: /send message/i}).click();
+  test("shows validation errors on empty submit", async ({ page }) => {
+    await page.getByRole("button", { name: /send message/i }).click();
     await expect(page.getByRole("alert").first()).toBeVisible();
   });
 });
@@ -335,7 +335,7 @@ npx playwright show-trace test-results/...trace.zip
 ### Common Issues
 
 | Symptom                       | Cause                                                         | Fix                                                                                 |
-|-------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| ----------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `net::ERR_CONNECTION_REFUSED` | Dev server not ready                                          | Increase `webServer.timeout` or check `gatsby develop`                              |
 | Locator not found             | Wrong selector or page hasn't loaded                          | Use `await expect(locator).toBeVisible()` before interacting                        |
 | Flaky `data-theme` tests      | Theme set by time-of-day logic                                | Always set `localStorage` in `beforeEach` for a deterministic start                 |

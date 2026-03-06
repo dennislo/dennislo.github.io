@@ -1,11 +1,11 @@
 ---
 name: create-plan
 description:
-   Creates a structured implementation plan document in the claude-plans/ directory. Plans include an
-   overview, architecture notes, agent orchestration table, agent escalation flow diagram, and an
-   implementation steps summary. Use this skill when the user asks to plan a feature, create a plan,
-   write a plan, or document an implementation approach. Trigger words are "create plan, write plan,
-   make a plan, plan this feature, plan the implementation, document the approach".
+  Creates a structured implementation plan document in the claude-plans/ directory. Plans include an
+  overview, architecture notes, agent orchestration table, agent escalation flow diagram, and an
+  implementation steps summary. Use this skill when the user asks to plan a feature, create a plan,
+  write a plan, or document an implementation approach. Trigger words are "create plan, write plan,
+  make a plan, plan this feature, plan the implementation, document the approach".
 ---
 
 # Create Plan Skill
@@ -80,7 +80,7 @@ These agents are defined in `.claude/agents/` and must be invoked via the `Task`
 implementation (not during planning). Reference them in the plan's Agent Orchestration section.
 
 | Agent             | Path                              | Role                                                              | Tools                               |
-|-------------------|-----------------------------------|-------------------------------------------------------------------|-------------------------------------|
+| ----------------- | --------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
 | **test-writer**   | `.claude/agents/test-writer.md`   | Writes unit/integration tests using Jest + React Testing Library  | Read, Glob, Grep, Bash, Edit, Write |
 | **code-reviewer** | `.claude/agents/code-reviewer.md` | Reviews code for quality, security, best practices, test coverage | Read, Glob, Grep, Bash              |
 | **debugger**      | `.claude/agents/debugger.md`      | Investigates and fixes test failures, TypeScript errors, bugs     | Read, Glob, Grep, Bash, Edit        |
