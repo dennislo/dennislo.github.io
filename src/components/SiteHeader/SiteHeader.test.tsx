@@ -48,7 +48,9 @@ describe("SiteHeader", () => {
 
   it("renders a nav element", () => {
     render(<SiteHeader />);
-    expect(screen.getByRole("navigation", { name: "Primary" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Primary" }),
+    ).toBeInTheDocument();
   });
 
   it("opens the mobile menu so nav links are reachable", async () => {
