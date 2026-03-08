@@ -5,6 +5,16 @@ import SiteHeader from "./SiteHeader";
 import { siteConfig } from "../../config";
 
 describe("SiteHeader", () => {
+  const getDesktopNav = () => {
+    const navigation = screen.getByRole("navigation", { name: "Primary" });
+    const desktopNavList = within(navigation).getByRole("list");
+
+    expect(desktopNavList).toHaveClass("hidden");
+    expect(desktopNavList).toHaveClass("md:flex");
+
+    return desktopNavList;
+  };
+
   beforeEach(() => {
     Object.defineProperty(window, "scrollY", {
       configurable: true,
@@ -19,12 +29,9 @@ describe("SiteHeader", () => {
   });
 
   it("renders the About nav link", () => {
-    const { container } = render(<SiteHeader />);
-    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+    render(<SiteHeader />);
 
-    expect(desktopNav).not.toBeNull();
-
-    const link = within(desktopNav as HTMLElement).getByRole("link", {
+    const link = within(getDesktopNav()).getByRole("link", {
       name: "About",
     });
     expect(link).toBeInTheDocument();
@@ -32,12 +39,9 @@ describe("SiteHeader", () => {
   });
 
   it("renders the Projects nav link", () => {
-    const { container } = render(<SiteHeader />);
-    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+    render(<SiteHeader />);
 
-    expect(desktopNav).not.toBeNull();
-
-    const link = within(desktopNav as HTMLElement).getByRole("link", {
+    const link = within(getDesktopNav()).getByRole("link", {
       name: "Projects",
     });
     expect(link).toBeInTheDocument();
@@ -45,12 +49,9 @@ describe("SiteHeader", () => {
   });
 
   it("renders the Experience nav link", () => {
-    const { container } = render(<SiteHeader />);
-    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+    render(<SiteHeader />);
 
-    expect(desktopNav).not.toBeNull();
-
-    const link = within(desktopNav as HTMLElement).getByRole("link", {
+    const link = within(getDesktopNav()).getByRole("link", {
       name: "Experience",
     });
     expect(link).toBeInTheDocument();
@@ -58,12 +59,9 @@ describe("SiteHeader", () => {
   });
 
   it("renders the Education nav link", () => {
-    const { container } = render(<SiteHeader />);
-    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+    render(<SiteHeader />);
 
-    expect(desktopNav).not.toBeNull();
-
-    const link = within(desktopNav as HTMLElement).getByRole("link", {
+    const link = within(getDesktopNav()).getByRole("link", {
       name: "Education",
     });
     expect(link).toBeInTheDocument();
@@ -185,8 +183,8 @@ describe("SiteHeader", () => {
   });
 
   it("updates the header style after scrolling", () => {
-    const { container } = render(<SiteHeader />);
-    const header = container.querySelector("header");
+    render(<SiteHeader />);
+    const header = screen.getByRole("banner");
 
     expect(header).toHaveClass("bg-transparent");
 
