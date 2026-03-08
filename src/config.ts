@@ -69,49 +69,71 @@ export const siteConfig = {
   ],
   experience: [
     {
+      title: "Software Engineer (Contractor)",
+      company: "Crosstide / 101 Ways",
+      dateRange: "Nov 2021 - Present",
+      bullets: [
+        "Architected and led the Marks & Spencer web platform monorepo, now used by 200+ engineers",
+        "Replatformed the basket and checkout application processing millions of orders daily",
+        "Championed test-driven development, decision logs, and thorough code reviews across the team",
+      ],
+    },
+    {
+      title: "Software Engineer (Contractor)",
+      company: "Pret A Manger",
+      dateRange: "Mar 2021 - Oct 2021",
+      bullets: [
+        "Enhanced high-volume subscription transactions with Chargebee, Commerce Tools, and Adyen",
+        "Spearheaded engineering practices through full remote pair programming and increased test coverage",
+      ],
+    },
+    {
+      title: "Software Engineer (Contractor)",
+      company: "NatWest Group",
+      dateRange: "Sep 2018 - Feb 2021",
+      bullets: [
+        "Developed a greenfield HR platform from scratch using React, Redux, and Node",
+        "Collaborated across NLP, legal, insurance, and HR disciplines to deliver NatWest Mentor",
+      ],
+    },
+    {
+      title: "Software Engineer (Contractor)",
+      company: "BCG Digital Ventures",
+      dateRange: "Apr 2018 - Aug 2018",
+      bullets: [
+        "Built a real-time data visualisation platform for an IoT startup (MachineMax)",
+        "Collaborated with hardware, data science, and ML teams to deliver production-grade dashboards",
+      ],
+    },
+    {
+      title: "Software Engineer (Contractor)",
+      company: "Elsevier",
+      dateRange: "Apr 2016 - Mar 2018",
+      bullets: [
+        "Developed journal home pages for ScienceDirect, serving publications like Cell and The Lancet",
+        "Designed and built a shared UI library to accelerate cross-team frontend development",
+      ],
+    },
+    {
       title: "Senior Software Engineer",
-      company: "Tech Company",
-      dateRange: "Jan 2022 - Present",
+      company: "Starcount",
+      dateRange: "Sep 2014 - Mar 2016",
       bullets: [
-        "Led development of microservices architecture serving 1M+ users",
-        "Reduced API response times by 40% through optimisation",
-        "Mentored team of 5 junior developers",
-      ],
-    },
-    {
-      title: "Full Stack Developer",
-      company: "Startup Inc",
-      dateRange: "Jun 2020 - Dec 2021",
-      bullets: [
-        "Built and deployed 3 production applications",
-        "Implemented CI/CD pipeline reducing deployment time by 60%",
-      ],
-    },
-    {
-      title: "Frontend Developer",
-      company: "Digital Agency",
-      dateRange: "Jan 2018 - May 2020",
-      bullets: [
-        "Delivered responsive web applications for 10+ clients",
-        "Introduced component library that reduced development time by 30%",
+        "Built the Vibe web app aggregating social media content from Facebook, Twitter, Instagram, and YouTube",
+        "Architected embeddable web components for third-party integration across web and mobile",
+        "Designed an enterprise analytics platform with scalable PDF report generation",
       ],
     },
   ],
   education: [
     {
-      degree: "B.S. Computer Science",
-      school: "University",
-      dateRange: "2014 - 2018",
+      degree: "Bachelor of Engineering (B.Eng.), Computer Software Engineering",
+      school: "UNSW",
+      dateRange: "2003 - 2008",
       achievements: [
-        "Graduated Magna Cum Laude with 3.8 GPA",
-        "Teaching Assistant for Data Structures",
+        "Honours Class 1",
+        "Honours Thesis: Service Oriented Architecture for e-Business Standards",
       ],
-    },
-    {
-      degree: "Full Stack Development Certificate",
-      school: "Coding Bootcamp",
-      dateRange: "2019",
-      achievements: ["Completed 500+ hours of coursework"],
     },
   ],
 };

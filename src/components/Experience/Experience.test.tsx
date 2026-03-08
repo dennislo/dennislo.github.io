@@ -21,8 +21,12 @@ describe("Experience", () => {
 
   it("renders each job title from siteConfig.experience", () => {
     render(<Experience />);
-    for (const exp of siteConfig.experience) {
-      expect(screen.getByText(exp.title)).toBeInTheDocument();
+    const uniqueTitles = [...new Set(siteConfig.experience.map((e) => e.title))];
+    for (const title of uniqueTitles) {
+      const expected = siteConfig.experience.filter(
+        (e) => e.title === title,
+      ).length;
+      expect(screen.getAllByText(title)).toHaveLength(expected);
     }
   });
 
