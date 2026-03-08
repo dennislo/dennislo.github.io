@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
   return (
     <div
       id="hero"
-      className="relative isolate overflow-hidden bg-white dark:bg-gray-950 py-24 md:h-screen"
+      className="relative isolate overflow-hidden bg-white dark:bg-gray-950 py-24 md:h-screen scroll-mt-28"
     >
       {/* Gradient overlay */}
       <div

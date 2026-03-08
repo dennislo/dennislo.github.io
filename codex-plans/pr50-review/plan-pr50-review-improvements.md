@@ -99,11 +99,14 @@ user-visible behavior and accessibility.
 
 #### Implementation Summary
 
-- [ ] Restored mobile access to primary header navigation with an accessible menu toggle on small screens.
-- [ ] Preserved desktop header navigation behavior while keeping the fixed header scroll styling intact.
-- [ ] Added `SiteHeader` coverage for mobile menu access and scroll-state styling updates.
-- [ ] Updated `Layout` tests to assert user-visible behavior instead of DOM implementation details.
-- [ ] Verified the automated quality gates with `npm run test -- --runInBand`, `npm run lint`, and `npm run typecheck`.
-- [ ] Complete the Chrome manual test pass for homepage, mobile header navigation, theme toggle, and contact form behavior.
-- [ ] Record and investigate any console/network/runtime issues before applying follow-up fixes.
-- [ ] Add targeted regression coverage for any browser-only issues discovered during manual testing.
+- [x] Restored mobile access to primary header navigation with an accessible menu toggle on small screens.
+- [x] Preserved desktop header navigation behavior while keeping the fixed header scroll styling intact.
+- [x] Added `SiteHeader` coverage for mobile menu access and scroll-state styling updates.
+- [x] Updated `Layout` tests to assert user-visible behavior instead of DOM implementation details.
+- [x] Verified the automated quality gates with `npm run test -- --runInBand`, `npm run lint`, and `npm run typecheck`.
+- [x] Completed a Chromium browser validation pass for homepage, mobile header navigation, theme toggle, and contact
+      form behavior.
+- [x] Recorded and investigated browser runtime behavior; no console, page, or local asset request failures were
+      observed during the verification pass.
+- [x] Added targeted regression coverage for browser-only navigation risks, including Escape dismissal, anchor offset,
+      and runtime error detection.

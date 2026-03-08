@@ -74,6 +74,58 @@ describe("SiteHeader", () => {
     );
   });
 
+  it("closes the mobile menu when escape is pressed", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    const menuButton = screen.getByRole("button", {
+      name: "Open navigation menu",
+    });
+
+    await user.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await user.keyboard("{Escape}");
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toBeInTheDocument();
+  });
+
+  it("resets the mobile menu when returning to desktop width", async () => {
+    const user = userEvent.setup();
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 390,
+    });
+
+    render(<SiteHeader />);
+
+    const menuButton = screen.getByRole("button", {
+      name: "Open navigation menu",
+    });
+
+    await user.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 1024,
+    });
+
+    fireEvent(window, new Event("resize"));
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toBeInTheDocument();
+  });
+
   it("updates the header style after scrolling", () => {
     const { container } = render(<SiteHeader />);
     const header = container.querySelector("header");

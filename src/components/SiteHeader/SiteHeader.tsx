@@ -31,6 +31,21 @@ const SiteHeader: React.FC = () => {
     return () => window.removeEventListener("resize", closeMenuOnResize);
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined;
+    }
+
+    const closeMenuOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", closeMenuOnEscape);
+    return () => window.removeEventListener("keydown", closeMenuOnEscape);
+  }, [isMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
