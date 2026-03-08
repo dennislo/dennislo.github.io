@@ -18,22 +18,7 @@ const SiteFooter: React.FC = () => {
 
   return (
     <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
-      {/* Decorative wave */}
-      <div className="w-full overflow-hidden leading-none">
-        <svg
-          viewBox="0 0 1440 60"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-12 text-gray-50 dark:text-gray-900"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div>
-
-      <div className="p-8 sm:p-12 md:p-16 lg:p-24 pt-0">
+      <div className="p-8 sm:p-12 md:p-16 lg:p-24">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           {/* Name & title */}
           <div>
