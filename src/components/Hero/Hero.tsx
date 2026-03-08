@@ -1,5 +1,6 @@
 import React from "react";
 import { siteConfig } from "../../config";
+import { useTheme } from "../../context/ThemeContext";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
@@ -7,6 +8,14 @@ import TablerInstagram from "../icons/TablerInstagram";
 
 const Hero: React.FC = () => {
   const accent = siteConfig.accentColor;
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+  const symbolColor = isDarkTheme ? `${accent}94` : `${accent}b8`;
+  const symbolOpacity = isDarkTheme ? "0.2" : "0.24";
+  const gridStrokeColor = isDarkTheme ? "#5b6673" : "#c9d2dc";
+  const overlayBackground = isDarkTheme
+    ? `radial-gradient(ellipse 800px 1200px at 0% 0%, ${accent}33 0%, ${accent}1f 20%, ${accent}14 40%, rgba(17,24,39,0.45) 70%, rgba(3,7,18,0.78) 90%, #030712 100%)`
+    : `radial-gradient(ellipse 800px 1200px at 0% 0%, ${accent}40 0%, ${accent}25 20%, ${accent}10 40%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0.8) 90%, white 100%)`;
 
   return (
     <div
@@ -17,14 +26,15 @@ const Hero: React.FC = () => {
       <div
         className="absolute inset-0 -z-10"
         style={{
-          background: `radial-gradient(ellipse 800px 1200px at 0% 0%, ${accent}40 0%, ${accent}25 20%, ${accent}10 40%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0.8) 90%, white 100%)`,
+          background: overlayBackground,
         }}
       />
 
       {/* SVG background */}
       <svg
         aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full stroke-gray-200 dark:stroke-gray-800 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+        className="absolute inset-0 -z-10 size-full [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+        style={{ color: symbolColor, stroke: gridStrokeColor }}
       >
         <defs>
           <pattern
@@ -48,7 +58,7 @@ const Hero: React.FC = () => {
             <text
               x="50"
               y="50"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="24"
               transform="rotate(-15)"
@@ -58,7 +68,7 @@ const Hero: React.FC = () => {
             <text
               x="150"
               y="100"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="20"
               transform="rotate(10)"
@@ -68,7 +78,7 @@ const Hero: React.FC = () => {
             <text
               x="250"
               y="80"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="18"
               transform="rotate(-5)"
@@ -78,7 +88,7 @@ const Hero: React.FC = () => {
             <text
               x="100"
               y="200"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="22"
               transform="rotate(15)"
@@ -88,7 +98,7 @@ const Hero: React.FC = () => {
             <text
               x="300"
               y="180"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="20"
               transform="rotate(-10)"
@@ -98,7 +108,7 @@ const Hero: React.FC = () => {
             <text
               x="200"
               y="250"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="24"
               transform="rotate(5)"
@@ -108,7 +118,7 @@ const Hero: React.FC = () => {
             <text
               x="50"
               y="320"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="18"
               transform="rotate(-8)"
@@ -118,7 +128,7 @@ const Hero: React.FC = () => {
             <text
               x="350"
               y="300"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="22"
               transform="rotate(12)"
@@ -128,7 +138,7 @@ const Hero: React.FC = () => {
             <text
               x="150"
               y="350"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="20"
               transform="rotate(-15)"
@@ -138,7 +148,7 @@ const Hero: React.FC = () => {
             <text
               x="250"
               y="370"
-              fill={accent}
+              fill="currentColor"
               fontFamily="monospace"
               fontSize="24"
               transform="rotate(8)"
@@ -151,7 +161,7 @@ const Hero: React.FC = () => {
           fill="url(#programming-symbols)"
           width="100%"
           height="100%"
-          opacity="0.2"
+          opacity={symbolOpacity}
         />
         <rect
           fill="url(#grid-pattern)"
