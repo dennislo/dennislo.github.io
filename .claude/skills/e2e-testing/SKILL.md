@@ -9,6 +9,17 @@ description:
 
 # Playwright E2E Testing Best Practices
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Workflow](#workflow)
+- [Configuration](#configuration)
+- [Test Structure](#test-structure)
+- [Best Practices](#best-practices)
+- [Common Patterns](#common-patterns)
+- [Template Tests](#template-tests)
+- [Debugging](#debugging)
+
 ## Overview
 
 This project uses Playwright for end-to-end tests. Tests live in `src/test-e2e/` and run against the Gatsby dev

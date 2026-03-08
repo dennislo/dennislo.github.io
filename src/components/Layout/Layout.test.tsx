@@ -36,14 +36,16 @@ describe("Layout", () => {
     ).toBeInTheDocument();
   });
 
-  it("wraps children inside a div container", () => {
-    const { container } = render(
+  it("renders the main page content alongside the theme toggle", () => {
+    render(
       <Layout>
         <p>Inner</p>
       </Layout>,
     );
-    // The outer ThemeProvider wrapper renders a div; inside it is Layout's own div
-    expect(container.querySelector("div")).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", { name: "Theme Toggle" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Inner")).toBeInTheDocument();
   });
 });

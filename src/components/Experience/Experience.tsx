@@ -10,7 +10,7 @@ const Experience: React.FC = () => {
   return (
     <section
       id="experience"
-      className="p-8 sm:p-12 md:p-16 lg:p-24 bg-white dark:bg-gray-950"
+      className="p-8 sm:p-12 md:p-16 lg:p-24 bg-white dark:bg-gray-950 scroll-mt-28"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         <div className="lg:col-span-4">
