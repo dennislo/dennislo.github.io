@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a personal website/blog built with Gatsby, React, and TypeScript.
 
+## Required Agent And Skill Usage
+
+- Use `.agent/skills/manual-testing/SKILL.md` for manual QA tasks: start the app, open a browser, go to `http://localhost:8000`, exercise the site like a real user, inspect DevTools, and capture evidence for issues.
+- Use `.claude/agents/debugger.md` whenever there are errors, failing tests, broken builds, console issues, or unclear behavior. Add plan steps to understand the symptom first, investigate and isolate the cause second, then fix and verify.
+- Use `.claude/agents/senior-frontend-engineer.md` for frontend implementation and bug-fix work in Gatsby, React, and TypeScript. Default to this agent when code needs to be written or corrected in the UI layer.
+- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library. If a request says `test-writter`, interpret it as this agent.
+- Use `.claude/skills/e2e-testing/SKILL.md` for Playwright work, including new browser tests, updating existing specs, debugging flaky end-to-end coverage, and validating user journeys.
+
 ## Code Style & Standards
 
 - Write TypeScript with strict typing

@@ -39,10 +39,12 @@ agent writes code itself, then delegates review, testing, and debugging to subag
    debugging.
 7. **Set execution order.** Run `code-reviewer` and `test-writer` in parallel when possible; call `debugger` only if
    typecheck or tests fail.
-8. **Add required output sections.** Include the ASCII agent escalation flow and implementation summary checklist [ ] at
+8. **Add required output sections.** Include the ASCII agent escalation flow and `## Implementation Steps (Summary)`
+   checklist [ ] at
    the end of the plan,
    with agent labels and parallelization notes. Ensure each step is clear and actionable. Each step should be marked as
-   complete with [x] once done by the responsible agent.
+   complete with [x] once done by the responsible agent. See `codex-plans/burger-menu/plan-burger-menu.md` for an
+   example.
 9. **Validate and finalize.** Ensure the plan is clear, actionable, and complete, then save it at the required path.
 
 ---

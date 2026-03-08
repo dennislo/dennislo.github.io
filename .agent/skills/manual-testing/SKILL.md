@@ -7,7 +7,8 @@ description: Manual QA workflow for web apps. Use when asked to start the app, o
 
 ## Workflow
 
-1. **Start the application.** Run `npm run develop` and wait for the local app to report a ready/healthy state.
+1. **Ask and wait for a human to start the application.** Run `npm run develop` and wait for the local app to
+   report a ready/healthy state.
 2. **Open the target environment.** Launch Chrome and navigate to `http://localhost:8000`.
 3. **Execute core scenarios.** Run the manual test scenarios listed below in a consistent order.
 4. **Inspect with DevTools.** Check Console, Network, Elements, and Performance for visible and hidden issues.

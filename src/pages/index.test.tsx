@@ -10,10 +10,52 @@ jest.mock("../components/Layout/Layout", () => ({
   },
 }));
 
-jest.mock("../components/Article/Article", () => ({
+jest.mock("../components/SiteHeader/SiteHeader", () => ({
   __esModule: true,
-  default: function MockArticle() {
-    return <div aria-label="Article">Article Content</div>;
+  default: function MockSiteHeader() {
+    return <header aria-label="SiteHeader">Site Header</header>;
+  },
+}));
+
+jest.mock("../components/Hero/Hero", () => ({
+  __esModule: true,
+  default: function MockHero() {
+    return <section aria-label="Hero">Hero Section</section>;
+  },
+}));
+
+jest.mock("../components/About/About", () => ({
+  __esModule: true,
+  default: function MockAbout() {
+    return <section aria-label="About">About Section</section>;
+  },
+}));
+
+jest.mock("../components/Projects/Projects", () => ({
+  __esModule: true,
+  default: function MockProjects() {
+    return <section aria-label="Projects">Projects Section</section>;
+  },
+}));
+
+jest.mock("../components/Experience/Experience", () => ({
+  __esModule: true,
+  default: function MockExperience() {
+    return <section aria-label="Experience">Experience Section</section>;
+  },
+}));
+
+jest.mock("../components/Education/Education", () => ({
+  __esModule: true,
+  default: function MockEducation() {
+    return <section aria-label="Education">Education Section</section>;
+  },
+}));
+
+jest.mock("../components/SiteFooter/SiteFooter", () => ({
+  __esModule: true,
+  default: function MockSiteFooter() {
+    return <footer aria-label="SiteFooter">Site Footer</footer>;
   },
 }));
 
@@ -67,9 +109,39 @@ describe("IndexPage", () => {
     expect(screen.getByLabelText("Layout")).toBeInTheDocument();
   });
 
-  it("renders the Article component", () => {
+  it("renders the SiteHeader component", () => {
     render(<IndexPage {...mockPageProps} />);
-    expect(screen.getByLabelText("Article")).toBeInTheDocument();
+    expect(screen.getByLabelText("SiteHeader")).toBeInTheDocument();
+  });
+
+  it("renders the Hero component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("Hero")).toBeInTheDocument();
+  });
+
+  it("renders the About component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("About")).toBeInTheDocument();
+  });
+
+  it("renders the Projects component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("Projects")).toBeInTheDocument();
+  });
+
+  it("renders the Experience component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("Experience")).toBeInTheDocument();
+  });
+
+  it("renders the Education component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("Education")).toBeInTheDocument();
+  });
+
+  it("renders the SiteFooter component", () => {
+    render(<IndexPage {...mockPageProps} />);
+    expect(screen.getByLabelText("SiteFooter")).toBeInTheDocument();
   });
 
   it("renders the page head title", () => {

@@ -102,15 +102,13 @@ describe("ContactForm", () => {
       expect(honeypot).toHaveAttribute("aria-hidden", "true");
     });
 
-    it("keeps responsive CSS class hooks on core layout elements", () => {
-      const { container } = setup();
+    it("renders the form and back link", () => {
+      setup();
 
-      expect(container.querySelector(".contact-form-container")).toBeTruthy();
-      expect(container.querySelector(".contact-form")).toBeTruthy();
-      expect(container.querySelector(".contact-form-submit")).toBeTruthy();
-
-      const backLink = screen.getByRole("link", { name: /back/i });
-      expect(backLink).toHaveClass("contact-form-back");
+      expect(
+        screen.getByRole("button", { name: /send message/i }),
+      ).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /back/i })).toBeInTheDocument();
     });
   });
 

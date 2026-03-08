@@ -1,7 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import { Link } from "gatsby";
 import { useForm, ValidationError } from "@formspree/react";
-import "./ContactForm.css";
 
 type FieldName = "firstName" | "lastName" | "mobile" | "email" | "message";
 
@@ -71,6 +70,12 @@ const FIELD_ORDER: FieldName[] = [
   "message",
 ];
 
+const inputClass =
+  "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors duration-200";
+
+const labelClass =
+  "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1";
+
 const ContactForm: React.FC = () => {
   const [state, handleFormspreeSubmit] = useForm("xykddnzg");
 
@@ -114,7 +119,7 @@ const ContactForm: React.FC = () => {
       email: emailRef,
       message: messageRef,
     }),
-    [], // refs are stable
+    [],
   );
 
   const handleChange = (
@@ -176,12 +181,20 @@ const ContactForm: React.FC = () => {
 
   if (state.succeeded) {
     return (
-      <div className="contact-form-container">
-        <div className="contact-form-success" role="alert">
-          <p>Thank you for your message! I&apos;ll get back to you soon.</p>
-          <p>
-            <Link to="/">Back to homepage</Link>
+      <div className="min-h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-950">
+        <div
+          className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-8 text-center max-w-md"
+          role="alert"
+        >
+          <p className="text-green-800 dark:text-green-200 text-lg mb-4">
+            Thank you for your message! I&apos;ll get back to you soon.
           </p>
+          <Link
+            to="/"
+            className="text-blue-600 dark:text-blue-400 underline hover:no-underline"
+          >
+            Back to homepage
+          </Link>
         </div>
       </div>
     );
@@ -190,190 +203,230 @@ const ContactForm: React.FC = () => {
   const hasServerErrors = state.errors !== null;
 
   return (
-    <div className="contact-form-container">
-      <Link to="/" className="contact-form-back">
-        &larr; Back
-      </Link>
-      <h1>Contact Me</h1>
-      <form className="contact-form" onSubmit={onSubmit} noValidate>
-        {/* Honeypot field for spam protection */}
-        <input
-          type="text"
-          name="_gotcha"
-          className="contact-form-honeypot"
-          tabIndex={-1}
-          aria-hidden="true"
-          autoComplete="off"
-        />
-
-        {/* First Name */}
-        <div className="contact-form-field">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            ref={fieldRefs.firstName as React.RefObject<HTMLInputElement>}
-            id="firstName"
-            name="firstName"
-            type="text"
-            value={values.firstName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-            aria-invalid={errors.firstName !== null ? "true" : undefined}
-            aria-describedby={
-              errors.firstName !== null ? "firstName-error" : undefined
-            }
-            autoComplete="given-name"
-          />
-          {errors.firstName && (
-            <span
-              id="firstName-error"
-              className="contact-form-error"
-              role="alert"
-            >
-              {errors.firstName}
-            </span>
-          )}
-          <ValidationError
-            prefix="First Name"
-            field="firstName"
-            errors={state.errors}
-          />
-        </div>
-
-        {/* Last Name */}
-        <div className="contact-form-field">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            ref={fieldRefs.lastName as React.RefObject<HTMLInputElement>}
-            id="lastName"
-            name="lastName"
-            type="text"
-            value={values.lastName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-            aria-invalid={errors.lastName !== null ? "true" : undefined}
-            aria-describedby={
-              errors.lastName !== null ? "lastName-error" : undefined
-            }
-            autoComplete="family-name"
-          />
-          {errors.lastName && (
-            <span
-              id="lastName-error"
-              className="contact-form-error"
-              role="alert"
-            >
-              {errors.lastName}
-            </span>
-          )}
-          <ValidationError
-            prefix="Last Name"
-            field="lastName"
-            errors={state.errors}
-          />
-        </div>
-
-        {/* Mobile Number */}
-        <div className="contact-form-field">
-          <label htmlFor="mobile">Mobile Number</label>
-          <input
-            ref={fieldRefs.mobile as React.RefObject<HTMLInputElement>}
-            id="mobile"
-            name="mobile"
-            type="tel"
-            value={values.mobile}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-            aria-invalid={errors.mobile !== null ? "true" : undefined}
-            aria-describedby={
-              errors.mobile !== null ? "mobile-error" : undefined
-            }
-            autoComplete="tel"
-          />
-          {errors.mobile && (
-            <span id="mobile-error" className="contact-form-error" role="alert">
-              {errors.mobile}
-            </span>
-          )}
-          <ValidationError
-            prefix="Mobile"
-            field="mobile"
-            errors={state.errors}
-          />
-        </div>
-
-        {/* Email Address */}
-        <div className="contact-form-field">
-          <label htmlFor="email">Email Address</label>
-          <input
-            ref={fieldRefs.email as React.RefObject<HTMLInputElement>}
-            id="email"
-            name="email"
-            type="email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-            aria-invalid={errors.email !== null ? "true" : undefined}
-            aria-describedby={errors.email !== null ? "email-error" : undefined}
-            autoComplete="email"
-          />
-          {errors.email && (
-            <span id="email-error" className="contact-form-error" role="alert">
-              {errors.email}
-            </span>
-          )}
-          <ValidationError prefix="Email" field="email" errors={state.errors} />
-        </div>
-
-        {/* Message */}
-        <div className="contact-form-field">
-          <label htmlFor="message">Message</label>
-          <textarea
-            ref={fieldRefs.message as React.RefObject<HTMLTextAreaElement>}
-            id="message"
-            name="message"
-            value={values.message}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-            aria-invalid={errors.message !== null ? "true" : undefined}
-            aria-describedby={
-              errors.message !== null ? "message-error" : undefined
-            }
-          />
-          {errors.message && (
-            <span
-              id="message-error"
-              className="contact-form-error"
-              role="alert"
-            >
-              {errors.message}
-            </span>
-          )}
-          <ValidationError
-            prefix="Message"
-            field="message"
-            errors={state.errors}
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="contact-form-submit"
-          disabled={state.submitting}
+    <div className="min-h-screen bg-white dark:bg-gray-950 p-8 sm:p-12 md:p-16 lg:p-24">
+      <div className="max-w-xl mx-auto">
+        <Link
+          to="/"
+          className="inline-block mb-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
         >
-          {state.submitting ? "Sending..." : "Send Message"}
-        </button>
+          &larr; Back
+        </Link>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+          Contact Me
+        </h1>
+        <form className="space-y-5" onSubmit={onSubmit} noValidate>
+          {/* Honeypot */}
+          <input
+            type="text"
+            name="_gotcha"
+            className="hidden"
+            tabIndex={-1}
+            aria-hidden="true"
+            autoComplete="off"
+          />
 
-        {hasServerErrors && (
-          <p className="contact-form-server-error" role="alert">
-            There was a problem sending your message. Please try again.
-          </p>
-        )}
-      </form>
+          {/* First Name */}
+          <div>
+            <label htmlFor="firstName" className={labelClass}>
+              First Name
+            </label>
+            <input
+              ref={fieldRefs.firstName as React.RefObject<HTMLInputElement>}
+              id="firstName"
+              name="firstName"
+              type="text"
+              value={values.firstName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              aria-invalid={errors.firstName !== null ? "true" : undefined}
+              aria-describedby={
+                errors.firstName !== null ? "firstName-error" : undefined
+              }
+              autoComplete="given-name"
+              className={inputClass}
+            />
+            {errors.firstName && (
+              <span
+                id="firstName-error"
+                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {errors.firstName}
+              </span>
+            )}
+            <ValidationError
+              prefix="First Name"
+              field="firstName"
+              errors={state.errors}
+            />
+          </div>
+
+          {/* Last Name */}
+          <div>
+            <label htmlFor="lastName" className={labelClass}>
+              Last Name
+            </label>
+            <input
+              ref={fieldRefs.lastName as React.RefObject<HTMLInputElement>}
+              id="lastName"
+              name="lastName"
+              type="text"
+              value={values.lastName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              aria-invalid={errors.lastName !== null ? "true" : undefined}
+              aria-describedby={
+                errors.lastName !== null ? "lastName-error" : undefined
+              }
+              autoComplete="family-name"
+              className={inputClass}
+            />
+            {errors.lastName && (
+              <span
+                id="lastName-error"
+                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {errors.lastName}
+              </span>
+            )}
+            <ValidationError
+              prefix="Last Name"
+              field="lastName"
+              errors={state.errors}
+            />
+          </div>
+
+          {/* Mobile */}
+          <div>
+            <label htmlFor="mobile" className={labelClass}>
+              Mobile Number
+            </label>
+            <input
+              ref={fieldRefs.mobile as React.RefObject<HTMLInputElement>}
+              id="mobile"
+              name="mobile"
+              type="tel"
+              value={values.mobile}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              aria-invalid={errors.mobile !== null ? "true" : undefined}
+              aria-describedby={
+                errors.mobile !== null ? "mobile-error" : undefined
+              }
+              autoComplete="tel"
+              className={inputClass}
+            />
+            {errors.mobile && (
+              <span
+                id="mobile-error"
+                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {errors.mobile}
+              </span>
+            )}
+            <ValidationError
+              prefix="Mobile"
+              field="mobile"
+              errors={state.errors}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className={labelClass}>
+              Email Address
+            </label>
+            <input
+              ref={fieldRefs.email as React.RefObject<HTMLInputElement>}
+              id="email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              aria-invalid={errors.email !== null ? "true" : undefined}
+              aria-describedby={
+                errors.email !== null ? "email-error" : undefined
+              }
+              autoComplete="email"
+              className={inputClass}
+            />
+            {errors.email && (
+              <span
+                id="email-error"
+                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {errors.email}
+              </span>
+            )}
+            <ValidationError
+              prefix="Email"
+              field="email"
+              errors={state.errors}
+            />
+          </div>
+
+          {/* Message */}
+          <div>
+            <label htmlFor="message" className={labelClass}>
+              Message
+            </label>
+            <textarea
+              ref={fieldRefs.message as React.RefObject<HTMLTextAreaElement>}
+              id="message"
+              name="message"
+              value={values.message}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+              rows={5}
+              aria-invalid={errors.message !== null ? "true" : undefined}
+              aria-describedby={
+                errors.message !== null ? "message-error" : undefined
+              }
+              className={inputClass}
+            />
+            {errors.message && (
+              <span
+                id="message-error"
+                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {errors.message}
+              </span>
+            )}
+            <ValidationError
+              prefix="Message"
+              field="message"
+              errors={state.errors}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={state.submitting}
+            className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+          >
+            {state.submitting ? "Sending..." : "Send Message"}
+          </button>
+
+          {hasServerErrors && (
+            <p
+              className="text-sm text-red-600 dark:text-red-400 text-center"
+              role="alert"
+            >
+              There was a problem sending your message. Please try again.
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };
