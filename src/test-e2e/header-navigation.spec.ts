@@ -15,6 +15,18 @@ const sectionChecks = [
   { linkName: "Education", hash: "#education", heading: "Education" },
 ] as const;
 
+function rectsIntersect(
+  first: { x: number; y: number; width: number; height: number },
+  second: { x: number; y: number; width: number; height: number },
+) {
+  return (
+    first.x < second.x + second.width &&
+    first.x + first.width > second.x &&
+    first.y < second.y + second.height &&
+    first.y + first.height > second.y
+  );
+}
+
 function monitorRuntimeIssues(page: Page) {
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
@@ -73,6 +85,60 @@ test.describe("Header navigation", () => {
 
     await expect(page).toHaveURL(/#about$/);
     await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("mobile menu renders as the top visual layer over the hero at the top of the page", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const menuButton = page.getByRole("button", { name: /navigation menu/i });
+    const mobileMenu = page.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const heroHeading = page.getByRole("heading", { name: "Hello! 👋" });
+
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" }));
+    await expect(heroHeading).toBeVisible();
+
+    await menuButton.click();
+
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+    await expect(mobileMenu).toBeVisible();
+
+    const menuBox = await mobileMenu.boundingBox();
+    const heroBox = await heroHeading.boundingBox();
+
+    expect(menuBox).not.toBeNull();
+    expect(heroBox).not.toBeNull();
+
+    if (rectsIntersect(menuBox!, heroBox!)) {
+      const overlapPoint = {
+        x: Math.max(menuBox!.x, heroBox!.x) + 8,
+        y: Math.max(menuBox!.y, heroBox!.y) + 8,
+      };
+
+      const topLayerHandle = await page.evaluateHandle(
+        ({ x, y }) => document.elementFromPoint(x, y),
+        overlapPoint,
+      );
+      const isMenuOnTop = await page.evaluate(
+        ({ menuId, node }) => {
+          if (!(node instanceof Element)) {
+            return false;
+          }
+
+          return node.closest(`#${menuId}`) !== null;
+        },
+        { menuId: "site-header-menu", node: topLayerHandle },
+      );
+
+      expect(isMenuOnTop).toBe(true);
+    } else {
+      expect(heroBox!.y).toBeGreaterThanOrEqual(
+        menuBox!.y + menuBox!.height - 1,
+      );
+    }
   });
 
   test("mobile header links land sections below the fixed header", async ({

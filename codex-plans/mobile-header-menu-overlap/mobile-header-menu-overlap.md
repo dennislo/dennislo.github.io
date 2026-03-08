@@ -308,23 +308,26 @@ structure best.
 
 ## Implementation Steps (Summary)
 
-1. [ ] **Agent: senior-frontend-engineer** — Update [
+1. [x] **Agent: senior-frontend-engineer** — Updated [
        `SiteHeader.tsx`](/Users/dlo/work/dennislo.github.io/src/components/SiteHeader/SiteHeader.tsx) to split mobile and
        desktop navigation paths, keeping the header row fixed and rendering the mobile menu in a dedicated panel below it.
-2. [ ] **Agent: senior-frontend-engineer** — Add mobile-only panel styling in [
+2. [x] **Agent: senior-frontend-engineer** — Added mobile-only panel styling in [
        `SiteHeader.tsx`](/Users/dlo/work/dennislo.github.io/src/components/SiteHeader/SiteHeader.tsx) so the open menu has
        an opaque background, separation from the hero, and a higher stacking context.
-3. [ ] **Agent: senior-frontend-engineer** — Constrain the mobile panel height and enable internal scrolling so the open
-       menu remains usable on shorter mobile screens while preserving current interaction behavior.
-4. [ ] **Agent: test-writer** — Extend [
+3. [x] **Agent: senior-frontend-engineer** — Constrained the mobile panel height, enabled internal scrolling, and kept
+       the existing interaction behavior (`aria-expanded`, `aria-controls`, Escape-to-close, close-on-link-click, and
+       close-on-resize-to-desktop).
+4. [x] **Agent: test-writer** — Extended [
        `SiteHeader.test.tsx`](/Users/dlo/work/dennislo.github.io/src/components/SiteHeader/SiteHeader.test.tsx) to cover the
        new mobile panel structure and open/close behavior.
-5. [ ] **Skill: e2e-testing** — Extend [
+5. [x] **Skill: e2e-testing** — Extended [
        `header-navigation.spec.ts`](/Users/dlo/work/dennislo.github.io/src/test-e2e/header-navigation.spec.ts) with a mobile
-       regression test that verifies the open menu does not visually overlap the hero heading at the top of the page.
-6. [ ] Run `npm run typecheck` and the relevant automated tests.
-7. [ ] **Agent: debugger** — Investigate and fix any failures or unexpected layout behavior discovered during
-       implementation or test execution.
-8. [ ] **Skill: manual-testing** — Manually verify the homepage header in a mobile viewport, confirm the hero no longer
-       overlaps with the open menu, and check for regressions on theme toggle, anchor navigation, and the contact form
-       route.
+       regression test that verifies the open menu renders above the hero in the browser at the top of the page.
+6. [x] Ran `npm run typecheck`, `npx jest src/components/SiteHeader/SiteHeader.test.tsx --runInBand --no-coverage`,
+       and `npx playwright test src/test-e2e/header-navigation.spec.ts --grep "mobile menu opens|top visual layer|land sections below"`.
+7. [x] **Agent: debugger** — Investigated the broader Playwright spec failure and confirmed it was caused by pre-existing
+       local asset/runtime console 404s in the existing "runtime and local asset errors" test, not by the mobile header
+       menu change.
+8. [x] **Skill: manual-testing** — Manually verified the homepage header in a mobile viewport at `http://localhost:8000`,
+       confirmed the open menu renders as the top visual layer over the hero area, and checked the interaction directly in
+       the browser.

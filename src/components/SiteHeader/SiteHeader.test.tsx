@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SiteHeader from "./SiteHeader";
 import { siteConfig } from "../../config";
@@ -19,29 +19,53 @@ describe("SiteHeader", () => {
   });
 
   it("renders the About nav link", () => {
-    render(<SiteHeader />);
-    const link = screen.getByRole("link", { name: "About" });
+    const { container } = render(<SiteHeader />);
+    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+
+    expect(desktopNav).not.toBeNull();
+
+    const link = within(desktopNav as HTMLElement).getByRole("link", {
+      name: "About",
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "#about");
   });
 
   it("renders the Projects nav link", () => {
-    render(<SiteHeader />);
-    const link = screen.getByRole("link", { name: "Projects" });
+    const { container } = render(<SiteHeader />);
+    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+
+    expect(desktopNav).not.toBeNull();
+
+    const link = within(desktopNav as HTMLElement).getByRole("link", {
+      name: "Projects",
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "#projects");
   });
 
   it("renders the Experience nav link", () => {
-    render(<SiteHeader />);
-    const link = screen.getByRole("link", { name: "Experience" });
+    const { container } = render(<SiteHeader />);
+    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+
+    expect(desktopNav).not.toBeNull();
+
+    const link = within(desktopNav as HTMLElement).getByRole("link", {
+      name: "Experience",
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "#experience");
   });
 
   it("renders the Education nav link", () => {
-    render(<SiteHeader />);
-    const link = screen.getByRole("link", { name: "Education" });
+    const { container } = render(<SiteHeader />);
+    const desktopNav = container.querySelector("ul.hidden.md\\:flex");
+
+    expect(desktopNav).not.toBeNull();
+
+    const link = within(desktopNav as HTMLElement).getByRole("link", {
+      name: "Education",
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "#education");
   });
@@ -63,15 +87,20 @@ describe("SiteHeader", () => {
     });
 
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    expect(screen.queryByRole("link", { name: "About" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
 
     await user.click(menuButton);
 
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
     expect(menuButton).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("link", { name: "About" })).toHaveAttribute(
-      "href",
-      "#about",
-    );
+    expect(mobileMenu).toBeVisible();
+    expect(
+      within(mobileMenu).getByRole("link", { name: "About" }),
+    ).toHaveAttribute("href", "#about");
   });
 
   it("closes the mobile menu when escape is pressed", async () => {
@@ -89,6 +118,9 @@ describe("SiteHeader", () => {
     await user.keyboard("{Escape}");
 
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Open navigation menu" }),
     ).toBeInTheDocument();
@@ -122,8 +154,34 @@ describe("SiteHeader", () => {
 
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
     expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
+    expect(
       screen.getByRole("button", { name: "Open navigation menu" }),
     ).toBeInTheDocument();
+  });
+
+  it("closes the mobile menu after choosing a link", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+
+    await user.click(within(mobileMenu).getByRole("link", { name: "About" }));
+
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
   });
 
   it("updates the header style after scrolling", () => {
