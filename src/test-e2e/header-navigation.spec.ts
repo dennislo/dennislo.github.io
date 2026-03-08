@@ -1,9 +1,9 @@
 import {
-  test,
-  expect,
   type ConsoleMessage,
+  expect,
   type Page,
   type Response,
+  test,
 } from "@playwright/test";
 
 const mobileViewport = { width: 390, height: 844 };
@@ -94,6 +94,9 @@ test.describe("Header navigation", () => {
 
       expect(headerBox).not.toBeNull();
       expect(headingBox).not.toBeNull();
+      // Meaning: after the anchor jump, the heading should start below the fixed header instead of being overlapped by it.
+      // Why this matters: a fixed header can visually cover anchor targets even though the browser technically scrolled
+      // to the right element. The test guards against that regression by checking actual layout in the browser, not just the URL hash.
       expect(headingBox!.y).toBeGreaterThanOrEqual(headerBox!.height - 1);
     }
   });
