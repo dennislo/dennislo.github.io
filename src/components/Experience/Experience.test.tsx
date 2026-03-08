@@ -21,7 +21,9 @@ describe("Experience", () => {
 
   it("renders each job title from siteConfig.experience", () => {
     render(<Experience />);
-    const uniqueTitles = [...new Set(siteConfig.experience.map((e) => e.title))];
+    const uniqueTitles = [
+      ...new Set(siteConfig.experience.map((e) => e.title)),
+    ];
     for (const title of uniqueTitles) {
       const expected = siteConfig.experience.filter(
         (e) => e.title === title,
