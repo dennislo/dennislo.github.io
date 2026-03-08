@@ -34,7 +34,9 @@ separation from the content above. The wave SVG sitting immediately inside creat
 `src/components/SiteFooter/SiteFooter.tsx` — lines 21–34:
 
 ```tsx
-{/* Decorative wave */}
+{
+  /* Decorative wave */
+}
 <div className="w-full overflow-hidden leading-none">
   <svg
     viewBox="0 0 1440 60"
@@ -47,7 +49,7 @@ separation from the content above. The wave SVG sitting immediately inside creat
       fill="currentColor"
     />
   </svg>
-</div>
+</div>;
 ```
 
 ---
@@ -137,13 +139,13 @@ All tests must pass and typecheck must be clean before proceeding. If either fai
 
 ## Agent Orchestration
 
-| Step | Agent                          | Action                                                                       |
-| ---- | ------------------------------ | ---------------------------------------------------------------------------- |
-| 1    | **senior-frontend-engineer**   | Edit `SiteFooter.tsx`: remove wave div, restore top padding                  |
-| 2    | **test-writer**                | Audit and update `SiteFooter.test.tsx` to remove wave-related assertions     |
-| 3    | **Main agent**                 | Run `npm test` and `npm run typecheck`                                       |
-| 3    | **debugger** _(if needed)_     | Investigate and fix any test failures or type errors                         |
-| 4    | **manual-testing skill**       | Start dev server, verify footer visually in light and dark mode              |
+| Step | Agent                        | Action                                                                   |
+| ---- | ---------------------------- | ------------------------------------------------------------------------ |
+| 1    | **senior-frontend-engineer** | Edit `SiteFooter.tsx`: remove wave div, restore top padding              |
+| 2    | **test-writer**              | Audit and update `SiteFooter.test.tsx` to remove wave-related assertions |
+| 3    | **Main agent**               | Run `npm test` and `npm run typecheck`                                   |
+| 3    | **debugger** _(if needed)_   | Investigate and fix any test failures or type errors                     |
+| 4    | **manual-testing skill**     | Start dev server, verify footer visually in light and dark mode          |
 
 ---
 
@@ -162,9 +164,9 @@ Main Agent (orchestrates)
 
 ## Implementation Steps (Summary)
 
-1. [ ] **[senior-frontend-engineer]** Remove wave div (lines 21–34) and `pt-0` from `SiteFooter.tsx`
-2. [ ] **[test-writer]** Remove wave-related assertions from `SiteFooter.test.tsx`
-3. [ ] **[Main]** Run `npm test` and `npm run typecheck` — both must pass
-4. [ ] **[debugger]** _(Only if needed.)_ Fix any test failures or type errors
-5. [ ] **[manual-testing skill]** Verify footer visually in light and dark mode; capture screenshots
-6. [ ] **[Main]** Commit changes
+1. [x] **[senior-frontend-engineer]** Remove wave div (lines 21–34) and `pt-0` from `SiteFooter.tsx`
+2. [x] **[test-writer]** Audited `SiteFooter.test.tsx` — no wave assertions existed, no changes needed
+3. [x] **[Main]** Run `npm test` and `npm run typecheck` — 121/121 tests pass, typecheck clean
+4. [ ] **[debugger]** _(Not needed — no failures.)_
+5. [x] **[manual-testing skill]** Verified footer in light and dark mode — clean `border-t`, no wave artifact, correct padding
+6. [x] **[Main]** Committed as `8a9f358` — "Remove decorative wave div from SiteFooter (dennislo-wms)"
