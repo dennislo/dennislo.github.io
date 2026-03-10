@@ -90,7 +90,16 @@ imported directly). Global CSS lives in `src/components/styles/` (reset, typogra
 **Testing:** Jest + React Testing Library. Tests live alongside source files (`*.test.tsx`). `jest.setup.js` imports
 `@testing-library/jest-dom`. CSS modules are mapped via `identity-obj-proxy`.
 
-**Pre-commit hook:** Runs `npm run format` then `npm run typecheck` automatically via Husky.
+**Pre-commit hook:** Runs `sh ./scripts/check-agents-claude-sync.sh` first, then `npm run format`,
+`npm run typecheck`, `npm run lint`, and `npm test` via Husky.
+
+**Mirrored agent docs:** `CLAUDE.md` is the canonical source of truth. `AGENTS.md` must stay byte-for-byte identical to
+the staged `CLAUDE.md` content. If the hook reports drift, restore the canonical paths if needed, then resync with:
+
+```bash
+cp CLAUDE.md AGENTS.md
+git add CLAUDE.md AGENTS.md
+```
 
 <!-- BEGIN BEADS INTEGRATION -->
 
@@ -156,7 +165,7 @@ bd close bd-42 --reason "Completed" --json
 2. **Claim your task atomically**: `bd update <id> --claim`
 3. **Work on it**: Implement, test, document
 4. **Discover new work?** Create linked issue:
-    - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
+   - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
 5. **Complete**: `bd close <id> --reason "Done"`
 
 ### Auto-Sync
