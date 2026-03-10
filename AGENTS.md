@@ -91,9 +91,20 @@ bd automatically syncs via Dolt:
 - ✅ Always use `--json` flag for programmatic use
 - ✅ Link discovered work with `discovered-from` dependencies
 - ✅ Check `bd ready` before asking "what should I work on?"
+- ✅ In Codex/Codex app sandboxes, rerun `bd` commands outside the sandbox if they fail with `Dolt server unreachable at 127.0.0.1:13819`
+- ✅ Treat `port 13819 is in use by a non-dolt process` as a likely sandbox false positive when `bd` works outside the sandbox
 - ❌ Do NOT create markdown TODO lists
 - ❌ Do NOT use external issue trackers
 - ❌ Do NOT duplicate tracking systems
+
+### Codex Sandbox Note
+
+`bd` talks to the local Dolt SQL server over `127.0.0.1:13819`. In Codex/Codex app sandboxed command execution, localhost TCP access may be blocked even when the repo's Dolt server is healthy. When that happens, commands such as `bd ready --json` can fail with:
+
+- `failed to open database: Dolt server unreachable at 127.0.0.1:13819`
+- `port 13819 is in use by a non-dolt process`
+
+If you see that combination in Codex, do not change the beads port or switch the repo away from Dolt as a first step. Re-run the same `bd` command with escalated permissions / outside the sandbox and continue if it succeeds there.
 
 For more details, see README.md and docs/QUICKSTART.md.
 
