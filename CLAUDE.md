@@ -4,8 +4,17 @@ This is a personal website/blog built with Gatsby, React, and TypeScript.
 
 ## Required Agent And Skill Usage
 
+- Use `.claude/skills/create-plan/SKILL.md` when the user asks for a plan, implementation approach, or scoped execution
+  document. Create the plan in `claude-plans/` using the local plan conventions.
 - Use `.agent/skills/manual-testing/SKILL.md` for manual QA tasks: start the app, open a browser, go to
   `http://localhost:8000`, exercise the site like a real user, inspect DevTools, and capture evidence for issues.
+- Use `.agent/skills/rule-of-5/SKILL.md` when the user asks for repeated review, convergence, iterative critique, or
+  the "rule of 5". Apply multiple review passes and record only net-new findings each round.
+- Use `.claude/agents/code-health.md` for code-health sweeps, cleanup audits, stale-pattern detection, and follow-up
+  maintenance discovery. Check existing `bd` work first and file any new actionable findings in `bd`.
+- Use `.claude/agents/code-reviewer.md` proactively after meaningful code or test changes, and whenever the user asks
+  for a review. Focus on correctness, security, performance, readability, error handling, React best practices, and
+  test adequacy.
 - Use `.claude/agents/debugger.md` whenever there are errors, failing tests, broken builds, console issues, or unclear
   behavior. Add plan steps to understand the symptom first, investigate and isolate the cause second, then fix and
   verify.
@@ -15,6 +24,8 @@ This is a personal website/blog built with Gatsby, React, and TypeScript.
   says `test-writter`, interpret it as this agent.
 - Use `.claude/skills/e2e-testing/SKILL.md` for Playwright work, including new browser tests, updating existing specs,
   debugging flaky end-to-end coverage, and validating user journeys.
+- Use `.claude/skills/unit-testing/SKILL.md` when writing or updating Jest and React Testing Library coverage, to
+  follow this repo's testing patterns, query priorities, mocking boundaries, and AAA structure.
 
 ## Code Style & Standards
 
