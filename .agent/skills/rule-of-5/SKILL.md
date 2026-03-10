@@ -127,29 +127,35 @@ only needs to be reported when the draft itself needs explanation.
 
 ```md
 Pass 0 - Initial Draft
+
 - Optional note:
 
 Pass 1 - Correctness
+
 - Findings:
 - Fixes made:
 - Residual risk:
 
 Pass 2 - Completeness
+
 - Findings:
 - Fixes made:
 - Residual risk:
 
 Pass 3 - Maintainability
+
 - Findings:
 - Fixes made:
 - Residual risk:
 
 Pass 4 - Systems or Existential
+
 - Findings:
 - Fixes made:
 - Residual risk:
 
 Convergence
+
 - Decision:
 - Why:
 ```

@@ -17,7 +17,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "format": "prettier --write .",
-    "prepare": "husky",
+    "prepare": "sh ./scripts/install-git-hooks.sh",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:e2e": "playwright test",

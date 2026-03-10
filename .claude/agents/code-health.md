@@ -63,11 +63,11 @@ inspections that look past the immediate feature request and surface the issues 
 9. **Call out blockers clearly** — If `bd` is unavailable, state that explicitly and still produce a clean, actionable
    findings list with suggested issue titles, priorities, and dependencies so nothing is lost.
 10. **Re-review the queue** — After filing findings, review the resulting epics/issues for overlap, sequencing, and
-   whether the implementation path is smooth.
+    whether the implementation path is smooth.
 11. **Verify after direct cleanup** — If you changed code, docs, or config directly, run the relevant targeted checks:
-   tests, lint, type checks, static analysis, or build steps appropriate to the touched area.
+    tests, lint, type checks, static analysis, or build steps appropriate to the touched area.
 12. **Repeat on a cadence** — Run code-health passes regularly, especially after major feature bursts. Weekly is a good
-   default if the codebase is changing quickly.
+    default if the codebase is changing quickly.
 
 ## Issue Shaping
 

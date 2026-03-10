@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+sh ./scripts/run-bd-hook.sh pre-commit "$@"
 sh ./scripts/check-agents-claude-sync.sh
 npm run format
 npm run typecheck
