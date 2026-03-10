@@ -1,6 +1,6 @@
 # Project Overview
 
-This is a personal website/blog built with Gatsby, React, and TypeScript.
+This is a personal website built with Gatsby, React, and TypeScript.
 
 ## Required Agent And Skill Usage
 
@@ -20,7 +20,8 @@ This is a personal website/blog built with Gatsby, React, and TypeScript.
   verify.
 - Use `.claude/agents/senior-frontend-engineer.md` for frontend implementation and bug-fix work in Gatsby, React, and
   TypeScript. Default to this agent when code needs to be written or corrected in the UI layer.
-- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library.
+- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library. If a request
+  says `test-writter`, interpret it as this agent.
 - Use `.claude/skills/e2e-testing/SKILL.md` for Playwright work, including new browser tests, updating existing specs,
   debugging flaky end-to-end coverage, and validating user journeys.
 - Use `.claude/skills/unit-testing/SKILL.md` when writing or updating Jest and React Testing Library coverage, to
@@ -100,8 +101,9 @@ imported directly). Global CSS lives in `src/components/styles/` (reset, typogra
 **Testing:** Jest + React Testing Library. Tests live alongside source files (`*.test.tsx`). `jest.setup.js` imports
 `@testing-library/jest-dom`. CSS modules are mapped via `identity-obj-proxy`.
 
-**Pre-commit hook:** Runs `sh ./scripts/check-agents-claude-sync.sh` first, then `npm run format`,
-`npm run typecheck`, `npm run lint`, and `npm test` via Husky.
+**Git hooks:** This repository should use `.husky` as `core.hooksPath`. Husky-owned hooks forward Beads hook events
+from `.husky`, and `pre-commit` then runs `sh ./scripts/check-agents-claude-sync.sh`, `npm run format`,
+`npm run typecheck`, `npm run lint`, and `npm test`.
 
 **Mirrored agent docs:** `CLAUDE.md` is the canonical source of truth. `AGENTS.md` must stay byte-for-byte identical to
 the staged `CLAUDE.md` content. If the hook reports drift, restore the canonical paths if needed, then resync with:
@@ -175,7 +177,7 @@ bd close bd-42 --reason "Completed" --json
 2. **Claim your task atomically**: `bd update <id> --claim`
 3. **Work on it**: Implement, test, document
 4. **Discover new work?** Create linked issue:
-    - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
+   - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
 5. **Complete**: `bd close <id> --reason "Done"`
 
 ### Auto-Sync
