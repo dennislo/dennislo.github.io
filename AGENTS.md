@@ -20,8 +20,7 @@ This is a personal website built with Gatsby, React, and TypeScript.
   verify.
 - Use `.claude/agents/senior-frontend-engineer.md` for frontend implementation and bug-fix work in Gatsby, React, and
   TypeScript. Default to this agent when code needs to be written or corrected in the UI layer.
-- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library. If a request
-  says `test-writter`, interpret it as this agent.
+- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library.
 - Use `.claude/skills/e2e-testing/SKILL.md` for Playwright work, including new browser tests, updating existing specs,
   debugging flaky end-to-end coverage, and validating user journeys.
 - Use `.claude/skills/unit-testing/SKILL.md` when writing or updating Jest and React Testing Library coverage, to
@@ -29,6 +28,7 @@ This is a personal website built with Gatsby, React, and TypeScript.
 
 ## Code Style & Standards
 
+- High-quality, maintainable, professional code
 - Write TypeScript with strict typing
 - Follow React best practices and hooks patterns
 - Use functional components over class components
@@ -36,7 +36,7 @@ This is a personal website built with Gatsby, React, and TypeScript.
 
 ## Testing Guidelines
 
-- All new components should include unit tests
+- All new components should include unit tests that meaningfully cover functionality and edge cases
 - Test files should be colocated with components (e.g., `Component.test.tsx`)
 - Use `@testing-library/react` for component testing
 - Verify both functionality and accessibility where applicable
@@ -47,7 +47,7 @@ This is a personal website built with Gatsby, React, and TypeScript.
 
 ## Development Workflow
 
-- This is a Gatsby project - use Gatsby-specific patterns and APIs
+- This is a Gatsby project – use Gatsby-specific patterns and APIs
 - Run tests before committing changes
 - Follow the existing project structure in `src/`
 - Maintain consistency with existing code patterns
