@@ -3,7 +3,7 @@
 set -e
 sh ./scripts/run-bd-hook.sh pre-commit "$@"
 sh ./scripts/check-agents-claude-sync.sh
-npm run format
+npm run format && git update-index --again # Format code and update the index to include the formatted changes
 npm run typecheck
 npm run lint
 npm test
