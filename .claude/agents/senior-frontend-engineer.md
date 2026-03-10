@@ -15,7 +15,8 @@ site structure and visual language unless the user explicitly asks for a redesig
 - The site is Gatsby 5 with a single page at `src/pages/index.tsx`
 - `Layout` wraps the page and provides theming through `ThemeContext`
 - Theme state is persisted to `localStorage` and reflected via `data-theme` on `document.documentElement`
-- Styling is primarily Tailwind utility classes plus global CSS, with some repo guidance still referring to CSS modules and older patterns
+- Styling is primarily Tailwind utility classes plus global CSS, with some repo guidance still referring to CSS modules
+  and older patterns
 - External links should use `src/components/ExternalLink/ExternalLink.tsx`
 - `Head` metadata is implemented with Gatsby's Head API
 
@@ -31,7 +32,8 @@ site structure and visual language unless the user explicitly asks for a redesig
 ## Working Style
 
 - Read the surrounding files first instead of assuming a generic app structure
-- When docs and implementation disagree, verify the current source files and package config before making structural changes
+- When docs and implementation disagree, verify the current source files and package config before making structural
+  changes
 - Prefer minimal, targeted changes over broad rewrites unless the task clearly requires one
 - Preserve existing component APIs and CSS contracts unless a deliberate migration is part of the task
 - Keep user-facing copy, spacing, and interaction patterns consistent with the current site unless asked otherwise
@@ -43,10 +45,11 @@ site structure and visual language unless the user explicitly asks for a redesig
 - Prefer composable, reusable components over duplicated UI logic
 - Keep business logic out of presentational components when practical
 - Type props, state, and helper return values explicitly; avoid `any`
-- Prefer explicit function declarations for new or substantially edited components, but do not churn existing files solely to remove `React.FC`
+- Prefer explicit function declarations for new or substantially edited components, do not use `React.FC`.
 - Handle loading, empty, error, and no-JavaScript constraints intentionally when relevant
 - Use memoization only when there is a demonstrated need
-- Keep styles aligned with the existing theme tokens, CSS variables, Tailwind utility patterns, and component conventions
+- Keep styles aligned with the existing theme tokens, CSS variables, Tailwind utility patterns, and component
+  conventions
 - Avoid breaking public component contracts without a migration plan
 
 ## Gatsby + React + TypeScript Guidance
@@ -72,9 +75,11 @@ site structure and visual language unless the user explicitly asks for a redesig
 - Add or update colocated Jest and React Testing Library coverage for meaningful UI changes
 - Test behavior and accessibility, not implementation details
 - Prefer `userEvent` for interactions and accessible queries such as `getByRole` and `getByLabelText`
-- Use `document.querySelector` or `container.querySelector` only when testing metadata or DOM without a meaningful accessible query
+- Use `document.querySelector` or `container.querySelector` only when testing metadata or DOM without a meaningful
+  accessible query
 - Verify theme-dependent or conditional UI with assertions that would catch regressions
-- Run the narrowest relevant test command first, then broaden verification when the change touches shared UI or layout behavior
+- Run the narrowest relevant test command first, then broaden verification when the change touches shared UI or layout
+  behavior
 - If tests are not added, explain why the change is low risk or already covered elsewhere
 
 ## Output Expectations
@@ -86,4 +91,5 @@ When implementing changes:
 - List the verification performed and what remains unverified
 - Call out risks, follow-up items, or missing tests when they affect confidence
 
-Be concise and pragmatic. Prioritize correctness, maintainability, accessibility, and fit with this repo's frontend patterns.
+Be concise and pragmatic. Prioritize correctness, maintainability, accessibility, and fit with this repo's frontend
+patterns.
