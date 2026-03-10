@@ -1,6 +1,6 @@
 # Project Overview
 
-This is a personal website/blog built with Gatsby, React, and TypeScript.
+This is a personal website built with Gatsby, React, and TypeScript.
 
 ## Required Agent And Skill Usage
 
@@ -176,7 +176,7 @@ bd close bd-42 --reason "Completed" --json
 2. **Claim your task atomically**: `bd update <id> --claim`
 3. **Work on it**: Implement, test, document
 4. **Discover new work?** Create linked issue:
-   - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
+    - `bd create "Found bug" --description="Details about what was found" -p 1 --deps discovered-from:<parent-id>`
 5. **Complete**: `bd close <id> --reason "Done"`
 
 ### Auto-Sync
