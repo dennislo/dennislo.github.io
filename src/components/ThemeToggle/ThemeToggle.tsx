@@ -1,4 +1,3 @@
-import React from "react";
 import { useTheme } from "../../context/ThemeContext";
 import TablerMoon from "../icons/TablerMoon";
 import TablerSun from "../icons/TablerSun";

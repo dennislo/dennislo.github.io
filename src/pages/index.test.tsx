@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import type { PageProps } from "gatsby";
 import IndexPage, { Head } from "./index";
 
 jest.mock("../components/Layout/Layout", () => ({
@@ -59,88 +58,44 @@ jest.mock("../components/SiteFooter/SiteFooter", () => ({
   },
 }));
 
-const mockLocation: PageProps["location"] = {
-  pathname: "/",
-  search: "",
-  hash: "",
-  href: "",
-  origin: "",
-  protocol: "",
-  host: "",
-  hostname: "",
-  port: "",
-  state: null,
-  key: "",
-  ancestorOrigins: {} as DOMStringList,
-  assign: jest.fn(),
-  reload: jest.fn(),
-  replace: jest.fn(),
-};
-
-class MockPageComponent extends React.Component {
-  render() {
-    return null;
-  }
-}
-
-const mockPageProps: PageProps = {
-  path: "/",
-  uri: "/",
-  location: mockLocation,
-  children: undefined,
-  params: {},
-  serverData: {},
-  pageResources: {
-    component: new MockPageComponent({}),
-    json: { data: {}, pageContext: {} },
-    page: {
-      componentChunkName: "component---src-pages-index-tsx",
-      path: "/",
-      webpackCompilationHash: "test-hash",
-    },
-  },
-  data: {},
-  pageContext: {},
-};
-
 describe("IndexPage", () => {
   it("renders the Layout component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("Layout")).toBeInTheDocument();
   });
 
   it("renders the SiteHeader component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("SiteHeader")).toBeInTheDocument();
   });
 
   it("renders the Hero component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("Hero")).toBeInTheDocument();
   });
 
   it("renders the About component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("About")).toBeInTheDocument();
   });
 
   it("renders the Projects component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("Projects")).toBeInTheDocument();
   });
 
   it("renders the Experience component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("Experience")).toBeInTheDocument();
   });
 
   it("renders the Education component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("Education")).toBeInTheDocument();
   });
 
   it("renders the SiteFooter component", () => {
-    render(<IndexPage {...mockPageProps} />);
+    render(<IndexPage />);
     expect(screen.getByLabelText("SiteFooter")).toBeInTheDocument();
   });
 
