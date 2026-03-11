@@ -1,8 +1,7 @@
-import React from "react";
 import { siteConfig } from "../../config";
 import TablerArrowUpRight from "../icons/TablerArrowUpRight";
 
-const Projects: React.FC = () => {
+const Projects = () => {
   const accent = siteConfig.accentColor;
   const { projects } = siteConfig;
 

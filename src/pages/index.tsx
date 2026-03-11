@@ -1,5 +1,3 @@
-import * as React from "react";
-import type { PageProps } from "gatsby";
 import Layout from "../components/Layout/Layout";
 import SiteHeader from "../components/SiteHeader/SiteHeader";
 import Hero from "../components/Hero/Hero";
@@ -9,7 +7,7 @@ import Experience from "../components/Experience/Experience";
 import Education from "../components/Education/Education";
 import SiteFooter from "../components/SiteFooter/SiteFooter";
 
-const IndexPage: React.FC<PageProps> = () => {
+const IndexPage = () => {
   return (
     <Layout>
       <SiteHeader />

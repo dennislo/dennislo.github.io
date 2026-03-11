@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import Education from "./Education";
 import { siteConfig } from "../../config";

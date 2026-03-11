@@ -1,4 +1,12 @@
-import React, { useMemo, useRef, useState } from "react";
+import {
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FocusEvent,
+  type FormEvent,
+  type RefObject,
+} from "react";
 import { Link } from "gatsby";
 import { useForm, ValidationError } from "@formspree/react";
 
@@ -76,7 +84,7 @@ const inputClass =
 const labelClass =
   "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1";
 
-const ContactForm: React.FC = () => {
+const ContactForm = () => {
   const [state, handleFormspreeSubmit] = useForm("xykddnzg");
 
   const [values, setValues] = useState<FormValues>({
@@ -110,7 +118,7 @@ const ContactForm: React.FC = () => {
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
   const fieldRefs = useMemo<
-    Record<FieldName, React.RefObject<HTMLInputElement | HTMLTextAreaElement>>
+    Record<FieldName, RefObject<HTMLInputElement | HTMLTextAreaElement>>
   >(
     () => ({
       firstName: firstNameRef,
@@ -123,7 +131,7 @@ const ContactForm: React.FC = () => {
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const fieldName = name as FieldName;
@@ -137,7 +145,7 @@ const ContactForm: React.FC = () => {
   };
 
   const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const fieldName = name as FieldName;
@@ -173,7 +181,7 @@ const ContactForm: React.FC = () => {
     return true;
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm()) return;
     handleFormspreeSubmit(values as unknown as Record<string, string>);
@@ -231,7 +239,7 @@ const ContactForm: React.FC = () => {
               First Name
             </label>
             <input
-              ref={fieldRefs.firstName as React.RefObject<HTMLInputElement>}
+              ref={fieldRefs.firstName as RefObject<HTMLInputElement>}
               id="firstName"
               name="firstName"
               type="text"
@@ -268,7 +276,7 @@ const ContactForm: React.FC = () => {
               Last Name
             </label>
             <input
-              ref={fieldRefs.lastName as React.RefObject<HTMLInputElement>}
+              ref={fieldRefs.lastName as RefObject<HTMLInputElement>}
               id="lastName"
               name="lastName"
               type="text"
@@ -305,7 +313,7 @@ const ContactForm: React.FC = () => {
               Mobile Number
             </label>
             <input
-              ref={fieldRefs.mobile as React.RefObject<HTMLInputElement>}
+              ref={fieldRefs.mobile as RefObject<HTMLInputElement>}
               id="mobile"
               name="mobile"
               type="tel"
@@ -342,7 +350,7 @@ const ContactForm: React.FC = () => {
               Email Address
             </label>
             <input
-              ref={fieldRefs.email as React.RefObject<HTMLInputElement>}
+              ref={fieldRefs.email as RefObject<HTMLInputElement>}
               id="email"
               name="email"
               type="email"
@@ -379,7 +387,7 @@ const ContactForm: React.FC = () => {
               Message
             </label>
             <textarea
-              ref={fieldRefs.message as React.RefObject<HTMLTextAreaElement>}
+              ref={fieldRefs.message as RefObject<HTMLTextAreaElement>}
               id="message"
               name="message"
               value={values.message}

@@ -1,18 +1,18 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 interface ExternalLinkProps {
   href: string;
   title?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
-const ExternalLink: React.FC<ExternalLinkProps> = ({
+const ExternalLink = ({
   href,
   title,
   children,
   className,
-}) => (
+}: ExternalLinkProps) => (
   <a
     href={href}
     title={title}

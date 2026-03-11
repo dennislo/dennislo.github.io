@@ -1,4 +1,3 @@
-import React from "react";
 import { siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import TablerEmail from "../icons/TablerEmail";
@@ -6,7 +5,7 @@ import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   const accent = siteConfig.accentColor;
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
