@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Link, HeadFC, PageProps } from "gatsby";
+import React from "react";
+import { Link, HeadFC } from "gatsby";
 
-const NotFoundPage: React.FC<PageProps> = () => {
+const NotFoundPage = () => {
   return (
     <main className="min-h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-950">
       <div className="text-center max-w-sm">

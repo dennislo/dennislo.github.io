@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "gatsby";
 import { siteConfig } from "../../config";
 
-const About: React.FC = () => {
+const About = () => {
   const accent = siteConfig.accentColor;
 
   return (
@@ -31,13 +32,13 @@ const About: React.FC = () => {
             </h3>
             <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               {siteConfig.agileIT}{" "}
-              <a
-                href="/contact-form"
+              <Link
+                to="/contact-form"
                 className="underline transition-colors duration-300"
                 style={{ color: accent }}
               >
                 Please contact us for further information about our services.
-              </a>
+              </Link>
             </p>
           </div>
 

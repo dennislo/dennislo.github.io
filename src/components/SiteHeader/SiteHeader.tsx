@@ -8,7 +8,7 @@ const navLinks = [
   { label: "Education", href: "#education" },
 ];
 
-const SiteHeader: React.FC = () => {
+const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

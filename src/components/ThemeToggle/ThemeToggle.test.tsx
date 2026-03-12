@@ -55,14 +55,7 @@ describe("ThemeToggle", () => {
         <ThemeToggle />
       </ThemeProvider>,
     );
-    // TablerMoon renders an SVG with a moon path — verify an svg is present inside the button
-    const button = screen.getByRole("button");
-    expect(button.querySelector("svg")).toBeInTheDocument();
-    // The moon path has a unique arc shape; verify it appears and sun's circle path does not
-    const paths = button.querySelectorAll("path");
-    const pathStrings = Array.from(paths).map((p) => p.getAttribute("d") ?? "");
-    const hasMoonPath = pathStrings.some((d) => d.includes("7.92 12.446"));
-    expect(hasMoonPath).toBe(true);
+    expect(screen.getByTestId("moon-icon")).toBeInTheDocument();
   });
 
   it("renders the sun icon when theme is dark", () => {
@@ -72,13 +65,7 @@ describe("ThemeToggle", () => {
         <ThemeToggle />
       </ThemeProvider>,
     );
-    const button = screen.getByRole("button");
-    expect(button.querySelector("svg")).toBeInTheDocument();
-    // The sun path has a unique circle definition; verify it appears
-    const paths = button.querySelectorAll("path");
-    const pathStrings = Array.from(paths).map((p) => p.getAttribute("d") ?? "");
-    const hasSunPath = pathStrings.some((d) => d.includes("m-4 0a4 4"));
-    expect(hasSunPath).toBe(true);
+    expect(screen.getByTestId("sun-icon")).toBeInTheDocument();
   });
 
   it("calls toggleTheme and switches aria-label on click", async () => {

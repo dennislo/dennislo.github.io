@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { siteConfig } from "../../config";
+import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
@@ -13,7 +14,7 @@ const navLinks = [
   { label: "Education", href: "#education" },
 ];
 
-const SiteFooter: React.FC = () => {
+const SiteFooter = () => {
   const accent = siteConfig.accentColor;
 
   return (
@@ -64,48 +65,40 @@ const SiteFooter: React.FC = () => {
             >
               <TablerEmail className="h-5 w-5" />
             </a>
-            <a
+            <ExternalLink
               href={siteConfig.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="Dennis Lo on GitHub"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerGithub className="h-5 w-5" />
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               href={siteConfig.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="Dennis Lo on LinkedIn"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerLinkedin className="h-5 w-5" />
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               href={siteConfig.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="Dennis Lo on Instagram"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerInstagram className="h-5 w-5" />
-            </a>
+            </ExternalLink>
           </div>
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-500">
             © {new Date().getFullYear()} {siteConfig.name}. Built with ❤️ using{" "}
-            <a
+            <ExternalLink
               href="https://www.gatsbyjs.org/"
-              target="_blank"
-              rel="noopener noreferrer"
               className="underline transition-colors duration-300"
               style={{ color: accent }}
             >
               Gatsby.js
-            </a>
+            </ExternalLink>
           </p>
         </div>
       </div>

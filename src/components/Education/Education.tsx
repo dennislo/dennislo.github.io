@@ -1,7 +1,7 @@
 import React from "react";
 import { siteConfig } from "../../config";
 
-const Education: React.FC = () => {
+const Education = () => {
   const accent = siteConfig.accentColor;
   const { education } = siteConfig;
 

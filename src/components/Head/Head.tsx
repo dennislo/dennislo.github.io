@@ -9,20 +9,15 @@ import React from "react";
 type HeadProps = {
   title?: string;
   description?: string;
-  lang?: string;
   author?: string;
 };
 
 export function Head({
   title = "Who is DLO?",
   description,
-  lang = "en",
   author = "@dlo",
 }: HeadProps) {
   const metaDescription = description ?? `${title} - My personal homepage`;
-  React.useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   return (
     <>

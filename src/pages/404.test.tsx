@@ -61,17 +61,17 @@ const mockPageProps: PageProps = {
 
 describe("NotFoundPage", () => {
   it("renders page not found heading", () => {
-    render(<NotFoundPage {...mockPageProps} />);
+    render(<NotFoundPage />);
     expect(screen.getByText("Page not found")).toBeInTheDocument();
   });
 
   it("renders apology message", () => {
-    render(<NotFoundPage {...mockPageProps} />);
+    render(<NotFoundPage />);
     expect(screen.getByText(/Sorry/)).toBeInTheDocument();
   });
 
   it("renders go home link", () => {
-    render(<NotFoundPage {...mockPageProps} />);
+    render(<NotFoundPage />);
     const link = screen.getByRole("link", { name: "Go home" });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/");

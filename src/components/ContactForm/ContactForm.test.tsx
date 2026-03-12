@@ -243,6 +243,16 @@ describe("ContactForm", () => {
         "true",
       );
     });
+
+    it("moves focus to the first invalid field (First Name) when the empty form is submitted", async () => {
+      const { user } = setup();
+
+      await user.click(screen.getByRole("button", { name: "Send Message" }));
+
+      await screen.findAllByText("This field is required.");
+
+      expect(document.activeElement).toBe(screen.getByLabelText("First Name"));
+    });
   });
 
   // ------------------------------------------------------------------ Validation: blur triggers

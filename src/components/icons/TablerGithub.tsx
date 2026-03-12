@@ -4,7 +4,7 @@ interface TablerIconProps {
   className?: string;
 }
 
-const TablerGithub: React.FC<TablerIconProps> = ({ className = "h-6 w-6" }) => (
+const TablerGithub = ({ className = "h-6 w-6" }: TablerIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
