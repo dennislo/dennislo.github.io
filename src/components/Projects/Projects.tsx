@@ -1,3 +1,4 @@
+import React from "react";
 import { siteConfig } from "../../config";
 import TablerArrowUpRight from "../icons/TablerArrowUpRight";
 

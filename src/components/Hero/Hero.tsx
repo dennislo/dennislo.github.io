@@ -1,3 +1,4 @@
+import React from "react";
 import { siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import TablerEmail from "../icons/TablerEmail";

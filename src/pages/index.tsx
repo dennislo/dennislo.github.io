@@ -1,3 +1,4 @@
+import React from "react";
 import Layout from "../components/Layout/Layout";
 import SiteHeader from "../components/SiteHeader/SiteHeader";
 import Hero from "../components/Hero/Hero";
