@@ -16,6 +16,7 @@ const TablerSun = ({ className = "h-6 w-6" }: TablerIconProps) => (
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
+    data-testid="sun-icon"
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
