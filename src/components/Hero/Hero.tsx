@@ -1,6 +1,7 @@
 import React from "react";
 import { siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
+import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
@@ -196,36 +197,30 @@ const Hero = () => {
         >
           <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </a>
-        <a
+        <ExternalLink
           href={siteConfig.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
           aria-label="Dennis Lo on GitHub"
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
           <TablerGithub className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-        </a>
-        <a
+        </ExternalLink>
+        <ExternalLink
           href={siteConfig.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
           aria-label="Dennis Lo on LinkedIn"
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
           <TablerLinkedin className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-        </a>
-        <a
+        </ExternalLink>
+        <ExternalLink
           href={siteConfig.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
           aria-label="Dennis Lo on Instagram"
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
           <TablerInstagram className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-        </a>
+        </ExternalLink>
       </div>
 
       <style>{`

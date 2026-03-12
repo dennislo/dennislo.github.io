@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { ThemeProvider } from "../../context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
@@ -16,10 +15,6 @@ const Layout = ({ children }: LayoutProps) => {
       </div>
     </ThemeProvider>
   );
-};
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Layout;
