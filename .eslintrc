@@ -29,6 +29,8 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off"
   },
   "overrides": [
     {

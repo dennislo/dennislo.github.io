@@ -1,7 +1,6 @@
-import React from "react";
 import { siteConfig } from "../../config";
 
-const About: React.FC = () => {
+const About = () => {
   const accent = siteConfig.accentColor;
 
   return (

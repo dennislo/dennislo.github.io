@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "gatsby";
 import { siteConfig } from "../../config";
 import TablerEmail from "../icons/TablerEmail";
@@ -13,7 +12,7 @@ const navLinks = [
   { label: "Education", href: "#education" },
 ];
 
-const SiteFooter: React.FC = () => {
+const SiteFooter = () => {
   const accent = siteConfig.accentColor;
 
   return (

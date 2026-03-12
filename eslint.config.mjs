@@ -11,12 +11,15 @@ export default tseslint.config(
     ],
   },
   ...tseslint.configs.recommended,
+  // Use the jsx-runtime preset: enables recommended rules + disables react-in-jsx-scope
+  // and react/jsx-uses-react (not needed with Gatsby 5 / React 18 automatic JSX transform)
+  reactPlugin.configs.flat["jsx-runtime"],
   {
+    // TypeScript enforces prop types; disable the runtime check for .ts/.tsx files
     files: ["**/*.{ts,tsx}"],
-    plugins: { react: reactPlugin },
     settings: { react: { version: "detect" } },
     rules: {
-      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
     },
   },
   {

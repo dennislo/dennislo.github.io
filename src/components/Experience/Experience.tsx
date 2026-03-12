@@ -1,7 +1,6 @@
-import React from "react";
 import { siteConfig } from "../../config";
 
-const Experience: React.FC = () => {
+const Experience = () => {
   const accent = siteConfig.accentColor;
   const { experience } = siteConfig;
 
