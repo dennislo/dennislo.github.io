@@ -1,15 +1,13 @@
 name: CI
 
 on:
-  pull_request: # Runs on every PR, regardless of target branch
+  pull_request:
+    branches: [develop]
   push:
     branches: [develop]
 
 permissions:
   contents: read
-
-env:
-  NPM_CONFIG_CACHE: ~/.npm
 
 jobs:
   format:
@@ -66,6 +64,7 @@ jobs:
 
   e2e-tests:
     name: E2E Tests
+    needs: [format, lint, typecheck, unit-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -76,22 +75,13 @@ jobs:
           cache-dependency-path: "package-lock.json"
       - run: npm ci --prefer-offline
       - name: Cache Playwright browsers
-        id: playwright-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             playwright-chromium-${{ runner.os }}-
-      - name: Install Playwright (with OS deps on cache miss)
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - name: Install Playwright (browsers only on cache hit)
-        run: npx playwright install chromium
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
       - run: npm run build
-        env:
-          NODE_ENV: production
       - run: npm run test:e2e
-        env:
-          CI: true
