@@ -68,6 +68,19 @@ describe("SiteHeader", () => {
     expect(link).toHaveAttribute("href", "#education");
   });
 
+  it("renders the Gists nav link as an external link in the desktop nav", () => {
+    render(<SiteHeader />);
+
+    const link = within(getDesktopNav()).getByRole("link", { name: "Gists" });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute(
+      "href",
+      "https://gist.github.com/dennislo/public",
+    );
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("renders a nav element", () => {
     render(<SiteHeader />);
     expect(
@@ -99,6 +112,50 @@ describe("SiteHeader", () => {
     expect(
       within(mobileMenu).getByRole("link", { name: "About" }),
     ).toHaveAttribute("href", "#about");
+  });
+
+  it("renders the Gists link in the mobile menu as an external link", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const link = within(mobileMenu).getByRole("link", { name: "Gists" });
+    expect(link).toHaveAttribute(
+      "href",
+      "https://gist.github.com/dennislo/public",
+    );
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("closes the mobile menu after clicking the Gists external link", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+
+    await user.click(within(mobileMenu).getByRole("link", { name: "Gists" }));
+
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
   });
 
   it("closes the mobile menu when escape is pressed", async () => {

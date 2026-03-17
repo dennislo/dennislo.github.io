@@ -167,6 +167,29 @@ test.describe("Header navigation", () => {
     }
   });
 
+  test("mobile menu exposes the Gists external link with the correct URL and new-tab attributes", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const menuButton = page.getByRole("button", { name: /navigation menu/i });
+    await menuButton.click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    const mobileMenu = page.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const gistsLink = mobileMenu.getByRole("link", { name: "Gists" });
+
+    await expect(gistsLink).toBeVisible();
+    await expect(gistsLink).toHaveAttribute(
+      "href",
+      "https://gist.github.com/dennislo/public",
+    );
+    await expect(gistsLink).toHaveAttribute("target", "_blank");
+    await expect(gistsLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   test("homepage and contact form stay free of runtime and local asset errors", async ({
     page,
   }) => {
