@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
@@ -24,9 +24,30 @@ const desktopLinkClassName =
 const mobileLinkClassName =
   "block rounded-lg px-2 py-2 text-sm text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100";
 
+const NavLinkItem = ({
+  link,
+  className,
+  onClick,
+}: {
+  link: NavLink;
+  className: string;
+  onClick?: () => void;
+}) =>
+  link.type === "internal" ? (
+    <a href={link.href} className={className} onClick={onClick}>
+      {link.label}
+    </a>
+  ) : (
+    <ExternalLink href={link.href} className={className} onClick={onClick}>
+      {link.label}
+    </ExternalLink>
+  );
+
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,18 +106,7 @@ const SiteHeader = () => {
           <ul className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
-                {link.type === "internal" ? (
-                  <a href={link.href} className={desktopLinkClassName}>
-                    {link.label}
-                  </a>
-                ) : (
-                  <ExternalLink
-                    href={link.href}
-                    className={desktopLinkClassName}
-                  >
-                    {link.label}
-                  </ExternalLink>
-                )}
+                <NavLinkItem link={link} className={desktopLinkClassName} />
               </li>
             ))}
           </ul>
@@ -127,30 +137,12 @@ const SiteHeader = () => {
           <div className="mx-4 rounded-b-2xl border border-t-0 border-gray-100 bg-white/95 px-4 pb-4 pt-3 shadow-lg backdrop-blur-sm dark:border-gray-800 dark:bg-gray-950/95">
             <ul className="flex max-h-[calc(100vh-4.5rem)] flex-col gap-3 overflow-y-auto">
               {navLinks.map((link) => (
-                <li
-                  key={link.href}
-                  onClick={
-                    link.type === "external"
-                      ? () => setIsMenuOpen(false)
-                      : undefined
-                  }
-                >
-                  {link.type === "internal" ? (
-                    <a
-                      href={link.href}
-                      className={mobileLinkClassName}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <ExternalLink
-                      href={link.href}
-                      className={mobileLinkClassName}
-                    >
-                      {link.label}
-                    </ExternalLink>
-                  )}
+                <li key={link.href}>
+                  <NavLinkItem
+                    link={link}
+                    className={mobileLinkClassName}
+                    onClick={closeMenu}
+                  />
                 </li>
               ))}
             </ul>
