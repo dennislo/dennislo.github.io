@@ -1,5 +1,5 @@
 import React from "react";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, MouseEventHandler, ReactNode } from "react";
 
 interface ExternalLinkProps {
   href: string;
@@ -8,6 +8,7 @@ interface ExternalLinkProps {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 const ExternalLink = ({
@@ -17,6 +18,7 @@ const ExternalLink = ({
   children,
   className,
   style,
+  onClick,
 }: ExternalLinkProps) => (
   <a
     href={href}
@@ -26,6 +28,7 @@ const ExternalLink = ({
     target="_blank"
     className={className}
     style={style}
+    onClick={onClick}
   >
     {children}
   </a>

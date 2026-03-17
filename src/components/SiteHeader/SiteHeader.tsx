@@ -1,16 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { siteConfig } from "../../config";
+import ExternalLink from "../ExternalLink/ExternalLink";
 
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
+type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
+type ExternalNavLink = { type: "external"; label: string; href: string };
+type NavLink = InternalNavLink | ExternalNavLink;
+
+const navLinks: NavLink[] = [
+  { type: "internal", label: "About", href: "#about" },
+  { type: "internal", label: "Projects", href: "#projects" },
+  { type: "internal", label: "Experience", href: "#experience" },
+  { type: "internal", label: "Education", href: "#education" },
+  {
+    type: "external",
+    label: "Gists",
+    href: "https://gist.github.com/dennislo/public",
+  },
 ];
+
+const desktopLinkClassName =
+  "text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300";
+
+const mobileLinkClassName =
+  "block rounded-lg px-2 py-2 text-sm text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100";
+
+const NavLinkItem = ({
+  link,
+  className,
+  onClick,
+}: {
+  link: NavLink;
+  className: string;
+  onClick?: () => void;
+}) =>
+  link.type === "internal" ? (
+    <a href={link.href} className={className} onClick={onClick}>
+      {link.label}
+    </a>
+  ) : (
+    <ExternalLink href={link.href} className={className} onClick={onClick}>
+      {link.label}
+    </ExternalLink>
+  );
 
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,12 +106,7 @@ const SiteHeader = () => {
           <ul className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
+                <NavLinkItem link={link} className={desktopLinkClassName} />
               </li>
             ))}
           </ul>
@@ -106,13 +138,11 @@ const SiteHeader = () => {
             <ul className="flex max-h-[calc(100vh-4.5rem)] flex-col gap-3 overflow-y-auto">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="block rounded-lg px-2 py-2 text-sm text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.label}
-                  </a>
+                  <NavLinkItem
+                    link={link}
+                    className={mobileLinkClassName}
+                    onClick={closeMenu}
+                  />
                 </li>
               ))}
             </ul>
