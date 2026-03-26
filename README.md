@@ -57,3 +57,9 @@ npm run deploy
 
 Your site will be built and deployed using the latest `master` branch. This is served by GitHub Pages
 at https://dlo.wtf/
+
+## Domain management
+
+Manage the `dlo.wtf` domain at https://account.squarespace.com/domains
+
+1. Sign in using the Google account: lo.dennis@gmail.com
