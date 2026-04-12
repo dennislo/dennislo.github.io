@@ -1,4 +1,0 @@
-#!/bin/sh
-
-set -e
-sh ./scripts/run-bd-hook.sh pre-push "$@"
