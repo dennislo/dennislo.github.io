@@ -45,7 +45,7 @@ Cover all current public Gatsby routes:
 | `/contact-form`   | `/contact-form.md`       |
 | `/404` or `/404/` | `/404.md`                |
 
-Future pages should add their own direct Markdown sibling route as part of page implementation.
+Future pages must add both a direct Markdown sibling route (`static/<page>.md`) AND a `<link rel="alternate" type="text/markdown" href="/<page>.md" />` in their page `Head` export as part of page implementation.
 
 ---
 
@@ -60,10 +60,29 @@ Future pages should add their own direct Markdown sibling route as part of page 
 
 ### Modified files
 
-5. **`src/pages/index.tsx`** — Add Markdown alternate link metadata through the Gatsby `Head` export.
-6. **`src/pages/contact-form.tsx`** — Add Markdown alternate link metadata.
-7. **`src/pages/404.tsx`** — Add Markdown alternate link metadata.
-8. **`static/llms.txt`** — Advertise direct Markdown source routes.
+5. **`src/pages/index.tsx`** — Define a page-local `Head` export that renders the shared `<Head />` component and adds
+   the alternate link. Do not continue re-exporting the shared Head unmodified; Gatsby's Head API requires the export to
+   be a React component, so wrapping is straightforward:
+
+   ```tsx
+   import { Head as SharedHead } from "../components/Head/Head";
+
+   export function Head() {
+     return (
+       <>
+         <SharedHead />
+         <link rel="alternate" type="text/markdown" href="/index.md" />
+       </>
+     );
+   }
+   ```
+
+6. **`src/pages/contact-form.tsx`** — Add `<link rel="alternate" type="text/markdown" href="/contact-form.md" />`
+   inside the existing inline `Head` fragment.
+7. **`src/pages/404.tsx`** — Add `<link rel="alternate" type="text/markdown" href="/404.md" />` inside the existing
+   `Head` function while preserving the `HeadFC` type annotation.
+8. **`static/llms.txt`** — Append a new section advertising direct Markdown source routes. Do not replace existing
+   content; the file already has a Primary Navigation section that must be kept.
 
 ---
 
@@ -71,6 +90,12 @@ Future pages should add their own direct Markdown sibling route as part of page 
 
 Each Markdown source file should be manually authored from the same facts used by the rendered page, primarily
 `src/config.ts`. Do not scrape rendered HTML.
+
+Add a comment at the top of each `.md` file pointing back to its source so future editors know where to update:
+
+```md
+[//]: # "Source: src/config.ts — update this file when config changes"
+```
 
 ### Shared rules
 
@@ -180,7 +205,8 @@ Use the page-specific Markdown route for each Gatsby page:
 
 ### `llms.txt`
 
-Update `static/llms.txt` so agents can discover the direct Markdown source routes without executing JavaScript.
+Append to `static/llms.txt` so agents can discover the direct Markdown source routes without executing JavaScript.
+The file already has a Primary Navigation section — keep it and add the new section below it.
 
 Add a compact section such as:
 
@@ -232,6 +258,20 @@ npm run test:e2e
 
 If e2e coverage is not added, replace `npm run test:e2e` with manual browser QA using
 `.agent/skills/manual-testing/SKILL.md`.
+
+### MIME type note
+
+GitHub Pages serves `.md` files as `text/plain`, not `text/markdown`. The `rel="alternate" type="text/markdown"`
+declaration in the `<link>` element is valid per RFC 7763 and correctly signals intent to agents — but the actual HTTP
+`Content-Type` response header will be `text/plain`. This is acceptable for AI agent parsing; agents do not require the
+`text/markdown` MIME type to read Markdown content.
+
+### `.nojekyll` prerequisite
+
+GitHub Pages Jekyll would otherwise process `.md` files and serve converted HTML instead of raw Markdown. Verify that
+the deployment output includes a `.nojekyll` file. `gh-pages` (used by `npm run deploy`) creates one automatically in
+the output directory — no manual action required, but confirm this assumption if direct `.md` routes return HTML
+after deployment.
 
 ---
 
@@ -321,7 +361,7 @@ Main Agent (orchestrator)
 2. [ ] Main agent: add Markdown alternate links to page `Head` exports.
 3. [ ] Main agent: update `static/llms.txt` with direct Markdown source discovery.
 4. [ ] **Agent: test-writer** — Add page metadata tests for the alternate Markdown links.
-5. [ ] **Skill: e2e-testing** — Add Playwright coverage for direct Markdown files and unchanged HTML routes.
+5. [ ] **Skill: e2e-testing** — Add Playwright coverage in `src/test-e2e/markdown-source.spec.ts` for direct Markdown files and unchanged HTML routes.
 6. [ ] **Agent: code-reviewer** — Review implementation for correctness, static-hosting constraints, AEO Layer 4
        alignment, and test adequacy.
 7. [ ] Run `npm run typecheck`, `npm test`, and `npm run test:e2e`.
