@@ -38,4 +38,13 @@ describe("ContactFormPage Head", () => {
     expect(meta).toBeInTheDocument();
     expect(meta?.content).toBe("Send a message to Dennis Lo");
   });
+
+  it("renders alternate Markdown link in head", () => {
+    const { container } = render(<Head />);
+    const link = container.querySelector(
+      'link[rel="alternate"][type="text/markdown"]',
+    ) as HTMLLinkElement | null;
+    expect(link).toBeInTheDocument();
+    expect(link?.getAttribute("href")).toBe("/contact-form.md");
+  });
 });
