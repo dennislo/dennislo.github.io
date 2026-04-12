@@ -103,4 +103,13 @@ describe("IndexPage", () => {
     const { container } = render(<Head />);
     expect(container.querySelector("title")).toHaveTextContent("Who is DLO?");
   });
+
+  it("renders alternate Markdown link in head", () => {
+    const { container } = render(<Head />);
+    const link = container.querySelector(
+      'link[rel="alternate"][type="text/markdown"]',
+    ) as HTMLLinkElement | null;
+    expect(link).toBeInTheDocument();
+    expect(link?.href).toContain("/index.md");
+  });
 });

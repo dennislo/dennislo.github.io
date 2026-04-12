@@ -7,6 +7,7 @@ import Projects from "../components/Projects/Projects";
 import Experience from "../components/Experience/Experience";
 import Education from "../components/Education/Education";
 import SiteFooter from "../components/SiteFooter/SiteFooter";
+import { Head as SharedHead } from "../components/Head/Head";
 
 const IndexPage = () => {
   return (
@@ -24,4 +25,11 @@ const IndexPage = () => {
 
 export default IndexPage;
 
-export { Head } from "../components/Head/Head";
+export function Head() {
+  return (
+    <>
+      <SharedHead />
+      <link rel="alternate" type="text/markdown" href="/index.md" />
+    </>
+  );
+}

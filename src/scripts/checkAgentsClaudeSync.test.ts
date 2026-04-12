@@ -12,10 +12,15 @@ const scriptPath = path.resolve(
 
 const repos: string[] = [];
 
+const cleanEnv = Object.fromEntries(
+  Object.entries(process.env).filter(([k]) => !k.startsWith("GIT_")),
+) as NodeJS.ProcessEnv;
+
 const runGit = (cwd: string, args: string[]) => {
   const result = spawnSync("git", args, {
     cwd,
     encoding: "utf8",
+    env: cleanEnv,
   });
 
   if (result.status !== 0) {
@@ -29,6 +34,7 @@ const runCheck = (cwd: string) =>
   spawnSync("sh", [scriptPath], {
     cwd,
     encoding: "utf8",
+    env: cleanEnv,
   });
 
 const initRepo = () => {

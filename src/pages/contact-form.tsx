@@ -14,5 +14,6 @@ export const Head = () => (
   <>
     <title>Contact — DLO</title>
     <meta name="description" content="Send a message to Dennis Lo" />
+    <link rel="alternate" type="text/markdown" href="/contact-form.md" />
   </>
 );
