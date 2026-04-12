@@ -7,6 +7,15 @@
   Personal homepage: Who is DLO?
 </h1>
 
+This site also publishes clean Markdown source routes alongside the rendered pages. Use the direct `.md` files in
+`static/` when you want plain-text, agent-friendly versions of the content:
+
+- `/index.md` for the homepage
+- `/contact-form.md` for the contact page
+- `/404.md` for the 404 page
+
+These routes are also advertised in `static/llms.txt` so agents can discover them without executing the site.
+
 <!-- TOC -->
 
 - [💻 Development](#development)
