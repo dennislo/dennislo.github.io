@@ -81,4 +81,13 @@ describe("NotFoundPage", () => {
     const { container } = render(<Head {...mockPageProps} />);
     expect(container.querySelector("title")).toHaveTextContent("Not found");
   });
+
+  it("renders alternate Markdown link in head", () => {
+    const { container } = render(<Head {...mockPageProps} />);
+    const link = container.querySelector(
+      'link[rel="alternate"][type="text/markdown"]',
+    ) as HTMLLinkElement | null;
+    expect(link).toBeInTheDocument();
+    expect(link?.getAttribute("href")).toBe("/404.md");
+  });
 });

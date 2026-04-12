@@ -11,3 +11,11 @@ Token counts below are rough estimates based on page content, using the AEO guid
 - [Experience](/#experience): Career history, contract roles, and representative impact (approx. 340 tokens).
 - [Education](/#education): Formal education and academic background (approx. 50 tokens).
 - [Gists](https://gist.github.com/dennislo/public): Public GitHub Gists and code snippets (external; token cost varies).
+
+## Markdown Sources
+
+Clean Markdown source is available at direct `.md` routes.
+
+- [Homepage Markdown](/index.md): Clean source for the homepage profile, services, projects, experience, and education.
+- [Contact Markdown](/contact-form.md): Clean source for contact intent and contact options.
+- [404 Markdown](/404.md): Clean source for fallback navigation.

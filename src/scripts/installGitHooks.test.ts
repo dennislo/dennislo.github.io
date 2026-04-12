@@ -21,10 +21,15 @@ const docSyncHookPath = path.resolve(
 
 const repos: string[] = [];
 
+const cleanEnv = Object.fromEntries(
+  Object.entries(process.env).filter(([k]) => !k.startsWith("GIT_")),
+) as NodeJS.ProcessEnv;
+
 const runGit = (cwd: string, args: string[]) => {
   const result = spawnSync("git", args, {
     cwd,
     encoding: "utf8",
+    env: cleanEnv,
   });
 
   if (result.status !== 0) {
@@ -72,6 +77,7 @@ describe("install-git-hooks.sh", () => {
     const result = spawnSync("sh", [scriptPath], {
       cwd,
       encoding: "utf8",
+      env: cleanEnv,
     });
 
     expect(result.status).toBe(0);
@@ -99,6 +105,7 @@ describe("install-git-hooks.sh", () => {
     const installResult = spawnSync("sh", [scriptPath], {
       cwd,
       encoding: "utf8",
+      env: cleanEnv,
     });
 
     expect(installResult.status).toBe(0);
@@ -110,7 +117,7 @@ describe("install-git-hooks.sh", () => {
       cwd,
       encoding: "utf8",
       env: {
-        ...process.env,
+        ...cleanEnv,
         PATH: "/usr/bin:/bin:/usr/sbin:/sbin",
       },
     });

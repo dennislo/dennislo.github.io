@@ -36,4 +36,9 @@ const NotFoundPage = () => {
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => <title>Not found</title>;
+export const Head: HeadFC = () => (
+  <>
+    <title>Not found</title>
+    <link rel="alternate" type="text/markdown" href="/404.md" />
+  </>
+);
