@@ -1,0 +1,18 @@
+node_modules/
+.cache/
+public
+src/gatsby-types.d.ts
+.idea/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Jest
+/coverage/
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
