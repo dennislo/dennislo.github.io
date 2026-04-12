@@ -87,6 +87,12 @@ This is a Gatsby 5 personal website (TypeScript) deployed to GitHub Pages at htt
 **Page structure:** `src/pages/index.tsx` is the sole page. It renders `<Layout>` wrapping `<Article>`. The `Head`
 component is exported from `src/components/Head/Head.tsx` and used as a named export from the page (Gatsby Head API).
 
+**Markdown source routes:** The site publishes clean Markdown siblings in `static/` that Gatsby copies to the site
+root: `static/index.md` → `/index.md`, `static/contact-form.md` → `/contact-form.md`, and `static/404.md` →
+`/404.md`. These files provide agent-friendly, chrome-free content for the homepage, contact page, and 404 page.
+Future pages should add the same pattern: a matching `static/<page>.md` file and a `rel="alternate"
+type="text/markdown"` link in the page `Head` export. `static/llms.txt` also advertises the direct Markdown routes.
+
 **Theme system:** `ThemeContext` (`src/context/ThemeContext.tsx`) provides `theme` (`"light" | "dark"`) and
 `toggleTheme` via React Context. Theme is persisted to `localStorage` and applied as `data-theme` on
 `document.documentElement`. CSS variables in `src/styles/theme.css` key off `:root[data-theme="dark"]` /
