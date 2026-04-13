@@ -1,18 +1,11 @@
 import React from "react";
 import { Link } from "gatsby";
-import { siteConfig } from "../../config";
+import { sectionNavLinks, siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
-
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
-];
 
 const SiteFooter = () => {
   const accent = siteConfig.accentColor;
@@ -33,7 +26,7 @@ const SiteFooter = () => {
 
           {/* Nav links */}
           <ul className="flex flex-wrap gap-4 lg:gap-6">
-            {navLinks.map((link) => (
+            {sectionNavLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
