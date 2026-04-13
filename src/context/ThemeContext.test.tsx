@@ -1,6 +1,7 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { hydrateRoot } from "react-dom/client";
 import { getTimeBasedTheme, ThemeProvider, useTheme } from "./ThemeContext";
 import { mockDate } from "../test/test-utils";
 
@@ -45,6 +46,7 @@ describe("getTimeBasedTheme", () => {
 describe("ThemeContext", () => {
   beforeEach(() => {
     localStorage.clear();
+    document.documentElement.removeAttribute("data-theme");
     // Default to nighttime so existing tests that expect 'dark' are deterministic.
     mockDate(22, 0);
   });
@@ -82,7 +84,7 @@ describe("ThemeContext", () => {
     spy.mockRestore();
   });
 
-  it("uses time-based theme when no localStorage is set (daytime → light)", async () => {
+  it("uses time-based theme when no localStorage is set (daytime -> light)", () => {
     // Override the default nighttime mock with daytime.
     jest.restoreAllMocks();
     mockDate(12, 0);
@@ -93,10 +95,7 @@ describe("ThemeContext", () => {
       </ThemeProvider>,
     );
 
-    // After mount the useEffect runs and calls getTimeBasedTheme() again.
-    await waitFor(() => {
-      expect(screen.getByRole("status")).toHaveTextContent("light");
-    });
+    expect(screen.getByRole("status")).toHaveTextContent("light");
   });
 
   it("saves theme-source as 'manual' and saves the new theme to localStorage on toggle", async () => {
@@ -114,7 +113,7 @@ describe("ThemeContext", () => {
     expect(localStorage.getItem("theme")).toBe("light");
   });
 
-  it("uses saved manual theme from localStorage instead of time-based theme", async () => {
+  it("uses saved manual theme from localStorage instead of time-based theme", () => {
     // Daytime mock would normally produce 'light', but the saved manual
     // theme is 'dark' — the saved preference should win.
     jest.restoreAllMocks();
@@ -129,12 +128,10 @@ describe("ThemeContext", () => {
       </ThemeProvider>,
     );
 
-    await waitFor(() => {
-      expect(screen.getByRole("status")).toHaveTextContent("dark");
-    });
+    expect(screen.getByRole("status")).toHaveTextContent("dark");
   });
 
-  it("ignores invalid localStorage theme value and falls back to time-based theme", async () => {
+  it("ignores invalid localStorage theme value and falls back to time-based theme", () => {
     // theme-source is 'manual' but the stored value is not a valid Theme
     localStorage.setItem("theme-source", "manual");
     localStorage.setItem("theme", "invalid-value");
@@ -146,13 +143,11 @@ describe("ThemeContext", () => {
     );
 
     // VALID_THEMES guard rejects 'invalid-value', falls back to getTimeBasedTheme()
-    // Nighttime mock (22:00) is active → should resolve to 'dark'
-    await waitFor(() => {
-      expect(screen.getByRole("status")).toHaveTextContent("dark");
-    });
+    // Nighttime mock (22:00) is active -> should resolve to 'dark'
+    expect(screen.getByRole("status")).toHaveTextContent("dark");
   });
 
-  it("uses time-based theme on mount when theme-source is not 'manual'", async () => {
+  it("uses time-based theme when theme-source is not 'manual'", () => {
     // theme-source is absent — should fall through to getTimeBasedTheme().
     // Nighttime mock is already active (set in beforeEach).
     localStorage.setItem("theme", "light"); // saved theme exists but source is not 'manual'
@@ -165,8 +160,36 @@ describe("ThemeContext", () => {
 
     // Even though a 'theme' value is stored, without theme-source === 'manual'
     // the provider ignores it and uses time-based (dark at 22:00).
-    await waitFor(() => {
-      expect(screen.getByRole("status")).toHaveTextContent("dark");
+    expect(screen.getByRole("status")).toHaveTextContent("dark");
+  });
+
+  it("hydrates manual light mode without SSR/client mismatch", async () => {
+    mockDate(12, 0);
+    localStorage.setItem("theme-source", "manual");
+    localStorage.setItem("theme", "light");
+
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const container = document.createElement("div");
+    container.innerHTML =
+      '<div><span role="status" aria-live="polite">dark</span><button>Toggle</button></div>';
+    document.body.appendChild(container);
+
+    await act(async () => {
+      hydrateRoot(
+        container,
+        <ThemeProvider>
+          <TestComponent />
+        </ThemeProvider>,
+      );
     });
+
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
+    expect(screen.getByRole("status")).toHaveTextContent("light");
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
+
+    consoleErrorSpy.mockRestore();
+    container.remove();
   });
 });

@@ -15,7 +15,7 @@
 - [🚀 Deployment](#deployment)
   - [Deploying latest](#deploying-latest)
 - [Domain management](#domain-management)
-  - [Commands](#commands)
+- [Commands](#commands)
 - [Architecture](#architecture)
   - [Site Config](#site-config)
   - [Styling](#styling)
@@ -73,7 +73,7 @@ Manage the `dlo.wtf` domain at https://account.squarespace.com/domains
 
 1. Sign in using the Google account: lo.dennis@gmail.com
 
-### Commands
+## Commands
 
 ```bash
 npm run develop          # Dev server at http://localhost:8000
@@ -97,8 +97,6 @@ npx jest src/components/Article/Article.test.tsx
 ```
 
 ## Architecture
-
-This website is deployed to GitHub Pages at https://dlo.wtf/.
 
 ### Site Config
 

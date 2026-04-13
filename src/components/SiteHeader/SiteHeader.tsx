@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { siteConfig } from "../../config";
+import { sectionNavLinks, siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
 type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
@@ -7,10 +7,7 @@ type ExternalNavLink = { type: "external"; label: string; href: string };
 type NavLink = InternalNavLink | ExternalNavLink;
 
 const navLinks: NavLink[] = [
-  { type: "internal", label: "About", href: "#about" },
-  { type: "internal", label: "Projects", href: "#projects" },
-  { type: "internal", label: "Experience", href: "#experience" },
-  { type: "internal", label: "Education", href: "#education" },
+  ...sectionNavLinks.map((link) => ({ ...link })),
   {
     type: "external",
     label: "Gists",

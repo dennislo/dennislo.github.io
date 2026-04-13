@@ -1,3 +1,16 @@
+export type SectionNavLink = {
+  label: string;
+  href: `#${string}`;
+  type: "internal" | "external";
+};
+
+export const sectionNavLinks: readonly SectionNavLink[] = [
+  { label: "About", href: "#about", type: "internal" },
+  { label: "Projects", href: "#projects", type: "internal" },
+  { label: "Experience", href: "#experience", type: "internal" },
+  { label: "Education", href: "#education", type: "internal" },
+];
+
 export const siteConfig = {
   header: "Who is DLO?",
   name: "Dennis Lo",

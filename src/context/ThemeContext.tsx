@@ -2,6 +2,7 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  useLayoutEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -26,25 +27,34 @@ export function getTimeBasedTheme(): Theme {
 }
 
 const VALID_THEMES: Theme[] = ["light", "dark"];
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+const getStoredTheme = (): Theme | null => {
+  const rawSavedTheme = localStorage.getItem("theme");
+  return rawSavedTheme && VALID_THEMES.includes(rawSavedTheme as Theme)
+    ? (rawSavedTheme as Theme)
+    : null;
+};
+
+const resolvePreferredTheme = (): Theme => {
+  const themeSource = localStorage.getItem("theme-source");
+  const savedTheme = getStoredTheme();
+  if (themeSource === "manual" && savedTheme) {
+    return savedTheme;
+  }
+
+  return getTimeBasedTheme();
+};
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>("dark");
 
-  useEffect(() => {
-    const themeSource = localStorage.getItem("theme-source");
-    const rawSavedTheme = localStorage.getItem("theme");
-    const savedTheme: Theme | null =
-      rawSavedTheme && VALID_THEMES.includes(rawSavedTheme as Theme)
-        ? (rawSavedTheme as Theme)
-        : null;
-    if (themeSource === "manual" && savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme(getTimeBasedTheme());
-    }
+  useIsomorphicLayoutEffect(() => {
+    setTheme(resolvePreferredTheme());
   }, []);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
