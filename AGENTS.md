@@ -40,13 +40,15 @@ This is a personal website built with Gatsby, React, and TypeScript.
 - Test files should be colocated with components (e.g., `Component.test.tsx`)
 - Verify both functionality and accessibility where applicable
 - Follow existing test patterns (see `src/components/Head/Head.test.tsx` for reference)
+- E2E tests are in `src/test-e2e/` as `*.spec.ts` files (run with `npm run test:e2e`)
+- Use `src/test/test-utils.ts` → `mockDate(hours, minutes)` to stub `Date` in time-based theme tests
 
 ## Development Workflow
 
 - This is a Gatsby project – use Gatsby-specific patterns and APIs
-- Run tests before committing changes
-- Follow the existing project structure in `src/`
-- Maintain consistency with existing code patterns
+- Work on `develop`. **Never commit directly to `master`** — `master` is production (GitHub Pages)
+- Deploy with `npm run deploy` (builds then pushes to `master` via `gh-pages`). This website is deployed to GitHub Pages
+  at https://dlo.wtf/.
 
 ## Communication Style
 
@@ -56,8 +58,6 @@ This is a personal website built with Gatsby, React, and TypeScript.
 - Explain technical decisions when they're not obvious
 
 ## Architecture
-
-This website is deployed to GitHub Pages at https://dlo.wtf/.
 
 **Mirrored agent docs:** `CLAUDE.md` is the canonical source of truth. `AGENTS.md` must stay byte-for-byte identical to
 the staged `CLAUDE.md` content. If the hook reports drift, restore the canonical paths if needed, then resync with:

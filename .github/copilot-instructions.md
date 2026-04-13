@@ -12,9 +12,11 @@
 
 ## Code style and standards
 
-- Use strict TypeScript typing.
-- Prefer functional React components and hooks.
-- Follow existing patterns in `src/`.
+- High-quality, maintainable, professional code
+- Write TypeScript with strict typing
+- Follow React best practices and hooks patterns
+- Use functional components over class components
+- Write comprehensive unit tests using Jest and React Testing Library
 
 ## Architecture notes
 
@@ -29,7 +31,6 @@
 
 ## Unit Tests
 
-- See `.claude/skills/unit-testing/SKILL.md` for unit testing guidelines.
 - Dependencies: Jest + React Testing Library.
 - Co-locate tests with components as `*.test.tsx`.
 - Test rendering, behavior, accessibility, and edge cases.
@@ -37,16 +38,10 @@
 
 ## E2E Tests
 
-- See `.claude/skills/e2e-testing/SKILL.md` for end-to-end testing guidelines.
 - Dependencies: Playwright for E2E tests.
 - Tests located in `tests/e2e/` with `.spec.ts` extension.
 - Run E2E tests with `npm run test:e2e`.
 
 ## Commands
 
-- `npm run develop` starts dev server at `http://localhost:8000`.
-- `npm run build` production build.
-- `npm run typecheck` TypeScript checks.
-- `npm run format` Prettier format.
-- `npm test` run Jest tests.
-- Run single test: `npx jest src/components/Article/Article.test.tsx`.
+If you need to see the available npm scripts, see the root README.md or run `npm run` to list all scripts.
