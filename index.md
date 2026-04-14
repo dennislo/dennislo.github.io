@@ -4,7 +4,7 @@
 
 Personal website of Dennis Lo, IT consultant and software engineer based in London. This page is the canonical Markdown source for the homepage at [dlo.wtf](/).
 
-Dennis Lo (DLO) is available for contract software engineering and IT consultancy engagements. For inquiries, use the [contact form](/contact-form) or email [dennis@dlo.wtf](mailto:dennis@dlo.wtf).
+Dennis Lo (DLO) is available for contract software engineering and IT consultancy engagements. For inquiries, use the [contact form](/contact-form) or email [lo.dennis@gmail.com](mailto:lo.dennis@gmail.com).
 
 ## Summary
 
@@ -114,7 +114,7 @@ _2003 – 2008_
 
 ## Contact
 
-- Email: [dennis@dlo.wtf](mailto:dennis@dlo.wtf)
+- Email: [lo.dennis@gmail.com](mailto:lo.dennis@gmail.com)
 - GitHub: [github.com/dennislo](https://github.com/dennislo)
 - LinkedIn: [linkedin.com/in/dennis-lo-profile](https://www.linkedin.com/in/dennis-lo-profile)
 - Instagram: [instagram.com/dlo](https://www.instagram.com/dlo)
