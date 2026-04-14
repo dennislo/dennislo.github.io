@@ -27,7 +27,7 @@ describe("SiteFooter", () => {
     render(<SiteFooter />);
     const link = screen.getByRole("link", { name: "Email Dennis Lo" });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", `mailto:${siteConfig.social.email}`);
+    expect(link).toHaveAttribute("href", "mailto:lo.dennis@gmail.com");
   });
 
   it("renders the GitHub social link with correct aria-label", () => {

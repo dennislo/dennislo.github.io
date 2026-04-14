@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Direct Markdown source routes", () => {
   test("GET /index.md returns raw Markdown with homepage H1", async ({
@@ -7,6 +7,7 @@ test.describe("Direct Markdown source routes", () => {
     await page.goto("/index.md");
     const body = await page.locator("body").textContent();
     expect(body).toContain("# Who is DLO?");
+    expect(body).toContain("lo.dennis@gmail.com");
   });
 
   test("GET /contact-form.md returns raw Markdown with contact H1", async ({
@@ -15,6 +16,7 @@ test.describe("Direct Markdown source routes", () => {
     await page.goto("/contact-form.md");
     const body = await page.locator("body").textContent();
     expect(body).toContain("# Contact Dennis Lo");
+    expect(body).toContain("lo.dennis@gmail.com");
   });
 
   test("GET /404.md returns raw Markdown with 404 H1", async ({ page }) => {
