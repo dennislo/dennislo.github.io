@@ -23,6 +23,7 @@
   - [External Links](#external-links)
   - [Icons](#icons)
   - [Markdown Source Routes](#markdown-source-routes)
+  - [Contact Form](#contact-form)
 
 <!-- TOC -->
 
@@ -139,3 +140,10 @@ SVG components live in `src/components/icons/` (Tabler icon set: `TablerEmail`, 
 New pages should add a matching `static/<page>.md` and a
 `<link rel="alternate" type="text/markdown" href="/<page>.md" />`
 in the page `Head` export.
+
+### Contact Form
+
+The contact form uses Formspree (https://formspree.io/) for submission handling. The repo owns the Gatsby page and form
+component, but the
+submission inbox and receipt routing are managed in the Formspree dashboard. If the destination email changes, update
+that Formspree configuration there rather than in this codebase.

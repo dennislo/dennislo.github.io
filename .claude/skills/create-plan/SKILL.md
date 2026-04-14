@@ -21,8 +21,9 @@ description:
 
 ## Overview
 
-Generate a detailed implementation plan `.md` file inside `claude-plans/<feature-name>/` that follows
-the conventions established in the existing plans. Plans act as orchestration documents — the main
+Generate a detailed implementation plan `.md` file inside `claude-plans/<feature-name>/` (if using Claude) and
+`codex-plans/<feature-name>/` (if using Codex) that follows the conventions established in the existing plans. Plans act
+as orchestration documents — the main
 agent writes code itself, then delegates review, testing, and debugging to subagents.
 
 ---

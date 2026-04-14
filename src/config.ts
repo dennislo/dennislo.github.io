@@ -1,7 +1,7 @@
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
-  type: "internal" | "external";
+  type: "internal";
 };
 
 export const sectionNavLinks: readonly SectionNavLink[] = [
@@ -19,7 +19,7 @@ export const siteConfig = {
     "Personal website of Dennis Lo, IT consultant and software engineer.",
   accentColor: "#1d4ed8",
   social: {
-    email: "dennis@dlo.wtf",
+    email: "lo.dennis@gmail.com",
     github: "https://github.com/dennislo",
     linkedin: "https://www.linkedin.com/in/dennis-lo-profile",
     instagram: "https://www.instagram.com/dlo",

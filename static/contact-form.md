@@ -4,7 +4,7 @@
 
 Use this page to contact Dennis Lo about IT consultancy and software engineering services. Dennis trades as Agile IT & Software Limited and is available for contract engagements.
 
-For fastest response, send an email directly to [dennis@dlo.wtf](mailto:dennis@dlo.wtf).
+For fastest response, send an email directly to [lo.dennis@gmail.com](mailto:lo.dennis@gmail.com).
 
 ## Best For
 
@@ -15,7 +15,7 @@ For fastest response, send an email directly to [dennis@dlo.wtf](mailto:dennis@d
 ## Contact Options
 
 - **Contact form**: [/contact-form](/contact-form) — fill in your name, mobile, email, and message
-- **Email**: [dennis@dlo.wtf](mailto:dennis@dlo.wtf)
+- **Email**: [lo.dennis@gmail.com](mailto:lo.dennis@gmail.com)
 - **GitHub**: [github.com/dennislo](https://github.com/dennislo)
 - **LinkedIn**: [linkedin.com/in/dennis-lo-profile](https://www.linkedin.com/in/dennis-lo-profile)
 
