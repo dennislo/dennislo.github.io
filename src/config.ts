@@ -1,7 +1,7 @@
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
-  type: "internal" | "external";
+  type: "internal";
 };
 
 export const sectionNavLinks: readonly SectionNavLink[] = [
