@@ -39,6 +39,7 @@ site structure and visual language unless the user explicitly asks for a redesig
 - Keep user-facing copy, spacing, and interaction patterns consistent with the current site unless asked otherwise
 - Preserve responsiveness across mobile and desktop breakpoints when changing layout, spacing, or navigation
 - When a task includes debugging, isolate the cause before editing code
+- Change discipline: Make the minimum change that solves the problem. One logical fix per change
 
 ## Engineering Standards
 
