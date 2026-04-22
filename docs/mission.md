@@ -13,4 +13,3 @@ frontend craftsmanship can live together in one place.
 The primary audience is people who want to learn more about Dennis, including potential collaborators, employers,
 clients, and peers in the software community. A secondary audience is fellow developers who may benefit from the site's
 technical implementation, testing practices, and overall approach to building a polished personal web presence.
-
