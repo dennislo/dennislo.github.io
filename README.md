@@ -1,18 +1,18 @@
-<p align="center">
+<p style="display: flex; justify-content: center;">
   <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
-<h1 align="center">
+<h1 style="display: flex; justify-content: center; width: 100%; text-align: center;">
   Personal homepage: Who is DLO?
 </h1>
 
-<!-- TOC -->
+## Contents
 
-- [💻 Development](#development)
+- [Development](#development)
   - [Running locally](#running-locally)
   - [Making changes](#making-changes)
-- [🚀 Deployment](#deployment)
+- [Deployment](#deployment)
   - [Deploying latest](#deploying-latest)
 - [Domain management](#domain-management)
 - [Commands](#commands)
@@ -25,11 +25,9 @@
   - [Markdown Source Routes](#markdown-source-routes)
   - [Contact Form](#contact-form)
 
-<!-- TOC -->
+## Development
 
-## [💻 Development](#development)
-
-### [Running locally](#running-locally)
+### Running locally
 
 1. **Run server**
 
@@ -46,14 +44,14 @@
 
    For example, you can edit `src/pages/index.tsx` to see your site update in real-time.
 
-### [Making changes](#making-changes)
+### Making changes
 
 All edits to be committed to the `develop` branch. Creating features branches
 is useful for larger changes.
 
-## [🚀 Deployment](#deployment)
+## Deployment
 
-### [Deploying latest](#deploying-latest)
+### Deploying latest
 
 **NOTE:** Do not commit directly to the `master` branch
 as this is the production branch for github pages.
@@ -94,7 +92,7 @@ npm run test:e2e:headed  # Playwright headed
 Run a single test file:
 
 ```bash
-npx jest src/components/Article/Article.test.tsx
+npx jest src/components/About/About.test.tsx
 ```
 
 ## Architecture
