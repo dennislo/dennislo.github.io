@@ -59,6 +59,11 @@ jest.mock("../components/SiteFooter/SiteFooter", () => ({
 }));
 
 describe("IndexPage", () => {
+  beforeEach(() => {
+    document.head.innerHTML = "";
+    document.title = "";
+  });
+
   it("renders the Layout component", () => {
     render(<IndexPage />);
     expect(screen.getByLabelText("Layout")).toBeInTheDocument();
@@ -100,13 +105,13 @@ describe("IndexPage", () => {
   });
 
   it("renders the page head title", () => {
-    const { container } = render(<Head />);
-    expect(container.querySelector("title")).toHaveTextContent("Who is DLO?");
+    render(<Head />);
+    expect(document.title).toBe("Who is DLO?");
   });
 
   it("renders alternate Markdown link in head", () => {
-    const { container } = render(<Head />);
-    const link = container.querySelector(
+    render(<Head />);
+    const link = document.head.querySelector(
       'link[rel="alternate"][type="text/markdown"]',
     ) as HTMLLinkElement | null;
     expect(link).toBeInTheDocument();
