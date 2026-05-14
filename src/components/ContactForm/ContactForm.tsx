@@ -118,7 +118,7 @@ const ContactForm = () => {
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
   const fieldRefs = useMemo<
-    Record<FieldName, RefObject<HTMLInputElement | HTMLTextAreaElement>>
+    Record<FieldName, RefObject<HTMLInputElement | HTMLTextAreaElement | null>>
   >(
     () => ({
       firstName: firstNameRef,
