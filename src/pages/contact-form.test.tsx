@@ -29,10 +29,15 @@ describe("ContactFormPage", () => {
 });
 
 describe("ContactFormPage Head", () => {
+  beforeEach(() => {
+    document.head.innerHTML = "";
+    document.title = "";
+  });
+
   it("renders title and description meta", () => {
     render(<Head />);
-    expect(screen.getByText("Contact — DLO")).toBeInTheDocument();
-    const meta = document.querySelector(
+    expect(document.title).toBe("Contact — DLO");
+    const meta = document.head.querySelector(
       'meta[name="description"]',
     ) as HTMLMetaElement | null;
     expect(meta).toBeInTheDocument();
@@ -40,8 +45,8 @@ describe("ContactFormPage Head", () => {
   });
 
   it("renders alternate Markdown link in head", () => {
-    const { container } = render(<Head />);
-    const link = container.querySelector(
+    render(<Head />);
+    const link = document.head.querySelector(
       'link[rel="alternate"][type="text/markdown"]',
     ) as HTMLLinkElement | null;
     expect(link).toBeInTheDocument();

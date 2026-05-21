@@ -60,6 +60,11 @@ const mockPageProps: PageProps = {
 };
 
 describe("NotFoundPage", () => {
+  beforeEach(() => {
+    document.head.innerHTML = "";
+    document.title = "";
+  });
+
   it("renders page not found heading", () => {
     render(<NotFoundPage />);
     expect(screen.getByText("Page not found")).toBeInTheDocument();
@@ -78,13 +83,13 @@ describe("NotFoundPage", () => {
   });
 
   it("renders the page head title", () => {
-    const { container } = render(<Head {...mockPageProps} />);
-    expect(container.querySelector("title")).toHaveTextContent("Not found");
+    render(<Head {...mockPageProps} />);
+    expect(document.title).toBe("Not found");
   });
 
   it("renders alternate Markdown link in head", () => {
-    const { container } = render(<Head {...mockPageProps} />);
-    const link = container.querySelector(
+    render(<Head {...mockPageProps} />);
+    const link = document.head.querySelector(
       'link[rel="alternate"][type="text/markdown"]',
     ) as HTMLLinkElement | null;
     expect(link).toBeInTheDocument();
