@@ -12,6 +12,7 @@ playwright/.cache/
 
 # Jest
 /coverage/
+/coverage-check/
 
 # Dolt database files (added by bd init)
 .dolt/
