@@ -11,6 +11,7 @@ const mobileViewport = { width: 390, height: 844 };
 const sectionChecks = [
   { linkName: "About", hash: "#about", heading: "About Me" },
   { linkName: "Projects", hash: "#projects", heading: "Projects" },
+  { linkName: "Activity", hash: "#github-activity", heading: "Activity" },
   { linkName: "Experience", hash: "#experience", heading: "Experience" },
   { linkName: "Education", hash: "#education", heading: "Education" },
 ] as const;
