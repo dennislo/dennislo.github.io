@@ -12,6 +12,7 @@ export const sectionNavLinks: readonly SectionNavLink[] = [
 ];
 
 export const siteConfig = {
+  siteUrl: "https://dlo.wtf",
   header: "Who is DLO?",
   name: "Dennis Lo",
   title: "IT Consultant & Software Engineer",
