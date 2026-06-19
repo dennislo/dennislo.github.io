@@ -48,6 +48,16 @@ describe("SiteHeader", () => {
     expect(link).toHaveAttribute("href", "#projects");
   });
 
+  it("renders the Activity nav link", () => {
+    render(<SiteHeader />);
+
+    const link = within(getDesktopNav()).getByRole("link", {
+      name: "Activity",
+    });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "#github-activity");
+  });
+
   it("renders the Experience nav link", () => {
     render(<SiteHeader />);
 
