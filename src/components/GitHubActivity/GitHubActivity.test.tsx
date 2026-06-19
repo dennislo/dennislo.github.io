@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import GitHubActivity from "./GitHubActivity";
 
 jest.mock("../../config", () => ({
@@ -289,7 +289,8 @@ describe("GitHubActivity", () => {
 
     render(<GitHubActivity />);
     await waitFor(() => {
-      expect(screen.getByText(/Activity/)).toBeInTheDocument();
+      const list = screen.getByRole("list", { name: "Recent GitHub activity" });
+      expect(within(list).getByText(/Activity/)).toBeInTheDocument();
     });
   });
 
@@ -339,10 +340,10 @@ describe("GitHubActivity", () => {
           },
           payload: {
             action: "closed",
+            merged: true,
             pull_request: {
               number: 11,
               title: "Ship the feature",
-              merged: true,
             },
           },
         },

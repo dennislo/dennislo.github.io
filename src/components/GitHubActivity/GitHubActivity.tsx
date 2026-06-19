@@ -153,8 +153,9 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
           : "updated";
       const number = pr && typeof pr.number === "number" ? pr.number : "";
       const title = pr && typeof pr.title === "string" ? pr.title : "";
+      const merged = event.payload.merged === true;
       const verb =
-        action === "closed" ? (pr && pr.merged ? "merged" : "closed") : action;
+        action === "closed" ? (merged ? "merged" : "closed") : action;
       return {
         ...base,
         icon: <IconPR />,
@@ -208,9 +209,10 @@ function useGitHubEvents(username: string): {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
+    let cancelled = false;
 
     const fetchEvents = async () => {
+      const controller = new AbortController();
       try {
         setLoading(true);
         setError(false);
@@ -220,14 +222,13 @@ function useGitHubEvents(username: string): {
         );
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = (await response.json()) as GitHubEvent[];
-        setEvents(data);
+        if (!cancelled) setEvents(data);
       } catch (err) {
-        // Ignore abort errors from cleanup; surface all other failures
-        if (err instanceof Error && err.name !== "AbortError") {
+        if (err instanceof Error && err.name !== "AbortError" && !cancelled) {
           setError(true);
         }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
@@ -238,7 +239,7 @@ function useGitHubEvents(username: string): {
     }, 300000);
 
     return () => {
-      controller.abort();
+      cancelled = true;
       clearInterval(interval);
     };
   }, [username]);
@@ -248,7 +249,8 @@ function useGitHubEvents(username: string): {
 
 const GitHubActivity = () => {
   const accent = siteConfig.accentColor;
-  const { events, loading, error } = useGitHubEvents("dennislo");
+  const username = siteConfig.social.github.replace("https://github.com/", "");
+  const { events, loading, error } = useGitHubEvents(username);
 
   const displayed = events.slice(0, 8).map(formatEvent);
 
