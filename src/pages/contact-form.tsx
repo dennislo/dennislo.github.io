@@ -15,7 +15,7 @@ export default ContactFormPage;
 
 export const Head = () => {
   const schemas = [
-    buildWebPageSchema(siteConfig, {
+    buildWebPageSchema({
       url: `${siteConfig.siteUrl}/contact-form`,
       name: "Contact — DLO",
       description: "Send a message to Dennis Lo",

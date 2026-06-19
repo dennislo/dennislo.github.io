@@ -166,7 +166,7 @@ describe("buildArticleSchema", () => {
 
 describe("buildWebPageSchema", () => {
   it("sets @type to WebPage", () => {
-    const schema = buildWebPageSchema(siteConfig, {
+    const schema = buildWebPageSchema({
       url: "https://dlo.wtf/contact-form",
       name: "Contact — DLO",
     });
@@ -174,7 +174,7 @@ describe("buildWebPageSchema", () => {
   });
 
   it("uses url from options", () => {
-    const schema = buildWebPageSchema(siteConfig, {
+    const schema = buildWebPageSchema({
       url: "https://dlo.wtf/contact-form",
       name: "Contact — DLO",
     });
@@ -182,7 +182,7 @@ describe("buildWebPageSchema", () => {
   });
 
   it("description key is absent when not provided", () => {
-    const schema = buildWebPageSchema(siteConfig, {
+    const schema = buildWebPageSchema({
       url: "https://dlo.wtf/contact-form",
       name: "Contact — DLO",
     });
@@ -192,7 +192,7 @@ describe("buildWebPageSchema", () => {
   });
 
   it("description is included when provided", () => {
-    const schema = buildWebPageSchema(siteConfig, {
+    const schema = buildWebPageSchema({
       url: "https://dlo.wtf/contact-form",
       name: "Contact — DLO",
       description: "Send a message to Dennis Lo",

@@ -1,3 +1,10 @@
+export type EducationEntry = {
+  degree: string;
+  school: string;
+  dateRange: string;
+  achievements: string[];
+};
+
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
@@ -149,5 +156,5 @@ export const siteConfig = {
         "Honours Thesis: Service Oriented Architecture for e-Business Standards",
       ],
     },
-  ],
+  ] satisfies [EducationEntry, ...EducationEntry[]],
 };

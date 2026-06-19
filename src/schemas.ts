@@ -141,7 +141,6 @@ export function buildArticleSchema(
 }
 
 export function buildWebPageSchema(
-  config: SiteConfig,
   options: WebPageSchemaOptions,
 ): WebPageSchema {
   return {
