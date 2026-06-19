@@ -5,8 +5,6 @@ const Education = () => {
   const accent = siteConfig.accentColor;
   const { education } = siteConfig;
 
-  if (!education || education.length === 0) return null;
-
   return (
     <section
       id="education"

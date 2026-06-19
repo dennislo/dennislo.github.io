@@ -1,6 +1,9 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import ContactForm from "../components/ContactForm/ContactForm";
+import { Head as SharedHead } from "../components/Head/Head";
+import { buildWebPageSchema } from "../schemas";
+import { siteConfig } from "../config";
 
 const ContactFormPage = () => (
   <Layout>
@@ -10,10 +13,22 @@ const ContactFormPage = () => (
 
 export default ContactFormPage;
 
-export const Head = () => (
-  <>
-    <title>Contact — DLO</title>
-    <meta name="description" content="Send a message to Dennis Lo" />
-    <link rel="alternate" type="text/markdown" href="/contact-form.md" />
-  </>
-);
+export const Head = () => {
+  const schemas = [
+    buildWebPageSchema({
+      url: `${siteConfig.siteUrl}/contact-form`,
+      name: "Contact — DLO",
+      description: "Send a message to Dennis Lo",
+    }),
+  ];
+  return (
+    <>
+      <SharedHead
+        title="Contact — DLO"
+        description="Send a message to Dennis Lo"
+        schemas={schemas}
+      />
+      <link rel="alternate" type="text/markdown" href="/contact-form.md" />
+    </>
+  );
+};

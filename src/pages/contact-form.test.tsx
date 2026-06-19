@@ -52,4 +52,38 @@ describe("ContactFormPage Head", () => {
     expect(link).toBeInTheDocument();
     expect(link?.getAttribute("href")).toBe("/contact-form.md");
   });
+
+  it("renders Open Graph meta tags via SharedHead", () => {
+    render(<Head />);
+    const ogTitle = document.head.querySelector('meta[property="og:title"]');
+    expect(ogTitle?.getAttribute("content")).toBe("Contact — DLO");
+    const ogDescription = document.head.querySelector(
+      'meta[property="og:description"]',
+    );
+    expect(ogDescription?.getAttribute("content")).toBe(
+      "Send a message to Dennis Lo",
+    );
+  });
+
+  it("renders Twitter card meta tags via SharedHead", () => {
+    render(<Head />);
+    const twitterCard = document.head.querySelector(
+      'meta[name="twitter:card"]',
+    );
+    expect(twitterCard?.getAttribute("content")).toBe("summary");
+    const twitterTitle = document.head.querySelector(
+      'meta[name="twitter:title"]',
+    );
+    expect(twitterTitle?.getAttribute("content")).toBe("Contact — DLO");
+  });
+
+  it("renders a WebPage JSON-LD script tag", () => {
+    render(<Head />);
+    const scripts = document.querySelectorAll(
+      'script[type="application/ld+json"]',
+    );
+    expect(scripts).toHaveLength(1);
+    const parsed = JSON.parse(scripts[0]?.textContent ?? "{}");
+    expect(parsed["@type"]).toBe("WebPage");
+  });
 });

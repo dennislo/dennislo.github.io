@@ -1,3 +1,10 @@
+export type EducationEntry = {
+  degree: string;
+  school: string;
+  dateRange: string;
+  achievements: string[];
+};
+
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
@@ -12,6 +19,7 @@ export const sectionNavLinks: readonly SectionNavLink[] = [
 ];
 
 export const siteConfig = {
+  siteUrl: "https://dlo.wtf",
   header: "Who is DLO?",
   name: "Dennis Lo",
   title: "IT Consultant & Software Engineer",
@@ -148,5 +156,5 @@ export const siteConfig = {
         "Honours Thesis: Service Oriented Architecture for e-Business Standards",
       ],
     },
-  ],
+  ] satisfies [EducationEntry, ...EducationEntry[]],
 };

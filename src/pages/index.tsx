@@ -9,6 +9,12 @@ import Experience from "../components/Experience/Experience";
 import Education from "../components/Education/Education";
 import SiteFooter from "../components/SiteFooter/SiteFooter";
 import { Head as SharedHead } from "../components/Head/Head";
+import {
+  buildPersonSchema,
+  buildWebSiteSchema,
+  buildProfilePageSchema,
+} from "../schemas";
+import { siteConfig } from "../config";
 
 const IndexPage = () => {
   return (
@@ -28,9 +34,14 @@ const IndexPage = () => {
 export default IndexPage;
 
 export function Head() {
+  const schemas = [
+    buildPersonSchema(siteConfig),
+    buildWebSiteSchema(siteConfig),
+    buildProfilePageSchema(siteConfig),
+  ];
   return (
     <>
-      <SharedHead />
+      <SharedHead schemas={schemas} />
       <link rel="alternate" type="text/markdown" href="/index.md" />
     </>
   );

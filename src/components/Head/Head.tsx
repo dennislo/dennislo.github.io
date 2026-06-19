@@ -5,17 +5,20 @@
  */
 
 import React from "react";
+import { JsonLd } from "../JsonLd/JsonLd";
 
 type HeadProps = {
   title?: string;
   description?: string;
   author?: string;
+  schemas?: ReadonlyArray<Record<string, unknown>>;
 };
 
 export function Head({
   title = "Who is DLO?",
   description,
   author = "@dlo",
+  schemas,
 }: HeadProps) {
   const metaDescription = description ?? `${title} - My personal homepage`;
 
@@ -58,6 +61,9 @@ export function Head({
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
         rel="stylesheet"
       />
+      {schemas?.map((schema, index) => (
+        <JsonLd key={String(schema["@type"] ?? index)} schema={schema} />
+      ))}
     </>
   );
 }
