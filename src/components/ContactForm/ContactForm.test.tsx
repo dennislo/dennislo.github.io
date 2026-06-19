@@ -77,6 +77,23 @@ describe("ContactForm", () => {
       expect(screen.getByLabelText("Message")).toBeInTheDocument();
     });
 
+    it("renders the persistent hint text for the message field", () => {
+      setup();
+      expect(
+        screen.getByText(
+          "If you would like to work with me please include information about the budget, timeline, project type.",
+        ),
+      ).toBeInTheDocument();
+    });
+
+    it("wires aria-describedby on the message textarea to the hint element", () => {
+      setup();
+      expect(screen.getByLabelText("Message")).toHaveAttribute(
+        "aria-describedby",
+        "message-hint",
+      );
+    });
+
     it('renders the submit button with text "Send Message"', () => {
       setup();
       expect(
@@ -241,6 +258,16 @@ describe("ContactForm", () => {
       expect(screen.getByLabelText("Message")).toHaveAttribute(
         "aria-invalid",
         "true",
+      );
+    });
+
+    it("includes both hint and error in aria-describedby when the message field has an error", async () => {
+      const { user } = setup();
+      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await screen.findByText("Message is required.");
+      expect(screen.getByLabelText("Message")).toHaveAttribute(
+        "aria-describedby",
+        "message-hint message-error",
       );
     });
 

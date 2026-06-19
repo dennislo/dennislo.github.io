@@ -386,6 +386,13 @@ const ContactForm = () => {
             <label htmlFor="message" className={labelClass}>
               Message
             </label>
+            <p
+              id="message-hint"
+              className="text-sm text-gray-500 dark:text-gray-400 mb-1"
+            >
+              If you would like to work with me please include information about
+              the budget, timeline, project type.
+            </p>
             <textarea
               ref={fieldRefs.message as RefObject<HTMLTextAreaElement>}
               id="message"
@@ -397,7 +404,9 @@ const ContactForm = () => {
               rows={5}
               aria-invalid={errors.message !== null ? "true" : undefined}
               aria-describedby={
-                errors.message !== null ? "message-error" : undefined
+                errors.message !== null
+                  ? "message-hint message-error"
+                  : "message-hint"
               }
               className={inputClass}
             />
