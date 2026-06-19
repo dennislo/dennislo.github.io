@@ -3,6 +3,11 @@ import { render } from "@testing-library/react";
 import { Head } from "./Head";
 
 describe("Head", () => {
+  beforeEach(() => {
+    document.head.innerHTML = "";
+    document.title = "";
+  });
+
   it("renders without crashing", () => {
     const { container } = render(<Head title="Test Title" />);
     expect(container).toBeTruthy();

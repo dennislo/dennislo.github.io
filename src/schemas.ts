@@ -22,17 +22,10 @@ export interface PersonSchemaNode {
   [key: string]: unknown;
 }
 
-export interface PersonSchema extends JsonLdBase {
-  "@type": "Person";
-  name: string;
-  url: string;
-  email: string;
-  jobTitle: string;
-  description: string;
-  sameAs: string[];
-  knowsAbout: string[];
-  alumniOf: { "@type": "EducationalOrganization"; name: string };
-}
+// Intersection type — avoids duplicating all eight field declarations
+export type PersonSchema = PersonSchemaNode & {
+  "@context": "https://schema.org";
+};
 
 export interface WebSiteSchema extends JsonLdBase {
   "@type": "WebSite";
