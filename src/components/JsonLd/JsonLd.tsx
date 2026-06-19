@@ -8,7 +8,10 @@ export function JsonLd({ schema }: JsonLdProps): React.ReactElement {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{
+        // Replace </ with <\/ to prevent the browser from terminating the script tag early
+        __html: JSON.stringify(schema).replace(/<\//g, "<\\/"),
+      }}
     />
   );
 }

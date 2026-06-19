@@ -64,4 +64,18 @@ describe("JsonLd", () => {
     expect(script).toBeInTheDocument();
     expect(script?.textContent).toBe("{}");
   });
+
+  it("escapes </script> sequences to prevent early tag termination", () => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: "Test </script><script>alert(1)</script>",
+    };
+    const { container } = render(<JsonLd schema={schema} />);
+    const script = container.querySelector(
+      'script[type="application/ld+json"]',
+    );
+    expect(script?.innerHTML).not.toContain("</script>");
+    expect(script?.innerHTML).toContain("<\\/script>");
+  });
 });

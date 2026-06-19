@@ -128,6 +128,13 @@ describe("buildArticleSchema", () => {
     expect(schema.author.name).toBe(siteConfig.name);
   });
 
+  it("author does NOT have @context (nested nodes must omit it)", () => {
+    const schema = buildArticleSchema(siteConfig, options);
+    expect(
+      Object.prototype.hasOwnProperty.call(schema.author, "@context"),
+    ).toBe(false);
+  });
+
   it("dateModified key is absent when not provided", () => {
     const schema = buildArticleSchema(siteConfig, options);
     expect(Object.prototype.hasOwnProperty.call(schema, "dateModified")).toBe(
