@@ -4,6 +4,7 @@ import SiteHeader from "../components/SiteHeader/SiteHeader";
 import Hero from "../components/Hero/Hero";
 import About from "../components/About/About";
 import Projects from "../components/Projects/Projects";
+import GitHubActivity from "../components/GitHubActivity/GitHubActivity";
 import Experience from "../components/Experience/Experience";
 import Education from "../components/Education/Education";
 import SiteFooter from "../components/SiteFooter/SiteFooter";
@@ -16,6 +17,7 @@ const IndexPage = () => {
       <Hero />
       <About />
       <Projects />
+      <GitHubActivity />
       <Experience />
       <Education />
       <SiteFooter />
