@@ -14,6 +14,7 @@ export type SectionNavLink = {
 export const sectionNavLinks: readonly SectionNavLink[] = [
   { label: "About", href: "#about", type: "internal" },
   { label: "Projects", href: "#projects", type: "internal" },
+  { label: "Activity", href: "#github-activity", type: "internal" },
   { label: "Experience", href: "#experience", type: "internal" },
   { label: "Education", href: "#education", type: "internal" },
 ];
