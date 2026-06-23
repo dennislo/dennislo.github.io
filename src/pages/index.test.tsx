@@ -37,6 +37,15 @@ jest.mock("../components/Projects/Projects", () => ({
   },
 }));
 
+jest.mock("../components/GitHubActivity/GitHubActivity", () => ({
+  __esModule: true,
+  default: function MockGitHubActivity() {
+    return (
+      <section aria-label="GitHubActivity">GitHub Activity Section</section>
+    );
+  },
+}));
+
 jest.mock("../components/Experience/Experience", () => ({
   __esModule: true,
   default: function MockExperience() {
@@ -87,6 +96,11 @@ describe("IndexPage", () => {
   it("renders the Projects component", () => {
     render(<IndexPage />);
     expect(screen.getByLabelText("Projects")).toBeInTheDocument();
+  });
+
+  it("renders the GitHubActivity component", () => {
+    render(<IndexPage />);
+    expect(screen.getByLabelText("GitHubActivity")).toBeInTheDocument();
   });
 
   it("renders the Experience component", () => {

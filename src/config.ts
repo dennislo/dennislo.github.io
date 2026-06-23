@@ -1,3 +1,10 @@
+export type EducationEntry = {
+  degree: string;
+  school: string;
+  dateRange: string;
+  achievements: string[];
+};
+
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
@@ -7,11 +14,13 @@ export type SectionNavLink = {
 export const sectionNavLinks: readonly SectionNavLink[] = [
   { label: "About", href: "#about", type: "internal" },
   { label: "Projects", href: "#projects", type: "internal" },
+  { label: "Activity", href: "#github-activity", type: "internal" },
   { label: "Experience", href: "#experience", type: "internal" },
   { label: "Education", href: "#education", type: "internal" },
 ];
 
 export const siteConfig = {
+  siteUrl: "https://dlo.wtf",
   header: "Who is DLO?",
   name: "Dennis Lo",
   title: "IT Consultant & Software Engineer",
@@ -148,5 +157,5 @@ export const siteConfig = {
         "Honours Thesis: Service Oriented Architecture for e-Business Standards",
       ],
     },
-  ],
+  ] satisfies [EducationEntry, ...EducationEntry[]],
 };
