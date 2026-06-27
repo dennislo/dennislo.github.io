@@ -7,14 +7,16 @@ test.describe("Contact icons", () => {
   }) => {
     await page.goto("/");
 
-    // Assert ALL "Contact Dennis Lo" links on the homepage point to routes.contactForm
+    // Assert ALL "Contact Dennis Lo" links on the homepage point to routes.contactForm.
+    // The built site renders the route with Gatsby's trailing slash, so tolerate it.
+    const contactFormHref = new RegExp(`^${routes.contactForm}/?$`);
     const allContactIconLinks = page.getByRole("link", {
       name: "Contact Dennis Lo",
     });
     const links = await allContactIconLinks.all();
     expect(links.length).toBeGreaterThan(0);
     for (const link of links) {
-      await expect(link).toHaveAttribute("href", routes.contactForm);
+      await expect(link).toHaveAttribute("href", contactFormHref);
     }
 
     // Click the footer's contact icon via the contentinfo landmark for a stable, non-positional selector
