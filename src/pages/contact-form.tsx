@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import ContactForm from "../components/ContactForm/ContactForm";
 import { Head as SharedHead } from "../components/Head/Head";
 import { buildWebPageSchema } from "../schemas";
-import { siteConfig } from "../config";
+import { routes, siteConfig } from "../config";
 
 const ContactFormPage = () => (
   <Layout>
@@ -16,7 +16,7 @@ export default ContactFormPage;
 export const Head = () => {
   const schemas = [
     buildWebPageSchema({
-      url: `${siteConfig.siteUrl}/contact-form`,
+      url: `${siteConfig.siteUrl}${routes.contactForm}`,
       name: "Contact — DLO",
       description: "Send a message to Dennis Lo",
     }),

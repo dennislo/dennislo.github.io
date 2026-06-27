@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { sectionNavLinks, siteConfig } from "../../config";
+import { routes, sectionNavLinks, siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
@@ -38,7 +38,7 @@ const SiteFooter = () => {
             ))}
             <li>
               <Link
-                to="/contact-form"
+                to={routes.contactForm}
                 className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
               >
                 Contact
@@ -52,8 +52,8 @@ const SiteFooter = () => {
             style={{ ["--accent" as string]: accent }}
           >
             <Link
-              to="/contact-form"
-              aria-label="Email Dennis Lo"
+              to={routes.contactForm}
+              aria-label="Contact Dennis Lo"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerEmail className="h-5 w-5" />

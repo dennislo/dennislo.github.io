@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Hero from "./Hero";
-import { siteConfig } from "../../config";
+import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
@@ -53,10 +53,10 @@ describe("Hero", () => {
 
   it("renders the email link with correct aria-label and href", () => {
     render(<Hero />);
-    const link = screen.getByRole("link", { name: "Email Dennis Lo" });
+    const link = screen.getByRole("link", { name: "Contact Dennis Lo" });
     expect(link).toBeInTheDocument();
     // The email icon should navigate to the internal contact form, not open a mail client
-    expect(link).toHaveAttribute("href", "/contact-form");
+    expect(link).toHaveAttribute("href", routes.contactForm);
   });
 
   it("renders the GitHub link with correct aria-label and href", () => {

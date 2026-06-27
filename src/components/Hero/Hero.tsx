@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { siteConfig } from "../../config";
+import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
@@ -191,8 +191,8 @@ const Hero = () => {
       {/* Social icons */}
       <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 dark:text-gray-300 animate-[fadeIn_0.8s_ease-out_0.6s_forwards] opacity-0">
         <Link
-          to="/contact-form"
-          aria-label="Email Dennis Lo"
+          to={routes.contactForm}
+          aria-label="Contact Dennis Lo"
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >

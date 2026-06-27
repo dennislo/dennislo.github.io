@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { routes } from "../config";
 
 test.describe("Contact icons", () => {
   test("email/contact icon on homepage has href /contact-form and navigates to the contact form", async ({
@@ -6,17 +7,23 @@ test.describe("Contact icons", () => {
   }) => {
     await page.goto("/");
 
-    // The email icon appears in both the Hero and the footer; use .first() to grab the first one
-    const emailLink = page
-      .getByRole("link", { name: "Email Dennis Lo" })
-      .first();
+    // Assert ALL "Contact Dennis Lo" links on the homepage point to routes.contactForm
+    const allContactIconLinks = page.getByRole("link", {
+      name: "Contact Dennis Lo",
+    });
+    const links = await allContactIconLinks.all();
+    expect(links.length).toBeGreaterThan(0);
+    for (const link of links) {
+      await expect(link).toHaveAttribute("href", routes.contactForm);
+    }
 
-    await expect(emailLink).toBeVisible();
-    await expect(emailLink).toHaveAttribute("href", "/contact-form");
+    // Click the footer's contact icon via the contentinfo landmark for a stable, non-positional selector
+    await page
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Contact Dennis Lo" })
+      .click();
 
-    await emailLink.click();
-
-    await expect(page).toHaveURL(/\/contact-form/);
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
     await expect(
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();

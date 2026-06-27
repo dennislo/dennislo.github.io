@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SiteHeader from "./SiteHeader";
-import { siteConfig } from "../../config";
+import { routes, siteConfig } from "../../config";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
 // Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
@@ -123,7 +123,7 @@ describe("SiteHeader", () => {
     const allContactLinks = screen.getAllByRole("link", { name: "Contact" });
     expect(allContactLinks).toHaveLength(2);
     allContactLinks.forEach((link) => {
-      expect(link).toHaveAttribute("href", "/contact-form");
+      expect(link).toHaveAttribute("href", routes.contactForm);
     });
   });
 
@@ -134,7 +134,7 @@ describe("SiteHeader", () => {
       name: "Contact",
     });
     expect(desktopContactLink).toBeInTheDocument();
-    expect(desktopContactLink).toHaveAttribute("href", "/contact-form");
+    expect(desktopContactLink).toHaveAttribute("href", routes.contactForm);
   });
 
   it("renders the Contact link in the mobile menu", async () => {
@@ -153,7 +153,7 @@ describe("SiteHeader", () => {
       name: "Contact",
     });
     expect(mobileContactLink).toBeInTheDocument();
-    expect(mobileContactLink).toHaveAttribute("href", "/contact-form");
+    expect(mobileContactLink).toHaveAttribute("href", routes.contactForm);
   });
 
   it("renders a nav element", () => {
@@ -247,9 +247,7 @@ describe("SiteHeader", () => {
     });
 
     // The Contact link is a Gatsby <Link> (route type); onClick forwarding via Change A closes the menu
-    await user.click(
-      within(mobileMenu).getByRole("link", { name: "Contact" }),
-    );
+    await user.click(within(mobileMenu).getByRole("link", { name: "Contact" }));
 
     expect(
       screen.getByRole("button", { name: "Open navigation menu" }),

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import SiteFooter from "./SiteFooter";
-import { siteConfig } from "../../config";
+import { routes, siteConfig } from "../../config";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom
 // Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
@@ -36,10 +36,10 @@ describe("SiteFooter", () => {
 
   it("renders the email social link with correct aria-label", () => {
     render(<SiteFooter />);
-    const link = screen.getByRole("link", { name: "Email Dennis Lo" });
+    const link = screen.getByRole("link", { name: "Contact Dennis Lo" });
     expect(link).toBeInTheDocument();
     // The email icon should navigate to the internal contact form, not open a mail client
-    expect(link).toHaveAttribute("href", "/contact-form");
+    expect(link).toHaveAttribute("href", routes.contactForm);
   });
 
   it("renders the GitHub social link with correct aria-label", () => {
@@ -87,10 +87,11 @@ describe("SiteFooter", () => {
 
   it("renders the Contact nav link pointing to /contact-form", () => {
     render(<SiteFooter />);
-    // "Contact" is unique: the email icon link's accessible name is "Email Dennis Lo" (sr-only span)
-    expect(
-      screen.getByRole("link", { name: "Contact" }),
-    ).toHaveAttribute("href", "/contact-form");
+    // "Contact" is unique: the email icon link's accessible name is "Contact Dennis Lo" (sr-only span)
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
+      "href",
+      routes.contactForm,
+    );
   });
 
   it("renders copyright text with the current year", () => {

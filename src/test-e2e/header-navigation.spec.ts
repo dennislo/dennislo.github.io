@@ -5,6 +5,7 @@ import {
   type Response,
   test,
 } from "@playwright/test";
+import { routes } from "../config";
 
 const mobileViewport = { width: 390, height: 844 };
 
@@ -224,7 +225,7 @@ test.describe("Header navigation", () => {
 
     await primaryNav.getByRole("link", { name: "Contact" }).click();
 
-    await expect(page).toHaveURL(/\/contact-form/);
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
     await expect(
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();
@@ -242,7 +243,7 @@ test.describe("Header navigation", () => {
       .getByRole("link", { name: "Contact" })
       .click();
 
-    await expect(page).toHaveURL(/\/contact-form/);
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
     await expect(
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();

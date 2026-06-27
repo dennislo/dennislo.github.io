@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "gatsby";
-import { sectionNavLinks, siteConfig } from "../../config";
+import { routes, sectionNavLinks, siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
 type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
@@ -18,7 +18,7 @@ const navLinks: NavLink[] = [
   {
     type: "route",
     label: "Contact",
-    href: "/contact-form",
+    href: routes.contactForm,
   },
 ];
 
