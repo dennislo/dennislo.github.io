@@ -37,6 +37,7 @@ export function Head({
 
   return (
     <>
+      <html lang={localeMeta[locale].htmlLang} />
       <title>{title}</title>
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
