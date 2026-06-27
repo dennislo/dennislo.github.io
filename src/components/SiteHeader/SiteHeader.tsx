@@ -4,6 +4,7 @@ import { routes, sectionNavLinks, siteConfig } from "../../config";
 import { useLocale } from "../../i18n";
 import type { TranslationDictionary } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
 // Map from section href to the nav dictionary key
 const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
@@ -160,6 +161,10 @@ const SiteHeader = () => {
             ))}
           </ul>
 
+          <div className="hidden md:flex md:items-center md:gap-1">
+            <LanguageSwitcher />
+          </div>
+
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors duration-200 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-100 md:hidden"
@@ -193,6 +198,9 @@ const SiteHeader = () => {
                 </li>
               ))}
             </ul>
+            <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-800">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       </nav>
