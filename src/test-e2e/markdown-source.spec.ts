@@ -29,7 +29,6 @@ test.describe("Direct Markdown source routes", () => {
     await page.goto("/");
     await expect(page).toHaveURL("/");
     await expect(page.locator("body")).not.toBeEmpty();
-    // Page should render React content, not raw Markdown
     const body = await page.locator("body").textContent();
     expect(body).not.toMatch(/^# /);
   });

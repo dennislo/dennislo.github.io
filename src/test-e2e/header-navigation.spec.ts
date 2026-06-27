@@ -161,9 +161,8 @@ test.describe("Header navigation", () => {
 
       expect(headerBox).not.toBeNull();
       expect(headingBox).not.toBeNull();
-      // Meaning: after the anchor jump, the heading should start below the fixed header instead of being overlapped by it.
-      // Why this matters: a fixed header can visually cover anchor targets even though the browser technically scrolled
-      // to the right element. The test guards against that regression by checking actual layout in the browser, not just the URL hash.
+      // A fixed header can visually cover anchor targets even though the browser technically scrolled to the right element.
+      // This guards against that regression by checking actual layout, not just the URL hash.
       expect(headingBox!.y).toBeGreaterThanOrEqual(headerBox!.height - 1);
     }
   });

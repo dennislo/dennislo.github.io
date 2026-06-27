@@ -36,11 +36,9 @@ test.describe("Theme Toggle", () => {
   });
 
   test("clicking toggle switches from dark back to light", async ({ page }) => {
-    // First switch to dark
     await page.getByRole("button", { name: /switch to dark mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
-    // Then switch back to light
     await page.getByRole("button", { name: /switch to light mode/i }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   });
@@ -72,7 +70,6 @@ test.describe("Theme Toggle", () => {
   test("toggle button shows moon icon in light mode (switch to dark)", async ({
     page,
   }) => {
-    // In light mode the button label is "Switch to dark mode"
     await expect(
       page.getByRole("button", { name: /switch to dark mode/i }),
     ).toBeVisible();
@@ -83,7 +80,6 @@ test.describe("Theme Toggle", () => {
   }) => {
     await page.getByRole("button", { name: /switch to dark mode/i }).click();
 
-    // In dark mode the button label is "Switch to light mode"
     await expect(
       page.getByRole("button", { name: /switch to light mode/i }),
     ).toBeVisible();
