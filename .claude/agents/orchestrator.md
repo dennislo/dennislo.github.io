@@ -38,13 +38,28 @@ Prohibited: Do NOT use `TodoWrite`, markdown TODO lists, or other trackers. `bd`
 
 Use the `Agent` tool to hand work to the right specialist. Choose the agent based on the task:
 
-- `senior-frontend-engineer` — Gatsby/React/TypeScript implementation and bug fixes
-- `test-writer` — new or updated Jest and React Testing Library coverage
-- `code-reviewer` — post-change review for correctness, regressions, and test adequacy
+- `test-writer` — write unit and integration tests **before** implementation begins; tests must fail first
+- `senior-frontend-engineer` — Gatsby/React/TypeScript implementation and bug fixes; runs **after** failing tests exist
+- `code-reviewer` — post-PR review for correctness, regressions, and test adequacy; runs after a PR is opened
 - `debugger` — reproducing errors, failing tests, broken builds, or unclear behavior
 - `code-health` — cleanup sweeps, stale-pattern detection, tech-debt discovery
 - `Explore` — broad codebase research across many files
 - `general-purpose` — multi-step research or lookups that do not fit a specialist
+
+### Test-Driven Development (TDD) Delegation Order
+
+For every feature or bug fix, delegate in this exact sequence. Do not skip steps or reorder them. Debugging sessions,
+code-health sweeps, and documentation-only changes are exempt and do not require this sequence.
+
+1. **Delegate to `test-writer`** — Write unit and integration tests that describe the expected behavior. If the task
+   involves user journeys, routing, or layout changes, also invoke `.claude/skills/e2e-testing/SKILL.md` to write
+   end-to-end tests. Confirm all tests fail before proceeding. Collect the failing test output — you will pass it to
+   the next agent as context.
+2. **Delegate to `senior-frontend-engineer`** — Implement the minimum code to make the failing tests pass. Include
+   the failing test output from step 1 in the delegation prompt so the agent understands the expected baseline.
+3. **Open a pull request** — Commit and push both the tests and the implementation, then open a PR.
+4. **Delegate to `code-reviewer`** — Review the PR for correctness, regressions, and test adequacy. All Critical and
+   Warning findings must be resolved by the appropriate agent before the PR is merged.
 
 ### Writing a Good Delegation Prompt
 

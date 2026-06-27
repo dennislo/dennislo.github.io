@@ -13,19 +13,40 @@ refer to it when relevant to the task at hand.
   the "rule of 5". Apply multiple review passes and record only net-new findings each round.
 - Use `.claude/agents/code-health.md` for code-health sweeps, cleanup audits, stale-pattern detection, and follow-up
   maintenance discovery. Check existing `bd` work first and file any new actionable findings in `bd`.
-- Use `.claude/agents/code-reviewer.md` proactively after meaningful code or test changes, and whenever the user asks
-  for a review. Focus on correctness, security, performance, readability, error handling, React best practices, and
-  test adequacy.
+- Use `.claude/agents/code-reviewer.md` for every pull request and whenever meaningful code or test changes are made.
+  Focus on correctness, security, performance, readability, error handling, React best practices, and test adequacy.
+  Apply all suggested fixes using the appropriate specialized agent before the PR is merged.
 - Use `.claude/agents/debugger.md` whenever there are errors, failing tests, broken builds, console issues, or unclear
   behavior. Add plan steps to understand the symptom first, investigate and isolate the cause second, then fix and
   verify.
+- Use `.claude/agents/test-writer.md` to write unit and integration tests **before** implementation begins. Tests must
+  be committed in a failing state to confirm the behavior is not yet implemented. Do not start implementation until
+  tests exist and fail for the right reason.
 - Use `.claude/agents/senior-frontend-engineer.md` for frontend implementation and bug-fix work in Gatsby, React, and
-  TypeScript. Default to this agent when code needs to be written or corrected in the UI layer.
-- Use `.claude/agents/test-writer.md` for unit and integration testing with Jest and React Testing Library.
+  TypeScript. This agent runs **after** the test-writer agent has produced failing tests. The goal is to make those
+  tests pass with the minimum change required.
 - Use `.claude/skills/e2e-testing/SKILL.md` for Playwright work, including new browser tests, updating existing specs,
-  debugging flaky end-to-end coverage, and validating user journeys.
+  debugging flaky end-to-end coverage, and validating user journeys. Write end-to-end tests in addition to unit tests,
+  **before** implementation, so they also start in a failing state.
 - Use `.claude/skills/unit-testing/SKILL.md` when writing or updating Jest and React Testing Library coverage, to
   follow this repo's testing patterns, query priorities, mocking boundaries, and AAA structure.
+
+## Development Workflow
+
+All feature work and bug fixes follow a test-driven development (TDD) cycle. The steps below are mandatory and must
+be executed in order. Debugging sessions, code-health sweeps, and documentation-only changes are exempt from this
+cycle and do not require tests to be written first.
+
+1. **Write failing tests first** — Delegate to `.claude/agents/test-writer.md` for unit and integration tests and to
+   `.claude/skills/e2e-testing/SKILL.md` for end-to-end tests. Run the tests to confirm they fail for the right
+   reason before moving on. Do not skip or defer this step.
+2. **Implement changes** — Delegate to `.claude/agents/senior-frontend-engineer.md` to write the minimum code that
+   makes the failing tests pass. No implementation work starts before failing tests are in place.
+3. **Create a pull request** — Commit and push all changes, then open a pull request. The PR must include both the
+   tests and the implementation together.
+4. **Review the pull request** — Delegate to `.claude/agents/code-reviewer.md` to review for correctness, regressions,
+   and test adequacy. All findings marked Critical or Warning must be resolved by the appropriate agent before the
+   PR is merged.
 
 ## Technology Stack & Development Guidelines
 
