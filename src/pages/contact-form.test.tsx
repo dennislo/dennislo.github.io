@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import ContactFormPage, { Head } from "./contact-form";
+import { enGB } from "../i18n/translations/en-GB";
+import { renderWithLocale } from "../test/renderWithLocale";
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -26,6 +28,18 @@ describe("ContactFormPage", () => {
     render(<ContactFormPage />);
     expect(screen.getByLabelText("Contact Form")).toBeInTheDocument();
   });
+
+  it("renders correctly when wrapped with LocaleProvider (en-GB)", () => {
+    renderWithLocale(<ContactFormPage />);
+    expect(screen.getByLabelText("Layout")).toBeInTheDocument();
+    expect(screen.getByLabelText("Contact Form")).toBeInTheDocument();
+  });
+
+  it("renders correctly when wrapped with LocaleProvider (zh-Hans)", () => {
+    renderWithLocale(<ContactFormPage />, "zh-Hans");
+    expect(screen.getByLabelText("Layout")).toBeInTheDocument();
+    expect(screen.getByLabelText("Contact Form")).toBeInTheDocument();
+  });
 });
 
 describe("ContactFormPage Head", () => {
@@ -34,14 +48,14 @@ describe("ContactFormPage Head", () => {
     document.title = "";
   });
 
-  it("renders title and description meta", () => {
+  it("renders the localized title and description meta from enGB dict", () => {
     render(<Head />);
-    expect(document.title).toBe("Contact — DLO");
+    expect(document.title).toBe(enGB.seo.contactPageTitle);
     const meta = document.head.querySelector(
       'meta[name="description"]',
     ) as HTMLMetaElement | null;
     expect(meta).toBeInTheDocument();
-    expect(meta?.content).toBe("Send a message to Dennis Lo");
+    expect(meta?.content).toBe(enGB.seo.contactPageDescription);
   });
 
   it("renders alternate Markdown link in head", () => {
@@ -56,12 +70,12 @@ describe("ContactFormPage Head", () => {
   it("renders Open Graph meta tags via SharedHead", () => {
     render(<Head />);
     const ogTitle = document.head.querySelector('meta[property="og:title"]');
-    expect(ogTitle?.getAttribute("content")).toBe("Contact — DLO");
+    expect(ogTitle?.getAttribute("content")).toBe(enGB.seo.contactPageTitle);
     const ogDescription = document.head.querySelector(
       'meta[property="og:description"]',
     );
     expect(ogDescription?.getAttribute("content")).toBe(
-      "Send a message to Dennis Lo",
+      enGB.seo.contactPageDescription,
     );
   });
 
@@ -74,7 +88,9 @@ describe("ContactFormPage Head", () => {
     const twitterTitle = document.head.querySelector(
       'meta[name="twitter:title"]',
     );
-    expect(twitterTitle?.getAttribute("content")).toBe("Contact — DLO");
+    expect(twitterTitle?.getAttribute("content")).toBe(
+      enGB.seo.contactPageTitle,
+    );
   });
 
   it("renders a WebPage JSON-LD script tag", () => {

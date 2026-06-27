@@ -1,14 +1,26 @@
 import React from "react";
 import { Link } from "gatsby";
 import { routes, sectionNavLinks, siteConfig } from "../../config";
+import { useLocale } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
+import type { TranslationDictionary } from "../../i18n";
+
+// Map from section href to the nav dictionary key (mirrors SiteHeader)
+const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
+  "#about": "about",
+  "#projects": "projects",
+  "#github-activity": "activity",
+  "#experience": "experience",
+  "#education": "education",
+};
 
 const SiteFooter = () => {
   const accent = siteConfig.accentColor;
+  const { t } = useLocale();
 
   return (
     <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
@@ -26,22 +38,25 @@ const SiteFooter = () => {
 
           {/* Nav links */}
           <ul className="flex flex-wrap gap-4 lg:gap-6">
-            {sectionNavLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {sectionNavLinks.map((link) => {
+              const key = hrefToNavKey[link.href] ?? "about";
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
+                  >
+                    {t(`nav.${key}`)}
+                  </a>
+                </li>
+              );
+            })}
             <li>
               <Link
                 to={routes.contactForm}
                 className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
               >
-                Contact
+                {t("footer.contact")}
               </Link>
             </li>
           </ul>
@@ -53,28 +68,28 @@ const SiteFooter = () => {
           >
             <Link
               to={routes.contactForm}
-              aria-label="Contact Dennis Lo"
+              aria-label={t("footer.emailAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerEmail className="h-5 w-5" />
             </Link>
             <ExternalLink
               href={siteConfig.social.github}
-              aria-label="Dennis Lo on GitHub"
+              aria-label={t("footer.githubAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerGithub className="h-5 w-5" />
             </ExternalLink>
             <ExternalLink
               href={siteConfig.social.linkedin}
-              aria-label="Dennis Lo on LinkedIn"
+              aria-label={t("footer.linkedinAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerLinkedin className="h-5 w-5" />
             </ExternalLink>
             <ExternalLink
               href={siteConfig.social.instagram}
-              aria-label="Dennis Lo on Instagram"
+              aria-label={t("footer.instagramAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerInstagram className="h-5 w-5" />
@@ -84,7 +99,8 @@ const SiteFooter = () => {
 
         <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-500">
-            © {new Date().getFullYear()} {siteConfig.name}. Built with ❤️ using{" "}
+            © {new Date().getFullYear()} {siteConfig.name}.{" "}
+            {t("footer.builtWith")} ❤️ {t("footer.using")}{" "}
             <ExternalLink
               href="https://www.gatsbyjs.org/"
               className="underline transition-colors duration-300"

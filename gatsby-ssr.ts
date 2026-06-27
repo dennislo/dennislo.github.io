@@ -6,3 +6,5 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({
 }) => {
   setHtmlAttributes({ lang: "en" });
 };
+
+export { wrapPageElement } from "./src/gatsby/wrapPageElement";

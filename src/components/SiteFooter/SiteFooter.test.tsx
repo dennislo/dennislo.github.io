@@ -1,10 +1,12 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import SiteFooter from "./SiteFooter";
 import { routes, siteConfig } from "../../config";
+import { enGB } from "../../i18n/translations/en-GB";
+import { zhHans } from "../../i18n/translations/zh-Hans";
+import { renderWithLocale } from "../../test/renderWithLocale";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom
-// Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
 jest.mock("gatsby", () => ({
   Link: ({
     to,
@@ -21,84 +23,143 @@ jest.mock("gatsby", () => ({
   ),
 }));
 
-describe("SiteFooter", () => {
-  it("renders the site name from siteConfig", () => {
-    render(<SiteFooter />);
-    // The name appears in a bold <p> and also in the copyright line; use getAllByText
+describe("SiteFooter (en-GB, default locale)", () => {
+  it("renders the site name from siteConfig (locale-invariant)", () => {
+    renderWithLocale(<SiteFooter />);
     const matches = screen.getAllByText(siteConfig.name, { exact: true });
     expect(matches.length).toBeGreaterThan(0);
   });
 
-  it("renders the title from siteConfig", () => {
-    render(<SiteFooter />);
+  it("renders the title from siteConfig (locale-invariant)", () => {
+    renderWithLocale(<SiteFooter />);
     expect(screen.getByText(siteConfig.title)).toBeInTheDocument();
   });
 
-  it("renders the email social link with correct aria-label", () => {
-    render(<SiteFooter />);
-    const link = screen.getByRole("link", { name: "Contact Dennis Lo" });
+  it("renders the email social link with localized aria-label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    const link = screen.getByRole("link", { name: enGB.footer.emailAria });
     expect(link).toBeInTheDocument();
-    // The email icon should navigate to the internal contact form, not open a mail client
     expect(link).toHaveAttribute("href", routes.contactForm);
   });
 
-  it("renders the GitHub social link with correct aria-label", () => {
-    render(<SiteFooter />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on GitHub" });
+  it("renders the GitHub social link with localized aria-label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    const link = screen.getByRole("link", { name: enGB.footer.githubAria });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.github);
   });
 
-  it("renders the LinkedIn social link with correct aria-label", () => {
-    render(<SiteFooter />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on LinkedIn" });
+  it("renders the LinkedIn social link with localized aria-label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    const link = screen.getByRole("link", { name: enGB.footer.linkedinAria });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.linkedin);
   });
 
-  it("renders the Instagram social link with correct aria-label", () => {
-    render(<SiteFooter />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on Instagram" });
+  it("renders the Instagram social link with localized aria-label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    const link = screen.getByRole("link", { name: enGB.footer.instagramAria });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.instagram);
   });
 
-  it("renders the About nav link", () => {
-    render(<SiteFooter />);
-    expect(screen.getByRole("link", { name: "About" })).toBeInTheDocument();
-  });
-
-  it("renders the Projects nav link", () => {
-    render(<SiteFooter />);
-    expect(screen.getByRole("link", { name: "Projects" })).toBeInTheDocument();
-  });
-
-  it("renders the Experience nav link", () => {
-    render(<SiteFooter />);
+  it("renders the localized About nav link label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
     expect(
-      screen.getByRole("link", { name: "Experience" }),
+      screen.getByRole("link", { name: enGB.nav.about }),
     ).toBeInTheDocument();
   });
 
-  it("renders the Education nav link", () => {
-    render(<SiteFooter />);
-    expect(screen.getByRole("link", { name: "Education" })).toBeInTheDocument();
+  it("renders the localized Projects nav link label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByRole("link", { name: enGB.nav.projects }),
+    ).toBeInTheDocument();
   });
 
-  it("renders the Contact nav link pointing to /contact-form", () => {
-    render(<SiteFooter />);
-    // "Contact" is unique: the email icon link's accessible name is "Contact Dennis Lo" (sr-only span)
-    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
-      "href",
-      routes.contactForm,
-    );
+  it("renders the localized Experience nav link label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByRole("link", { name: enGB.nav.experience }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the localized Education nav link label from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByRole("link", { name: enGB.nav.education }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the localized Contact nav link from enGB.footer.contact pointing to /contact-form", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByRole("link", { name: enGB.footer.contact }),
+    ).toHaveAttribute("href", routes.contactForm);
+  });
+
+  it("renders the localized 'Built with' text from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByText(new RegExp(enGB.footer.builtWith)),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the localized 'using' text from enGB dict", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(screen.getByText(new RegExp(enGB.footer.using))).toBeInTheDocument();
   });
 
   it("renders copyright text with the current year", () => {
-    render(<SiteFooter />);
+    renderWithLocale(<SiteFooter />);
     const currentYear = new Date().getFullYear();
     expect(
       screen.getByText(new RegExp(`© ${currentYear}`)),
+    ).toBeInTheDocument();
+  });
+});
+
+describe("SiteFooter (zh-Hans locale)", () => {
+  it("renders localized About nav label in Chinese", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.nav.about }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders localized Projects nav label in Chinese", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.nav.projects }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders localized Experience nav label in Chinese", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.nav.experience }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders localized Education nav label in Chinese", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.nav.education }),
+    ).toBeInTheDocument();
+  });
+
+  it("does NOT render English nav labels when locale is zh-Hans", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    // "About" in English should not appear as a nav link
+    expect(
+      screen.queryByRole("link", { name: enGB.nav.about }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders localized Contact label in Chinese", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.footer.contact }),
     ).toBeInTheDocument();
   });
 });

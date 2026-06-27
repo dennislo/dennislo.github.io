@@ -1,9 +1,18 @@
 import React from "react";
 import { Link } from "gatsby";
-import { siteConfig } from "../../config";
+import { routes, siteConfig } from "../../config";
+import { useLocale } from "../../i18n";
+import {
+  getLocalizedClients,
+  getLocalizedFunFacts,
+} from "../../i18n/localizedContent";
 
 const About = () => {
   const accent = siteConfig.accentColor;
+  const { t, dict } = useLocale();
+
+  const clients = getLocalizedClients(dict);
+  const funFacts = getLocalizedFunFacts(dict);
 
   return (
     <section
@@ -13,7 +22,7 @@ const About = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         <div className="lg:col-span-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100">
-            About Me
+            {t("about.heading")}
           </h2>
           <div
             className="w-[75px] h-[5px] mt-2 rounded-full"
@@ -23,28 +32,28 @@ const About = () => {
 
         <div className="lg:col-span-8 space-y-6">
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-            {siteConfig.aboutMe}
+            {t("about.aboutMe")}
           </p>
 
           <div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-              Agile IT &amp; Software Limited
+              {t("about.agileITHeading")}
             </h3>
             <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              {siteConfig.agileIT}{" "}
+              {t("about.agileIT")}{" "}
               <Link
-                to="/contact-form"
+                to={routes.contactForm}
                 className="underline transition-colors duration-300"
                 style={{ color: accent }}
               >
-                Please contact us for further information about our services.
+                {t("about.agileITContactLink")}
               </Link>
             </p>
           </div>
 
           <div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
-              Technologies &amp; Skills
+              {t("about.skillsHeading")}
             </h3>
             <div className="flex flex-wrap gap-2">
               {siteConfig.skills.map((skill) => (
@@ -60,10 +69,10 @@ const About = () => {
 
           <div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
-              I&apos;ve worked with clients from:
+              {t("about.clientsHeading")}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {siteConfig.clients.map((client) => (
+              {clients.map((client) => (
                 <span
                   key={client}
                   className="px-3 py-1 border rounded-full text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200 cursor-default"
@@ -77,10 +86,10 @@ const About = () => {
 
           <div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
-              Fun facts:
+              {t("about.funFactsHeading")}
             </h3>
             <ul className="space-y-2">
-              {siteConfig.funFacts.map((fact) => (
+              {funFacts.map((fact) => (
                 <li
                   key={fact.text}
                   className="flex items-start gap-2 text-base text-gray-700 dark:text-gray-300"

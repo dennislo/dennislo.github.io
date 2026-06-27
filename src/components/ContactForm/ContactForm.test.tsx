@@ -1,7 +1,10 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from "./ContactForm";
+import { enGB } from "../../i18n/translations/en-GB";
+import { zhHans } from "../../i18n/translations/zh-Hans";
+import { renderWithLocale } from "../../test/renderWithLocale";
 
 // Mock Gatsby's Link as a plain anchor so we don't need a Gatsby runtime
 jest.mock("gatsby", () => ({
@@ -35,20 +38,26 @@ import { useForm } from "@formspree/react";
 const mockUseForm = useForm as jest.Mock;
 
 // Helper: render the form and return userEvent instance
-function setup() {
+function setup(locale: Parameters<typeof renderWithLocale>[1] = "en-GB") {
   const user = userEvent.setup();
-  const utils = render(<ContactForm />);
+  const utils = renderWithLocale(<ContactForm />, locale);
   return { user, ...utils };
 }
 
-// Helper: fill every required field with valid data
+// Helper: fill every required field with valid data using localized labels
 async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText("First Name"), "Jane");
-  await user.type(screen.getByLabelText("Last Name"), "Doe");
-  await user.type(screen.getByLabelText("Mobile Number"), "+61 400 123 456");
-  await user.type(screen.getByLabelText("Email Address"), "jane@example.com");
+  await user.type(screen.getByLabelText(enGB.contact.firstNameLabel), "Jane");
+  await user.type(screen.getByLabelText(enGB.contact.lastNameLabel), "Doe");
   await user.type(
-    screen.getByLabelText("Message"),
+    screen.getByLabelText(enGB.contact.mobileLabel),
+    "+61 400 123 456",
+  );
+  await user.type(
+    screen.getByLabelText(enGB.contact.emailLabel),
+    "jane@example.com",
+  );
+  await user.type(
+    screen.getByLabelText(enGB.contact.messageLabel),
     "Hello, this is a test message.",
   );
 }
@@ -58,52 +67,57 @@ beforeEach(() => {
   mockHandleSubmit.mockClear();
 });
 
-describe("ContactForm", () => {
+describe("ContactForm (en-GB, default locale)", () => {
   // ------------------------------------------------------------------ Rendering
   describe("initial rendering", () => {
-    it('renders the "Contact Me" heading', () => {
+    it("renders the localized 'Contact Me' heading from enGB dict", () => {
       setup();
       expect(
-        screen.getByRole("heading", { name: "Contact Me" }),
+        screen.getByRole("heading", { name: enGB.contact.pageTitle }),
       ).toBeInTheDocument();
     });
 
-    it("renders all five fields with correct labels", () => {
-      setup();
-      expect(screen.getByLabelText("First Name")).toBeInTheDocument();
-      expect(screen.getByLabelText("Last Name")).toBeInTheDocument();
-      expect(screen.getByLabelText("Mobile Number")).toBeInTheDocument();
-      expect(screen.getByLabelText("Email Address")).toBeInTheDocument();
-      expect(screen.getByLabelText("Message")).toBeInTheDocument();
-    });
-
-    it("renders the persistent hint text for the message field", () => {
+    it("renders all five fields with localized labels from enGB dict", () => {
       setup();
       expect(
-        screen.getByText(
-          "If you would like to work with me please include information about the budget, timeline, project type.",
-        ),
+        screen.getByLabelText(enGB.contact.firstNameLabel),
       ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(enGB.contact.lastNameLabel),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(enGB.contact.mobileLabel),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(enGB.contact.emailLabel),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(enGB.contact.messageLabel),
+      ).toBeInTheDocument();
+    });
+
+    it("renders the localized hint text from enGB dict", () => {
+      setup();
+      expect(screen.getByText(enGB.contact.messageHint)).toBeInTheDocument();
     });
 
     it("wires aria-describedby on the message textarea to the hint element", () => {
       setup();
-      expect(screen.getByLabelText("Message")).toHaveAttribute(
+      expect(screen.getByLabelText(enGB.contact.messageLabel)).toHaveAttribute(
         "aria-describedby",
         "message-hint",
       );
     });
 
-    it('renders the submit button with text "Send Message"', () => {
+    it("renders the localized submit button text from enGB dict", () => {
       setup();
       expect(
-        screen.getByRole("button", { name: "Send Message" }),
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
       ).toBeInTheDocument();
     });
 
     it("renders a back link pointing to /", () => {
       setup();
-      // The back link contains an arrow character and "Back"
       const backLink = screen.getByRole("link", { name: /back/i });
       expect(backLink).toHaveAttribute("href", "/");
     });
@@ -123,7 +137,9 @@ describe("ContactForm", () => {
       setup();
 
       expect(
-        screen.getByRole("button", { name: /send message/i }),
+        screen.getByRole("button", {
+          name: new RegExp(enGB.contact.submitButton, "i"),
+        }),
       ).toBeInTheDocument();
       expect(screen.getByRole("link", { name: /back/i })).toBeInTheDocument();
     });
@@ -131,41 +147,45 @@ describe("ContactForm", () => {
 
   // ------------------------------------------------------------------ Success state
   describe("success state", () => {
-    it("shows a thank-you message when state.succeeded is true", () => {
+    it("shows the localized thank-you message from enGB dict when state.succeeded is true", () => {
       mockUseForm.mockReturnValue([
         { succeeded: true, submitting: false, errors: null },
         mockHandleSubmit,
       ]);
       setup();
-      expect(
-        screen.getByText(/thank you for your message/i),
-      ).toBeInTheDocument();
+      expect(screen.getByText(enGB.contact.successMessage)).toBeInTheDocument();
       // The form itself should not be present
       expect(
-        screen.queryByRole("button", { name: /send message/i }),
+        screen.queryByRole("button", {
+          name: new RegExp(enGB.contact.submitButton, "i"),
+        }),
       ).not.toBeInTheDocument();
     });
 
-    it("shows a back-to-homepage link in the success state", () => {
+    it("shows the localized back-to-homepage link text from enGB dict in the success state", () => {
       mockUseForm.mockReturnValue([
         { succeeded: true, submitting: false, errors: null },
         mockHandleSubmit,
       ]);
       setup();
-      const link = screen.getByRole("link", { name: /back to homepage/i });
+      const link = screen.getByRole("link", {
+        name: new RegExp(enGB.contact.successBackLink, "i"),
+      });
       expect(link).toHaveAttribute("href", "/");
     });
   });
 
   // ------------------------------------------------------------------ Submitting state
   describe("submitting state", () => {
-    it('shows "Sending..." on the button and disables it while submitting', () => {
+    it("shows the localized 'Sending...' text and disables button while submitting", () => {
       mockUseForm.mockReturnValue([
         { succeeded: false, submitting: true, errors: null },
         mockHandleSubmit,
       ]);
       setup();
-      const button = screen.getByRole("button", { name: "Sending..." });
+      const button = screen.getByRole("button", {
+        name: enGB.contact.submittingButton,
+      });
       expect(button).toBeInTheDocument();
       expect(button).toBeDisabled();
     });
@@ -176,16 +196,17 @@ describe("ContactForm", () => {
     it("does not show the server error banner in the default state", () => {
       setup();
       expect(
-        screen.queryByText(/there was a problem sending your message/i),
+        screen.queryByText(
+          new RegExp(enGB.contact.serverErrorMessage.slice(0, 30), "i"),
+        ),
       ).not.toBeInTheDocument();
     });
 
-    it("shows a general error message when state.errors is a SubmissionError", () => {
+    it("shows the localized server error message from enGB dict when state.errors is set", () => {
       mockUseForm.mockReturnValue([
         {
           succeeded: false,
           submitting: false,
-          // Non-null errors object simulates a SubmissionError from Formspree
           errors: {
             kind: "error",
             getFormErrors: () => [],
@@ -197,37 +218,43 @@ describe("ContactForm", () => {
       ]);
       setup();
       expect(
-        screen.getByText(/there was a problem sending your message/i),
+        screen.getByText(enGB.contact.serverErrorMessage),
       ).toBeInTheDocument();
     });
   });
 
   // ------------------------------------------------------------------ Validation: submit empty form
   describe("client-side validation on submit", () => {
-    it("shows all five required-field error messages when the empty form is submitted", async () => {
+    it("shows all five localized required-field error messages from enGB dict when the empty form is submitted", async () => {
       const { user } = setup();
 
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
 
-      // firstName and lastName both show "This field is required."
+      // firstName and lastName both show validationRequired
       const requiredErrors = await screen.findAllByText(
-        "This field is required.",
+        enGB.contact.validationRequired,
       );
       expect(requiredErrors).toHaveLength(2);
 
       expect(
-        screen.getByText("Mobile number is required."),
+        screen.getByText(enGB.contact.validationMobileRequired),
       ).toBeInTheDocument();
       expect(
-        screen.getByText("Email address is required."),
+        screen.getByText(enGB.contact.validationEmailRequired),
       ).toBeInTheDocument();
-      expect(screen.getByText("Message is required.")).toBeInTheDocument();
+      expect(
+        screen.getByText(enGB.contact.validationMessageRequired),
+      ).toBeInTheDocument();
     });
 
     it("does not call the Formspree submit handler when validation fails", async () => {
       const { user } = setup();
 
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
 
       expect(mockHandleSubmit).not.toHaveBeenCalled();
     });
@@ -235,27 +262,28 @@ describe("ContactForm", () => {
     it("sets aria-invalid to true on fields with validation errors after submit", async () => {
       const { user } = setup();
 
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
 
-      await screen.findAllByText("This field is required.");
+      await screen.findAllByText(enGB.contact.validationRequired);
 
-      expect(screen.getByLabelText("First Name")).toHaveAttribute(
+      expect(
+        screen.getByLabelText(enGB.contact.firstNameLabel),
+      ).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByLabelText(enGB.contact.lastNameLabel)).toHaveAttribute(
         "aria-invalid",
         "true",
       );
-      expect(screen.getByLabelText("Last Name")).toHaveAttribute(
+      expect(screen.getByLabelText(enGB.contact.mobileLabel)).toHaveAttribute(
         "aria-invalid",
         "true",
       );
-      expect(screen.getByLabelText("Mobile Number")).toHaveAttribute(
+      expect(screen.getByLabelText(enGB.contact.emailLabel)).toHaveAttribute(
         "aria-invalid",
         "true",
       );
-      expect(screen.getByLabelText("Email Address")).toHaveAttribute(
-        "aria-invalid",
-        "true",
-      );
-      expect(screen.getByLabelText("Message")).toHaveAttribute(
+      expect(screen.getByLabelText(enGB.contact.messageLabel)).toHaveAttribute(
         "aria-invalid",
         "true",
       );
@@ -263,9 +291,11 @@ describe("ContactForm", () => {
 
     it("includes both hint and error in aria-describedby when the message field has an error", async () => {
       const { user } = setup();
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
-      await screen.findByText("Message is required.");
-      expect(screen.getByLabelText("Message")).toHaveAttribute(
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
+      await screen.findByText(enGB.contact.validationMessageRequired);
+      expect(screen.getByLabelText(enGB.contact.messageLabel)).toHaveAttribute(
         "aria-describedby",
         "message-hint message-error",
       );
@@ -274,46 +304,56 @@ describe("ContactForm", () => {
     it("moves focus to the first invalid field (First Name) when the empty form is submitted", async () => {
       const { user } = setup();
 
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
 
-      await screen.findAllByText("This field is required.");
+      await screen.findAllByText(enGB.contact.validationRequired);
 
-      expect(document.activeElement).toBe(screen.getByLabelText("First Name"));
+      expect(document.activeElement).toBe(
+        screen.getByLabelText(enGB.contact.firstNameLabel),
+      );
     });
   });
 
   // ------------------------------------------------------------------ Validation: blur triggers
   describe("client-side validation on blur", () => {
-    it("shows an email error when an invalid email is entered and the field is blurred", async () => {
+    it("shows the localized email error message from enGB dict when an invalid email is entered and blurred", async () => {
       const { user } = setup();
 
-      await user.type(screen.getByLabelText("Email Address"), "not-an-email");
-      await user.tab(); // move focus away to trigger blur
-
-      expect(
-        screen.getByText("Enter a valid email address."),
-      ).toBeInTheDocument();
-    });
-
-    it("shows a mobile error when an invalid phone number is entered and the field is blurred", async () => {
-      const { user } = setup();
-
-      await user.type(screen.getByLabelText("Mobile Number"), "abc");
+      await user.type(
+        screen.getByLabelText(enGB.contact.emailLabel),
+        "not-an-email",
+      );
       await user.tab();
 
       expect(
-        screen.getByText("Enter a valid phone number (e.g. +61 400 123 456)."),
+        screen.getByText(enGB.contact.validationEmailInvalid),
       ).toBeInTheDocument();
     });
 
-    it("shows a message error when a short message (<10 chars) is entered and the field is blurred", async () => {
+    it("shows the localized mobile error message from enGB dict when an invalid phone number is entered and blurred", async () => {
       const { user } = setup();
 
-      await user.type(screen.getByLabelText("Message"), "short");
+      await user.type(screen.getByLabelText(enGB.contact.mobileLabel), "abc");
       await user.tab();
 
       expect(
-        screen.getByText("Message must be at least 10 characters."),
+        screen.getByText(enGB.contact.validationMobileInvalid),
+      ).toBeInTheDocument();
+    });
+
+    it("shows the localized message-too-short error from enGB dict when a short message is entered and blurred", async () => {
+      const { user } = setup();
+
+      await user.type(
+        screen.getByLabelText(enGB.contact.messageLabel),
+        "short",
+      );
+      await user.tab();
+
+      expect(
+        screen.getByText(enGB.contact.validationMessageMin),
       ).toBeInTheDocument();
     });
   });
@@ -324,7 +364,9 @@ describe("ContactForm", () => {
       const { user } = setup();
 
       await fillValidForm(user);
-      await user.click(screen.getByRole("button", { name: "Send Message" }));
+      await user.click(
+        screen.getByRole("button", { name: enGB.contact.submitButton }),
+      );
 
       expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
     });
@@ -333,21 +375,58 @@ describe("ContactForm", () => {
       const { user } = setup();
 
       // Trigger an email error
-      await user.type(screen.getByLabelText("Email Address"), "bad");
+      await user.type(screen.getByLabelText(enGB.contact.emailLabel), "bad");
       await user.tab();
       expect(
-        screen.getByText("Enter a valid email address."),
+        screen.getByText(enGB.contact.validationEmailInvalid),
       ).toBeInTheDocument();
 
       // Fix the email — error should disappear
-      await user.clear(screen.getByLabelText("Email Address"));
+      await user.clear(screen.getByLabelText(enGB.contact.emailLabel));
       await user.type(
-        screen.getByLabelText("Email Address"),
+        screen.getByLabelText(enGB.contact.emailLabel),
         "good@example.com",
       );
       expect(
-        screen.queryByText("Enter a valid email address."),
+        screen.queryByText(enGB.contact.validationEmailInvalid),
       ).not.toBeInTheDocument();
     });
+  });
+});
+
+describe("ContactForm (zh-Hans locale)", () => {
+  it("renders the localized First Name label in Chinese", () => {
+    renderWithLocale(<ContactForm />, "zh-Hans");
+    expect(
+      screen.getByLabelText(zhHans.contact.firstNameLabel),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the localized Last Name label in Chinese", () => {
+    renderWithLocale(<ContactForm />, "zh-Hans");
+    expect(
+      screen.getByLabelText(zhHans.contact.lastNameLabel),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the localized heading in Chinese", () => {
+    renderWithLocale(<ContactForm />, "zh-Hans");
+    expect(
+      screen.getByRole("heading", { name: zhHans.contact.pageTitle }),
+    ).toBeInTheDocument();
+  });
+
+  it("does NOT render the English heading when locale is zh-Hans", () => {
+    renderWithLocale(<ContactForm />, "zh-Hans");
+    expect(
+      screen.queryByRole("heading", { name: enGB.contact.pageTitle }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders the localized submit button in Chinese", () => {
+    renderWithLocale(<ContactForm />, "zh-Hans");
+    expect(
+      screen.getByRole("button", { name: zhHans.contact.submitButton }),
+    ).toBeInTheDocument();
   });
 });

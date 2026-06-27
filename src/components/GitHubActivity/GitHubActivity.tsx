@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { siteConfig } from "../../config";
+import { useLocale } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
 interface GitHubEvent {
@@ -250,6 +251,7 @@ function useGitHubEvents(username: string): {
 const GitHubActivity = () => {
   const accent = siteConfig.accentColor;
   const username = siteConfig.social.github.replace("https://github.com/", "");
+  const { t } = useLocale();
   const { events, loading, error } = useGitHubEvents(username);
 
   const displayed = events.slice(0, 8).map(formatEvent);
@@ -263,7 +265,7 @@ const GitHubActivity = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         <div className="lg:col-span-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100">
-            Activity
+            {t("githubActivity.heading")}
           </h2>
           <div
             className="w-[75px] h-[5px] mt-2 rounded-full"
@@ -274,7 +276,7 @@ const GitHubActivity = () => {
         <div className="lg:col-span-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 hover:shadow-md transition-all duration-300">
             {loading && (
-              <ul aria-label="Loading GitHub activity" aria-busy="true">
+              <ul aria-label={t("githubActivity.loadingAria")} aria-busy="true">
                 {[0, 1, 2].map((i) => (
                   <li
                     key={i}
@@ -292,25 +294,25 @@ const GitHubActivity = () => {
 
             {!loading && error && (
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Couldn&apos;t load recent activity.{" "}
+                {t("githubActivity.errorText")}{" "}
                 <ExternalLink
                   href={siteConfig.social.github}
                   className="font-medium hover:underline"
                   style={{ color: accent }}
                 >
-                  View on GitHub
+                  {t("githubActivity.errorLinkText")}
                 </ExternalLink>
               </p>
             )}
 
             {!loading && !error && displayed.length === 0 && (
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                No recent public activity.
+                {t("githubActivity.noActivityText")}
               </p>
             )}
 
             {!loading && !error && displayed.length > 0 && (
-              <ul aria-label="Recent GitHub activity">
+              <ul aria-label={t("githubActivity.listAria")}>
                 {displayed.map((item) => (
                   <li
                     key={item.id}
@@ -343,7 +345,7 @@ const GitHubActivity = () => {
               className="text-sm font-medium hover:underline"
               style={{ color: accent }}
             >
-              View all activity on GitHub →
+              {t("githubActivity.viewAllLink")}
             </ExternalLink>
           </div>
         </div>

@@ -21,6 +21,7 @@ export const enUS: TranslationDictionary = {
   hero: {
     greeting: "Hello!",
     intro: "I'm",
+    role: "IT Consultant & Software Engineer",
     contactAriaLabel: "Contact Dennis Lo",
     githubAriaLabel: "Dennis Lo on GitHub",
     linkedinAriaLabel: "Dennis Lo on LinkedIn",

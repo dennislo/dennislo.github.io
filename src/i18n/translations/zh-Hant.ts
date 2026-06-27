@@ -24,6 +24,7 @@ export const zhHant: TranslationDictionary = {
   hero: {
     greeting: "你好！",
     intro: "我是",
+    role: "IT 顧問與軟體工程師",
     contactAriaLabel: "聯絡 Dennis Lo",
     githubAriaLabel: "Dennis Lo 的 GitHub",
     linkedinAriaLabel: "Dennis Lo 的 LinkedIn",

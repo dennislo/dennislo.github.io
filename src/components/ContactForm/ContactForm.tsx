@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { Link } from "gatsby";
 import { useForm, ValidationError } from "@formspree/react";
+import { useLocale } from "../../i18n";
 
 type FieldName = "firstName" | "lastName" | "mobile" | "email" | "message";
 
@@ -36,33 +37,36 @@ interface FormValues {
   message: string;
 }
 
-function validateField(name: FieldName, value: string): string | null {
+type TFn = (key: string) => string;
+
+function validateField(name: FieldName, value: string, t: TFn): string | null {
   switch (name) {
     case "firstName":
     case "lastName": {
       const trimmed = value.trim();
-      if (trimmed.length === 0) return "This field is required.";
-      if (trimmed.length > 50) return "Must be 50 characters or fewer.";
+      if (trimmed.length === 0) return t("contact.validationRequired");
+      if (trimmed.length > 50) return t("contact.validationMaxLength");
       return null;
     }
     case "mobile": {
-      if (value.trim().length === 0) return "Mobile number is required.";
+      if (value.trim().length === 0)
+        return t("contact.validationMobileRequired");
       if (!/^\+?[\d\s\-()]{7,15}$/.test(value.trim()))
-        return "Enter a valid phone number (e.g. +61 400 123 456).";
+        return t("contact.validationMobileInvalid");
       return null;
     }
     case "email": {
-      if (value.trim().length === 0) return "Email address is required.";
+      if (value.trim().length === 0)
+        return t("contact.validationEmailRequired");
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
-        return "Enter a valid email address.";
+        return t("contact.validationEmailInvalid");
       return null;
     }
     case "message": {
       const trimmed = value.trim();
-      if (trimmed.length === 0) return "Message is required.";
-      if (trimmed.length < 10) return "Message must be at least 10 characters.";
-      if (trimmed.length > 500)
-        return "Message must be 500 characters or fewer.";
+      if (trimmed.length === 0) return t("contact.validationMessageRequired");
+      if (trimmed.length < 10) return t("contact.validationMessageMin");
+      if (trimmed.length > 500) return t("contact.validationMessageMax");
       return null;
     }
     default:
@@ -86,6 +90,7 @@ const labelClass =
 
 const ContactForm = () => {
   const [state, handleFormspreeSubmit] = useForm("xykddnzg");
+  const { t } = useLocale();
 
   const [values, setValues] = useState<FormValues>({
     firstName: "",
@@ -139,7 +144,7 @@ const ContactForm = () => {
     if (touched[fieldName]) {
       setErrors((prev) => ({
         ...prev,
-        [fieldName]: validateField(fieldName, value),
+        [fieldName]: validateField(fieldName, value, t),
       }));
     }
   };
@@ -152,17 +157,17 @@ const ContactForm = () => {
     setTouched((prev) => ({ ...prev, [fieldName]: true }));
     setErrors((prev) => ({
       ...prev,
-      [fieldName]: validateField(fieldName, value),
+      [fieldName]: validateField(fieldName, value, t),
     }));
   };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {
-      firstName: validateField("firstName", values.firstName),
-      lastName: validateField("lastName", values.lastName),
-      mobile: validateField("mobile", values.mobile),
-      email: validateField("email", values.email),
-      message: validateField("message", values.message),
+      firstName: validateField("firstName", values.firstName, t),
+      lastName: validateField("lastName", values.lastName, t),
+      mobile: validateField("mobile", values.mobile, t),
+      email: validateField("email", values.email, t),
+      message: validateField("message", values.message, t),
     };
     setErrors(newErrors);
     setTouched({
@@ -195,13 +200,13 @@ const ContactForm = () => {
           role="alert"
         >
           <p className="text-green-800 dark:text-green-200 text-lg mb-4">
-            Thank you for your message! I&apos;ll get back to you soon.
+            {t("contact.successMessage")}
           </p>
           <Link
             to="/"
             className="text-blue-600 dark:text-blue-400 underline hover:no-underline"
           >
-            Back to homepage
+            {t("contact.successBackLink")}
           </Link>
         </div>
       </div>
@@ -217,10 +222,10 @@ const ContactForm = () => {
           to="/"
           className="inline-block mb-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
         >
-          &larr; Back
+          &larr; {t("contact.backLink")}
         </Link>
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-          Contact Me
+          {t("contact.pageTitle")}
         </h1>
         <form className="space-y-5" onSubmit={onSubmit} noValidate>
           {/* Honeypot */}
@@ -236,7 +241,7 @@ const ContactForm = () => {
           {/* First Name */}
           <div>
             <label htmlFor="firstName" className={labelClass}>
-              First Name
+              {t("contact.firstNameLabel")}
             </label>
             <input
               ref={fieldRefs.firstName as RefObject<HTMLInputElement>}
@@ -273,7 +278,7 @@ const ContactForm = () => {
           {/* Last Name */}
           <div>
             <label htmlFor="lastName" className={labelClass}>
-              Last Name
+              {t("contact.lastNameLabel")}
             </label>
             <input
               ref={fieldRefs.lastName as RefObject<HTMLInputElement>}
@@ -310,7 +315,7 @@ const ContactForm = () => {
           {/* Mobile */}
           <div>
             <label htmlFor="mobile" className={labelClass}>
-              Mobile Number
+              {t("contact.mobileLabel")}
             </label>
             <input
               ref={fieldRefs.mobile as RefObject<HTMLInputElement>}
@@ -347,7 +352,7 @@ const ContactForm = () => {
           {/* Email */}
           <div>
             <label htmlFor="email" className={labelClass}>
-              Email Address
+              {t("contact.emailLabel")}
             </label>
             <input
               ref={fieldRefs.email as RefObject<HTMLInputElement>}
@@ -384,14 +389,13 @@ const ContactForm = () => {
           {/* Message */}
           <div>
             <label htmlFor="message" className={labelClass}>
-              Message
+              {t("contact.messageLabel")}
             </label>
             <p
               id="message-hint"
               className="text-sm text-gray-500 dark:text-gray-400 mb-1"
             >
-              If you would like to work with me please include information about
-              the budget, timeline, project type.
+              {t("contact.messageHint")}
             </p>
             <textarea
               ref={fieldRefs.message as RefObject<HTMLTextAreaElement>}
@@ -431,7 +435,9 @@ const ContactForm = () => {
             disabled={state.submitting}
             className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
           >
-            {state.submitting ? "Sending..." : "Send Message"}
+            {state.submitting
+              ? t("contact.submittingButton")
+              : t("contact.submitButton")}
           </button>
 
           {hasServerErrors && (
@@ -439,7 +445,7 @@ const ContactForm = () => {
               className="text-sm text-red-600 dark:text-red-400 text-center"
               role="alert"
             >
-              There was a problem sending your message. Please try again.
+              {t("contact.serverErrorMessage")}
             </p>
           )}
         </form>

@@ -1,11 +1,13 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Hero from "./Hero";
 import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
+import { enGB } from "../../i18n/translations/en-GB";
+import { zhHans } from "../../i18n/translations/zh-Hans";
+import { renderWithLocale } from "../../test/renderWithLocale";
 
-// Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
-// Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
+// Mock gatsby's Link so it renders as a plain anchor in jsdom
 jest.mock("gatsby", () => ({
   Link: ({
     to,
@@ -28,7 +30,7 @@ jest.mock("../../context/ThemeContext", () => ({
 
 const mockUseTheme = useTheme as jest.MockedFunction<typeof useTheme>;
 
-describe("Hero", () => {
+describe("Hero (en-GB, default locale)", () => {
   beforeEach(() => {
     mockUseTheme.mockReturnValue({
       theme: "light",
@@ -36,52 +38,62 @@ describe("Hero", () => {
     });
   });
 
-  it("renders the greeting", () => {
-    render(<Hero />);
-    expect(screen.getByText(/Hello!/)).toBeInTheDocument();
+  it("renders the localized greeting from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    expect(
+      screen.getByText(new RegExp(enGB.hero.greeting)),
+    ).toBeInTheDocument();
   });
 
-  it("renders the name from siteConfig", () => {
-    render(<Hero />);
+  it("renders the localized intro text from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    expect(screen.getByText(new RegExp(enGB.hero.intro))).toBeInTheDocument();
+  });
+
+  it("renders the name from siteConfig (locale-invariant)", () => {
+    renderWithLocale(<Hero />);
     expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
   });
 
-  it("renders the title from siteConfig", () => {
-    render(<Hero />);
+  it("renders the title from siteConfig (locale-invariant)", () => {
+    renderWithLocale(<Hero />);
     expect(screen.getByText(siteConfig.title)).toBeInTheDocument();
   });
 
-  it("renders the email link with correct aria-label and href", () => {
-    render(<Hero />);
-    const link = screen.getByRole("link", { name: "Contact Dennis Lo" });
+  it("renders the localized contact aria-label from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    const link = screen.getByRole("link", { name: enGB.hero.contactAriaLabel });
     expect(link).toBeInTheDocument();
-    // The email icon should navigate to the internal contact form, not open a mail client
     expect(link).toHaveAttribute("href", routes.contactForm);
   });
 
-  it("renders the GitHub link with correct aria-label and href", () => {
-    render(<Hero />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on GitHub" });
+  it("renders the localized GitHub aria-label from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    const link = screen.getByRole("link", { name: enGB.hero.githubAriaLabel });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.github);
   });
 
-  it("renders the LinkedIn link with correct aria-label and href", () => {
-    render(<Hero />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on LinkedIn" });
+  it("renders the localized LinkedIn aria-label from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    const link = screen.getByRole("link", {
+      name: enGB.hero.linkedinAriaLabel,
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.linkedin);
   });
 
-  it("renders the Instagram link with correct aria-label and href", () => {
-    render(<Hero />);
-    const link = screen.getByRole("link", { name: "Dennis Lo on Instagram" });
+  it("renders the localized Instagram aria-label from enGB dict", () => {
+    renderWithLocale(<Hero />);
+    const link = screen.getByRole("link", {
+      name: enGB.hero.instagramAriaLabel,
+    });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.instagram);
   });
 
   it("uses light theme overlay and symbol styling by default", () => {
-    const { container } = render(<Hero />);
+    const { container } = renderWithLocale(<Hero />);
 
     const overlay = container.querySelector(".absolute.inset-0.-z-10");
     const svg = container.querySelector("svg");
@@ -107,7 +119,7 @@ describe("Hero", () => {
       toggleTheme: jest.fn(),
     });
 
-    const { container } = render(<Hero />);
+    const { container } = renderWithLocale(<Hero />);
 
     const overlay = container.querySelector(".absolute.inset-0.-z-10");
     const svg = container.querySelector("svg");
@@ -125,5 +137,43 @@ describe("Hero", () => {
     });
     expect(symbolRect).toHaveAttribute("opacity", "0.2");
     expect(gridRect).not.toHaveAttribute("opacity");
+  });
+});
+
+describe("Hero (zh-Hans locale)", () => {
+  beforeEach(() => {
+    mockUseTheme.mockReturnValue({
+      theme: "light",
+      toggleTheme: jest.fn(),
+    });
+  });
+
+  it("renders the localized greeting in Chinese", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    expect(
+      screen.getByText(new RegExp(zhHans.hero.greeting)),
+    ).toBeInTheDocument();
+  });
+
+  it("does NOT render the English greeting when locale is zh-Hans", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    // enGB greeting is "Hello!" — should not appear
+    expect(
+      screen.queryByText(new RegExp(enGB.hero.greeting)),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders the localized contact aria-label in Chinese", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    const link = screen.getByRole("link", {
+      name: zhHans.hero.contactAriaLabel,
+    });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", routes.contactForm);
+  });
+
+  it("name remains locale-invariant in zh-Hans", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
   });
 });

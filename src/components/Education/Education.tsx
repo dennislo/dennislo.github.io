@@ -1,9 +1,13 @@
 import React from "react";
 import { siteConfig } from "../../config";
+import { useLocale } from "../../i18n";
+import { getLocalizedEducation } from "../../i18n/localizedContent";
 
 const Education = () => {
   const accent = siteConfig.accentColor;
-  const { education } = siteConfig;
+  const { t, dict } = useLocale();
+
+  const education = getLocalizedEducation(dict);
 
   return (
     <section
@@ -13,7 +17,7 @@ const Education = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         <div className="lg:col-span-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100">
-            Education
+            {t("education.heading")}
           </h2>
           <div
             className="w-[75px] h-[5px] mt-2 rounded-full"
