@@ -51,13 +51,15 @@ const SiteFooter = () => {
             className="flex items-center gap-4 text-gray-600 dark:text-gray-400"
             style={{ ["--accent" as string]: accent }}
           >
-            <a
-              href={`mailto:${siteConfig.social.email}`}
-              aria-label="Email Dennis Lo"
+            <Link
+              to="/contact-form"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
-              <TablerEmail className="h-5 w-5" />
-            </a>
+              <span aria-hidden="true">
+                <TablerEmail className="h-5 w-5" />
+              </span>
+              <span className="sr-only">Email Dennis Lo</span>
+            </Link>
             <ExternalLink
               href={siteConfig.social.github}
               aria-label="Dennis Lo on GitHub"
