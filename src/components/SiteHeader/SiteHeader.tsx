@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { sectionNavLinks, siteConfig } from "../../config";
+import { Link } from "gatsby";
+import { routes, sectionNavLinks, siteConfig } from "../../config";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
 type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
 type ExternalNavLink = { type: "external"; label: string; href: string };
-type NavLink = InternalNavLink | ExternalNavLink;
+type RouteNavLink = { type: "route"; label: string; href: `/${string}` };
+type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
 const navLinks: NavLink[] = [
   ...sectionNavLinks.map((link) => ({ ...link })),
@@ -12,6 +14,11 @@ const navLinks: NavLink[] = [
     type: "external",
     label: "Gists",
     href: "https://gist.github.com/dennislo/public",
+  },
+  {
+    type: "route",
+    label: "Contact",
+    href: routes.contactForm,
   },
 ];
 
@@ -29,16 +36,27 @@ const NavLinkItem = ({
   link: NavLink;
   className: string;
   onClick?: () => void;
-}) =>
-  link.type === "internal" ? (
-    <a href={link.href} className={className} onClick={onClick}>
-      {link.label}
-    </a>
-  ) : (
+}) => {
+  if (link.type === "internal") {
+    return (
+      <a href={link.href} className={className} onClick={onClick}>
+        {link.label}
+      </a>
+    );
+  }
+  if (link.type === "route") {
+    return (
+      <Link to={link.href} className={className} onClick={onClick}>
+        {link.label}
+      </Link>
+    );
+  }
+  return (
     <ExternalLink href={link.href} className={className} onClick={onClick}>
       {link.label}
     </ExternalLink>
   );
+};
 
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);

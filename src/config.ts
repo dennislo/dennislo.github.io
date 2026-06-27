@@ -19,6 +19,10 @@ export const sectionNavLinks: readonly SectionNavLink[] = [
   { label: "Education", href: "#education", type: "internal" },
 ];
 
+export const routes = {
+  contactForm: "/contact-form",
+} as const;
+
 export const siteConfig = {
   siteUrl: "https://dlo.wtf",
   header: "Who is DLO?",

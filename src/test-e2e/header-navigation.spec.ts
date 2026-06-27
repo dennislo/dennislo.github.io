@@ -5,6 +5,7 @@ import {
   type Response,
   test,
 } from "@playwright/test";
+import { routes } from "../config";
 
 const mobileViewport = { width: 390, height: 844 };
 
@@ -209,5 +210,42 @@ test.describe("Header navigation", () => {
     expect(issues.consoleErrors).toEqual([]);
     expect(issues.pageErrors).toEqual([]);
     expect(issues.failedResponses).toEqual([]);
+  });
+
+  test("mobile menu Contact link navigates to /contact-form and shows the Contact Me heading", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const menuButton = page.getByRole("button", { name: /navigation menu/i });
+    const primaryNav = page.getByRole("navigation", { name: "Primary" });
+
+    await menuButton.click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await primaryNav.getByRole("link", { name: "Contact" }).click();
+
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
+    await expect(
+      page.getByRole("heading", { name: "Contact Me" }),
+    ).toBeVisible();
+  });
+
+  test("desktop nav Contact link navigates to /contact-form and shows the Contact Me heading", async ({
+    page,
+  }) => {
+    // Override to a desktop viewport for this test (beforeEach sets mobile)
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+
+    await page
+      .getByRole("navigation", { name: "Primary" })
+      .getByRole("link", { name: "Contact" })
+      .click();
+
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
+    await expect(
+      page.getByRole("heading", { name: "Contact Me" }),
+    ).toBeVisible();
   });
 });
