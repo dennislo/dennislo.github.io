@@ -1,4 +1,11 @@
 import type { GatsbyConfig } from "gatsby";
+import {
+  locales,
+  localeMeta,
+  localizePath,
+  stripLocale,
+} from "./src/i18n/config";
+import { siteConfig } from "./src/config";
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -12,7 +19,37 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-postcss",
     "gatsby-plugin-image",
-    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        // Exclude /en-GB/ alias pages (canonical is the unprefixed path) and Gatsby's dev pages.
+        excludes: ["/en-GB/", "/en-GB/**", "/dev-404-page/"],
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+        }: {
+          allSitePage: { nodes: Array<{ path: string }> };
+        }) => {
+          return allPages.filter((page) => {
+            const p = page.path;
+            return !p.startsWith("/en-GB/") && !p.startsWith("/dev-404-page/");
+          });
+        },
+        serialize: ({ path }: { path: string }) => {
+          const { basePath } = stripLocale(path);
+          const links = [
+            ...locales.map((L) => ({
+              lang: localeMeta[L].htmlLang,
+              url: `${siteConfig.siteUrl}${localizePath(basePath, L)}`,
+            })),
+            { lang: "x-default", url: `${siteConfig.siteUrl}${basePath}` },
+          ];
+          return {
+            url: `${siteConfig.siteUrl}${path}`,
+            links,
+          };
+        },
+      },
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {

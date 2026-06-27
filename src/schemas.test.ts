@@ -6,6 +6,7 @@ import {
   buildArticleSchema,
   buildWebPageSchema,
 } from "./schemas";
+import { localeMeta, defaultLocale } from "./i18n/config";
 
 describe("buildPersonSchema", () => {
   const schema = buildPersonSchema(siteConfig);
@@ -161,6 +162,93 @@ describe("buildArticleSchema", () => {
       image: "https://dlo.wtf/og-image.png",
     });
     expect(schema.image).toBe("https://dlo.wtf/og-image.png");
+  });
+});
+
+describe("buildPersonSchema — localized overrides", () => {
+  it("overrides jobTitle when seo.jobTitle is supplied", () => {
+    const schema = buildPersonSchema(siteConfig, { jobTitle: "顾问" });
+    expect(schema.jobTitle).toBe("顾问");
+  });
+
+  it("overrides description when seo.description is supplied", () => {
+    const schema = buildPersonSchema(siteConfig, {
+      description: "desc-zh",
+    });
+    expect(schema.description).toBe("desc-zh");
+  });
+
+  it("default buildPersonSchema still uses config.title for jobTitle", () => {
+    const schema = buildPersonSchema(siteConfig);
+    expect(schema.jobTitle).toBe(siteConfig.title);
+  });
+
+  it("default buildPersonSchema still uses config.description for description", () => {
+    const schema = buildPersonSchema(siteConfig);
+    expect(schema.description).toBe(siteConfig.description);
+  });
+
+  it("can override both jobTitle and description together", () => {
+    const schema = buildPersonSchema(siteConfig, {
+      jobTitle: "顾问",
+      description: "Dennis Lo 的个人网站。",
+    });
+    expect(schema.jobTitle).toBe("顾问");
+    expect(schema.description).toBe("Dennis Lo 的个人网站。");
+  });
+});
+
+describe("buildWebSiteSchema — localized overrides", () => {
+  it("includes inLanguage defaulting to en-GB when no seo arg is supplied", () => {
+    const schema = buildWebSiteSchema(siteConfig);
+    expect(schema.inLanguage).toBe(localeMeta[defaultLocale].htmlLang);
+  });
+
+  it("overrides inLanguage when seo.inLanguage is supplied", () => {
+    const schema = buildWebSiteSchema(siteConfig, {
+      inLanguage: "zh-Hans",
+    });
+    expect(schema.inLanguage).toBe("zh-Hans");
+  });
+
+  it("default call still produces correct @type", () => {
+    const schema = buildWebSiteSchema(siteConfig);
+    expect(schema["@type"]).toBe("WebSite");
+  });
+});
+
+describe("buildProfilePageSchema — localized overrides", () => {
+  it("includes inLanguage defaulting to en-GB when no seo arg is supplied", () => {
+    const schema = buildProfilePageSchema(siteConfig);
+    expect(schema.inLanguage).toBe(localeMeta[defaultLocale].htmlLang);
+  });
+
+  it("overrides inLanguage when seo.inLanguage is supplied", () => {
+    const schema = buildProfilePageSchema(siteConfig, {
+      inLanguage: "zh-Hant",
+    });
+    expect(schema.inLanguage).toBe("zh-Hant");
+  });
+
+  it("overrides top-level description when seo.description is supplied", () => {
+    const schema = buildProfilePageSchema(siteConfig, {
+      inLanguage: "zh-Hant",
+      description: "d",
+    });
+    expect(schema.description).toBe("d");
+  });
+
+  it("overrides mainEntity.description when seo.description is supplied", () => {
+    const schema = buildProfilePageSchema(siteConfig, {
+      inLanguage: "zh-Hant",
+      description: "d",
+    });
+    expect(schema.mainEntity["description"]).toBe("d");
+  });
+
+  it("default call still has @type ProfilePage", () => {
+    const schema = buildProfilePageSchema(siteConfig);
+    expect(schema["@type"]).toBe("ProfilePage");
   });
 });
 

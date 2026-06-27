@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import IndexPage, { Head } from "./index";
 import { enGB } from "../i18n/translations/en-GB";
 import { renderWithLocale } from "../test/renderWithLocale";
+import { getDictionary } from "../i18n/dictionaries";
+import { siteConfig } from "../config";
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -164,5 +166,47 @@ describe("IndexPage", () => {
     expect(enGB.about.heading).toBe("About Me");
     expect(enGB.projects.heading).toBe("Projects");
     expect(enGB.experience.heading).toBe("Experience");
+  });
+});
+
+describe("IndexPage Head — localized SEO", () => {
+  // Cast to any so TypeScript accepts the not-yet-implemented pageContext/location props.
+  // Runtime assertions will fail (RED) until the engineer implements them.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const LocalizedHead = Head as React.ComponentType<any>;
+
+  beforeEach(() => {
+    document.head.innerHTML = "";
+    document.title = "";
+  });
+
+  it("renders localized title from zh-Hans dictionary when pageContext.locale=zh-Hans", () => {
+    // The new contract: Head accepts pageContext and location props
+    render(
+      <LocalizedHead
+        pageContext={{ locale: "zh-Hans" }}
+        location={{ pathname: "/zh-Hans/" }}
+      />,
+    );
+    const zhHansDict = getDictionary("zh-Hans");
+    expect(document.querySelector("title")?.textContent).toBe(
+      zhHansDict.seo.siteTitle,
+    );
+  });
+
+  it("emits canonical href https://dlo.wtf/zh-Hans/ when pageContext.locale=zh-Hans and pathname=/zh-Hans/", () => {
+    render(
+      <LocalizedHead
+        pageContext={{ locale: "zh-Hans" }}
+        location={{ pathname: "/zh-Hans/" }}
+      />,
+    );
+    const canonical = document.querySelector(
+      'link[rel="canonical"]',
+    ) as HTMLLinkElement | null;
+    expect(canonical).not.toBeNull();
+    expect(canonical?.getAttribute("href")).toBe(
+      `${siteConfig.siteUrl}/zh-Hans/`,
+    );
   });
 });

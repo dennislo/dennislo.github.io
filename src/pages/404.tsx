@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, HeadFC } from "gatsby";
 import { useLocale } from "../i18n";
+import { Head as SharedHead } from "../components/Head/Head";
+import { defaultLocale } from "../i18n/config";
+import { getDictionary } from "../i18n/dictionaries";
 
 const NotFoundPage = () => {
   const { t } = useLocale();
@@ -39,9 +42,12 @@ const NotFoundPage = () => {
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => (
-  <>
-    <title>Not found</title>
-    <link rel="alternate" type="text/markdown" href="/404.md" />
-  </>
-);
+export const Head: HeadFC = () => {
+  const title = getDictionary(defaultLocale).seo.notFoundTitle;
+  return (
+    <>
+      <SharedHead title={title} locale={defaultLocale} path="/404/" />
+      <link rel="alternate" type="text/markdown" href="/404.md" />
+    </>
+  );
+};
