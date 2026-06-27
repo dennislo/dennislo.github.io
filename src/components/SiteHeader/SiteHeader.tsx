@@ -5,7 +5,7 @@ import ExternalLink from "../ExternalLink/ExternalLink";
 
 type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
 type ExternalNavLink = { type: "external"; label: string; href: string };
-type RouteNavLink = { type: "route"; label: string; href: string };
+type RouteNavLink = { type: "route"; label: string; href: `/${string}` };
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
 const navLinks: NavLink[] = [

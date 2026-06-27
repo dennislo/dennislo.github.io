@@ -229,4 +229,22 @@ test.describe("Header navigation", () => {
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();
   });
+
+  test("desktop nav Contact link navigates to /contact-form and shows the Contact Me heading", async ({
+    page,
+  }) => {
+    // Override to a desktop viewport for this test (beforeEach sets mobile)
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+
+    await page
+      .getByRole("navigation", { name: "Primary" })
+      .getByRole("link", { name: "Contact" })
+      .click();
+
+    await expect(page).toHaveURL(/\/contact-form/);
+    await expect(
+      page.getByRole("heading", { name: "Contact Me" }),
+    ).toBeVisible();
+  });
 });

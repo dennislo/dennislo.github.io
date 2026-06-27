@@ -192,13 +192,11 @@ const Hero = () => {
       <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 dark:text-gray-300 animate-[fadeIn_0.8s_ease-out_0.6s_forwards] opacity-0">
         <Link
           to="/contact-form"
+          aria-label="Email Dennis Lo"
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
-          <span aria-hidden="true">
-            <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-          </span>
-          <span className="sr-only">Email Dennis Lo</span>
+          <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </Link>
         <ExternalLink
           href={siteConfig.social.github}

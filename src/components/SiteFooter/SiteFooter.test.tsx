@@ -4,9 +4,20 @@ import SiteFooter from "./SiteFooter";
 import { siteConfig } from "../../config";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom
+// Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
 jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
+  Link: ({
+    to,
+    children,
+    ...rest
+  }: {
+    to: string;
+    children: React.ReactNode;
+    [key: string]: unknown;
+  }) => (
+    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+      {children}
+    </a>
   ),
 }));
 
@@ -72,6 +83,14 @@ describe("SiteFooter", () => {
   it("renders the Education nav link", () => {
     render(<SiteFooter />);
     expect(screen.getByRole("link", { name: "Education" })).toBeInTheDocument();
+  });
+
+  it("renders the Contact nav link pointing to /contact-form", () => {
+    render(<SiteFooter />);
+    // "Contact" is unique: the email icon link's accessible name is "Email Dennis Lo" (sr-only span)
+    expect(
+      screen.getByRole("link", { name: "Contact" }),
+    ).toHaveAttribute("href", "/contact-form");
   });
 
   it("renders copyright text with the current year", () => {

@@ -5,9 +5,20 @@ import { siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
+// Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
 jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
+  Link: ({
+    to,
+    children,
+    ...rest
+  }: {
+    to: string;
+    children: React.ReactNode;
+    [key: string]: unknown;
+  }) => (
+    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+      {children}
+    </a>
   ),
 }));
 

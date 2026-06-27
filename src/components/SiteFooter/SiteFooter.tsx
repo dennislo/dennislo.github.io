@@ -53,12 +53,10 @@ const SiteFooter = () => {
           >
             <Link
               to="/contact-form"
+              aria-label="Email Dennis Lo"
               className="transition-colors duration-300 hover:text-[--accent]"
             >
-              <span aria-hidden="true">
-                <TablerEmail className="h-5 w-5" />
-              </span>
-              <span className="sr-only">Email Dennis Lo</span>
+              <TablerEmail className="h-5 w-5" />
             </Link>
             <ExternalLink
               href={siteConfig.social.github}

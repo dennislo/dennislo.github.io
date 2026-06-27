@@ -5,9 +5,20 @@ import SiteHeader from "./SiteHeader";
 import { siteConfig } from "../../config";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
+// Spread ...rest so that onClick, aria-label, className, etc. are forwarded to the anchor.
 jest.mock("gatsby", () => ({
-  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <a href={to}>{children}</a>
+  Link: ({
+    to,
+    children,
+    ...rest
+  }: {
+    to: string;
+    children: React.ReactNode;
+    [key: string]: unknown;
+  }) => (
+    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+      {children}
+    </a>
   ),
 }));
 
@@ -98,13 +109,19 @@ describe("SiteHeader", () => {
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("renders a Contact nav link pointing to /contact-form in both desktop and mobile", () => {
+  it("renders a Contact nav link pointing to /contact-form in both desktop and mobile", async () => {
+    const user = userEvent.setup();
+
     render(<SiteHeader />);
 
-    // All Contact links across desktop and mobile should point to /contact-form
-    // getAllByRole finds all matches (desktop + mobile list items)
+    // Open the mobile menu so both desktop and mobile Contact links are in the a11y tree
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    // Both the desktop nav link and the mobile menu link should be present
     const allContactLinks = screen.getAllByRole("link", { name: "Contact" });
-    expect(allContactLinks.length).toBeGreaterThanOrEqual(1);
+    expect(allContactLinks).toHaveLength(2);
     allContactLinks.forEach((link) => {
       expect(link).toHaveAttribute("href", "/contact-form");
     });
@@ -207,6 +224,32 @@ describe("SiteHeader", () => {
     });
 
     await user.click(within(mobileMenu).getByRole("link", { name: "Gists" }));
+
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: "Mobile primary menu" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("closes the mobile menu after clicking the mobile Contact route link", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+
+    // The Contact link is a Gatsby <Link> (route type); onClick forwarding via Change A closes the menu
+    await user.click(
+      within(mobileMenu).getByRole("link", { name: "Contact" }),
+    );
 
     expect(
       screen.getByRole("button", { name: "Open navigation menu" }),
