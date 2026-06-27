@@ -4,6 +4,13 @@ import userEvent from "@testing-library/user-event";
 import SiteHeader from "./SiteHeader";
 import { siteConfig } from "../../config";
 
+// Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
+jest.mock("gatsby", () => ({
+  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <a href={to}>{children}</a>
+  ),
+}));
+
 describe("SiteHeader", () => {
   const getDesktopNav = () => {
     const navigation = screen.getByRole("navigation", { name: "Primary" });
@@ -89,6 +96,47 @@ describe("SiteHeader", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("renders a Contact nav link pointing to /contact-form in both desktop and mobile", () => {
+    render(<SiteHeader />);
+
+    // All Contact links across desktop and mobile should point to /contact-form
+    // getAllByRole finds all matches (desktop + mobile list items)
+    const allContactLinks = screen.getAllByRole("link", { name: "Contact" });
+    expect(allContactLinks.length).toBeGreaterThanOrEqual(1);
+    allContactLinks.forEach((link) => {
+      expect(link).toHaveAttribute("href", "/contact-form");
+    });
+  });
+
+  it("renders the Contact link in the desktop nav list", () => {
+    render(<SiteHeader />);
+
+    const desktopContactLink = within(getDesktopNav()).getByRole("link", {
+      name: "Contact",
+    });
+    expect(desktopContactLink).toBeInTheDocument();
+    expect(desktopContactLink).toHaveAttribute("href", "/contact-form");
+  });
+
+  it("renders the Contact link in the mobile menu", async () => {
+    const user = userEvent.setup();
+
+    render(<SiteHeader />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
+
+    const mobileMenu = screen.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const mobileContactLink = within(mobileMenu).getByRole("link", {
+      name: "Contact",
+    });
+    expect(mobileContactLink).toBeInTheDocument();
+    expect(mobileContactLink).toHaveAttribute("href", "/contact-form");
   });
 
   it("renders a nav element", () => {

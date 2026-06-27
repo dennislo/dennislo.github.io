@@ -27,7 +27,8 @@ describe("SiteFooter", () => {
     render(<SiteFooter />);
     const link = screen.getByRole("link", { name: "Email Dennis Lo" });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "mailto:lo.dennis@gmail.com");
+    // The email icon should navigate to the internal contact form, not open a mail client
+    expect(link).toHaveAttribute("href", "/contact-form");
   });
 
   it("renders the GitHub social link with correct aria-label", () => {

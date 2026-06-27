@@ -4,6 +4,13 @@ import Hero from "./Hero";
 import { siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 
+// Mock gatsby's Link so it renders as a plain anchor in jsdom (same pattern as SiteFooter.test.tsx)
+jest.mock("gatsby", () => ({
+  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <a href={to}>{children}</a>
+  ),
+}));
+
 jest.mock("../../context/ThemeContext", () => ({
   useTheme: jest.fn(),
 }));
@@ -37,7 +44,8 @@ describe("Hero", () => {
     render(<Hero />);
     const link = screen.getByRole("link", { name: "Email Dennis Lo" });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", `mailto:${siteConfig.social.email}`);
+    // The email icon should navigate to the internal contact form, not open a mail client
+    expect(link).toHaveAttribute("href", "/contact-form");
   });
 
   it("renders the GitHub link with correct aria-label and href", () => {
