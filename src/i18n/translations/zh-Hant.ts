@@ -1,0 +1,166 @@
+import type { TranslationDictionary } from "../types";
+
+// Traditional Chinese (Taiwan conventions).
+// Proper nouns, brand names, company names, programming languages, and tech product names
+// are kept in their original English form.
+export const zhHant: TranslationDictionary = {
+  nav: {
+    primaryAriaLabel: "主導覽",
+    mobileMenuAriaLabel: "行動裝置主選單",
+    openMenu: "開啟導覽選單",
+    closeMenu: "關閉導覽選單",
+    menu: "選單",
+    about: "關於",
+    projects: "專案",
+    activity: "動態",
+    experience: "經歷",
+    education: "學歷",
+    gists: "Gists",
+    contact: "聯絡",
+  },
+  languageSwitcher: {
+    ariaLabel: "選擇語言",
+  },
+  hero: {
+    greeting: "你好！",
+    intro: "我是",
+    contactAriaLabel: "聯絡 Dennis Lo",
+    githubAriaLabel: "Dennis Lo 的 GitHub",
+    linkedinAriaLabel: "Dennis Lo 的 LinkedIn",
+    instagramAriaLabel: "Dennis Lo 的 Instagram",
+  },
+  about: {
+    heading: "關於我",
+    agileITHeading: "Agile IT & Software Limited",
+    agileITContactLink: "如需進一步了解我們的服務，歡迎與我們聯絡。",
+    skillsHeading: "技術與技能",
+    clientsHeading: "我曾服務的客戶產業：",
+    funFactsHeading: "趣事：",
+    aboutMe:
+      "我是 Dennis Lo，一名 IT 顧問與軟體工程師，專注於打造穩健、可擴展的解決方案來解決實際問題。我在全端領域擁有深厚的專業知識，在快節奏的協作環境中游刃有餘，並在本地與國際客戶的高影響力專案交付中累積了豐富的成功經驗。",
+    agileIT:
+      "我們提供企業級 IT 諮詢與軟體工程服務，在 JavaScript、C#、Java 和 Bash/Shell 方面具備專業技術。我們的豐富經驗橫跨多個產業與複雜的技術挑戰，涵蓋系統架構、全端開發、DevOps 自動化以及遺留系統現代化改造。",
+    clients: {
+      advertisingMedia: "廣告與媒體",
+      hrRecruitment: "人力資源與招聘",
+      retailConsumer: "零售與消費",
+      scienceEducation: "科學與教育",
+      financeBanking: "金融與銀行",
+      itTelecommunications: "資訊科技與電信",
+    },
+    funFacts: {
+      fact1: "正在探索 AI 驅動的軟體交付",
+      fact2: "歡迎與我聊聊創業與 Web 開發",
+      fact3: "喜歡烹飪、滑雪和騎自行車",
+    },
+  },
+  projects: {
+    heading: "專案",
+    viewProjectAria: "查看 {name}",
+    aiDevRoundupName: "AI Dev Roundup Newsletter",
+    aiDevRoundupDescription:
+      "每週二一封簡潔的電子報，五分鐘讀完。為工程師精心整理的 AI 前沿資訊、生產就緒函式庫和開發者工具。",
+    chromeExtensionMasteryName: "Chrome Extension Mastery",
+    chromeExtensionMasteryDescription:
+      "一門完整的課程，涵蓋從基礎知識到在 Chrome Web Store 發布的全端 Chrome 擴充功能開發。",
+    extensionKitName: "ExtensionKit",
+    extensionKitDescription:
+      "基於 TypeScript、React 和 Vite 的 Chrome 擴充功能起始樣板工具包，助你快速從零到發布。",
+  },
+  experience: {
+    heading: "工作經歷",
+    roleContractor: "軟體工程師（契約制）",
+    roleSenior: "資深軟體工程師",
+    crosstideBullet1:
+      "主導架構並領導 Marks & Spencer Web 平台 Monorepo，目前已有 200 餘名工程師使用",
+    crosstideBullet2: "重構購物車與結帳應用程式，每日處理數百萬筆訂單",
+    crosstideBullet3: "在團隊中推廣測試驅動開發、決策日誌及嚴謹的程式碼審查",
+    pretBullet1:
+      "借助 Chargebee、Commerce Tools 和 Adyen 提升高並發訂閱交易處理能力",
+    pretBullet2: "透過全程遠端結對程式設計推動工程實踐，提升測試覆蓋率",
+    natwestBullet1: "使用 React、Redux 和 Node 從零構建全新 HR 平台",
+    natwestBullet2:
+      "跨 NLP、法律、保險和 HR 等多個領域協作，交付 NatWest Mentor 產品",
+    bcgBullet1: "為物聯網新創公司 MachineMax 構建即時資料視覺化平台",
+    bcgBullet2: "與硬體、資料科學和機器學習團隊協作，交付生產級儀表板",
+    elsevierBullet1:
+      "為 ScienceDirect 開發期刊首頁，服務 Cell 和 The Lancet 等學術出版品",
+    elsevierBullet2: "設計並構建共用 UI 元件庫，提升跨團隊前端開發效率",
+    starcountBullet1:
+      "開發 Vibe Web 應用程式，聚合來自 Facebook、Twitter、Instagram 和 YouTube 的社群媒體內容",
+    starcountBullet2: "架構可嵌入的 Web 元件，支援跨 Web 和行動端的第三方整合",
+    starcountBullet3: "設計具備可擴展 PDF 報告生成能力的企業級資料分析平台",
+  },
+  education: {
+    heading: "學歷",
+    degree: "工學學士（榮譽），計算機軟體工程",
+    school: "UNSW",
+    achievement1: "一等榮譽",
+    achievement2: "榮譽論文：面向 e-Business 標準的服務導向架構",
+  },
+  githubActivity: {
+    heading: "動態",
+    loadingAria: "正在載入 GitHub 動態",
+    listAria: "最近的 GitHub 動態",
+    errorText: "無法載入最近的動態。",
+    errorLinkText: "在 GitHub 上查看",
+    noActivityText: "暫無最近的公開動態。",
+    viewAllLink: "在 GitHub 上查看所有動態 →",
+  },
+  themeToggle: {
+    switchToDark: "切換至深色模式",
+    switchToLight: "切換至淺色模式",
+  },
+  footer: {
+    emailAria: "聯絡 Dennis Lo",
+    githubAria: "Dennis Lo 的 GitHub",
+    linkedinAria: "Dennis Lo 的 LinkedIn",
+    instagramAria: "Dennis Lo 的 Instagram",
+    builtWith: "採用",
+    using: "構建",
+    contact: "聯絡",
+  },
+  contact: {
+    pageTitle: "聯絡我",
+    backLink: "返回",
+    firstNameLabel: "名字",
+    lastNameLabel: "姓氏",
+    mobileLabel: "手機號碼",
+    emailLabel: "電子郵件地址",
+    messageLabel: "訊息",
+    messageHint: "若您希望與我合作，請提供預算、時間表和專案類型等資訊。",
+    submitButton: "傳送訊息",
+    submittingButton: "傳送中...",
+    successMessage: "感謝您的訊息！我會盡快回覆您。",
+    successBackLink: "返回首頁",
+    serverErrorMessage: "傳送訊息時發生問題，請再試一次。",
+    validationRequired: "此欄位為必填。",
+    validationMaxLength: "不能超過 50 個字元。",
+    validationMobileRequired: "手機號碼為必填。",
+    validationMobileInvalid: "請輸入有效的電話號碼（例如 +886 912 345 678）。",
+    validationEmailRequired: "電子郵件地址為必填。",
+    validationEmailInvalid: "請輸入有效的電子郵件地址。",
+    validationMessageRequired: "訊息為必填。",
+    validationMessageMin: "訊息至少需要 10 個字元。",
+    validationMessageMax: "訊息不能超過 500 個字元。",
+  },
+  notFound: {
+    title: "404",
+    heading: "找不到頁面",
+    body: "抱歉，我們找不到您要尋找的內容。",
+    goHomeButton: "返回首頁",
+  },
+  seo: {
+    siteTitle: "Dennis Lo — IT 顧問與軟體工程師",
+    description: "Dennis Lo 的個人網站，IT 顧問與軟體工程師。",
+    contactPageTitle: "聯絡 — DLO",
+    contactPageDescription: "向 Dennis Lo 傳送訊息",
+    notFoundTitle: "找不到頁面",
+    ogTitle: "Dennis Lo — IT 顧問與軟體工程師",
+    ogDescription: "Dennis Lo 的個人網站，IT 顧問與軟體工程師。",
+    twitterTitle: "Dennis Lo — IT 顧問與軟體工程師",
+    twitterDescription: "Dennis Lo 的個人網站，IT 顧問與軟體工程師。",
+    jsonLdJobTitle: "IT 顧問與軟體工程師",
+    jsonLdDescription: "Dennis Lo 的個人網站，IT 顧問與軟體工程師。",
+  },
+};
