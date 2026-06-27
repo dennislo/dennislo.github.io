@@ -31,7 +31,6 @@ test.describe("Contact Form", () => {
   }) => {
     await page.getByRole("button", { name: /send message/i }).click();
 
-    // All five fields must show client-side validation errors.
     // Count assumes Formspree state.errors initialises as null (no server-error alert on first render).
     await expect(page.getByRole("alert").first()).toBeVisible();
     const alerts = page.getByRole("alert");
@@ -76,7 +75,6 @@ test.describe("Contact Form", () => {
   test("form fields have aria-invalid set when errors are shown", async ({
     page,
   }) => {
-    // Trigger validation on email by filling an invalid value and blurring
     await page.getByLabel("Email Address").fill("bad");
     await page.getByLabel("Email Address").blur();
 
