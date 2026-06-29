@@ -95,7 +95,6 @@ export const zhHant: TranslationDictionary = {
   education: {
     heading: "學歷",
     degree: "工學學士（榮譽），計算機軟體工程",
-    school: "UNSW",
     achievement1: "一等榮譽",
     achievement2: "榮譽論文：面向 e-Business 標準的服務導向架構",
   },

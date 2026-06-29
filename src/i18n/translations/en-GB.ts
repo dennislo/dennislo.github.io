@@ -104,7 +104,6 @@ export const enGB = {
   education: {
     heading: "Education",
     degree: "Bachelor of Engineering (B.Eng.), Computer Software Engineering",
-    school: "UNSW",
     achievement1: "Honours Class 1",
     achievement2:
       "Honours Thesis: Service Oriented Architecture for e-Business Standards",

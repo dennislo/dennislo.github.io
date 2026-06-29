@@ -22,6 +22,7 @@ type HeadProps = {
   schemas?: ReadonlyArray<Record<string, unknown>>;
   locale?: Locale;
   path?: string;
+  showHreflang?: boolean;
 };
 
 export function Head({
@@ -31,6 +32,7 @@ export function Head({
   schemas,
   locale = defaultLocale,
   path = "/",
+  showHreflang = true,
 }: HeadProps) {
   const metaDescription = description ?? `${title} - My personal homepage`;
   const canonicalHref = `${siteConfig.siteUrl}${localizePath(path, locale)}`;
@@ -49,19 +51,22 @@ export function Head({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
       <link rel="canonical" href={canonicalHref} />
-      {locales.map((L) => (
+      {showHreflang &&
+        locales.map((L) => (
+          <link
+            key={L}
+            rel="alternate"
+            hrefLang={localeMeta[L].htmlLang}
+            href={`${siteConfig.siteUrl}${localizePath(path, L)}`}
+          />
+        ))}
+      {showHreflang && (
         <link
-          key={L}
           rel="alternate"
-          hrefLang={localeMeta[L].htmlLang}
-          href={`${siteConfig.siteUrl}${localizePath(path, L)}`}
+          hrefLang="x-default"
+          href={`${siteConfig.siteUrl}${path}`}
         />
-      ))}
-      <link
-        rel="alternate"
-        hrefLang="x-default"
-        href={`${siteConfig.siteUrl}${path}`}
-      />
+      )}
       <link
         rel="apple-touch-icon"
         sizes="180x180"

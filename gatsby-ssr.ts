@@ -1,12 +1,7 @@
 import "./src/styles/global.css";
 import React from "react";
 import type { GatsbySSR } from "gatsby";
-import {
-  localeMeta,
-  stripLocale,
-  locales,
-  defaultLocale,
-} from "./src/i18n/config";
+import { locales, defaultLocale } from "./src/i18n/config";
 
 // Inline redirect script: runs synchronously in <head> before first paint so the
 // browser never renders wrong-locale content when the user has a stored preference.
@@ -16,15 +11,8 @@ const validLocales = locales.join("','");
 const REDIRECT_SCRIPT = `(function(){try{var s=localStorage.getItem('preferredLocale');if(s&&['${validLocales}'].indexOf(s)>-1&&s!=='${defaultLocale}'&&location.pathname==='/'){location.replace('/'+s+'/')}}catch(e){}})();`;
 
 export const onRenderBody: GatsbySSR["onRenderBody"] = ({
-  setHtmlAttributes,
   setHeadComponents,
-  pathname,
 }) => {
-  // Derive the locale from the rendered page's pathname for accurate lang attribute.
-  const { locale } = stripLocale(pathname ?? "/");
-  setHtmlAttributes({ lang: localeMeta[locale].htmlLang });
-
-  // Inject the redirect script into every page's <head>.
   setHeadComponents([
     React.createElement("script", {
       key: "locale-redirect",

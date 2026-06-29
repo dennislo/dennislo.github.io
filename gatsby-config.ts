@@ -23,7 +23,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-plugin-sitemap",
       options: {
         // Exclude /en-GB/ alias pages (canonical is the unprefixed path) and Gatsby's dev pages.
-        excludes: ["/en-GB/", "/en-GB/**", "/dev-404-page/"],
+        excludes: ["/en-GB/", "/en-GB/**", "/dev-404-page/", "/404/"],
         resolvePages: ({
           allSitePage: { nodes: allPages },
         }: {
@@ -31,7 +31,11 @@ const config: GatsbyConfig = {
         }) => {
           return allPages.filter((page) => {
             const p = page.path;
-            return !p.startsWith("/en-GB/") && !p.startsWith("/dev-404-page/");
+            return (
+              !p.startsWith("/en-GB/") &&
+              !p.startsWith("/dev-404-page/") &&
+              p !== "/404/"
+            );
           });
         },
         serialize: ({ path }: { path: string }) => {

@@ -46,7 +46,12 @@ export const Head: HeadFC = () => {
   const title = getDictionary(defaultLocale).seo.notFoundTitle;
   return (
     <>
-      <SharedHead title={title} locale={defaultLocale} path="/404/" />
+      <SharedHead
+        title={title}
+        locale={defaultLocale}
+        path="/404/"
+        showHreflang={false}
+      />
       <link rel="alternate" type="text/markdown" href="/404.md" />
     </>
   );

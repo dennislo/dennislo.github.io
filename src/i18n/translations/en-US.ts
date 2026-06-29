@@ -102,7 +102,6 @@ export const enUS: TranslationDictionary = {
   education: {
     heading: "Education",
     degree: "Bachelor of Engineering (B.Eng.), Computer Software Engineering",
-    school: "UNSW",
     achievement1: "Honors Class 1",
     achievement2:
       "Honors Thesis: Service Oriented Architecture for e-Business Standards",
