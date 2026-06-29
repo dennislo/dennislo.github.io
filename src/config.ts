@@ -37,10 +37,6 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/dennis-lo-profile",
     instagram: "https://www.instagram.com/dlo",
   },
-  aboutMe:
-    "I'm Dennis Lo, an IT consultant and software engineer who crafts robust, scalable solutions that solve real problems. I have deep expertise across the full stack, I thrive in fast-paced, collaborative environments and have a proven track record of delivering high-impact projects for clients both locally and internationally.",
-  agileIT:
-    "We deliver enterprise-grade IT consultancy and software engineering services, with specialized expertise in JavaScript, C#, Java, and Bash/Shell. Our proven experience spans diverse industries and complex technical challenges, from system architecture and full-stack development to DevOps automation and legacy system modernization.",
   skills: [
     "JavaScript",
     "TypeScript",
@@ -53,14 +49,6 @@ export const siteConfig = {
     "DevOps",
     "Full Stack Development",
     "System Architecture",
-  ],
-  clients: [
-    "Advertising & Media",
-    "HR & Recruitment",
-    "Retail & Consumer",
-    "Science & Education",
-    "Finance & Banking",
-    "IT & Telecommunications",
   ],
   funFacts: [
     {

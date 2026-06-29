@@ -90,7 +90,7 @@ const labelClass =
 
 const ContactForm = () => {
   const [state, handleFormspreeSubmit] = useForm("xykddnzg");
-  const { t } = useLocale();
+  const { t, localizePath } = useLocale();
 
   const [values, setValues] = useState<FormValues>({
     firstName: "",
@@ -203,7 +203,7 @@ const ContactForm = () => {
             {t("contact.successMessage")}
           </p>
           <Link
-            to="/"
+            to={localizePath("/")}
             className="text-blue-600 dark:text-blue-400 underline hover:no-underline"
           >
             {t("contact.successBackLink")}

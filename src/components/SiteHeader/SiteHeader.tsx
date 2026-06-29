@@ -81,7 +81,7 @@ const NavLinkItem = ({
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t } = useLocale();
+  const { t, localizePath } = useLocale();
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
@@ -130,7 +130,11 @@ const SiteHeader = () => {
       return { ...link, label: t(`nav.${link.label}`) };
     }
     // route = contact
-    return { ...link, label: t("nav.contact") };
+    return {
+      ...link,
+      href: localizePath(link.href) as `/${string}`,
+      label: t("nav.contact"),
+    };
   });
 
   return (

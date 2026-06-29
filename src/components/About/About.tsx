@@ -9,7 +9,7 @@ import {
 
 const About = () => {
   const accent = siteConfig.accentColor;
-  const { t, dict } = useLocale();
+  const { t, dict, localizePath } = useLocale();
 
   const clients = getLocalizedClients(dict);
   const funFacts = getLocalizedFunFacts(dict);
@@ -42,7 +42,7 @@ const About = () => {
             <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               {t("about.agileIT")}{" "}
               <Link
-                to={routes.contactForm}
+                to={localizePath(routes.contactForm)}
                 className="underline transition-colors duration-300"
                 style={{ color: accent }}
               >
