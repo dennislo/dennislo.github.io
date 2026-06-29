@@ -29,6 +29,32 @@ describe("getLocalizedProjects", () => {
     expect(result[1].name).toBe(enGB.projects.chromeExtensionMasteryName);
     expect(result[2].name).toBe(enGB.projects.extensionKitName);
   });
+
+  it("maps localized strings by stable content key, not array position", () => {
+    type KeyedProject = (typeof siteConfig.projects)[number] & {
+      contentKey: "aiDevRoundup" | "chromeExtensionMastery" | "extensionKit";
+    };
+    const mutableConfig = siteConfig as unknown as {
+      projects: KeyedProject[];
+    };
+    const originalProjects = siteConfig.projects;
+
+    mutableConfig.projects = [
+      { ...originalProjects[1], contentKey: "chromeExtensionMastery" },
+      { ...originalProjects[0], contentKey: "aiDevRoundup" },
+    ];
+
+    try {
+      const result = getLocalizedProjects(enGB);
+      expect(result[0].name).toBe(enGB.projects.chromeExtensionMasteryName);
+      expect(result[0].description).toBe(
+        enGB.projects.chromeExtensionMasteryDescription,
+      );
+      expect(result[1].name).toBe(enGB.projects.aiDevRoundupName);
+    } finally {
+      mutableConfig.projects = originalProjects as unknown as KeyedProject[];
+    }
+  });
 });
 
 describe("getLocalizedExperience", () => {
@@ -67,6 +93,38 @@ describe("getLocalizedExperience", () => {
     siteConfig.experience = [];
     expect(getLocalizedExperience(enGB)).toEqual([]);
     siteConfig.experience = origExperience;
+  });
+
+  it("maps localized bullets by stable content key, not array position", () => {
+    type KeyedExperience = (typeof siteConfig.experience)[number] & {
+      contentKey:
+        | "crosstide"
+        | "pret"
+        | "natwest"
+        | "bcg"
+        | "elsevier"
+        | "starcount";
+    };
+    const mutableConfig = siteConfig as unknown as {
+      experience: KeyedExperience[];
+    };
+    const originalExperience = siteConfig.experience;
+
+    mutableConfig.experience = [
+      { ...originalExperience[5], contentKey: "starcount" },
+      { ...originalExperience[0], contentKey: "crosstide" },
+    ];
+
+    try {
+      const result = getLocalizedExperience(enGB);
+      expect(result[0].company).toBe("Starcount");
+      expect(result[0].bullets[0]).toBe(enGB.experience.starcountBullet1);
+      expect(result[1].company).toBe("Crosstide / 101 Ways");
+      expect(result[1].bullets[0]).toBe(enGB.experience.crosstideBullet1);
+    } finally {
+      mutableConfig.experience =
+        originalExperience as unknown as KeyedExperience[];
+    }
   });
 });
 

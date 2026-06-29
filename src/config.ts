@@ -5,6 +5,19 @@ export type EducationEntry = {
   achievements: string[];
 };
 
+export type ProjectContentKey =
+  | "aiDevRoundup"
+  | "chromeExtensionMastery"
+  | "extensionKit";
+
+export type ExperienceContentKey =
+  | "crosstide"
+  | "pret"
+  | "natwest"
+  | "bcg"
+  | "elsevier"
+  | "starcount";
+
 export type SectionNavLink = {
   label: string;
   href: `#${string}`;
@@ -60,6 +73,7 @@ export const siteConfig = {
   ],
   projects: [
     {
+      contentKey: "aiDevRoundup",
       name: "AI Dev Roundup Newsletter",
       description:
         "One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, and developer tools curated for engineers.",
@@ -67,6 +81,7 @@ export const siteConfig = {
       skills: ["React", "Node.js", "AWS"],
     },
     {
+      contentKey: "chromeExtensionMastery",
       name: "Chrome Extension Mastery",
       description:
         "A comprehensive course covering full-stack Chrome extension development from fundamentals to publishing on the Chrome Web Store.",
@@ -74,6 +89,7 @@ export const siteConfig = {
       skills: ["JavaScript", "Chrome APIs", "React"],
     },
     {
+      contentKey: "extensionKit",
       name: "ExtensionKit",
       description:
         "A starter template kit for Chrome extensions with TypeScript, React, and Vite — get from zero to published in minutes.",
@@ -83,6 +99,7 @@ export const siteConfig = {
   ],
   experience: [
     {
+      contentKey: "crosstide",
       title: "Software Engineer (Contractor)",
       company: "Crosstide / 101 Ways",
       dateRange: "Nov 2021 - Present",
@@ -93,6 +110,7 @@ export const siteConfig = {
       ],
     },
     {
+      contentKey: "pret",
       title: "Software Engineer (Contractor)",
       company: "Pret A Manger",
       dateRange: "Mar 2021 - Oct 2021",
@@ -102,6 +120,7 @@ export const siteConfig = {
       ],
     },
     {
+      contentKey: "natwest",
       title: "Software Engineer (Contractor)",
       company: "NatWest Group",
       dateRange: "Sep 2018 - Feb 2021",
@@ -111,6 +130,7 @@ export const siteConfig = {
       ],
     },
     {
+      contentKey: "bcg",
       title: "Software Engineer (Contractor)",
       company: "BCG Digital Ventures",
       dateRange: "Apr 2018 - Aug 2018",
@@ -120,6 +140,7 @@ export const siteConfig = {
       ],
     },
     {
+      contentKey: "elsevier",
       title: "Software Engineer (Contractor)",
       company: "Elsevier",
       dateRange: "Apr 2016 - Mar 2018",
@@ -129,6 +150,7 @@ export const siteConfig = {
       ],
     },
     {
+      contentKey: "starcount",
       title: "Senior Software Engineer",
       company: "Starcount",
       dateRange: "Sep 2014 - Mar 2016",

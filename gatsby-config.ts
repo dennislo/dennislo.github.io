@@ -75,7 +75,8 @@ const config: GatsbyConfig = {
         // if you have a development env for your segment account, paste that key here
         // when process.env.NODE_ENV === 'development'
         // optional; non-empty string
-        devKey: "SEGMENT_DEV_WRITE_KEY",
+        // Omitted until a real development write key exists so local Gatsby
+        // develop does not request Segment with a placeholder key.
 
         // Boolean indicating if you want this plugin to perform any automated analytics.page() calls
         // at all, or not.

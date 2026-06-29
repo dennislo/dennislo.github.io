@@ -3,6 +3,7 @@ node_modules/
 public
 src/gatsby-types.d.ts
 .idea/
+.DS_Store
 
 # Playwright
 test-results/
