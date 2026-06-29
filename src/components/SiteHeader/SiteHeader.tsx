@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "gatsby";
 import { routes, sectionNavLinks, siteConfig } from "../../config";
 import { useLocale } from "../../i18n";
-import type { TranslationDictionary } from "../../i18n";
+import type { TranslationDictionary, TranslationKey } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
@@ -15,8 +15,18 @@ const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
   "#education": "education",
 };
 
+function navTranslationKey(
+  key: keyof TranslationDictionary["nav"],
+): Extract<TranslationKey, `nav.${string}`> {
+  return `nav.${key}` as Extract<TranslationKey, `nav.${string}`>;
+}
+
 type InternalNavLink = { type: "internal"; href: `#${string}` };
-type ExternalNavLink = { type: "external"; label: string; href: string };
+type ExternalNavLink = {
+  type: "external";
+  label: keyof TranslationDictionary["nav"];
+  href: string;
+};
 type RouteNavLink = { type: "route"; href: `/${string}` };
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
@@ -123,11 +133,11 @@ const SiteHeader = () => {
   const navLinks: NavLinkWithLabel[] = staticNavLinks.map((link) => {
     if (link.type === "internal") {
       const key = hrefToNavKey[link.href] ?? "about";
-      return { ...link, label: t(`nav.${key}`) };
+      return { ...link, label: t(navTranslationKey(key)) };
     }
     if (link.type === "external") {
       // The only external link is Gists; its label key is stored in link.label
-      return { ...link, label: t(`nav.${link.label}`) };
+      return { ...link, label: t(navTranslationKey(link.label)) };
     }
     // route = contact
     return {

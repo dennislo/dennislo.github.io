@@ -1,7 +1,7 @@
 import { useLocaleContext } from "./LocaleContext";
 import { localizePath as localizePathFn } from "./config";
 import type { Locale } from "./config";
-import type { TranslationDictionary } from "./types";
+import type { TranslationDictionary, TranslationKey } from "./types";
 import { enGB } from "./translations/en-GB";
 
 /**
@@ -34,12 +34,15 @@ function interpolate(
 export function useLocale(): {
   locale: Locale;
   dict: TranslationDictionary;
-  t: (key: string, vars?: Record<string, string | number>) => string;
+  t: (key: TranslationKey, vars?: Record<string, string | number>) => string;
   localizePath: (path: string) => string;
 } {
   const { locale, dict } = useLocaleContext();
 
-  const t = (key: string, vars?: Record<string, string | number>): string => {
+  const t = (
+    key: TranslationKey,
+    vars?: Record<string, string | number>,
+  ): string => {
     const keys = key.split(".");
 
     // Try active dictionary first.

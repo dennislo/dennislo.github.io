@@ -1,6 +1,8 @@
 import type { Page, Actions } from "gatsby";
 import { locales, defaultLocale, localizePath } from "../i18n/config";
 
+const special404Paths = new Set(["/404/", "/404.html"]);
+
 export function createLocalePages({
   page,
   actions,
@@ -15,18 +17,7 @@ export function createLocalePages({
     return;
   }
 
-  // 404 page: delete original, create once with defaultLocale (no locale fan-out).
-  // Use exact match to avoid catching Gatsby's internal /dev-404-page/.
-  if (page.path === "/404/" || page.path === "/404.html") {
-    deletePage(page);
-    createPage({
-      ...page,
-      context: { ...page.context, locale: defaultLocale },
-    });
-    return;
-  }
-
-  // Normal page: delete original, then create one page per locale plus the
+  // Delete original, then create one page per locale plus the
   // explicit en-GB alias so /en-GB/<path> resolves alongside the root path.
   deletePage(page);
 
@@ -38,11 +29,13 @@ export function createLocalePages({
     });
   }
 
-  // Explicit en-GB alias: /en-GB/ for root, /en-GB/<path> for everything else.
-  const aliasPath = page.path === "/" ? "/en-GB/" : `/en-GB${page.path}`;
-  createPage({
-    ...page,
-    path: aliasPath,
-    context: { ...page.context, locale: defaultLocale },
-  });
+  if (!special404Paths.has(page.path)) {
+    // Explicit en-GB alias: /en-GB/ for root, /en-GB/<path> for everything else.
+    const aliasPath = page.path === "/" ? "/en-GB/" : `/en-GB${page.path}`;
+    createPage({
+      ...page,
+      path: aliasPath,
+      context: { ...page.context, locale: defaultLocale },
+    });
+  }
 }

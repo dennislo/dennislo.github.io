@@ -36,6 +36,16 @@ function monitorRuntimeIssues(page: Page) {
 
   page.on("console", (message: ConsoleMessage) => {
     if (message.type() === "error") {
+      const { url } = message.location();
+      const isKnownExternalResourceNoise =
+        message.text().startsWith("Failed to load resource:") &&
+        (url.startsWith("https://api.github.com/") ||
+          url.startsWith("https://cdn.segment.io/"));
+
+      if (isKnownExternalResourceNoise) {
+        return;
+      }
+
       consoleErrors.push(message.text());
     }
   });

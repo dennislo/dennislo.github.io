@@ -125,4 +125,33 @@ describe("NotFoundPage (zh-Hans locale)", () => {
       screen.getByRole("link", { name: zhHans.notFound.goHomeButton }),
     ).toBeInTheDocument();
   });
+
+  it("links the go-home button to the localized home", () => {
+    renderWithLocale(<NotFoundPage />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.notFound.goHomeButton }),
+    ).toHaveAttribute("href", "/zh-Hans/");
+  });
+
+  it("renders zh-Hans metadata from pageContext.locale", () => {
+    document.head.innerHTML = "";
+    document.title = "";
+
+    render(
+      <Head
+        {...mockPageProps}
+        pageContext={{ locale: "zh-Hans" }}
+        location={{ ...mockLocation, pathname: "/zh-Hans/404/" }}
+      />,
+    );
+
+    expect(document.title).toBe(zhHans.seo.notFoundTitle);
+    expect(document.querySelector("html")).toHaveAttribute("lang", "zh-Hans");
+    const canonical = document.head.querySelector(
+      'link[rel="canonical"]',
+    ) as HTMLLinkElement | null;
+    expect(canonical?.getAttribute("href")).toBe(
+      "https://dlo.wtf/zh-Hans/404/",
+    );
+  });
 });

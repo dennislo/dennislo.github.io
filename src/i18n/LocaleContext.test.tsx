@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { LocaleProvider } from "./LocaleContext";
 import { useLocale } from "./useLocale";
 import type { Locale } from "./config";
+import type { TranslationKey } from "./types";
 
 // A helper component that exposes the useLocale hook values through the DOM
 // so we can assert on them without testing implementation details.
@@ -17,7 +18,9 @@ const LocaleConsumer = ({
   return (
     <div>
       <span data-testid="locale">{locale}</span>
-      <span data-testid="translation">{t(translationKey, vars)}</span>
+      <span data-testid="translation">
+        {t(translationKey as TranslationKey, vars)}
+      </span>
       <span data-testid="localized-root">{localizePath("/")}</span>
     </div>
   );

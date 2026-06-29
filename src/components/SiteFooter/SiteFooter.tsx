@@ -20,7 +20,7 @@ const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
 
 const SiteFooter = () => {
   const accent = siteConfig.accentColor;
-  const { t } = useLocale();
+  const { t, localizePath } = useLocale();
 
   return (
     <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
@@ -53,7 +53,7 @@ const SiteFooter = () => {
             })}
             <li>
               <Link
-                to={routes.contactForm}
+                to={localizePath(routes.contactForm)}
                 className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
               >
                 {t("footer.contact")}
@@ -67,7 +67,7 @@ const SiteFooter = () => {
             style={{ ["--accent" as string]: accent }}
           >
             <Link
-              to={routes.contactForm}
+              to={localizePath(routes.contactForm)}
               aria-label={t("footer.emailAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >

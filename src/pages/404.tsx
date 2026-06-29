@@ -1,12 +1,12 @@
 import React from "react";
-import { Link, HeadFC } from "gatsby";
+import { Link } from "gatsby";
 import { useLocale } from "../i18n";
 import { Head as SharedHead } from "../components/Head/Head";
-import { defaultLocale } from "../i18n/config";
+import { defaultLocale, isLocale, stripLocale } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
 
 const NotFoundPage = () => {
-  const { t } = useLocale();
+  const { t, localizePath } = useLocale();
 
   return (
     <main className="min-h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-950">
@@ -30,7 +30,7 @@ const NotFoundPage = () => {
           )}
         </p>
         <Link
-          to="/"
+          to={localizePath("/")}
           className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-colors duration-200"
         >
           {t("notFound.goHomeButton")}
@@ -42,17 +42,29 @@ const NotFoundPage = () => {
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => {
-  const title = getDictionary(defaultLocale).seo.notFoundTitle;
+interface NotFoundHeadProps {
+  pageContext?: { locale?: unknown };
+  location?: { pathname?: string };
+}
+
+export function Head({ pageContext, location }: NotFoundHeadProps = {}) {
+  const localeFromCtx = pageContext?.locale;
+  const locale =
+    typeof localeFromCtx === "string" && isLocale(localeFromCtx)
+      ? localeFromCtx
+      : defaultLocale;
+  const dict = getDictionary(locale);
+  const { basePath } = stripLocale(location?.pathname ?? "/404/");
+
   return (
     <>
       <SharedHead
-        title={title}
-        locale={defaultLocale}
-        path="/404/"
+        title={dict.seo.notFoundTitle}
+        locale={locale}
+        path={basePath}
         showHreflang={false}
       />
       <link rel="alternate" type="text/markdown" href="/404.md" />
     </>
   );
-};
+}

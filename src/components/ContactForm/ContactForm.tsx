@@ -10,6 +10,7 @@ import React, {
 import { Link } from "gatsby";
 import { useForm, ValidationError } from "@formspree/react";
 import { useLocale } from "../../i18n";
+import type { TranslationKey } from "../../i18n";
 
 type FieldName = "firstName" | "lastName" | "mobile" | "email" | "message";
 
@@ -37,7 +38,8 @@ interface FormValues {
   message: string;
 }
 
-type TFn = (key: string) => string;
+type ContactTranslationKey = Extract<TranslationKey, `contact.${string}`>;
+type TFn = (key: ContactTranslationKey) => string;
 
 function validateField(name: FieldName, value: string, t: TFn): string | null {
   switch (name) {
@@ -219,7 +221,7 @@ const ContactForm = () => {
     <div className="min-h-screen bg-white dark:bg-gray-950 p-8 sm:p-12 md:p-16 lg:p-24">
       <div className="max-w-xl mx-auto">
         <Link
-          to="/"
+          to={localizePath("/")}
           className="inline-block mb-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
         >
           &larr; {t("contact.backLink")}

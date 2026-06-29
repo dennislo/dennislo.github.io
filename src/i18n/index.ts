@@ -10,7 +10,7 @@ export {
 export type { Locale, LocaleMeta } from "./config";
 
 // Re-export types
-export type { TranslationDictionary } from "./types";
+export type { TranslationDictionary, TranslationKey } from "./types";
 
 // Re-export context and hook
 export { LocaleProvider } from "./LocaleContext";

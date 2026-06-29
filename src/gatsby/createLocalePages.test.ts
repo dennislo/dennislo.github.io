@@ -56,7 +56,7 @@ describe("createLocalePages", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // 404 page: delete original, create once with defaultLocale.
+  // 404 page: localized fan-out.
   // ---------------------------------------------------------------------------
   describe("when path contains '404'", () => {
     const page404 = makePage("/404/");
@@ -67,12 +67,12 @@ describe("createLocalePages", () => {
       expect(deletePage).toHaveBeenCalledWith(page404);
     });
 
-    it("calls createPage exactly once (not fanned out across locales)", () => {
+    it("calls createPage exactly 4 times (one per locale, no en-GB alias)", () => {
       createLocalePages({ page: page404, actions: actions as never });
-      expect(createPage).toHaveBeenCalledTimes(1);
+      expect(createPage).toHaveBeenCalledTimes(4);
     });
 
-    it("creates the 404 page with the same path and context.locale === 'en-GB'", () => {
+    it("creates the default 404 page at '/404/' with locale en-GB", () => {
       createLocalePages({ page: page404, actions: actions as never });
       expect(createPage).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -82,11 +82,40 @@ describe("createLocalePages", () => {
       );
     });
 
-    it("preserves the original component on the created 404 page", () => {
+    it("creates localized 404 pages for non-default locales", () => {
       createLocalePages({ page: page404, actions: actions as never });
       expect(createPage).toHaveBeenCalledWith(
-        expect.objectContaining({ component: page404.component }),
+        expect.objectContaining({
+          path: "/zh-Hans/404/",
+          context: expect.objectContaining({ locale: "zh-Hans" }),
+        }),
       );
+      expect(createPage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          path: "/zh-Hant/404/",
+          context: expect.objectContaining({ locale: "zh-Hant" }),
+        }),
+      );
+      expect(createPage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          path: "/en-US/404/",
+          context: expect.objectContaining({ locale: "en-US" }),
+        }),
+      );
+    });
+
+    it("does not create the explicit en-GB 404 alias", () => {
+      createLocalePages({ page: page404, actions: actions as never });
+      expect(createPage).not.toHaveBeenCalledWith(
+        expect.objectContaining({ path: "/en-GB/404/" }),
+      );
+    });
+
+    it("preserves the original component on the created 404 page", () => {
+      createLocalePages({ page: page404, actions: actions as never });
+      for (const call of createPage.mock.calls) {
+        expect(call[0]).toMatchObject({ component: page404.component });
+      }
     });
   });
 

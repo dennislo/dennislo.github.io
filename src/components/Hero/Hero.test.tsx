@@ -169,7 +169,7 @@ describe("Hero (zh-Hans locale)", () => {
       name: zhHans.hero.contactAriaLabel,
     });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", routes.contactForm);
+    expect(link).toHaveAttribute("href", "/zh-Hans/contact-form");
   });
 
   it("name remains locale-invariant in zh-Hans", () => {

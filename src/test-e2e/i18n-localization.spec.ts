@@ -122,3 +122,74 @@ test.describe("locale persistence redirect", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hant");
   });
 });
+
+test.describe("locale-aware internal navigation", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize(desktopViewport);
+  });
+
+  test("header Contact link keeps zh-Hans users in zh-Hans", async ({
+    page,
+  }) => {
+    await page.goto("/zh-Hans/");
+
+    await page
+      .getByRole("navigation", { name: "主导航" })
+      .getByRole("link", { name: "联系" })
+      .click();
+
+    await expect(page).toHaveURL(/\/zh-Hans\/contact-form\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hans");
+  });
+
+  test("contact form Back link keeps zh-Hans users in zh-Hans", async ({
+    page,
+  }) => {
+    await page.goto("/zh-Hans/contact-form/");
+
+    await page.getByRole("link", { name: /返回/ }).click();
+
+    await expect(page).toHaveURL(/\/zh-Hans\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hans");
+  });
+
+  test("Hero contact icon keeps zh-Hans users in zh-Hans", async ({ page }) => {
+    await page.goto("/zh-Hans/");
+
+    await page
+      .locator("#hero")
+      .getByRole("link", { name: "联系 Dennis Lo" })
+      .click();
+
+    await expect(page).toHaveURL(/\/zh-Hans\/contact-form\/$/);
+  });
+
+  test("Footer contact links keep zh-Hans users in zh-Hans", async ({
+    page,
+  }) => {
+    await page.goto("/zh-Hans/");
+
+    await page
+      .locator("footer")
+      .getByRole("link", { name: "联系", exact: true })
+      .click();
+
+    await expect(page).toHaveURL(/\/zh-Hans\/contact-form\/$/);
+  });
+});
+
+test.describe("localized 404", () => {
+  test("zh-Hans 404 route renders zh-Hans metadata, content, and home link", async ({
+    page,
+  }) => {
+    await page.goto("/zh-Hans/404/");
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hans");
+    await expect(page).toHaveTitle("页面未找到");
+    await expect(page.getByRole("heading", { name: "404" })).toBeVisible();
+    await expect(page.getByText("页面未找到")).toBeVisible();
+
+    await page.getByRole("link", { name: "返回首页" }).click();
+    await expect(page).toHaveURL(/\/zh-Hans\/$/);
+  });
+});

@@ -12,7 +12,7 @@ import TablerInstagram from "../icons/TablerInstagram";
 const Hero = () => {
   const accent = siteConfig.accentColor;
   const { theme } = useTheme();
-  const { t } = useLocale();
+  const { t, localizePath } = useLocale();
   const isDarkTheme = theme === "dark";
   const symbolColor = isDarkTheme ? `${accent}94` : `${accent}b8`;
   const symbolOpacity = isDarkTheme ? "0.2" : "0.24";
@@ -194,7 +194,7 @@ const Hero = () => {
       {/* Social icons */}
       <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 dark:text-gray-300 animate-[fadeIn_0.8s_ease-out_0.6s_forwards] opacity-0">
         <Link
-          to={routes.contactForm}
+          to={localizePath(routes.contactForm)}
           aria-label={t("hero.contactAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
