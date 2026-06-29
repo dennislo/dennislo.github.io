@@ -106,7 +106,7 @@ test.describe("language switcher", () => {
     // locate the active locale link directly (first match = desktop switcher).
     await page.goto("/zh-Hant/");
     const active = page.getByRole("link", { name: /繁體中文/ }).first();
-    await expect(active).toHaveAttribute("aria-current", "true");
+    await expect(active).toHaveAttribute("aria-current", "page");
   });
 });
 

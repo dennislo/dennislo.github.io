@@ -188,9 +188,7 @@ describe("GitHubActivity (en-GB, default locale)", () => {
     renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByText(
-          new RegExp(enGB.githubActivity.errorText.replace(/[.]/g, "\\.")),
-        ),
+        screen.getByText(enGB.githubActivity.errorText),
       ).toBeInTheDocument();
     });
     expect(
@@ -375,9 +373,7 @@ describe("GitHubActivity (en-GB, default locale)", () => {
     renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByText(
-          new RegExp(enGB.githubActivity.errorText.replace(/[.]/g, "\\.")),
-        ),
+        screen.getByText(enGB.githubActivity.errorText),
       ).toBeInTheDocument();
     });
   });
