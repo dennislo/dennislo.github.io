@@ -12,6 +12,27 @@
 import { siteConfig } from "../config";
 import type { TranslationDictionary } from "./types";
 
+// Guard the index↔key coupling at module load time so a reorder in siteConfig
+// fails loudly rather than silently attaching wrong localized strings.
+if (process.env.NODE_ENV !== "test") {
+  console.assert(
+    siteConfig.projects[0]?.name?.includes("AI Dev Roundup"),
+    "localizedContent: projects[0] expected to be AI Dev Roundup",
+  );
+  console.assert(
+    siteConfig.projects[1]?.name?.includes("Chrome Extension"),
+    "localizedContent: projects[1] expected to be Chrome Extension Mastery",
+  );
+  console.assert(
+    siteConfig.experience[0]?.company?.startsWith("Crosstide"),
+    "localizedContent: experience[0] expected to be Crosstide",
+  );
+  console.assert(
+    siteConfig.experience[5]?.company === "Starcount",
+    "localizedContent: experience[5] expected to be Starcount",
+  );
+}
+
 // ─── Projects ────────────────────────────────────────────────────────────────
 // siteConfig.projects index → dict.projects key prefix
 // 0: aiDevRoundup, 1: chromeExtensionMastery, 2: extensionKit

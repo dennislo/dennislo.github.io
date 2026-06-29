@@ -16,7 +16,8 @@ export function createLocalePages({
   }
 
   // 404 page: delete original, create once with defaultLocale (no locale fan-out).
-  if (page.path.includes("404")) {
+  // Use exact match to avoid catching Gatsby's internal /dev-404-page/.
+  if (page.path === "/404/" || page.path === "/404.html") {
     deletePage(page);
     createPage({
       ...page,

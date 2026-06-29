@@ -86,19 +86,16 @@ describe("LanguageSwitcher", () => {
   // 2. Active locale has aria-current; others link to the same page in that locale
   // -------------------------------------------------------------------------
   describe("aria-current and link targets at root ('/')", () => {
-    it("marks the en-GB control as aria-current='true' or 'page' when locale is en-GB", () => {
+    it("marks the en-GB control as aria-current='page' when locale is en-GB", () => {
       renderSwitcher("en-GB", "/");
 
       const { flag, label } = localeMeta["en-GB"];
-      // The active control wraps both flag and label — find it by walking up the DOM
       const activeControl =
         screen.getByText(flag).closest("[aria-current]") ||
         screen.getByText(label).closest("[aria-current]");
 
       expect(activeControl).not.toBeNull();
-      expect(activeControl).toHaveAttribute("aria-current");
-      const ariaCurrent = activeControl!.getAttribute("aria-current");
-      expect(["true", "page"]).toContain(ariaCurrent);
+      expect(activeControl).toHaveAttribute("aria-current", "page");
     });
 
     it("does NOT mark the zh-Hans control as aria-current when locale is en-GB", () => {
@@ -133,7 +130,7 @@ describe("LanguageSwitcher", () => {
   // 3. Locale is zh-Hant at path '/zh-Hant/contact-form/'
   // -------------------------------------------------------------------------
   describe("link targets for zh-Hant locale at /zh-Hant/contact-form/", () => {
-    it("marks the zh-Hant control as aria-current", () => {
+    it("marks the zh-Hant control as aria-current='page'", () => {
       renderSwitcher("zh-Hant", "/zh-Hant/contact-form/");
 
       const { flag, label } = localeMeta["zh-Hant"];
@@ -142,8 +139,7 @@ describe("LanguageSwitcher", () => {
         screen.getByText(label).closest("[aria-current]");
 
       expect(activeControl).not.toBeNull();
-      const ariaCurrent = activeControl!.getAttribute("aria-current");
-      expect(["true", "page"]).toContain(ariaCurrent);
+      expect(activeControl).toHaveAttribute("aria-current", "page");
     });
 
     it("the en-US control links to '/en-US/contact-form/'", () => {
