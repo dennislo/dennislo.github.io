@@ -154,7 +154,7 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
           : "updated";
       const number = pr && typeof pr.number === "number" ? pr.number : "";
       const title = pr && typeof pr.title === "string" ? pr.title : "";
-      const merged = event.payload.merged === true;
+      const merged = pr !== undefined && pr.merged === true;
       const verb =
         action === "closed" ? (merged ? "merged" : "closed") : action;
       return {

@@ -345,10 +345,10 @@ describe("GitHubActivity (en-GB, default locale)", () => {
           },
           payload: {
             action: "closed",
-            merged: true,
             pull_request: {
               number: 11,
               title: "Ship the feature",
+              merged: true,
             },
           },
         },
