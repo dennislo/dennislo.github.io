@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { siteConfig } from "../../config";
 import { useLocale } from "../../i18n";
+import type { TranslationKey } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
 interface GitHubEvent {
@@ -19,6 +20,8 @@ interface FormattedEvent {
   repoUrl: string;
   time: string;
 }
+
+type Translate = ReturnType<typeof useLocale>["t"];
 
 const IconPush = () => (
   <svg
@@ -108,26 +111,69 @@ const IconCode = () => (
   </svg>
 );
 
-function timeAgo(isoDate: string): string {
+const pullRequestActionKeys: Partial<Record<string, TranslationKey>> = {
+  opened: "githubActivity.actions.opened",
+  closed: "githubActivity.actions.closed",
+  reopened: "githubActivity.actions.reopened",
+  updated: "githubActivity.actions.updated",
+};
+
+const issueActionKeys: Partial<Record<string, TranslationKey>> = {
+  opened: "githubActivity.actions.opened",
+  closed: "githubActivity.actions.closed",
+  reopened: "githubActivity.actions.reopened",
+  updated: "githubActivity.actions.updated",
+};
+
+const refTypeKeys: Partial<Record<string, TranslationKey>> = {
+  branch: "githubActivity.refTypes.branch",
+  tag: "githubActivity.refTypes.tag",
+  repository: "githubActivity.refTypes.repository",
+};
+
+function timeAgo(isoDate: string, t: Translate): string {
   const diffMs = Date.now() - new Date(isoDate).getTime();
   const diffMinutes = Math.floor(diffMs / 60000);
-  if (diffMinutes < 1) return "just now";
+  if (diffMinutes < 1) return t("githubActivity.relativeTime.justNow");
   if (diffMinutes < 60)
-    return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+    return t(
+      diffMinutes === 1
+        ? "githubActivity.relativeTime.minuteSingular"
+        : "githubActivity.relativeTime.minutePlural",
+      { count: diffMinutes },
+    );
   const diffHours = Math.floor(diffMinutes / 60);
   if (diffHours < 24)
-    return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+    return t(
+      diffHours === 1
+        ? "githubActivity.relativeTime.hourSingular"
+        : "githubActivity.relativeTime.hourPlural",
+      { count: diffHours },
+    );
   const diffDays = Math.floor(diffHours / 24);
-  return `${diffDays} day${diffDays === 1 ? "" : "s"} ago`;
+  return t(
+    diffDays === 1
+      ? "githubActivity.relativeTime.daySingular"
+      : "githubActivity.relativeTime.dayPlural",
+    { count: diffDays },
+  );
 }
 
-function formatEvent(event: GitHubEvent): FormattedEvent {
+function translateAction(
+  action: string,
+  actionKeys: Partial<Record<string, TranslationKey>>,
+  t: Translate,
+): string {
+  return t(actionKeys[action] ?? "githubActivity.actions.updated");
+}
+
+function formatEvent(event: GitHubEvent, t: Translate): FormattedEvent {
   const repoUrl = `https://github.com/${event.repo.name}`;
   const base = {
     id: event.id,
     repoName: event.repo.name,
     repoUrl,
-    time: timeAgo(event.created_at),
+    time: timeAgo(event.created_at, t),
   };
 
   switch (event.type) {
@@ -141,7 +187,15 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
       return {
         ...base,
         icon: <IconPush />,
-        label: `Pushed ${count} commit${count === 1 ? "" : "s"} to ${ref}`,
+        label: t("githubActivity.events.push", {
+          count,
+          commitLabel: t(
+            count === 1
+              ? "githubActivity.events.commitSingular"
+              : "githubActivity.events.commitPlural",
+          ),
+          ref,
+        }),
       };
     }
     case "PullRequestEvent": {
@@ -156,11 +210,17 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
       const title = pr && typeof pr.title === "string" ? pr.title : "";
       const merged = pr !== undefined && pr.merged === true;
       const verb =
-        action === "closed" ? (merged ? "merged" : "closed") : action;
+        action === "closed" && merged
+          ? t("githubActivity.actions.merged")
+          : translateAction(action, pullRequestActionKeys, t);
       return {
         ...base,
         icon: <IconPR />,
-        label: `${verb.charAt(0).toUpperCase() + verb.slice(1)} PR #${number}: ${title}`,
+        label: t("githubActivity.events.pullRequest", {
+          verb,
+          number,
+          title,
+        }),
       };
     }
     case "IssuesEvent": {
@@ -175,7 +235,11 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
       return {
         ...base,
         icon: <IconIssue />,
-        label: `${action.charAt(0).toUpperCase() + action.slice(1)} issue #${number}: ${title}`,
+        label: t("githubActivity.events.issue", {
+          verb: translateAction(action, issueActionKeys, t),
+          number,
+          title,
+        }),
       };
     }
     case "CreateEvent": {
@@ -188,15 +252,30 @@ function formatEvent(event: GitHubEvent): FormattedEvent {
       return {
         ...base,
         icon: <IconCode />,
-        label: `Created ${refType}${ref ? ` ${ref}` : ""}`,
+        label: t("githubActivity.events.create", {
+          refType: t(refTypeKeys[refType] ?? "githubActivity.refTypes.branch"),
+          ref: ref ? ` ${ref}` : "",
+        }),
       };
     }
     case "WatchEvent":
-      return { ...base, icon: <IconStar />, label: "Starred" };
+      return {
+        ...base,
+        icon: <IconStar />,
+        label: t("githubActivity.events.watch"),
+      };
     case "ForkEvent":
-      return { ...base, icon: <IconCode />, label: "Forked" };
+      return {
+        ...base,
+        icon: <IconCode />,
+        label: t("githubActivity.events.fork"),
+      };
     default:
-      return { ...base, icon: <IconCode />, label: "Activity" };
+      return {
+        ...base,
+        icon: <IconCode />,
+        label: t("githubActivity.events.default"),
+      };
   }
 }
 
@@ -254,7 +333,7 @@ const GitHubActivity = () => {
   const { t } = useLocale();
   const { events, loading, error } = useGitHubEvents(username);
 
-  const displayed = events.slice(0, 8).map(formatEvent);
+  const displayed = events.slice(0, 8).map((event) => formatEvent(event, t));
 
   return (
     <section

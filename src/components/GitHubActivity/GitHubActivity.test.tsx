@@ -400,4 +400,22 @@ describe("GitHubActivity (zh-Hans locale)", () => {
       screen.getByRole("list", { name: zhHans.githubActivity.loadingAria }),
     ).toBeInTheDocument();
   });
+
+  it("renders dynamic event labels and relative times in Chinese", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => [
+        makePushEvent({
+          created_at: new Date(Date.now() - 120000).toISOString(),
+        }),
+      ],
+    } as Response);
+
+    renderWithLocale(<GitHubActivity />, "zh-Hans");
+
+    await waitFor(() => {
+      expect(screen.getByText(/推送 2 次提交到 main/)).toBeInTheDocument();
+      expect(screen.getByText("2 分钟前")).toBeInTheDocument();
+    });
+  });
 });
