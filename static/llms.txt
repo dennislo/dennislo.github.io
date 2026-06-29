@@ -12,6 +12,15 @@ Token counts below are rough estimates based on page content, using the AEO guid
 - [Education](/#education): Formal education and academic background (approx. 50 tokens).
 - [Gists](https://gist.github.com/dennislo/public): Public GitHub Gists and code snippets (external; token cost varies).
 
+## Languages
+
+This site is available in four languages. The default (English UK) lives at the root; other locales are prefixed.
+
+- English (UK): `/`
+- English (US): `/en-US/`
+- 简体中文 (Simplified Chinese): `/zh-Hans/`
+- 繁體中文 (Traditional Chinese): `/zh-Hant/`
+
 ## Markdown Sources
 
 Clean Markdown source is available at direct `.md` routes.

@@ -1,23 +1,48 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "gatsby";
 import { routes, sectionNavLinks, siteConfig } from "../../config";
+import { useLocale } from "../../i18n";
+import type { TranslationDictionary, TranslationKey } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
-type InternalNavLink = { type: "internal"; label: string; href: `#${string}` };
-type ExternalNavLink = { type: "external"; label: string; href: string };
-type RouteNavLink = { type: "route"; label: string; href: `/${string}` };
+// Map from section href to the nav dictionary key
+const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
+  "#about": "about",
+  "#projects": "projects",
+  "#github-activity": "activity",
+  "#experience": "experience",
+  "#education": "education",
+};
+
+function navTranslationKey(
+  key: keyof TranslationDictionary["nav"],
+): Extract<TranslationKey, `nav.${string}`> {
+  return `nav.${key}` as Extract<TranslationKey, `nav.${string}`>;
+}
+
+type InternalNavLink = { type: "internal"; href: `#${string}` };
+type ExternalNavLink = {
+  type: "external";
+  label: keyof TranslationDictionary["nav"];
+  href: string;
+};
+type RouteNavLink = { type: "route"; href: `/${string}` };
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
-const navLinks: NavLink[] = [
-  ...sectionNavLinks.map((link) => ({ ...link })),
+// Static links whose labels come from the dictionary
+const staticNavLinks: NavLink[] = [
+  ...sectionNavLinks.map((link) => ({
+    type: "internal" as const,
+    href: link.href,
+  })),
   {
-    type: "external",
-    label: "Gists",
+    type: "external" as const,
+    label: "gists",
     href: "https://gist.github.com/dennislo/public",
   },
   {
-    type: "route",
-    label: "Contact",
+    type: "route" as const,
     href: routes.contactForm,
   },
 ];
@@ -28,12 +53,17 @@ const desktopLinkClassName =
 const mobileLinkClassName =
   "block rounded-lg px-2 py-2 text-sm text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100";
 
+type NavLinkWithLabel =
+  | { type: "internal"; href: `#${string}`; label: string }
+  | { type: "external"; href: string; label: string }
+  | { type: "route"; href: `/${string}`; label: string };
+
 const NavLinkItem = ({
   link,
   className,
   onClick,
 }: {
-  link: NavLink;
+  link: NavLinkWithLabel;
   className: string;
   onClick?: () => void;
 }) => {
@@ -61,6 +91,7 @@ const NavLinkItem = ({
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t, localizePath } = useLocale();
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
@@ -98,6 +129,24 @@ const SiteHeader = () => {
     return () => window.removeEventListener("keydown", closeMenuOnEscape);
   }, [isMenuOpen]);
 
+  // Resolve localized labels for each nav link
+  const navLinks: NavLinkWithLabel[] = staticNavLinks.map((link) => {
+    if (link.type === "internal") {
+      const key = hrefToNavKey[link.href] ?? "about";
+      return { ...link, label: t(navTranslationKey(key)) };
+    }
+    if (link.type === "external") {
+      // The only external link is Gists; its label key is stored in link.label
+      return { ...link, label: t(navTranslationKey(link.label)) };
+    }
+    // route = contact
+    return {
+      ...link,
+      href: localizePath(link.href) as `/${string}`,
+      label: t("nav.contact"),
+    };
+  });
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -107,7 +156,7 @@ const SiteHeader = () => {
       }`}
     >
       <nav
-        aria-label="Primary"
+        aria-label={t("nav.primaryAriaLabel")}
         className="relative px-4 py-4 md:px-16 lg:px-24"
       >
         <div className="flex items-center justify-between gap-4 md:items-center">
@@ -126,24 +175,26 @@ const SiteHeader = () => {
             ))}
           </ul>
 
+          <div className="hidden md:flex md:items-center md:gap-1">
+            <LanguageSwitcher />
+          </div>
+
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors duration-200 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-100 md:hidden"
             aria-expanded={isMenuOpen}
             aria-controls="site-header-menu"
-            aria-label={
-              isMenuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
+            aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
             onClick={() => setIsMenuOpen((open) => !open)}
           >
-            Menu
+            {t("nav.menu")}
           </button>
         </div>
 
         <div
           id="site-header-menu"
           role="region"
-          aria-label="Mobile primary menu"
+          aria-label={t("nav.mobileMenuAriaLabel")}
           hidden={!isMenuOpen}
           className={`absolute left-0 right-0 top-full md:hidden ${
             isMenuOpen ? "block" : "hidden"
@@ -161,6 +212,9 @@ const SiteHeader = () => {
                 </li>
               ))}
             </ul>
+            <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-800">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       </nav>

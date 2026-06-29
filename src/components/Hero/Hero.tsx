@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
+import { useLocale } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
@@ -11,6 +12,7 @@ import TablerInstagram from "../icons/TablerInstagram";
 const Hero = () => {
   const accent = siteConfig.accentColor;
   const { theme } = useTheme();
+  const { t, localizePath } = useLocale();
   const isDarkTheme = theme === "dark";
   const symbolColor = isDarkTheme ? `${accent}94` : `${accent}b8`;
   const symbolOpacity = isDarkTheme ? "0.2" : "0.24";
@@ -177,10 +179,11 @@ const Hero = () => {
       <div className="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
         <div>
           <h2 className="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-gray-700 dark:text-gray-300 animate-[fadeIn_0.8s_ease-out_forwards] opacity-0">
-            Hello! 👋
+            {t("hero.greeting")} 👋
           </h2>
           <h1 className="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 dark:text-gray-100 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] opacity-0">
-            I&apos;m <span style={{ color: accent }}>{siteConfig.name}</span>
+            {t("hero.intro")}{" "}
+            <span style={{ color: accent }}>{siteConfig.name}</span>
           </h1>
           <p className="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl font-medium text-gray-600 dark:text-gray-400 animate-[fadeIn_0.8s_ease-out_0.4s_forwards] opacity-0">
             {siteConfig.title}
@@ -191,8 +194,8 @@ const Hero = () => {
       {/* Social icons */}
       <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 dark:text-gray-300 animate-[fadeIn_0.8s_ease-out_0.6s_forwards] opacity-0">
         <Link
-          to={routes.contactForm}
-          aria-label="Contact Dennis Lo"
+          to={localizePath(routes.contactForm)}
+          aria-label={t("hero.contactAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
@@ -200,7 +203,7 @@ const Hero = () => {
         </Link>
         <ExternalLink
           href={siteConfig.social.github}
-          aria-label="Dennis Lo on GitHub"
+          aria-label={t("hero.githubAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
@@ -208,7 +211,7 @@ const Hero = () => {
         </ExternalLink>
         <ExternalLink
           href={siteConfig.social.linkedin}
-          aria-label="Dennis Lo on LinkedIn"
+          aria-label={t("hero.linkedinAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
@@ -216,7 +219,7 @@ const Hero = () => {
         </ExternalLink>
         <ExternalLink
           href={siteConfig.social.instagram}
-          aria-label="Dennis Lo on Instagram"
+          aria-label={t("hero.instagramAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >

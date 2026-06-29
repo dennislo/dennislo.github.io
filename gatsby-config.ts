@@ -1,4 +1,11 @@
 import type { GatsbyConfig } from "gatsby";
+import {
+  locales,
+  localeMeta,
+  localizePath,
+  stripLocale,
+} from "./src/i18n/config";
+import { siteConfig } from "./src/config";
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -12,7 +19,41 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-postcss",
     "gatsby-plugin-image",
-    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        // Exclude /en-GB/ alias pages (canonical is the unprefixed path) and Gatsby's dev pages.
+        excludes: ["/en-GB/", "/en-GB/**", "/dev-404-page/", "/404/"],
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+        }: {
+          allSitePage: { nodes: Array<{ path: string }> };
+        }) => {
+          return allPages.filter((page) => {
+            const p = page.path;
+            return (
+              !p.startsWith("/en-GB/") &&
+              !p.startsWith("/dev-404-page/") &&
+              p !== "/404/"
+            );
+          });
+        },
+        serialize: ({ path }: { path: string }) => {
+          const { basePath } = stripLocale(path);
+          const links = [
+            ...locales.map((L) => ({
+              lang: localeMeta[L].htmlLang,
+              url: `${siteConfig.siteUrl}${localizePath(basePath, L)}`,
+            })),
+            { lang: "x-default", url: `${siteConfig.siteUrl}${basePath}` },
+          ];
+          return {
+            url: `${siteConfig.siteUrl}${path}`,
+            links,
+          };
+        },
+      },
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
@@ -34,7 +75,8 @@ const config: GatsbyConfig = {
         // if you have a development env for your segment account, paste that key here
         // when process.env.NODE_ENV === 'development'
         // optional; non-empty string
-        devKey: "SEGMENT_DEV_WRITE_KEY",
+        // Omitted until a real development write key exists so local Gatsby
+        // develop does not request Segment with a placeholder key.
 
         // Boolean indicating if you want this plugin to perform any automated analytics.page() calls
         // at all, or not.

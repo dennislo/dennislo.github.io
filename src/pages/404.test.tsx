@@ -2,6 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import type { PageProps } from "gatsby";
 import NotFoundPage, { Head } from "./404";
+import { enGB } from "../i18n/translations/en-GB";
+import { zhHans } from "../i18n/translations/zh-Hans";
+import { renderWithLocale } from "../test/renderWithLocale";
 
 jest.mock("gatsby", () => ({
   Link: function MockLink({
@@ -59,25 +62,33 @@ const mockPageProps: PageProps = {
   pageContext: {},
 };
 
-describe("NotFoundPage", () => {
+describe("NotFoundPage (en-GB, default locale)", () => {
   beforeEach(() => {
     document.head.innerHTML = "";
     document.title = "";
   });
 
-  it("renders page not found heading", () => {
-    render(<NotFoundPage />);
-    expect(screen.getByText("Page not found")).toBeInTheDocument();
+  it("renders the localized 404 title from enGB dict", () => {
+    renderWithLocale(<NotFoundPage />);
+    // The 404 heading text ("404") is numeric — the same across locales
+    expect(screen.getByText(enGB.notFound.title)).toBeInTheDocument();
   });
 
-  it("renders apology message", () => {
-    render(<NotFoundPage />);
+  it("renders the localized 'Page not found' heading from enGB dict", () => {
+    renderWithLocale(<NotFoundPage />);
+    expect(screen.getByText(enGB.notFound.heading)).toBeInTheDocument();
+  });
+
+  it("renders the localized apology body from enGB dict", () => {
+    // The component currently hardcodes the body text with an emoji; the dict key holds
+    // the bare text. We assert on a fragment that is present in both ("Sorry").
+    renderWithLocale(<NotFoundPage />);
     expect(screen.getByText(/Sorry/)).toBeInTheDocument();
   });
 
-  it("renders go home link", () => {
-    render(<NotFoundPage />);
-    const link = screen.getByRole("link", { name: "Go home" });
+  it("renders the localized go-home button from enGB dict", () => {
+    renderWithLocale(<NotFoundPage />);
+    const link = screen.getByRole("link", { name: enGB.notFound.goHomeButton });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/");
   });
@@ -94,5 +105,53 @@ describe("NotFoundPage", () => {
     ) as HTMLLinkElement | null;
     expect(link).toBeInTheDocument();
     expect(link?.getAttribute("href")).toBe("/404.md");
+  });
+});
+
+describe("NotFoundPage (zh-Hans locale)", () => {
+  it("renders the localized 'Page not found' heading in Chinese", () => {
+    renderWithLocale(<NotFoundPage />, "zh-Hans");
+    expect(screen.getByText(zhHans.notFound.heading)).toBeInTheDocument();
+  });
+
+  it("does NOT render the English heading when locale is zh-Hans", () => {
+    renderWithLocale(<NotFoundPage />, "zh-Hans");
+    expect(screen.queryByText(enGB.notFound.heading)).not.toBeInTheDocument();
+  });
+
+  it("renders the localized go-home button in Chinese", () => {
+    renderWithLocale(<NotFoundPage />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.notFound.goHomeButton }),
+    ).toBeInTheDocument();
+  });
+
+  it("links the go-home button to the localized home", () => {
+    renderWithLocale(<NotFoundPage />, "zh-Hans");
+    expect(
+      screen.getByRole("link", { name: zhHans.notFound.goHomeButton }),
+    ).toHaveAttribute("href", "/zh-Hans/");
+  });
+
+  it("renders zh-Hans metadata from pageContext.locale", () => {
+    document.head.innerHTML = "";
+    document.title = "";
+
+    render(
+      <Head
+        {...mockPageProps}
+        pageContext={{ locale: "zh-Hans" }}
+        location={{ ...mockLocation, pathname: "/zh-Hans/404/" }}
+      />,
+    );
+
+    expect(document.title).toBe(zhHans.seo.notFoundTitle);
+    expect(document.querySelector("html")).toHaveAttribute("lang", "zh-Hans");
+    const canonical = document.head.querySelector(
+      'link[rel="canonical"]',
+    ) as HTMLLinkElement | null;
+    expect(canonical?.getAttribute("href")).toBe(
+      "https://dlo.wtf/zh-Hans/404/",
+    );
   });
 });

@@ -1,6 +1,14 @@
 import type { siteConfig } from "./config";
+import { localeMeta, defaultLocale } from "./i18n/config";
 
 type SiteConfig = typeof siteConfig;
+
+export interface LocalizedSeoOverrides {
+  jobTitle?: string;
+  description?: string;
+  name?: string;
+  inLanguage?: string;
+}
 
 // Base type with index signature so all schema types are assignable to Record<string, unknown>
 interface JsonLdBase {
@@ -32,6 +40,7 @@ export interface WebSiteSchema extends JsonLdBase {
   name: string;
   url: string;
   description: string;
+  inLanguage: string;
 }
 
 export interface ProfilePageSchema extends JsonLdBase {
@@ -39,6 +48,7 @@ export interface ProfilePageSchema extends JsonLdBase {
   url: string;
   name: string;
   description: string;
+  inLanguage: string;
   mainEntity: PersonSchemaNode;
 }
 
@@ -75,14 +85,17 @@ export interface WebPageSchema extends JsonLdBase {
   description?: string;
 }
 
-function buildPersonNode(config: SiteConfig): PersonSchemaNode {
+function buildPersonNode(
+  config: SiteConfig,
+  seo?: LocalizedSeoOverrides,
+): PersonSchemaNode {
   return {
     "@type": "Person",
     name: config.name,
     url: config.siteUrl,
     email: config.social.email,
-    jobTitle: config.title,
-    description: config.description,
+    jobTitle: seo?.jobTitle ?? config.title,
+    description: seo?.description ?? config.description,
     sameAs: [
       config.social.github,
       config.social.linkedin,
@@ -96,28 +109,39 @@ function buildPersonNode(config: SiteConfig): PersonSchemaNode {
   };
 }
 
-export function buildPersonSchema(config: SiteConfig): PersonSchema {
-  return { "@context": "https://schema.org", ...buildPersonNode(config) };
+export function buildPersonSchema(
+  config: SiteConfig,
+  seo?: LocalizedSeoOverrides,
+): PersonSchema {
+  return { "@context": "https://schema.org", ...buildPersonNode(config, seo) };
 }
 
-export function buildWebSiteSchema(config: SiteConfig): WebSiteSchema {
+export function buildWebSiteSchema(
+  config: SiteConfig,
+  seo?: LocalizedSeoOverrides,
+): WebSiteSchema {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: config.header,
     url: config.siteUrl,
-    description: config.description,
+    description: seo?.description ?? config.description,
+    inLanguage: seo?.inLanguage ?? localeMeta[defaultLocale].htmlLang,
   };
 }
 
-export function buildProfilePageSchema(config: SiteConfig): ProfilePageSchema {
+export function buildProfilePageSchema(
+  config: SiteConfig,
+  seo?: LocalizedSeoOverrides,
+): ProfilePageSchema {
   return {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     url: config.siteUrl,
     name: config.header,
-    description: config.description,
-    mainEntity: buildPersonNode(config),
+    description: seo?.description ?? config.description,
+    inLanguage: seo?.inLanguage ?? localeMeta[defaultLocale].htmlLang,
+    mainEntity: buildPersonNode(config, seo),
   };
 }
 

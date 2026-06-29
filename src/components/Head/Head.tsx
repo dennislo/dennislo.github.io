@@ -6,12 +6,23 @@
 
 import React from "react";
 import { JsonLd } from "../JsonLd/JsonLd";
+import {
+  locales,
+  localeMeta,
+  localizePath,
+  defaultLocale,
+  type Locale,
+} from "../../i18n/config";
+import { siteConfig } from "../../config";
 
 type HeadProps = {
   title?: string;
   description?: string;
   author?: string;
   schemas?: ReadonlyArray<Record<string, unknown>>;
+  locale?: Locale;
+  path?: string;
+  showHreflang?: boolean;
 };
 
 export function Head({
@@ -19,20 +30,43 @@ export function Head({
   description,
   author = "@dlo",
   schemas,
+  locale = defaultLocale,
+  path = "/",
+  showHreflang = true,
 }: HeadProps) {
   const metaDescription = description ?? `${title} - My personal homepage`;
+  const canonicalHref = `${siteConfig.siteUrl}${localizePath(path, locale)}`;
 
   return (
     <>
+      <html lang={localeMeta[locale].htmlLang} />
       <title>{title}</title>
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
+      <meta property="og:locale" content={localeMeta[locale].ogLocale} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={author} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
+      <link rel="canonical" href={canonicalHref} />
+      {showHreflang &&
+        locales.map((L) => (
+          <link
+            key={L}
+            rel="alternate"
+            hrefLang={localeMeta[L].htmlLang}
+            href={`${siteConfig.siteUrl}${localizePath(path, L)}`}
+          />
+        ))}
+      {showHreflang && (
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href={`${siteConfig.siteUrl}${path}`}
+        />
+      )}
       <link
         rel="apple-touch-icon"
         sizes="180x180"

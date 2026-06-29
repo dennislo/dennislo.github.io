@@ -1,6 +1,9 @@
 import React from "react";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import GitHubActivity from "./GitHubActivity";
+import { enGB } from "../../i18n/translations/en-GB";
+import { zhHans } from "../../i18n/translations/zh-Hans";
+import { renderWithLocale } from "../../test/renderWithLocale";
 
 jest.mock("../../config", () => ({
   siteConfig: {
@@ -111,26 +114,26 @@ afterEach(() => {
   mockFetch.mockReset();
 });
 
-describe("GitHubActivity", () => {
-  it('renders the "Activity" heading', async () => {
-    render(<GitHubActivity />);
+describe("GitHubActivity (en-GB, default locale)", () => {
+  it("renders the localized heading from enGB dict", async () => {
+    renderWithLocale(<GitHubActivity />);
     expect(
-      screen.getByRole("heading", { name: "Activity" }),
+      screen.getByRole("heading", { name: enGB.githubActivity.heading }),
     ).toBeInTheDocument();
   });
 
-  it("shows skeleton placeholders while loading", () => {
-    render(<GitHubActivity />);
+  it("shows skeleton placeholders with localized loading aria-label from enGB dict", () => {
+    renderWithLocale(<GitHubActivity />);
     expect(
-      screen.getByRole("list", { name: "Loading GitHub activity" }),
+      screen.getByRole("list", { name: enGB.githubActivity.loadingAria }),
     ).toBeInTheDocument();
   });
 
-  it("renders event rows after fetch resolves", async () => {
-    render(<GitHubActivity />);
+  it("renders event rows with localized list aria-label after fetch resolves", async () => {
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByRole("list", { name: "Recent GitHub activity" }),
+        screen.getByRole("list", { name: enGB.githubActivity.listAria }),
       ).toBeInTheDocument();
     });
     const items = screen.getAllByRole("listitem");
@@ -138,14 +141,14 @@ describe("GitHubActivity", () => {
   });
 
   it("renders the push event label with commit count and branch", async () => {
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(screen.getByText(/Pushed 2 commits to main/)).toBeInTheDocument();
     });
   });
 
   it("renders the PR event label with number and title", async () => {
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
         screen.getByText(/Opened PR #42: Add dark mode/),
@@ -154,14 +157,14 @@ describe("GitHubActivity", () => {
   });
 
   it("renders the WatchEvent as 'Starred'", async () => {
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(screen.getByText(/Starred/)).toBeInTheDocument();
     });
   });
 
   it("links repo names to the correct GitHub URL", async () => {
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       const repoLink = screen.getByRole("link", { name: "dennislo/my-repo" });
       expect(repoLink).toHaveAttribute(
@@ -171,38 +174,38 @@ describe("GitHubActivity", () => {
     });
   });
 
-  it("renders the 'View all activity' footer link pointing to the github profile", async () => {
-    render(<GitHubActivity />);
+  it("renders the 'View all activity' footer link with localized text from enGB dict", async () => {
+    renderWithLocale(<GitHubActivity />);
     const footerLink = screen.getByRole("link", {
-      name: /View all activity on GitHub/,
+      name: enGB.githubActivity.viewAllLink,
     });
     expect(footerLink).toHaveAttribute("href", "https://github.com/dennislo");
   });
 
-  it("shows error state when fetch fails", async () => {
+  it("shows localized error state text when fetch fails", async () => {
     mockFetch.mockRejectedValue(new Error("Network error"));
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByText(/Couldn't load recent activity/),
+        screen.getByText(enGB.githubActivity.errorText),
       ).toBeInTheDocument();
     });
     expect(
-      screen.getByRole("link", { name: "View on GitHub" }),
+      screen.getByRole("link", { name: enGB.githubActivity.errorLinkText }),
     ).toBeInTheDocument();
   });
 
-  it("shows empty state when API returns no events", async () => {
+  it("shows localized empty state text when API returns no events", async () => {
     mockFetch.mockResolvedValue({
       ok: true,
       json: async () => [],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByText("No recent public activity."),
+        screen.getByText(enGB.githubActivity.noActivityText),
       ).toBeInTheDocument();
     });
   });
@@ -216,20 +219,20 @@ describe("GitHubActivity", () => {
       json: async () => manyEvents,
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByRole("list", { name: "Recent GitHub activity" }),
+        screen.getByRole("list", { name: enGB.githubActivity.listAria }),
       ).toBeInTheDocument();
     });
     expect(screen.getAllByRole("listitem")).toHaveLength(8);
   });
 
   it("refetches after 5 minutes via setInterval", async () => {
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByRole("list", { name: "Recent GitHub activity" }),
+        screen.getByRole("list", { name: enGB.githubActivity.listAria }),
       ).toBeInTheDocument();
     });
 
@@ -247,7 +250,7 @@ describe("GitHubActivity", () => {
       json: async () => [makeIssuesEvent()],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
         screen.getByText(/Opened issue #7: Bug in dark mode/),
@@ -261,7 +264,7 @@ describe("GitHubActivity", () => {
       json: async () => [makeCreateEvent()],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
         screen.getByText(/Created branch feature\/cool-thing/),
@@ -275,7 +278,7 @@ describe("GitHubActivity", () => {
       json: async () => [makeForkEvent()],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(screen.getByText(/Forked/)).toBeInTheDocument();
     });
@@ -287,9 +290,11 @@ describe("GitHubActivity", () => {
       json: async () => [makeUnknownEvent()],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
-      const list = screen.getByRole("list", { name: "Recent GitHub activity" });
+      const list = screen.getByRole("list", {
+        name: enGB.githubActivity.listAria,
+      });
       expect(within(list).getByText(/Activity/)).toBeInTheDocument();
     });
   });
@@ -318,7 +323,7 @@ describe("GitHubActivity", () => {
       ],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
         screen.getByText(/Closed PR #10: Remove old code/),
@@ -340,17 +345,17 @@ describe("GitHubActivity", () => {
           },
           payload: {
             action: "closed",
-            merged: true,
             pull_request: {
               number: 11,
               title: "Ship the feature",
+              merged: true,
             },
           },
         },
       ],
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
         screen.getByText(/Merged PR #11: Ship the feature/),
@@ -365,11 +370,52 @@ describe("GitHubActivity", () => {
       json: async () => ({ message: "Forbidden" }),
     } as Response);
 
-    render(<GitHubActivity />);
+    renderWithLocale(<GitHubActivity />);
     await waitFor(() => {
       expect(
-        screen.getByText(/Couldn't load recent activity/),
+        screen.getByText(enGB.githubActivity.errorText),
       ).toBeInTheDocument();
+    });
+  });
+});
+
+describe("GitHubActivity (zh-Hans locale)", () => {
+  it("renders the localized heading in Chinese", () => {
+    renderWithLocale(<GitHubActivity />, "zh-Hans");
+    expect(
+      screen.getByRole("heading", { name: zhHans.githubActivity.heading }),
+    ).toBeInTheDocument();
+  });
+
+  it("does NOT render the English heading when locale is zh-Hans", () => {
+    renderWithLocale(<GitHubActivity />, "zh-Hans");
+    expect(
+      screen.queryByRole("heading", { name: enGB.githubActivity.heading }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows localized loading aria-label in Chinese", () => {
+    renderWithLocale(<GitHubActivity />, "zh-Hans");
+    expect(
+      screen.getByRole("list", { name: zhHans.githubActivity.loadingAria }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders dynamic event labels and relative times in Chinese", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => [
+        makePushEvent({
+          created_at: new Date(Date.now() - 120000).toISOString(),
+        }),
+      ],
+    } as Response);
+
+    renderWithLocale(<GitHubActivity />, "zh-Hans");
+
+    await waitFor(() => {
+      expect(screen.getByText(/推送 2 次提交到 main/)).toBeInTheDocument();
+      expect(screen.getByText("2 分钟前")).toBeInTheDocument();
     });
   });
 });
