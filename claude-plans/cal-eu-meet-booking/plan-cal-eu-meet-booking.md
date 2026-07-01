@@ -121,7 +121,7 @@ Reduce desktop header nav gaps:
 Reduce desktop language switcher visual gaps by adjusting `LanguageSwitcher` link padding:
 
 ```tsx
-className="inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded ..."
+className = "inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded ...";
 ```
 
 Keep mobile menu item spacing unchanged unless visual QA shows overflow.
@@ -154,12 +154,12 @@ Keep mobile menu item spacing unchanged unless visual QA shows overflow.
 
 ## Agent Orchestration
 
-| Agent | Path | Role In This Plan | When To Use |
-| --- | --- | --- | --- |
-| `test-writer` | `.claude/agents/test-writer.md` | Writes Jest/RTL tests before implementation | First implementation step |
-| `senior-frontend-engineer` | `.claude/agents/senior-frontend-engineer.md` | Implements the minimal frontend changes that satisfy failing tests | After failing tests are confirmed |
-| `code-reviewer` | `.claude/agents/code-reviewer.md` | Reviews correctness, React/Gatsby SSR risk, accessibility, and test adequacy | After tests pass and before PR |
-| `debugger` | `.claude/agents/debugger.md` | Investigates failing tests, build failures, console errors, or BookerEmbed runtime issues | Only when verification fails |
+| Agent                      | Path                                         | Role In This Plan                                                                         | When To Use                       |
+| -------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------- |
+| `test-writer`              | `.claude/agents/test-writer.md`              | Writes Jest/RTL tests before implementation                                               | First implementation step         |
+| `senior-frontend-engineer` | `.claude/agents/senior-frontend-engineer.md` | Implements the minimal frontend changes that satisfy failing tests                        | After failing tests are confirmed |
+| `code-reviewer`            | `.claude/agents/code-reviewer.md`            | Reviews correctness, React/Gatsby SSR risk, accessibility, and test adequacy              | After tests pass and before PR    |
+| `debugger`                 | `.claude/agents/debugger.md`                 | Investigates failing tests, build failures, console errors, or BookerEmbed runtime issues | Only when verification fails      |
 
 Use `.claude/skills/unit-testing/SKILL.md` for Jest/RTL work, `.claude/skills/e2e-testing/SKILL.md` for Playwright work, and `.agent/skills/manual-testing/SKILL.md` for browser QA after implementation.
 
@@ -759,9 +759,10 @@ it("renders Meet immediately after Contact in the footer nav", () => {
   expect(navLabels.indexOf(enGB.footer.meet)).toBe(
     navLabels.indexOf(enGB.footer.contact) + 1,
   );
-  expect(
-    screen.getByRole("link", { name: enGB.footer.meet }),
-  ).toHaveAttribute("href", routes.meet);
+  expect(screen.getByRole("link", { name: enGB.footer.meet })).toHaveAttribute(
+    "href",
+    routes.meet,
+  );
 });
 ```
 
@@ -863,7 +864,8 @@ In `src/components/SiteFooter/SiteFooter.tsx`, render Meet immediately after Con
 In `src/components/LanguageSwitcher/LanguageSwitcher.tsx`, change the link class from `px-2` to `px-1.5`:
 
 ```tsx
-className="inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded transition-colors duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+className =
+  "inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded transition-colors duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100";
 ```
 
 - [ ] **Step 5: Verify nav tests**
