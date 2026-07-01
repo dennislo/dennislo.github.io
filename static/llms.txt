@@ -19,7 +19,7 @@ This site is available in four languages. The default (English UK) lives at the 
 - English (UK): `/`
 - English (US): `/en-US/`
 - 简体中文 (Simplified Chinese): `/zh-Hans/`
-- 繁體中文 (Traditional Chinese): `/zh-Hant/`
+- Español (España): `/es-ES/`
 
 ## Markdown Sources
 

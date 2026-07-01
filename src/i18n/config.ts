@@ -1,4 +1,4 @@
-export const locales = ["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const;
+export const locales = ["en-GB", "en-US", "zh-Hans", "es-ES"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en-GB";
 
@@ -28,11 +28,11 @@ export const localeMeta: Record<Locale, LocaleMeta> = {
     htmlLang: "zh-Hans",
     ogLocale: "zh_CN",
   },
-  "zh-Hant": {
-    label: "繁體中文",
-    flag: "🇹🇼",
-    htmlLang: "zh-Hant",
-    ogLocale: "zh_TW",
+  "es-ES": {
+    label: "Español (España)",
+    flag: "🇪🇸",
+    htmlLang: "es-ES",
+    ogLocale: "es_ES",
   },
 };
 

@@ -1,7 +1,7 @@
 import { enGB } from "./translations/en-GB";
 import { enUS } from "./translations/en-US";
 import { zhHans } from "./translations/zh-Hans";
-import { zhHant } from "./translations/zh-Hant";
+import { esES } from "./translations/es-ES";
 import type { Locale } from "./config";
 import type { TranslationDictionary } from "./types";
 
@@ -9,7 +9,7 @@ export const dictionaries: Record<Locale, TranslationDictionary> = {
   "en-GB": enGB,
   "en-US": enUS,
   "zh-Hans": zhHans,
-  "zh-Hant": zhHant,
+  "es-ES": esES,
 };
 
 /**

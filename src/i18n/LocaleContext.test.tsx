@@ -97,7 +97,7 @@ describe("LocaleProvider + useLocale", () => {
     });
 
     it("returns the key string even in non-default locales when the key is absent", () => {
-      renderWithLocale("zh-Hant", "completely.missing.key");
+      renderWithLocale("es-ES", "completely.missing.key");
       expect(screen.getByTestId("translation")).toHaveTextContent(
         "completely.missing.key",
       );
@@ -126,11 +126,9 @@ describe("LocaleProvider + useLocale", () => {
       );
     });
 
-    it("returns '/zh-Hant/' for the root path when locale is zh-Hant", () => {
-      renderWithLocale("zh-Hant", "nav.menu");
-      expect(screen.getByTestId("localized-root")).toHaveTextContent(
-        "/zh-Hant/",
-      );
+    it("returns '/es-ES/' for the root path when locale is es-ES", () => {
+      renderWithLocale("es-ES", "nav.menu");
+      expect(screen.getByTestId("localized-root")).toHaveTextContent("/es-ES/");
     });
 
     it("returns '/en-US/' or '/' for the root path when locale is en-US", () => {

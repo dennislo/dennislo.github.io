@@ -9,7 +9,7 @@ import {
 
 describe("locales constant", () => {
   it("contains exactly the four expected locale codes", () => {
-    expect(locales).toEqual(["en-GB", "en-US", "zh-Hans", "zh-Hant"]);
+    expect(locales).toEqual(["en-GB", "en-US", "zh-Hans", "es-ES"]);
   });
 
   it("has en-GB as the defaultLocale", () => {
@@ -18,7 +18,7 @@ describe("locales constant", () => {
 });
 
 describe("isLocale", () => {
-  it.each(["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const)(
+  it.each(["en-GB", "en-US", "zh-Hans", "es-ES"] as const)(
     "returns true for valid locale %s",
     (locale) => {
       expect(isLocale(locale)).toBe(true);
@@ -47,9 +47,9 @@ describe("localizePath", () => {
     expect(localizePath("/", "zh-Hans")).toBe("/zh-Hans/");
   });
 
-  it("prefixes /contact-form/ with zh-Hant locale", () => {
-    expect(localizePath("/contact-form/", "zh-Hant")).toBe(
-      "/zh-Hant/contact-form/",
+  it("prefixes /contact-form/ with es-ES locale", () => {
+    expect(localizePath("/contact-form/", "es-ES")).toBe(
+      "/es-ES/contact-form/",
     );
   });
 
@@ -94,9 +94,9 @@ describe("stripLocale", () => {
     });
   });
 
-  it("strips zh-Hant prefix correctly", () => {
-    expect(stripLocale("/zh-Hant/")).toEqual({
-      locale: "zh-Hant",
+  it("strips es-ES prefix correctly", () => {
+    expect(stripLocale("/es-ES/")).toEqual({
+      locale: "es-ES",
       basePath: "/",
     });
   });
@@ -134,28 +134,28 @@ describe("stripLocale", () => {
 });
 
 describe("localeMeta", () => {
-  it.each(["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const)(
+  it.each(["en-GB", "en-US", "zh-Hans", "es-ES"] as const)(
     "has a non-empty label for locale %s",
     (locale) => {
       expect(localeMeta[locale].label).toBeTruthy();
     },
   );
 
-  it.each(["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const)(
+  it.each(["en-GB", "en-US", "zh-Hans", "es-ES"] as const)(
     "has a non-empty flag for locale %s",
     (locale) => {
       expect(localeMeta[locale].flag).toBeTruthy();
     },
   );
 
-  it.each(["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const)(
+  it.each(["en-GB", "en-US", "zh-Hans", "es-ES"] as const)(
     "has a non-empty htmlLang for locale %s",
     (locale) => {
       expect(localeMeta[locale].htmlLang).toBeTruthy();
     },
   );
 
-  it.each(["en-GB", "en-US", "zh-Hans", "zh-Hant"] as const)(
+  it.each(["en-GB", "en-US", "zh-Hans", "es-ES"] as const)(
     "has a non-empty ogLocale for locale %s",
     (locale) => {
       expect(localeMeta[locale].ogLocale).toBeTruthy();

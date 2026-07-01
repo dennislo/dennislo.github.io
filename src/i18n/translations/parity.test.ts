@@ -1,7 +1,7 @@
 import { enGB } from "./en-GB";
 import { enUS } from "./en-US";
 import { zhHans } from "./zh-Hans";
-import { zhHant } from "./zh-Hant";
+import { esES } from "./es-ES";
 
 // Recursively flatten a nested object into a sorted array of dot-path keys.
 // e.g. { nav: { about: "About" } } -> ["nav.about"]
@@ -31,7 +31,7 @@ const baseKeys = flattenKeys(enGB).sort();
 const dictionaries: Array<{ name: string; dict: typeof enGB }> = [
   { name: "en-US", dict: enUS },
   { name: "zh-Hans", dict: zhHans },
-  { name: "zh-Hant", dict: zhHant },
+  { name: "es-ES", dict: esES },
 ];
 
 describe("Translation dictionary key parity", () => {
