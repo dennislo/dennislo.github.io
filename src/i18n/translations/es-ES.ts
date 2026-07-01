@@ -162,6 +162,8 @@ export const esES: TranslationDictionary = {
     builtWith: "Creado con",
     using: "usando",
     contact: "Contacto",
+    companyNumberLabel: "Número de empresa",
+    vatNumberLabel: "Número de IVA",
   },
   contact: {
     pageTitle: "Contáctame",

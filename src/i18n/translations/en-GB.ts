@@ -161,6 +161,8 @@ export const enGB = {
     builtWith: "Built with",
     using: "using",
     contact: "Contact",
+    companyNumberLabel: "Company Number",
+    vatNumberLabel: "VAT number",
   },
   contact: {
     pageTitle: "Contact Me",

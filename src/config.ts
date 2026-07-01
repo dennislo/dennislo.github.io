@@ -44,6 +44,12 @@ export const siteConfig = {
   description:
     "Personal website of Dennis Lo, IT consultant and software engineer.",
   accentColor: "#1d4ed8",
+  companyDetails: {
+    name: "Agile IT & Software Limited",
+    address: "Brookfield Court Selby Road, Garforth, Leeds LS25 1NB, UK",
+    companyNumber: "10042911",
+    vatNumber: "235 2977 88",
+  },
   social: {
     email: "lo.dennis@gmail.com",
     github: "https://github.com/dennislo",

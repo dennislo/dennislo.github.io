@@ -151,6 +151,8 @@ export const zhHans: TranslationDictionary = {
     builtWith: "采用",
     using: "构建",
     contact: "联系",
+    companyNumberLabel: "公司注册号",
+    vatNumberLabel: "增值税号",
   },
   contact: {
     pageTitle: "联系我",
