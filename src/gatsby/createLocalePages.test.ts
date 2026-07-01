@@ -92,8 +92,8 @@ describe("createLocalePages", () => {
       );
       expect(createPage).toHaveBeenCalledWith(
         expect.objectContaining({
-          path: "/zh-Hant/404/",
-          context: expect.objectContaining({ locale: "zh-Hant" }),
+          path: "/es-ES/404/",
+          context: expect.objectContaining({ locale: "es-ES" }),
         }),
       );
       expect(createPage).toHaveBeenCalledWith(
@@ -176,12 +176,12 @@ describe("createLocalePages", () => {
       );
     });
 
-    it("creates the zh-Hant page at path '/zh-Hant/'", () => {
+    it("creates the es-ES page at path '/es-ES/'", () => {
       createLocalePages({ page: rootPage, actions: actions as never });
       expect(createPage).toHaveBeenCalledWith(
         expect.objectContaining({
-          path: "/zh-Hant/",
-          context: expect.objectContaining({ locale: "zh-Hant" }),
+          path: "/es-ES/",
+          context: expect.objectContaining({ locale: "es-ES" }),
         }),
       );
     });
@@ -261,12 +261,12 @@ describe("createLocalePages", () => {
       );
     });
 
-    it("creates the zh-Hant page at '/zh-Hant/contact-form/'", () => {
+    it("creates the es-ES page at '/es-ES/contact-form/'", () => {
       createLocalePages({ page: contactPage, actions: actions as never });
       expect(createPage).toHaveBeenCalledWith(
         expect.objectContaining({
-          path: "/zh-Hant/contact-form/",
-          context: expect.objectContaining({ locale: "zh-Hant" }),
+          path: "/es-ES/contact-form/",
+          context: expect.objectContaining({ locale: "es-ES" }),
         }),
       );
     });

@@ -15,10 +15,10 @@ describe("wrapPageElement", () => {
   // Valid locale in pageContext.
   // ---------------------------------------------------------------------------
   describe("when props.pageContext.locale is a valid locale", () => {
-    it("wraps element in LocaleProvider and exposes the locale to children via useLocale (zh-Hant)", () => {
+    it("wraps element in LocaleProvider and exposes the locale to children via useLocale (es-ES)", () => {
       // Arrange
       const element = <LocaleProbe />;
-      const props = { pageContext: { locale: "zh-Hant" } };
+      const props = { pageContext: { locale: "es-ES" } };
 
       // Act
       const wrapped = wrapPageElement({
@@ -28,7 +28,7 @@ describe("wrapPageElement", () => {
       render(wrapped);
 
       // Assert
-      expect(screen.getByRole("status")).toHaveTextContent("zh-Hant");
+      expect(screen.getByRole("status")).toHaveTextContent("es-ES");
     });
 
     it("exposes en-US to children when pageContext.locale is 'en-US'", () => {

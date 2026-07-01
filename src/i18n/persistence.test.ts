@@ -35,9 +35,9 @@ describe("persistence — getStoredLocale", () => {
     expect(getStoredLocale()).toBe("en-US");
   });
 
-  it("returns 'zh-Hant' when it is stored", () => {
-    storeLocale("zh-Hant");
-    expect(getStoredLocale()).toBe("zh-Hant");
+  it("returns 'es-ES' when it is stored", () => {
+    storeLocale("es-ES");
+    expect(getStoredLocale()).toBe("es-ES");
   });
 
   it("returns null when an invalid locale string is stored (e.g. 'fr')", () => {
@@ -68,8 +68,8 @@ describe("persistence — storeLocale", () => {
 
   it("overwrites a previously stored locale", () => {
     storeLocale("en-US");
-    storeLocale("zh-Hant");
-    expect(localStorage.getItem(STORAGE_KEY)).toBe("zh-Hant");
+    storeLocale("es-ES");
+    expect(localStorage.getItem(STORAGE_KEY)).toBe("es-ES");
   });
 
   it("does not throw even when called multiple times", () => {
@@ -93,8 +93,8 @@ describe("persistence — resolveRedirectTarget", () => {
     expect(resolveRedirectTarget("/", "en-US")).toBe("/en-US/");
   });
 
-  it("returns '/zh-Hant/' when pathname is '/' and stored locale is 'zh-Hant'", () => {
-    expect(resolveRedirectTarget("/", "zh-Hant")).toBe("/zh-Hant/");
+  it("returns '/es-ES/' when pathname is '/' and stored locale is 'es-ES'", () => {
+    expect(resolveRedirectTarget("/", "es-ES")).toBe("/es-ES/");
   });
 
   it("returns null when pathname is '/' and stored locale is the default 'en-GB'", () => {
@@ -112,7 +112,7 @@ describe("persistence — resolveRedirectTarget", () => {
 
   it("returns null when pathname is the en-GB alias '/en-GB/' (not bare root)", () => {
     // The /en-GB/ alias is NOT the bare '/' root, so no redirect should fire
-    expect(resolveRedirectTarget("/en-GB/", "zh-Hant")).toBeNull();
+    expect(resolveRedirectTarget("/en-GB/", "es-ES")).toBeNull();
   });
 
   it("returns null when pathname is '/zh-Hans/' (already localized root)", () => {
@@ -120,7 +120,7 @@ describe("persistence — resolveRedirectTarget", () => {
   });
 
   it("returns null for any non-root path regardless of stored locale", () => {
-    expect(resolveRedirectTarget("/about/", "zh-Hant")).toBeNull();
-    expect(resolveRedirectTarget("/zh-Hant/about/", "zh-Hant")).toBeNull();
+    expect(resolveRedirectTarget("/about/", "es-ES")).toBeNull();
+    expect(resolveRedirectTarget("/es-ES/about/", "es-ES")).toBeNull();
   });
 });

@@ -225,14 +225,14 @@ describe("buildProfilePageSchema — localized overrides", () => {
 
   it("overrides inLanguage when seo.inLanguage is supplied", () => {
     const schema = buildProfilePageSchema(siteConfig, {
-      inLanguage: "zh-Hant",
+      inLanguage: "es-ES",
     });
-    expect(schema.inLanguage).toBe("zh-Hant");
+    expect(schema.inLanguage).toBe("es-ES");
   });
 
   it("overrides top-level description when seo.description is supplied", () => {
     const schema = buildProfilePageSchema(siteConfig, {
-      inLanguage: "zh-Hant",
+      inLanguage: "es-ES",
       description: "d",
     });
     expect(schema.description).toBe("d");
@@ -240,7 +240,7 @@ describe("buildProfilePageSchema — localized overrides", () => {
 
   it("overrides mainEntity.description when seo.description is supplied", () => {
     const schema = buildProfilePageSchema(siteConfig, {
-      inLanguage: "zh-Hant",
+      inLanguage: "es-ES",
       description: "d",
     });
     expect(schema.mainEntity["description"]).toBe("d");

@@ -29,11 +29,12 @@ test.describe("i18n locale routing and content", () => {
     );
   });
 
-  test("'/zh-Hant/' renders Traditional Chinese content with html lang zh-Hant", async ({
+  test("'/es-ES/' renders Spanish content with html lang es-ES", async ({
     page,
   }) => {
-    await page.goto("/zh-Hant/");
-    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hant");
+    await page.goto("/es-ES/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
+    await expect(page.getByRole("heading", { name: "Sobre mí" })).toBeVisible();
   });
 
   test("'/en-US/' renders with html lang en-US", async ({ page }) => {
@@ -104,8 +105,10 @@ test.describe("language switcher", () => {
   test("the active locale is marked aria-current", async ({ page }) => {
     // On a localized page the switcher's aria-label is itself translated, so
     // locate the active locale link directly (first match = desktop switcher).
-    await page.goto("/zh-Hant/");
-    const active = page.getByRole("link", { name: /繁體中文/ }).first();
+    await page.goto("/es-ES/");
+    const active = page
+      .getByRole("link", { name: /Español \(España\)/ })
+      .first();
     await expect(active).toHaveAttribute("aria-current", "page");
   });
 });
@@ -115,11 +118,11 @@ test.describe("locale persistence redirect", () => {
     page,
   }) => {
     await page.addInitScript(() => {
-      localStorage.setItem("preferredLocale", "zh-Hant");
+      localStorage.setItem("preferredLocale", "es-ES");
     });
     await page.goto("/");
-    await expect(page).toHaveURL(/\/zh-Hant\/$/);
-    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hant");
+    await expect(page).toHaveURL(/\/es-ES\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
   });
 });
 

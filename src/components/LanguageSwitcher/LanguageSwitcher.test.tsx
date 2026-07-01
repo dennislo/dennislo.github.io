@@ -127,13 +127,13 @@ describe("LanguageSwitcher", () => {
   });
 
   // -------------------------------------------------------------------------
-  // 3. Locale is zh-Hant at path '/zh-Hant/contact-form/'
+  // 3. Locale is es-ES at path '/es-ES/contact-form/'
   // -------------------------------------------------------------------------
-  describe("link targets for zh-Hant locale at /zh-Hant/contact-form/", () => {
-    it("marks the zh-Hant control as aria-current='page'", () => {
-      renderSwitcher("zh-Hant", "/zh-Hant/contact-form/");
+  describe("link targets for es-ES locale at /es-ES/contact-form/", () => {
+    it("marks the es-ES control as aria-current='page'", () => {
+      renderSwitcher("es-ES", "/es-ES/contact-form/");
 
-      const { flag, label } = localeMeta["zh-Hant"];
+      const { flag, label } = localeMeta["es-ES"];
       const activeControl =
         screen.getByText(flag).closest("[aria-current]") ||
         screen.getByText(label).closest("[aria-current]");
@@ -143,7 +143,7 @@ describe("LanguageSwitcher", () => {
     });
 
     it("the en-US control links to '/en-US/contact-form/'", () => {
-      renderSwitcher("zh-Hant", "/zh-Hant/contact-form/");
+      renderSwitcher("es-ES", "/es-ES/contact-form/");
 
       const { label } = localeMeta["en-US"];
       const link = screen.getByText(label).closest("a");
@@ -152,7 +152,7 @@ describe("LanguageSwitcher", () => {
     });
 
     it("the en-GB control links to '/contact-form/' (default locale, no prefix)", () => {
-      renderSwitcher("zh-Hant", "/zh-Hant/contact-form/");
+      renderSwitcher("es-ES", "/es-ES/contact-form/");
 
       const { label } = localeMeta["en-GB"];
       const link = screen.getByText(label).closest("a");
@@ -161,7 +161,7 @@ describe("LanguageSwitcher", () => {
     });
 
     it("the zh-Hans control links to '/zh-Hans/contact-form/'", () => {
-      renderSwitcher("zh-Hant", "/zh-Hant/contact-form/");
+      renderSwitcher("es-ES", "/es-ES/contact-form/");
 
       const { label } = localeMeta["zh-Hans"];
       const link = screen.getByText(label).closest("a");
