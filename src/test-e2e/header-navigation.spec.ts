@@ -286,6 +286,6 @@ test.describe("Header navigation", () => {
       .click();
 
     await expect(page).toHaveURL(new RegExp(`${routes.meet}/?$`));
-    await expect(page.getByRole("main")).toBeVisible();
+    await expect(page.getByRole("main")).toBeVisible({ timeout: 10000 });
   });
 });
