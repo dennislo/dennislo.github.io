@@ -159,6 +159,8 @@ export const enUS: TranslationDictionary = {
     builtWith: "Built with",
     using: "using",
     contact: "Contact",
+    companyNumberLabel: "Company Number",
+    vatNumberLabel: "VAT number",
   },
   contact: {
     pageTitle: "Contact Me",
