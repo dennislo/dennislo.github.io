@@ -168,6 +168,42 @@ describe("SiteFooter (en-GB, default locale)", () => {
       screen.getByText(new RegExp(`© ${currentYear}`)),
     ).toBeInTheDocument();
   });
+
+  it("renders the company name from siteConfig.companyDetails (locale-invariant)", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByText(siteConfig.companyDetails.name),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the company address from siteConfig.companyDetails (locale-invariant)", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByText(siteConfig.companyDetails.address),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the company number alongside its localized enGB label", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByText(
+        new RegExp(
+          `${enGB.footer.companyNumberLabel}.*${siteConfig.companyDetails.companyNumber}`,
+        ),
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the VAT number alongside its localized enGB label", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByText(
+        new RegExp(
+          `${enGB.footer.vatNumberLabel}.*${siteConfig.companyDetails.vatNumber}`,
+        ),
+      ),
+    ).toBeInTheDocument();
+  });
 });
 
 describe("SiteFooter (zh-Hans locale)", () => {
@@ -219,5 +255,41 @@ describe("SiteFooter (zh-Hans locale)", () => {
     expect(
       screen.getByRole("link", { name: zhHans.footer.meet }),
     ).toHaveAttribute("href", "/zh-Hans/meet");
+  });
+
+  it("renders the invariant company name in zh-Hans locale", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByText(siteConfig.companyDetails.name),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the invariant company address in zh-Hans locale", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByText(siteConfig.companyDetails.address),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the invariant company number with its localized zh-Hans label", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByText(
+        new RegExp(
+          `${zhHans.footer.companyNumberLabel}.*${siteConfig.companyDetails.companyNumber}`,
+        ),
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the invariant VAT number with its localized zh-Hans label", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByText(
+        new RegExp(
+          `${zhHans.footer.vatNumberLabel}.*${siteConfig.companyDetails.vatNumber}`,
+        ),
+      ),
+    ).toBeInTheDocument();
   });
 });

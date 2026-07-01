@@ -50,6 +50,12 @@ export const siteConfig = {
     eventSlug: "online-meeting",
     url: "https://cal.eu/dennis-lo/online-meeting",
   },
+  companyDetails: {
+    name: "Agile IT & Software Limited",
+    address: "Brookfield Court Selby Road, Garforth, Leeds LS25 1NB, UK",
+    companyNumber: "10042911",
+    vatNumber: "235 2977 88",
+  },
   social: {
     email: "lo.dennis@gmail.com",
     github: "https://github.com/dennislo",

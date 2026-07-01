@@ -125,6 +125,21 @@ const SiteFooter = () => {
               Gatsby.js
             </ExternalLink>
           </p>
+
+          <div className="mt-3 space-y-1 text-xs text-gray-500 dark:text-gray-500">
+            <p>{siteConfig.companyDetails.name}</p>
+            <address className="not-italic">
+              {siteConfig.companyDetails.address}
+            </address>
+            <p>
+              {t("footer.companyNumberLabel")}:{" "}
+              {siteConfig.companyDetails.companyNumber}
+            </p>
+            <p>
+              {t("footer.vatNumberLabel")}:{" "}
+              {siteConfig.companyDetails.vatNumber}
+            </p>
+          </div>
         </div>
       </div>
     </footer>

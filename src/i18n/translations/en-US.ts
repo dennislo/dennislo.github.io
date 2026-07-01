@@ -163,6 +163,8 @@ export const enUS: TranslationDictionary = {
     using: "using",
     contact: "Contact",
     meet: "Meet",
+    companyNumberLabel: "Company Number",
+    vatNumberLabel: "VAT number",
   },
   meet: {
     pageTitle: "Book a Meeting",
