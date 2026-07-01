@@ -7,7 +7,8 @@ import { enGB } from "../../i18n/translations/en-GB";
 import { zhHans } from "../../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
-// Mock gatsby's Link so it renders as a plain anchor in jsdom
+// Mock gatsby's Link so it renders as a plain anchor in jsdom, tagged with a
+// data attribute so tests can distinguish it from a raw, uninstrumented <a>.
 jest.mock("gatsby", () => ({
   Link: ({
     to,
@@ -18,7 +19,11 @@ jest.mock("gatsby", () => ({
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+    <a
+      href={to}
+      data-gatsby-link="true"
+      {...(rest as React.ComponentProps<"a">)}
+    >
       {children}
     </a>
   ),
@@ -90,6 +95,25 @@ describe("Hero (en-GB, default locale)", () => {
     });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", siteConfig.social.instagram);
+  });
+
+  it("renders the Meet social icon immediately after Contact", () => {
+    renderWithLocale(<Hero />);
+
+    const links = screen.getAllByRole("link");
+    const names = links.map((link) => link.getAttribute("aria-label"));
+    const contactIndex = names.indexOf(enGB.hero.contactAriaLabel);
+    const meetIndex = names.indexOf(enGB.hero.meetAriaLabel);
+
+    expect(meetIndex).toBe(contactIndex + 1);
+    expect(links[meetIndex]).toHaveAttribute("href", routes.meet);
+  });
+
+  it("renders the Meet social icon using Gatsby's Link, not a plain anchor", () => {
+    renderWithLocale(<Hero />);
+
+    const link = screen.getByRole("link", { name: enGB.hero.meetAriaLabel });
+    expect(link).toHaveAttribute("data-gatsby-link", "true");
   });
 
   it("uses light theme overlay and symbol styling by default", () => {
@@ -170,6 +194,15 @@ describe("Hero (zh-Hans locale)", () => {
     });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/zh-Hans/contact-form");
+  });
+
+  it("renders the localized Meet aria-label in Chinese", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    const link = screen.getByRole("link", {
+      name: zhHans.hero.meetAriaLabel,
+    });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/zh-Hans/meet");
   });
 
   it("name remains locale-invariant in zh-Hans", () => {

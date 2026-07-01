@@ -27,7 +27,11 @@ type ExternalNavLink = {
   label: keyof TranslationDictionary["nav"];
   href: string;
 };
-type RouteNavLink = { type: "route"; href: `/${string}` };
+type RouteNavLink = {
+  type: "route";
+  href: `/${string}`;
+  label: keyof TranslationDictionary["nav"];
+};
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
 // Static links whose labels come from the dictionary
@@ -44,6 +48,12 @@ const staticNavLinks: NavLink[] = [
   {
     type: "route" as const,
     href: routes.contactForm,
+    label: "contact",
+  },
+  {
+    type: "route" as const,
+    href: routes.meet,
+    label: "meet",
   },
 ];
 
@@ -56,7 +66,11 @@ const mobileLinkClassName =
 type NavLinkWithLabel =
   | { type: "internal"; href: `#${string}`; label: string }
   | { type: "external"; href: string; label: string }
-  | { type: "route"; href: `/${string}`; label: string };
+  | {
+      type: "route";
+      href: `/${string}`;
+      label: string;
+    };
 
 const NavLinkItem = ({
   link,
@@ -139,11 +153,10 @@ const SiteHeader = () => {
       // The only external link is Gists; its label key is stored in link.label
       return { ...link, label: t(navTranslationKey(link.label)) };
     }
-    // route = contact
     return {
       ...link,
       href: localizePath(link.href) as `/${string}`,
-      label: t("nav.contact"),
+      label: t(navTranslationKey(link.label)),
     };
   });
 
@@ -167,7 +180,7 @@ const SiteHeader = () => {
             {siteConfig.header}
           </a>
 
-          <ul className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
+          <ul className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <NavLinkItem link={link} className={desktopLinkClassName} />

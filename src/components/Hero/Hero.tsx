@@ -4,6 +4,7 @@ import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import { useLocale } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
+import TablerCalendarEvent from "../icons/TablerCalendarEvent";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
@@ -200,6 +201,14 @@ const Hero = () => {
           style={{ ["--accent" as string]: accent }}
         >
           <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+        </Link>
+        <Link
+          to={localizePath(routes.meet)}
+          aria-label={t("hero.meetAriaLabel")}
+          className="transition-colors duration-300 hover:text-[--accent]"
+          style={{ ["--accent" as string]: accent }}
+        >
+          <TablerCalendarEvent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </Link>
         <ExternalLink
           href={siteConfig.social.github}

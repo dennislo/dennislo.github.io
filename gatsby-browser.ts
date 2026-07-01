@@ -1,4 +1,5 @@
 import "./src/styles/global.css";
+import "@calcom/atoms/globals.min.css";
 
 export { wrapPageElement } from "./src/gatsby/wrapPageElement";
 

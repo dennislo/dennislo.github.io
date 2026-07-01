@@ -17,6 +17,7 @@ export const zhHans: TranslationDictionary = {
     education: "教育",
     gists: "Gists",
     contact: "联系",
+    meet: "预约会议",
   },
   languageSwitcher: {
     ariaLabel: "选择语言",
@@ -26,6 +27,7 @@ export const zhHans: TranslationDictionary = {
     intro: "我是",
     role: "IT 顾问与软件工程师",
     contactAriaLabel: "联系 Dennis Lo",
+    meetAriaLabel: "与 Dennis Lo 预约会议",
     githubAriaLabel: "Dennis Lo 的 GitHub",
     linkedinAriaLabel: "Dennis Lo 的 LinkedIn",
     instagramAriaLabel: "Dennis Lo 的 Instagram",
@@ -145,14 +147,22 @@ export const zhHans: TranslationDictionary = {
   },
   footer: {
     emailAria: "联系 Dennis Lo",
+    meetAria: "与 Dennis Lo 预约会议",
     githubAria: "Dennis Lo 的 GitHub",
     linkedinAria: "Dennis Lo 的 LinkedIn",
     instagramAria: "Dennis Lo 的 Instagram",
     builtWith: "采用",
     using: "构建",
     contact: "联系",
+    meet: "预约会议",
     companyNumberLabel: "公司注册号",
     vatNumberLabel: "增值税号",
+  },
+  meet: {
+    pageTitle: "预约会议",
+    loading: "正在加载会议时间",
+    unavailable: "当前无法在此处完成预约",
+    openBookingPage: "打开预约页面",
   },
   contact: {
     pageTitle: "联系我",
@@ -187,6 +197,8 @@ export const zhHans: TranslationDictionary = {
   seo: {
     siteTitle: "Dennis Lo — IT 顾问与软件工程师",
     description: "Dennis Lo 的个人网站，IT 顾问与软件工程师。",
+    meetPageTitle: "与 Dennis Lo 预约会议 - DLO",
+    meetPageDescription: "与 Dennis Lo 预约在线会议",
     contactPageTitle: "联系 — DLO",
     contactPageDescription: "向 Dennis Lo 发送消息",
     notFoundTitle: "页面未找到",

@@ -34,6 +34,7 @@ export const sectionNavLinks: readonly SectionNavLink[] = [
 
 export const routes = {
   contactForm: "/contact-form",
+  meet: "/meet",
 } as const;
 
 export const siteConfig = {
@@ -44,6 +45,11 @@ export const siteConfig = {
   description:
     "Personal website of Dennis Lo, IT consultant and software engineer.",
   accentColor: "#1d4ed8",
+  booking: {
+    username: "dennis-lo",
+    eventSlug: "online-meeting",
+    url: "https://cal.eu/dennis-lo/online-meeting",
+  },
   companyDetails: {
     name: "Agile IT & Software Limited",
     address: "Brookfield Court Selby Road, Garforth, Leeds LS25 1NB, UK",

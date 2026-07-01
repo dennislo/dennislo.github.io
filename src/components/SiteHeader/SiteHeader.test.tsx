@@ -7,7 +7,8 @@ import { enGB } from "../../i18n/translations/en-GB";
 import { zhHans } from "../../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
-// Mock gatsby's Link so it renders as a plain anchor in jsdom
+// Mock gatsby's Link so it renders as a plain anchor in jsdom, tagged with a
+// data attribute so tests can distinguish it from a raw, uninstrumented <a>.
 jest.mock("gatsby", () => ({
   Link: ({
     to,
@@ -18,7 +19,11 @@ jest.mock("gatsby", () => ({
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+    <a
+      href={to}
+      data-gatsby-link="true"
+      {...(rest as React.ComponentProps<"a">)}
+    >
       {children}
     </a>
   ),
@@ -150,6 +155,30 @@ describe("SiteHeader (en-GB, default locale)", () => {
     expect(desktopContactLink).toHaveAttribute("href", routes.contactForm);
   });
 
+  it("renders the Meet link immediately after Contact in the desktop nav list", () => {
+    renderWithLocale(<SiteHeader />);
+
+    const links = within(getDesktopNav()).getAllByRole("link");
+    const labels = links.map((link) => link.textContent?.trim());
+    const contactIndex = labels.indexOf(enGB.nav.contact);
+    const meetIndex = labels.indexOf(enGB.nav.meet);
+
+    expect(meetIndex).toBe(contactIndex + 1);
+    expect(links[meetIndex]).toHaveAttribute("href", routes.meet);
+  });
+
+  it("renders the Meet link in the desktop nav using Gatsby's Link, not a plain anchor", () => {
+    renderWithLocale(<SiteHeader />);
+
+    const meetLink = within(getDesktopNav()).getByRole("link", {
+      name: enGB.nav.meet,
+    });
+
+    // The mocked gatsby Link tags its output with data-gatsby-link so tests
+    // can assert client-side navigation is used instead of a full page load.
+    expect(meetLink).toHaveAttribute("data-gatsby-link", "true");
+  });
+
   it("renders the Contact link in the mobile menu", async () => {
     const user = userEvent.setup();
 
@@ -165,6 +194,42 @@ describe("SiteHeader (en-GB, default locale)", () => {
     });
     expect(mobileContactLink).toBeInTheDocument();
     expect(mobileContactLink).toHaveAttribute("href", routes.contactForm);
+  });
+
+  it("renders the Meet link in the mobile menu immediately after Contact", async () => {
+    const user = userEvent.setup();
+
+    renderWithLocale(<SiteHeader />);
+
+    await user.click(screen.getByRole("button", { name: enGB.nav.openMenu }));
+
+    const mobileMenu = screen.getByRole("region", {
+      name: enGB.nav.mobileMenuAriaLabel,
+    });
+    const links = within(mobileMenu).getAllByRole("link");
+    const labels = links.map((link) => link.textContent?.trim());
+    const contactIndex = labels.indexOf(enGB.nav.contact);
+    const meetIndex = labels.indexOf(enGB.nav.meet);
+
+    expect(meetIndex).toBe(contactIndex + 1);
+    expect(links[meetIndex]).toHaveAttribute("href", routes.meet);
+  });
+
+  it("renders the Meet link in the mobile menu using Gatsby's Link, not a plain anchor", async () => {
+    const user = userEvent.setup();
+
+    renderWithLocale(<SiteHeader />);
+
+    await user.click(screen.getByRole("button", { name: enGB.nav.openMenu }));
+
+    const mobileMenu = screen.getByRole("region", {
+      name: enGB.nav.mobileMenuAriaLabel,
+    });
+    const meetLink = within(mobileMenu).getByRole("link", {
+      name: enGB.nav.meet,
+    });
+
+    expect(meetLink).toHaveAttribute("data-gatsby-link", "true");
   });
 
   it("renders a nav element", () => {
@@ -363,6 +428,14 @@ describe("SiteHeader (en-GB, default locale)", () => {
     expect(header).toHaveClass("bg-white/80");
     expect(header).toHaveClass("backdrop-blur-sm");
   });
+
+  it("uses reduced desktop nav gaps", () => {
+    renderWithLocale(<SiteHeader />);
+
+    const desktopNav = getDesktopNav();
+    expect(desktopNav).toHaveClass("md:gap-4");
+    expect(desktopNav).toHaveClass("lg:gap-5");
+  });
 });
 
 describe("SiteHeader (zh-Hans locale)", () => {
@@ -410,5 +483,20 @@ describe("SiteHeader (zh-Hans locale)", () => {
 
     // suppress unused variable warning
     void user;
+  });
+
+  it("renders the localized Meet label in Chinese", async () => {
+    const user = userEvent.setup();
+    renderWithLocale(<SiteHeader />, "zh-Hans");
+
+    await user.click(screen.getByRole("button", { name: zhHans.nav.openMenu }));
+
+    const mobileMenu = screen.getByRole("region", {
+      name: zhHans.nav.mobileMenuAriaLabel,
+    });
+
+    expect(
+      within(mobileMenu).getByRole("link", { name: zhHans.nav.meet }),
+    ).toHaveAttribute("href", "/zh-Hans/meet");
   });
 });
