@@ -17,6 +17,7 @@ export const esES: TranslationDictionary = {
     education: "Formación",
     gists: "Gists",
     contact: "Contacto",
+    meet: "Reunión",
   },
   languageSwitcher: {
     ariaLabel: "Seleccionar idioma",
@@ -26,6 +27,7 @@ export const esES: TranslationDictionary = {
     intro: "Soy",
     role: "Consultor de TI e Ingeniero de Software",
     contactAriaLabel: "Contactar con Dennis Lo",
+    meetAriaLabel: "Reservar una reunión con Dennis Lo",
     githubAriaLabel: "Dennis Lo en GitHub",
     linkedinAriaLabel: "Dennis Lo en LinkedIn",
     instagramAriaLabel: "Dennis Lo en Instagram",
@@ -156,12 +158,19 @@ export const esES: TranslationDictionary = {
   },
   footer: {
     emailAria: "Contactar con Dennis Lo",
+    meetAria: "Reservar una reunión con Dennis Lo",
     githubAria: "Dennis Lo en GitHub",
     linkedinAria: "Dennis Lo en LinkedIn",
     instagramAria: "Dennis Lo en Instagram",
     builtWith: "Creado con",
     using: "usando",
     contact: "Contacto",
+    meet: "Reunión",
+  },
+  meet: {
+    loading: "Cargando horarios disponibles",
+    unavailable: "La reserva no está disponible aquí temporalmente",
+    openBookingPage: "Abrir página de reserva",
   },
   contact: {
     pageTitle: "Contáctame",
@@ -200,6 +209,8 @@ export const esES: TranslationDictionary = {
     siteTitle: "Dennis Lo — Consultor de TI e Ingeniero de Software",
     description:
       "Sitio web personal de Dennis Lo, consultor de TI e ingeniero de software.",
+    meetPageTitle: "Reunión con Dennis Lo - DLO",
+    meetPageDescription: "Reserva una reunión online con Dennis Lo",
     contactPageTitle: "Contacto — DLO",
     contactPageDescription: "Envía un mensaje a Dennis Lo",
     notFoundTitle: "No encontrado",

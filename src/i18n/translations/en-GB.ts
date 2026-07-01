@@ -16,6 +16,7 @@ export const enGB = {
     education: "Education",
     gists: "Gists",
     contact: "Contact",
+    meet: "Meet",
   },
   languageSwitcher: {
     ariaLabel: "Select language",
@@ -25,6 +26,7 @@ export const enGB = {
     intro: "I'm",
     role: "IT Consultant & Software Engineer",
     contactAriaLabel: "Contact Dennis Lo",
+    meetAriaLabel: "Book a meeting with Dennis Lo",
     githubAriaLabel: "Dennis Lo on GitHub",
     linkedinAriaLabel: "Dennis Lo on LinkedIn",
     instagramAriaLabel: "Dennis Lo on Instagram",
@@ -155,12 +157,19 @@ export const enGB = {
   },
   footer: {
     emailAria: "Contact Dennis Lo",
+    meetAria: "Book a meeting with Dennis Lo",
     githubAria: "Dennis Lo on GitHub",
     linkedinAria: "Dennis Lo on LinkedIn",
     instagramAria: "Dennis Lo on Instagram",
     builtWith: "Built with",
     using: "using",
     contact: "Contact",
+    meet: "Meet",
+  },
+  meet: {
+    loading: "Loading meeting times",
+    unavailable: "Booking is temporarily unavailable here",
+    openBookingPage: "Open booking page",
   },
   contact: {
     pageTitle: "Contact Me",
@@ -199,6 +208,8 @@ export const enGB = {
     siteTitle: "Dennis Lo — IT Consultant & Software Engineer",
     description:
       "Personal website of Dennis Lo, IT consultant and software engineer.",
+    meetPageTitle: "Meet Dennis Lo - DLO",
+    meetPageDescription: "Book an online meeting with Dennis Lo",
     contactPageTitle: "Contact — DLO",
     contactPageDescription: "Send a message to Dennis Lo",
     notFoundTitle: "Not found",

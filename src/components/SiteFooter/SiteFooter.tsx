@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { routes, sectionNavLinks, siteConfig } from "../../config";
 import { useLocale } from "../../i18n";
 import ExternalLink from "../ExternalLink/ExternalLink";
+import TablerCalendarEvent from "../icons/TablerCalendarEvent";
 import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
@@ -59,6 +60,14 @@ const SiteFooter = () => {
                 {t("footer.contact")}
               </Link>
             </li>
+            <li>
+              <a
+                href={localizePath(routes.meet)}
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
+              >
+                {t("footer.meet")}
+              </a>
+            </li>
           </ul>
 
           {/* Social icons */}
@@ -73,6 +82,13 @@ const SiteFooter = () => {
             >
               <TablerEmail className="h-5 w-5" />
             </Link>
+            <a
+              href={localizePath(routes.meet)}
+              aria-label={t("footer.meetAria")}
+              className="transition-colors duration-300 hover:text-[--accent]"
+            >
+              <TablerCalendarEvent className="h-5 w-5" />
+            </a>
             <ExternalLink
               href={siteConfig.social.github}
               aria-label={t("footer.githubAria")}

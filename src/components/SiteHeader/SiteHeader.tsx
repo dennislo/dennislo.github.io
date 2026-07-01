@@ -27,7 +27,12 @@ type ExternalNavLink = {
   label: keyof TranslationDictionary["nav"];
   href: string;
 };
-type RouteNavLink = { type: "route"; href: `/${string}` };
+type RouteNavLink = {
+  type: "route";
+  href: `/${string}`;
+  label: keyof TranslationDictionary["nav"];
+  renderAsAnchor?: boolean;
+};
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
 // Static links whose labels come from the dictionary
@@ -44,6 +49,13 @@ const staticNavLinks: NavLink[] = [
   {
     type: "route" as const,
     href: routes.contactForm,
+    label: "contact",
+  },
+  {
+    type: "route" as const,
+    href: routes.meet,
+    label: "meet",
+    renderAsAnchor: true,
   },
 ];
 
@@ -56,7 +68,12 @@ const mobileLinkClassName =
 type NavLinkWithLabel =
   | { type: "internal"; href: `#${string}`; label: string }
   | { type: "external"; href: string; label: string }
-  | { type: "route"; href: `/${string}`; label: string };
+  | {
+      type: "route";
+      href: `/${string}`;
+      label: string;
+      renderAsAnchor?: boolean;
+    };
 
 const NavLinkItem = ({
   link,
@@ -75,6 +92,13 @@ const NavLinkItem = ({
     );
   }
   if (link.type === "route") {
+    if (link.renderAsAnchor) {
+      return (
+        <a href={link.href} className={className} onClick={onClick}>
+          {link.label}
+        </a>
+      );
+    }
     return (
       <Link to={link.href} className={className} onClick={onClick}>
         {link.label}
@@ -139,11 +163,10 @@ const SiteHeader = () => {
       // The only external link is Gists; its label key is stored in link.label
       return { ...link, label: t(navTranslationKey(link.label)) };
     }
-    // route = contact
     return {
       ...link,
       href: localizePath(link.href) as `/${string}`,
-      label: t("nav.contact"),
+      label: t(navTranslationKey(link.label)),
     };
   });
 
@@ -167,7 +190,7 @@ const SiteHeader = () => {
             {siteConfig.header}
           </a>
 
-          <ul className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
+          <ul className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <NavLinkItem link={link} className={desktopLinkClassName} />

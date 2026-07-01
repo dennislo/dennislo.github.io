@@ -270,4 +270,15 @@ describe("LanguageSwitcher", () => {
       expect(screen.getByText(label)).toBeInTheDocument();
     });
   });
+
+  describe("compact spacing", () => {
+    it("uses compact locale link padding in the top navigation", () => {
+      renderSwitcher("en-GB", "/");
+
+      const englishUsLink = screen.getByRole("link", {
+        name: localeMeta["en-US"].label,
+      });
+      expect(englishUsLink).toHaveClass("px-1.5");
+    });
+  });
 });

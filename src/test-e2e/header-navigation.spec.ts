@@ -211,10 +211,10 @@ test.describe("Header navigation", () => {
       page.getByRole("button", { name: /switch to (dark|light) mode/i }),
     ).toBeVisible();
 
-    await page.goto("/contact-form");
-    await expect(
-      page.getByRole("heading", { name: "Contact Me" }),
-    ).toBeVisible();
+    await page.goto("/contact-form/");
+    await expect(page.getByRole("heading", { name: "Contact Me" })).toBeVisible(
+      { timeout: 10000 },
+    );
 
     expect(issues.consoleErrors).toEqual([]);
     expect(issues.pageErrors).toEqual([]);
@@ -256,5 +256,36 @@ test.describe("Header navigation", () => {
     await expect(
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();
+  });
+
+  test("mobile menu shows Meet immediately after Contact", async ({ page }) => {
+    await page.goto("/");
+
+    const menuButton = page.getByRole("button", { name: /navigation menu/i });
+    await menuButton.click();
+
+    const mobileMenu = page.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const labels = await mobileMenu
+      .getByRole("link")
+      .evaluateAll((links) => links.map((link) => link.textContent ?? ""));
+
+    expect(labels.indexOf("Meet")).toBe(labels.indexOf("Contact") + 1);
+  });
+
+  test("desktop nav Meet link navigates to /meet and shows the booking page", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+
+    await page
+      .getByRole("navigation", { name: "Primary" })
+      .getByRole("link", { name: "Meet" })
+      .click();
+
+    await expect(page).toHaveURL(new RegExp(`${routes.meet}/?$`));
+    await expect(page.getByRole("main")).toBeVisible();
   });
 });

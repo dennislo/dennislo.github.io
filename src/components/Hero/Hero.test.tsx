@@ -92,6 +92,18 @@ describe("Hero (en-GB, default locale)", () => {
     expect(link).toHaveAttribute("href", siteConfig.social.instagram);
   });
 
+  it("renders the Meet social icon immediately after Contact", () => {
+    renderWithLocale(<Hero />);
+
+    const links = screen.getAllByRole("link");
+    const names = links.map((link) => link.getAttribute("aria-label"));
+    const contactIndex = names.indexOf(enGB.hero.contactAriaLabel);
+    const meetIndex = names.indexOf(enGB.hero.meetAriaLabel);
+
+    expect(meetIndex).toBe(contactIndex + 1);
+    expect(links[meetIndex]).toHaveAttribute("href", routes.meet);
+  });
+
   it("uses light theme overlay and symbol styling by default", () => {
     const { container } = renderWithLocale(<Hero />);
 
@@ -170,6 +182,15 @@ describe("Hero (zh-Hans locale)", () => {
     });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/zh-Hans/contact-form");
+  });
+
+  it("renders the localized Meet aria-label in Chinese", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    const link = screen.getByRole("link", {
+      name: zhHans.hero.meetAriaLabel,
+    });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/zh-Hans/meet");
   });
 
   it("name remains locale-invariant in zh-Hans", () => {
