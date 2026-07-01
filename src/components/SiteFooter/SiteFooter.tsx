@@ -61,12 +61,12 @@ const SiteFooter = () => {
               </Link>
             </li>
             <li>
-              <a
-                href={localizePath(routes.meet)}
+              <Link
+                to={localizePath(routes.meet)}
                 className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
               >
                 {t("footer.meet")}
-              </a>
+              </Link>
             </li>
           </ul>
 
@@ -82,13 +82,13 @@ const SiteFooter = () => {
             >
               <TablerEmail className="h-5 w-5" />
             </Link>
-            <a
-              href={localizePath(routes.meet)}
+            <Link
+              to={localizePath(routes.meet)}
               aria-label={t("footer.meetAria")}
               className="transition-colors duration-300 hover:text-[--accent]"
             >
               <TablerCalendarEvent className="h-5 w-5" />
-            </a>
+            </Link>
             <ExternalLink
               href={siteConfig.social.github}
               aria-label={t("footer.githubAria")}

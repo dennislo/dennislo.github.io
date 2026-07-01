@@ -4,6 +4,7 @@ import MeetPage, { Head } from "./meet";
 import { enGB } from "../i18n/translations/en-GB";
 import { getDictionary } from "../i18n/dictionaries";
 import { siteConfig } from "../config";
+import { renderWithLocale } from "../test/renderWithLocale";
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -21,12 +22,29 @@ jest.mock("../components/MeetingBooker/MeetingBooker", () => ({
 
 describe("MeetPage", () => {
   it("renders the layout and meeting booker", () => {
-    render(<MeetPage />);
+    renderWithLocale(<MeetPage />);
 
     expect(screen.getByLabelText("Layout")).toBeInTheDocument();
     expect(
       screen.getByRole("region", { name: "Meeting booker" }),
     ).toBeInTheDocument();
+  });
+
+  it("renders a top-level page heading", () => {
+    renderWithLocale(<MeetPage />);
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toBeInTheDocument();
+    expect(heading).not.toHaveTextContent("");
+  });
+
+  it("renders the heading localized for the active non-default locale", () => {
+    renderWithLocale(<MeetPage />, "zh-Hans");
+
+    const dict = getDictionary("zh-Hans");
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveTextContent(dict.meet.pageTitle);
+    expect(heading).not.toHaveTextContent(enGB.meet.pageTitle);
   });
 });
 

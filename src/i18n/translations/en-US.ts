@@ -165,6 +165,7 @@ export const enUS: TranslationDictionary = {
     meet: "Meet",
   },
   meet: {
+    pageTitle: "Book a Meeting",
     loading: "Loading meeting times",
     unavailable: "Booking is temporarily unavailable here",
     openBookingPage: "Open booking page",

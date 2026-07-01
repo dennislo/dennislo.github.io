@@ -157,6 +157,7 @@ export const zhHans: TranslationDictionary = {
     meet: "预约会议",
   },
   meet: {
+    pageTitle: "预约会议",
     loading: "正在加载会议时间",
     unavailable: "当前无法在此处完成预约",
     openBookingPage: "打开预约页面",

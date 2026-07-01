@@ -6,7 +6,8 @@ import { enGB } from "../../i18n/translations/en-GB";
 import { zhHans } from "../../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
-// Mock gatsby's Link so it renders as a plain anchor in jsdom
+// Mock gatsby's Link so it renders as a plain anchor in jsdom, tagged with a
+// data attribute so tests can distinguish it from a raw, uninstrumented <a>.
 jest.mock("gatsby", () => ({
   Link: ({
     to,
@@ -17,7 +18,11 @@ jest.mock("gatsby", () => ({
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <a href={to} {...(rest as React.ComponentProps<"a">)}>
+    <a
+      href={to}
+      data-gatsby-link="true"
+      {...(rest as React.ComponentProps<"a">)}
+    >
       {children}
     </a>
   ),
@@ -105,6 +110,13 @@ describe("SiteFooter (en-GB, default locale)", () => {
     ).toHaveAttribute("href", routes.meet);
   });
 
+  it("renders the Meet nav link using Gatsby's Link, not a plain anchor", () => {
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.getByRole("link", { name: enGB.footer.meet }),
+    ).toHaveAttribute("data-gatsby-link", "true");
+  });
+
   it("renders Meet immediately after Contact in the footer nav", () => {
     renderWithLocale(<SiteFooter />);
 
@@ -128,6 +140,13 @@ describe("SiteFooter (en-GB, default locale)", () => {
 
     expect(meetIndex).toBe(contactIndex + 1);
     expect(links[meetIndex]).toHaveAttribute("href", routes.meet);
+  });
+
+  it("renders the Meet social icon link using Gatsby's Link, not a plain anchor", () => {
+    renderWithLocale(<SiteFooter />);
+
+    const link = screen.getByRole("link", { name: enGB.footer.meetAria });
+    expect(link).toHaveAttribute("data-gatsby-link", "true");
   });
 
   it("renders the localized 'Built with' text from enGB dict", () => {

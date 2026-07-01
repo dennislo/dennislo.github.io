@@ -11,12 +11,18 @@ import {
   stripLocale,
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
+import { useLocale } from "../i18n";
 
 function MeetPage() {
+  const { dict } = useLocale();
+
   return (
     <Layout>
       <main className="min-h-screen bg-white px-6 py-24 dark:bg-gray-950 sm:px-10 lg:px-24">
         <div className="mx-auto max-w-5xl">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+            {dict.meet.pageTitle}
+          </h1>
           <MeetingBooker />
         </div>
       </main>

@@ -15,12 +15,9 @@ type BookerEmbedModule = {
 
 // Gatsby cannot bundle the full @calcom/atoms package cleanly because its
 // Booker entrypoint pulls in a large Next-specific peer dependency surface.
-// Loading the browser bundle only on the client keeps the meet page build-safe.
+// Loading it dynamically only on the client keeps the meet page build-safe.
 export async function loadBookerEmbed() {
-  const module = (await import(
-    /* webpackIgnore: true */
-    "https://esm.sh/@calcom/atoms@2.11.0?bundle"
-  )) as BookerEmbedModule;
+  const module = (await import("@calcom/atoms")) as BookerEmbedModule;
 
   return module.BookerEmbed;
 }

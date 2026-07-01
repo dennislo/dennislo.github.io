@@ -168,6 +168,7 @@ export const esES: TranslationDictionary = {
     meet: "Reunión",
   },
   meet: {
+    pageTitle: "Reservar una Reunión",
     loading: "Cargando horarios disponibles",
     unavailable: "La reserva no está disponible aquí temporalmente",
     openBookingPage: "Abrir página de reserva",

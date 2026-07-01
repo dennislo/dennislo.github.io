@@ -31,7 +31,6 @@ type RouteNavLink = {
   type: "route";
   href: `/${string}`;
   label: keyof TranslationDictionary["nav"];
-  renderAsAnchor?: boolean;
 };
 type NavLink = InternalNavLink | ExternalNavLink | RouteNavLink;
 
@@ -55,7 +54,6 @@ const staticNavLinks: NavLink[] = [
     type: "route" as const,
     href: routes.meet,
     label: "meet",
-    renderAsAnchor: true,
   },
 ];
 
@@ -72,7 +70,6 @@ type NavLinkWithLabel =
       type: "route";
       href: `/${string}`;
       label: string;
-      renderAsAnchor?: boolean;
     };
 
 const NavLinkItem = ({
@@ -92,13 +89,6 @@ const NavLinkItem = ({
     );
   }
   if (link.type === "route") {
-    if (link.renderAsAnchor) {
-      return (
-        <a href={link.href} className={className} onClick={onClick}>
-          {link.label}
-        </a>
-      );
-    }
     return (
       <Link to={link.href} className={className} onClick={onClick}>
         {link.label}

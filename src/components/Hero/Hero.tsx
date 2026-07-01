@@ -202,14 +202,14 @@ const Hero = () => {
         >
           <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </Link>
-        <a
-          href={localizePath(routes.meet)}
+        <Link
+          to={localizePath(routes.meet)}
           aria-label={t("hero.meetAriaLabel")}
           className="transition-colors duration-300 hover:text-[--accent]"
           style={{ ["--accent" as string]: accent }}
         >
           <TablerCalendarEvent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-        </a>
+        </Link>
         <ExternalLink
           href={siteConfig.social.github}
           aria-label={t("hero.githubAriaLabel")}
