@@ -43,11 +43,11 @@ jest.mock("@gatsbyjs/reach-router", () => ({
 // ---------------------------------------------------------------------------
 // Helper: render LanguageSwitcher with a controlled location and locale
 // ---------------------------------------------------------------------------
-function renderSwitcher(locale: Locale, pathname: string) {
+function renderSwitcher(locale: Locale, pathname: string, compact?: boolean) {
   mockUseLocation.mockReturnValue({ pathname, search: "", hash: "" });
   return render(
     <LocaleProvider locale={locale}>
-      <LanguageSwitcher />
+      <LanguageSwitcher compact={compact} />
     </LocaleProvider>,
   );
 }
@@ -283,6 +283,70 @@ describe("LanguageSwitcher", () => {
         const link = screen.getByText(label).closest("a, button");
         expect(link).toHaveClass("px-1.5");
         expect(link).not.toHaveClass("px-2");
+      }
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // 8. Accessible name — every locale link always has aria-label={label},
+  // regardless of compact mode, so the accessible name is discernible even
+  // when the visible text label is hidden below the xl breakpoint.
+  // -------------------------------------------------------------------------
+  describe("accessible name via aria-label", () => {
+    it("sets aria-label to the locale's label on every locale link", () => {
+      renderSwitcher("en-GB", "/");
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const link = screen.getByRole("link", { name: label });
+        expect(link).toHaveAttribute("aria-label", label);
+      }
+    });
+
+    it("sets aria-label to the locale's label on every locale link when compact", () => {
+      renderSwitcher("en-GB", "/", true);
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const link = screen.getByRole("link", { name: label });
+        expect(link).toHaveAttribute("aria-label", label);
+      }
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // 9. compact prop controls whether the visible text label span is hidden
+  // below the xl breakpoint (compact) or always visible (default).
+  // -------------------------------------------------------------------------
+  describe("compact prop controls label visibility", () => {
+    it("does NOT hide the label text span when compact is not set (default)", () => {
+      renderSwitcher("en-GB", "/");
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const labelSpan = screen.getByText(label);
+        expect(labelSpan).not.toHaveClass("hidden");
+      }
+    });
+
+    it("does NOT hide the label text span when compact is explicitly false", () => {
+      renderSwitcher("en-GB", "/", false);
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const labelSpan = screen.getByText(label);
+        expect(labelSpan).not.toHaveClass("hidden");
+      }
+    });
+
+    it("hides the label text span below xl when compact is true", () => {
+      renderSwitcher("en-GB", "/", true);
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const labelSpan = screen.getByText(label);
+        expect(labelSpan).toHaveClass("hidden");
+        expect(labelSpan).toHaveClass("xl:inline");
       }
     });
   });

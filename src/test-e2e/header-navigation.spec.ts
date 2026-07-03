@@ -276,6 +276,61 @@ test.describe("Header navigation", () => {
     await expect(mobileMeet).toHaveAttribute("rel", "noopener noreferrer");
   });
 
+  for (const width of [375, 768, 1024, 1280]) {
+    test(`header content stays within a ${width}px viewport without wrapping the logo`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+
+      const header = page.locator("header");
+      await expect(header).toBeVisible();
+
+      // Every visible element inside the header must sit fully inside the
+      // viewport. Overflowing elements get visually clipped (position: fixed
+      // header), so document.scrollWidth alone cannot catch this regression.
+      // Assumes hidden header content uses display:none (like the mobile
+      // menu's `hidden` attribute); an off-canvas transform pattern would
+      // need an explicit exclusion here to avoid false failures.
+      const overflowing = await page.evaluate(() => {
+        const offenders: string[] = [];
+        const headerEl = document.querySelector("header");
+        if (!headerEl) {
+          return ["<header not found>"];
+        }
+        for (const el of headerEl.querySelectorAll("*")) {
+          const style = window.getComputedStyle(el);
+          if (style.display === "none" || style.visibility === "hidden") {
+            continue;
+          }
+          const box = el.getBoundingClientRect();
+          if (box.width === 0 && box.height === 0) {
+            continue;
+          }
+          if (box.right > window.innerWidth + 1 || box.left < -1) {
+            const label =
+              el.getAttribute("aria-label") ??
+              el.textContent?.trim().slice(0, 40) ??
+              "";
+            offenders.push(
+              `<${el.tagName.toLowerCase()}> "${label}" left=${Math.round(box.left)} right=${Math.round(box.right)}`,
+            );
+          }
+        }
+        return offenders;
+      });
+      expect(overflowing).toEqual([]);
+
+      // The site logo must render on a single line, not wrap vertically.
+      const logoBox = await page
+        .locator("header")
+        .getByRole("link", { name: siteConfig.header })
+        .boundingBox();
+      expect(logoBox).not.toBeNull();
+      expect(logoBox!.height).toBeLessThanOrEqual(32);
+    });
+  }
+
   test("desktop nav Contact link navigates to /contact-form and shows the Contact Me heading", async ({
     page,
   }) => {

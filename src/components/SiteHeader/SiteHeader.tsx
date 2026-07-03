@@ -110,7 +110,7 @@ const SiteHeader = () => {
 
   useEffect(() => {
     const closeMenuOnResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
         setIsMenuOpen(false);
       }
     };
@@ -162,17 +162,17 @@ const SiteHeader = () => {
     >
       <nav
         aria-label={t("nav.primaryAriaLabel")}
-        className="relative px-4 py-4 md:px-16 lg:px-24"
+        className="relative px-4 py-4 md:px-16"
       >
         <div className="flex items-center justify-between gap-4 md:items-center">
           <a
             href="#hero"
-            className="font-bold text-gray-900 dark:text-gray-100 hover:opacity-80 transition-opacity duration-200"
+            className="whitespace-nowrap font-bold text-gray-900 dark:text-gray-100 hover:opacity-80 transition-opacity duration-200"
           >
             {siteConfig.header}
           </a>
 
-          <ul className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
+          <ul className="hidden lg:flex lg:items-center lg:gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <NavLinkItem link={link} className={desktopLinkClassName} />
@@ -180,13 +180,13 @@ const SiteHeader = () => {
             ))}
           </ul>
 
-          <div className="hidden md:flex md:items-center md:gap-1">
-            <LanguageSwitcher />
+          <div className="hidden lg:flex lg:items-center lg:gap-1">
+            <LanguageSwitcher compact />
           </div>
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors duration-200 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-100 md:hidden"
+            className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors duration-200 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-100 lg:hidden"
             aria-expanded={isMenuOpen}
             aria-controls="site-header-menu"
             aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
@@ -201,7 +201,7 @@ const SiteHeader = () => {
           role="region"
           aria-label={t("nav.mobileMenuAriaLabel")}
           hidden={!isMenuOpen}
-          className={`absolute left-0 right-0 top-full md:hidden ${
+          className={`absolute left-0 right-0 top-full lg:hidden ${
             isMenuOpen ? "block" : "hidden"
           }`}
         >

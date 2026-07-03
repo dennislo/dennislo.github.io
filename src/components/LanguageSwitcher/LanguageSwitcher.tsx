@@ -10,7 +10,7 @@ import {
 import { useLocale } from "../../i18n/useLocale";
 import { storeLocale } from "../../i18n/persistence";
 
-function LanguageSwitcher() {
+function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const { locale, t } = useLocale();
   const { pathname } = useLocation();
   const { basePath } = stripLocale(pathname);
@@ -36,10 +36,13 @@ function LanguageSwitcher() {
             to={target}
             onClick={handleClick}
             aria-current={isActive ? "page" : undefined}
+            aria-label={label}
             className="inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded transition-colors duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
           >
             <span aria-hidden="true">{flag}</span>
-            <span>{label}</span>
+            <span className={compact ? "hidden xl:inline" : undefined}>
+              {label}
+            </span>
           </Link>
         );
       })}
