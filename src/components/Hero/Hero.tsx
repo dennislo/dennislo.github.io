@@ -8,6 +8,7 @@ import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
+import TablerCalendarEvent from "../icons/TablerCalendarEvent";
 
 const Hero = () => {
   const accent = siteConfig.accentColor;
@@ -201,6 +202,14 @@ const Hero = () => {
         >
           <TablerEmail className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </Link>
+        <ExternalLink
+          href={siteConfig.social.meet}
+          aria-label={t("hero.meetAriaLabel")}
+          className="transition-colors duration-300 hover:text-[--accent]"
+          style={{ ["--accent" as string]: accent }}
+        >
+          <TablerCalendarEvent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+        </ExternalLink>
         <ExternalLink
           href={siteConfig.social.github}
           aria-label={t("hero.githubAriaLabel")}

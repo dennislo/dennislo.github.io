@@ -16,6 +16,7 @@ export const enGB = {
     education: "Education",
     gists: "Gists",
     contact: "Contact",
+    meet: "Meet",
   },
   languageSwitcher: {
     ariaLabel: "Select language",
@@ -28,6 +29,7 @@ export const enGB = {
     githubAriaLabel: "Dennis Lo on GitHub",
     linkedinAriaLabel: "Dennis Lo on LinkedIn",
     instagramAriaLabel: "Dennis Lo on Instagram",
+    meetAriaLabel: "Meet with Dennis Lo",
   },
   about: {
     heading: "About Me",
@@ -161,6 +163,7 @@ export const enGB = {
     builtWith: "Built with",
     using: "using",
     contact: "Contact",
+    meetAria: "Meet with Dennis Lo",
     companyNumberLabel: "Company Number",
     vatNumberLabel: "VAT number",
   },

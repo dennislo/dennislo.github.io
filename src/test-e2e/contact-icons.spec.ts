@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { routes } from "../config";
+import { routes, siteConfig } from "../config";
+
+const meetUrl = siteConfig.social.meet;
 
 test.describe("Contact icons", () => {
   test("email/contact icon on homepage has href /contact-form and navigates to the contact form", async ({
@@ -25,9 +27,37 @@ test.describe("Contact icons", () => {
       .getByRole("link", { name: "Contact Dennis Lo" })
       .click();
 
-    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`));
+    // gatsby develop lazily compiles each page's bundle/page-data on first
+    // visit, which can take several seconds and exceeds the default 5s
+    // expect timeout. Give this navigation extra headroom instead of
+    // guessing with an arbitrary wait.
+    await expect(page).toHaveURL(new RegExp(`${routes.contactForm}/?$`), {
+      timeout: 15_000,
+    });
+    await expect(page.getByRole("heading", { name: "Contact Me" })).toBeVisible(
+      { timeout: 15_000 },
+    );
+  });
+
+  test("Meet social icons open Cal.eu in a new tab from the homepage and footer", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const meetLinks = page.getByRole("link", { name: "Meet with Dennis Lo" });
+    const links = await meetLinks.all();
+    expect(links.length).toBeGreaterThanOrEqual(2);
+
+    for (const link of links) {
+      await expect(link).toHaveAttribute("href", meetUrl);
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+
     await expect(
-      page.getByRole("heading", { name: "Contact Me" }),
+      page
+        .getByRole("contentinfo")
+        .getByRole("link", { name: "Meet with Dennis Lo" }),
     ).toBeVisible();
   });
 });

@@ -5,6 +5,7 @@ import SiteHeader from "./SiteHeader";
 import { routes, siteConfig } from "../../config";
 import { enGB } from "../../i18n/translations/en-GB";
 import { zhHans } from "../../i18n/translations/zh-Hans";
+import { localeMeta, locales } from "../../i18n/config";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
 // Mock gatsby's Link so it renders as a plain anchor in jsdom
@@ -32,7 +33,7 @@ describe("SiteHeader (en-GB, default locale)", () => {
     const desktopNavList = within(navigation).getByRole("list");
 
     expect(desktopNavList).toHaveClass("hidden");
-    expect(desktopNavList).toHaveClass("md:flex");
+    expect(desktopNavList).toHaveClass("lg:flex");
 
     return desktopNavList;
   };
@@ -346,6 +347,55 @@ describe("SiteHeader (en-GB, default locale)", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("renders the Meet nav link in the desktop nav immediately after Contact", () => {
+    renderWithLocale(<SiteHeader />);
+
+    const desktopNavList = getDesktopNav();
+    const navItems = within(desktopNavList).getAllByRole("listitem");
+    const contactIndex = navItems.findIndex((item) =>
+      within(item).queryByRole("link", { name: enGB.nav.contact }),
+    );
+    const meetIndex = navItems.findIndex((item) =>
+      within(item).queryByRole("link", { name: "Meet" }),
+    );
+
+    expect(contactIndex).toBeGreaterThan(-1);
+    expect(meetIndex).toBe(contactIndex + 1);
+
+    const meetLink = within(desktopNavList).getByRole("link", {
+      name: "Meet",
+    });
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("renders the Meet link in the mobile menu and closes the menu when it is clicked", async () => {
+    const user = userEvent.setup();
+
+    renderWithLocale(<SiteHeader />);
+
+    await user.click(screen.getByRole("button", { name: enGB.nav.openMenu }));
+
+    const mobileMenu = screen.getByRole("region", {
+      name: enGB.nav.mobileMenuAriaLabel,
+    });
+    const meetLink = within(mobileMenu).getByRole("link", { name: "Meet" });
+
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+
+    await user.click(meetLink);
+
+    expect(
+      screen.getByRole("button", { name: enGB.nav.openMenu }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: enGB.nav.mobileMenuAriaLabel }),
+    ).not.toBeInTheDocument();
+  });
+
   it("updates the header style after scrolling", () => {
     renderWithLocale(<SiteHeader />);
     const header = screen.getByRole("banner");
@@ -362,6 +412,58 @@ describe("SiteHeader (en-GB, default locale)", () => {
 
     expect(header).toHaveClass("bg-white/80");
     expect(header).toHaveClass("backdrop-blur-sm");
+  });
+
+  // ---------------------------------------------------------------------
+  // LanguageSwitcher width variants: the desktop switcher row is
+  // width-constrained so it uses compact mode (flag-only below xl), while
+  // the mobile hamburger dropdown has plenty of width so labels stay
+  // fully visible.
+  // ---------------------------------------------------------------------
+  describe("LanguageSwitcher compact behavior", () => {
+    it("keeps locale labels fully visible (not hidden) inside the mobile menu", async () => {
+      const user = userEvent.setup();
+
+      renderWithLocale(<SiteHeader />);
+
+      await user.click(screen.getByRole("button", { name: enGB.nav.openMenu }));
+
+      const mobileMenu = screen.getByRole("region", {
+        name: enGB.nav.mobileMenuAriaLabel,
+      });
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const labelSpan = within(mobileMenu).getByText(label);
+        expect(labelSpan).not.toHaveClass("hidden");
+      }
+    });
+
+    it("hides locale labels below xl (compact) in the desktop switcher outside the mobile menu", () => {
+      const { container } = renderWithLocale(<SiteHeader />);
+
+      // The mobile menu region is hidden (not open) at this point, so it is
+      // not queryable via role; use a narrow DOM selector on its id to scope
+      // it out, since it is intentionally inaccessible while collapsed.
+      const mobileMenu = container.querySelector("#site-header-menu")!;
+      expect(mobileMenu).not.toBeNull();
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        // The desktop switcher renders the same label text outside the
+        // mobile menu region; getAllByText covers both instances present
+        // in the DOM (mobile menu is only hidden via CSS, not unmounted).
+        const labelSpans = screen
+          .getAllByText(label)
+          .filter((el) => !mobileMenu.contains(el));
+
+        expect(labelSpans.length).toBeGreaterThan(0);
+        labelSpans.forEach((labelSpan) => {
+          expect(labelSpan).toHaveClass("hidden");
+          expect(labelSpan).toHaveClass("xl:inline");
+        });
+      }
+    });
   });
 });
 
