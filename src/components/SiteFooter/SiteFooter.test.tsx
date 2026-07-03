@@ -107,10 +107,7 @@ describe("SiteFooter (en-GB, default locale)", () => {
     expect(contactLink.closest("li")?.nextElementSibling).toBe(
       meetLink.closest("li"),
     );
-    expect(meetLink).toHaveAttribute(
-      "href",
-      "https://www.cal.eu/dennis-lo/online-meeting",
-    );
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
     expect(meetLink).toHaveAttribute("target", "_blank");
     expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
   });
@@ -126,10 +123,7 @@ describe("SiteFooter (en-GB, default locale)", () => {
     });
 
     expect(contactIconLink.nextElementSibling).toBe(meetIconLink);
-    expect(meetIconLink).toHaveAttribute(
-      "href",
-      "https://www.cal.eu/dennis-lo/online-meeting",
-    );
+    expect(meetIconLink).toHaveAttribute("href", siteConfig.social.meet);
     expect(meetIconLink).toHaveAttribute("target", "_blank");
     expect(meetIconLink).toHaveAttribute("rel", "noopener noreferrer");
   });

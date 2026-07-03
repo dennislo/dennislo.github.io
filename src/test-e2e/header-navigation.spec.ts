@@ -5,11 +5,11 @@ import {
   type Response,
   test,
 } from "@playwright/test";
-import { routes } from "../config";
+import { routes, siteConfig } from "../config";
 
 const mobileViewport = { width: 390, height: 844 };
 
-const meetUrl = "https://www.cal.eu/dennis-lo/online-meeting";
+const meetUrl = siteConfig.social.meet;
 
 const sectionChecks = [
   { linkName: "About", hash: "#about", heading: "About Me" },

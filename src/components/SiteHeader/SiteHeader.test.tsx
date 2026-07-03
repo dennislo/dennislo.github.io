@@ -364,10 +364,7 @@ describe("SiteHeader (en-GB, default locale)", () => {
     const meetLink = within(desktopNavList).getByRole("link", {
       name: "Meet",
     });
-    expect(meetLink).toHaveAttribute(
-      "href",
-      "https://www.cal.eu/dennis-lo/online-meeting",
-    );
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
     expect(meetLink).toHaveAttribute("target", "_blank");
     expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
   });
@@ -384,10 +381,7 @@ describe("SiteHeader (en-GB, default locale)", () => {
     });
     const meetLink = within(mobileMenu).getByRole("link", { name: "Meet" });
 
-    expect(meetLink).toHaveAttribute(
-      "href",
-      "https://www.cal.eu/dennis-lo/online-meeting",
-    );
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
     expect(meetLink).toHaveAttribute("target", "_blank");
     expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
 

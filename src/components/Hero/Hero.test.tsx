@@ -103,10 +103,7 @@ describe("Hero (en-GB, default locale)", () => {
     });
 
     expect(meetLink).toBeInTheDocument();
-    expect(meetLink).toHaveAttribute(
-      "href",
-      "https://www.cal.eu/dennis-lo/online-meeting",
-    );
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
     expect(meetLink).toHaveAttribute("target", "_blank");
     expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
     expect(contactLink.nextElementSibling).toBe(meetLink);

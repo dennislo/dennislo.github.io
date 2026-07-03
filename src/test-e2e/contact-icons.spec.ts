@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { routes } from "../config";
+import { routes, siteConfig } from "../config";
 
-const meetUrl = "https://www.cal.eu/dennis-lo/online-meeting";
+const meetUrl = siteConfig.social.meet;
 
 test.describe("Contact icons", () => {
   test("email/contact icon on homepage has href /contact-form and navigates to the contact form", async ({
