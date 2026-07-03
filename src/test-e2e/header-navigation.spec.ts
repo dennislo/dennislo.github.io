@@ -9,6 +9,8 @@ import { routes } from "../config";
 
 const mobileViewport = { width: 390, height: 844 };
 
+const meetUrl = "https://www.cal.eu/dennis-lo/online-meeting";
+
 const sectionChecks = [
   { linkName: "About", hash: "#about", heading: "About Me" },
   { linkName: "Projects", hash: "#projects", heading: "Projects" },
@@ -238,6 +240,40 @@ test.describe("Header navigation", () => {
     await expect(
       page.getByRole("heading", { name: "Contact Me" }),
     ).toBeVisible();
+  });
+
+  test("desktop and mobile nav expose the Meet link as a new-tab Cal.eu link after Contact", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+
+    const primaryNav = page.getByRole("navigation", { name: "Primary" });
+    const desktopContact = primaryNav.getByRole("link", { name: "Contact" });
+    const desktopMeet = primaryNav.getByRole("link", { name: "Meet" });
+
+    await expect(desktopMeet).toBeVisible();
+    await expect(desktopMeet).toHaveAttribute("href", meetUrl);
+    await expect(desktopMeet).toHaveAttribute("target", "_blank");
+    await expect(desktopMeet).toHaveAttribute("rel", "noopener noreferrer");
+    const nextDesktopItemText = await desktopContact.evaluate((node) =>
+      node.parentElement?.nextElementSibling?.textContent?.trim(),
+    );
+    expect(nextDesktopItemText).toBe("Meet");
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.reload();
+    await page.getByRole("button", { name: /navigation menu/i }).click();
+
+    const mobileMenu = page.getByRole("region", {
+      name: "Mobile primary menu",
+    });
+    const mobileMeet = mobileMenu.getByRole("link", { name: "Meet" });
+
+    await expect(mobileMeet).toBeVisible();
+    await expect(mobileMeet).toHaveAttribute("href", meetUrl);
+    await expect(mobileMeet).toHaveAttribute("target", "_blank");
+    await expect(mobileMeet).toHaveAttribute("rel", "noopener noreferrer");
   });
 
   test("desktop nav Contact link navigates to /contact-form and shows the Contact Me heading", async ({

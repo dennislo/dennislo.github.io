@@ -92,6 +92,26 @@ describe("Hero (en-GB, default locale)", () => {
     expect(link).toHaveAttribute("href", siteConfig.social.instagram);
   });
 
+  it("renders a Meet link immediately after the contact link with the correct href and external attributes", () => {
+    renderWithLocale(<Hero />);
+
+    const contactLink = screen.getByRole("link", {
+      name: enGB.hero.contactAriaLabel,
+    });
+    const meetLink = screen.getByRole("link", {
+      name: "Meet with Dennis Lo",
+    });
+
+    expect(meetLink).toBeInTheDocument();
+    expect(meetLink).toHaveAttribute(
+      "href",
+      "https://www.cal.eu/dennis-lo/online-meeting",
+    );
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(contactLink.nextElementSibling).toBe(meetLink);
+  });
+
   it("uses light theme overlay and symbol styling by default", () => {
     const { container } = renderWithLocale(<Hero />);
 

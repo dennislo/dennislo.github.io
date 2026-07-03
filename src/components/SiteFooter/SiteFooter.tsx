@@ -7,6 +7,7 @@ import TablerEmail from "../icons/TablerEmail";
 import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
+import TablerCalendarEvent from "../icons/TablerCalendarEvent";
 import type { TranslationDictionary } from "../../i18n";
 
 // Map from section href to the nav dictionary key (mirrors SiteHeader)
@@ -59,6 +60,14 @@ const SiteFooter = () => {
                 {t("footer.contact")}
               </Link>
             </li>
+            <li>
+              <ExternalLink
+                href={siteConfig.social.meet}
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300"
+              >
+                {t("nav.meet")}
+              </ExternalLink>
+            </li>
           </ul>
 
           {/* Social icons */}
@@ -73,6 +82,13 @@ const SiteFooter = () => {
             >
               <TablerEmail className="h-5 w-5" />
             </Link>
+            <ExternalLink
+              href={siteConfig.social.meet}
+              aria-label={t("footer.meetAria")}
+              className="transition-colors duration-300 hover:text-[--accent]"
+            >
+              <TablerCalendarEvent className="h-5 w-5" />
+            </ExternalLink>
             <ExternalLink
               href={siteConfig.social.github}
               aria-label={t("footer.githubAria")}

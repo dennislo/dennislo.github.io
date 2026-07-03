@@ -36,7 +36,7 @@ function LanguageSwitcher() {
             to={target}
             onClick={handleClick}
             aria-current={isActive ? "page" : undefined}
-            className="inline-flex items-center gap-1 px-2 py-1 text-sm rounded transition-colors duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            className="inline-flex items-center gap-1 px-1.5 py-1 text-sm rounded transition-colors duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
           >
             <span aria-hidden="true">{flag}</span>
             <span>{label}</span>

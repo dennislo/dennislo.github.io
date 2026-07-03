@@ -346,6 +346,61 @@ describe("SiteHeader (en-GB, default locale)", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("renders the Meet nav link in the desktop nav immediately after Contact", () => {
+    renderWithLocale(<SiteHeader />);
+
+    const desktopNavList = getDesktopNav();
+    const navItems = within(desktopNavList).getAllByRole("listitem");
+    const contactIndex = navItems.findIndex((item) =>
+      within(item).queryByRole("link", { name: enGB.nav.contact }),
+    );
+    const meetIndex = navItems.findIndex((item) =>
+      within(item).queryByRole("link", { name: "Meet" }),
+    );
+
+    expect(contactIndex).toBeGreaterThan(-1);
+    expect(meetIndex).toBe(contactIndex + 1);
+
+    const meetLink = within(desktopNavList).getByRole("link", {
+      name: "Meet",
+    });
+    expect(meetLink).toHaveAttribute(
+      "href",
+      "https://www.cal.eu/dennis-lo/online-meeting",
+    );
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("renders the Meet link in the mobile menu and closes the menu when it is clicked", async () => {
+    const user = userEvent.setup();
+
+    renderWithLocale(<SiteHeader />);
+
+    await user.click(screen.getByRole("button", { name: enGB.nav.openMenu }));
+
+    const mobileMenu = screen.getByRole("region", {
+      name: enGB.nav.mobileMenuAriaLabel,
+    });
+    const meetLink = within(mobileMenu).getByRole("link", { name: "Meet" });
+
+    expect(meetLink).toHaveAttribute(
+      "href",
+      "https://www.cal.eu/dennis-lo/online-meeting",
+    );
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+
+    await user.click(meetLink);
+
+    expect(
+      screen.getByRole("button", { name: enGB.nav.openMenu }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByRole("region", { name: enGB.nav.mobileMenuAriaLabel }),
+    ).not.toBeInTheDocument();
+  });
+
   it("updates the header style after scrolling", () => {
     renderWithLocale(<SiteHeader />);
     const header = screen.getByRole("banner");

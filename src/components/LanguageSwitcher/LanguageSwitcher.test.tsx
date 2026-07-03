@@ -270,4 +270,20 @@ describe("LanguageSwitcher", () => {
       expect(screen.getByText(label)).toBeInTheDocument();
     });
   });
+
+  // -------------------------------------------------------------------------
+  // 7. Compact spacing — each locale control uses px-1.5, not px-2
+  // -------------------------------------------------------------------------
+  describe("compact horizontal padding", () => {
+    it("applies 'px-1.5' and not 'px-2' to every locale link", () => {
+      renderSwitcher("en-GB", "/");
+
+      for (const locale of locales) {
+        const { label } = localeMeta[locale];
+        const link = screen.getByText(label).closest("a, button");
+        expect(link).toHaveClass("px-1.5");
+        expect(link).not.toHaveClass("px-2");
+      }
+    });
+  });
 });

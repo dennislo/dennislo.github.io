@@ -45,6 +45,11 @@ const staticNavLinks: NavLink[] = [
     type: "route" as const,
     href: routes.contactForm,
   },
+  {
+    type: "external" as const,
+    label: "meet",
+    href: siteConfig.social.meet,
+  },
 ];
 
 const desktopLinkClassName =
@@ -136,7 +141,7 @@ const SiteHeader = () => {
       return { ...link, label: t(navTranslationKey(key)) };
     }
     if (link.type === "external") {
-      // The only external link is Gists; its label key is stored in link.label
+      // External labels are stored in link.label
       return { ...link, label: t(navTranslationKey(link.label)) };
     }
     // route = contact
@@ -167,7 +172,7 @@ const SiteHeader = () => {
             {siteConfig.header}
           </a>
 
-          <ul className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
+          <ul className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <NavLinkItem link={link} className={desktopLinkClassName} />
