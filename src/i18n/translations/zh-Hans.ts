@@ -17,6 +17,7 @@ export const zhHans: TranslationDictionary = {
     education: "教育",
     gists: "Gists",
     contact: "联系",
+    meet: "预约会议",
   },
   languageSwitcher: {
     ariaLabel: "选择语言",
@@ -29,6 +30,7 @@ export const zhHans: TranslationDictionary = {
     githubAriaLabel: "Dennis Lo 的 GitHub",
     linkedinAriaLabel: "Dennis Lo 的 LinkedIn",
     instagramAriaLabel: "Dennis Lo 的 Instagram",
+    meetAriaLabel: "与 Dennis Lo 预约会议",
   },
   about: {
     heading: "关于我",
@@ -151,6 +153,7 @@ export const zhHans: TranslationDictionary = {
     builtWith: "采用",
     using: "构建",
     contact: "联系",
+    meetAria: "与 Dennis Lo 预约会议",
     companyNumberLabel: "公司注册号",
     vatNumberLabel: "增值税号",
   },

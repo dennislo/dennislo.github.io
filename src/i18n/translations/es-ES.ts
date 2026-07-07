@@ -17,6 +17,7 @@ export const esES: TranslationDictionary = {
     education: "Formación",
     gists: "Gists",
     contact: "Contacto",
+    meet: "Reunión",
   },
   languageSwitcher: {
     ariaLabel: "Seleccionar idioma",
@@ -29,6 +30,7 @@ export const esES: TranslationDictionary = {
     githubAriaLabel: "Dennis Lo en GitHub",
     linkedinAriaLabel: "Dennis Lo en LinkedIn",
     instagramAriaLabel: "Dennis Lo en Instagram",
+    meetAriaLabel: "Reunirse con Dennis Lo",
   },
   about: {
     heading: "Sobre mí",
@@ -162,6 +164,7 @@ export const esES: TranslationDictionary = {
     builtWith: "Creado con",
     using: "usando",
     contact: "Contacto",
+    meetAria: "Reunirse con Dennis Lo",
     companyNumberLabel: "Número de empresa",
     vatNumberLabel: "Número de IVA",
   },

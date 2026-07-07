@@ -52,6 +52,7 @@ export const siteConfig = {
   },
   social: {
     email: "lo.dennis@gmail.com",
+    meet: "https://www.cal.eu/dennis-lo/online-meeting",
     github: "https://github.com/dennislo",
     linkedin: "https://www.linkedin.com/in/dennis-lo-profile",
     instagram: "https://www.instagram.com/dlo",

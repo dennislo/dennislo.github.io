@@ -98,6 +98,36 @@ describe("SiteFooter (en-GB, default locale)", () => {
     ).toHaveAttribute("href", routes.contactForm);
   });
 
+  it("renders the footer nav Meet link immediately after Contact, opening the Cal.eu link in a new tab", () => {
+    renderWithLocale(<SiteFooter />);
+
+    const contactLink = screen.getByRole("link", { name: enGB.footer.contact });
+    const meetLink = screen.getByRole("link", { name: "Meet" });
+
+    expect(contactLink.closest("li")?.nextElementSibling).toBe(
+      meetLink.closest("li"),
+    );
+    expect(meetLink).toHaveAttribute("href", siteConfig.social.meet);
+    expect(meetLink).toHaveAttribute("target", "_blank");
+    expect(meetLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("renders the footer social Meet icon with localized aria-label immediately after the contact icon", () => {
+    renderWithLocale(<SiteFooter />);
+
+    const contactIconLink = screen.getByRole("link", {
+      name: enGB.footer.emailAria,
+    });
+    const meetIconLink = screen.getByRole("link", {
+      name: "Meet with Dennis Lo",
+    });
+
+    expect(contactIconLink.nextElementSibling).toBe(meetIconLink);
+    expect(meetIconLink).toHaveAttribute("href", siteConfig.social.meet);
+    expect(meetIconLink).toHaveAttribute("target", "_blank");
+    expect(meetIconLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("renders the localized 'Built with' text from enGB dict", () => {
     renderWithLocale(<SiteFooter />);
     expect(
