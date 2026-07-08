@@ -1,6 +1,26 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("browser locale auto-detection", () => {
+  // Fail fast on hydration mismatches: the locale-detection redirect lands the
+  // user on a fresh full page load where LocaleAutoDetectNotice's first client
+  // render must match the server-rendered markup exactly.
+  let consoleErrors: string[];
+
+  test.beforeEach(async ({ page }) => {
+    consoleErrors = [];
+    page.on("pageerror", (err) => consoleErrors.push(err.message));
+    page.on("console", (msg) => {
+      if (msg.type() === "error") consoleErrors.push(msg.text());
+    });
+  });
+
+  test.afterEach(() => {
+    expect(
+      consoleErrors,
+      `Unexpected console/page errors:\n${consoleErrors.join("\n")}`,
+    ).toEqual([]);
+  });
+
   test.describe("supported browser locale, no stored preference", () => {
     test.use({ locale: "es-ES" });
 
