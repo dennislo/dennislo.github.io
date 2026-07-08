@@ -11,6 +11,15 @@ export default defineConfig({
   use: {
     baseURL: process.env.CI ? "http://localhost:9000" : "http://localhost:8000",
     trace: "on-first-retry",
+    // Pin the emulated browser locale to the site's default (en-GB) so specs are
+    // deterministic regardless of the host/CI runner's OS locale. Without this,
+    // Chromium falls back to the runner's locale (e.g. en-US on GitHub Actions
+    // Ubuntu runners), which the auto-detection feature in src/i18n/detect.ts
+    // then legitimately redirects '/' away from — breaking specs that assume an
+    // unprefixed en-GB root. Individual specs (e.g. locale-auto-detect.spec.ts)
+    // override this per-describe via test.use({ locale: ... }) when they need
+    // to exercise a different browser locale.
+    locale: "en-GB",
   },
   projects: [
     {

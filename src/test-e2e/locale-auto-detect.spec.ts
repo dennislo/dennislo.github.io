@@ -3,21 +3,33 @@ import { test, expect } from "@playwright/test";
 test.describe("browser locale auto-detection", () => {
   // Fail fast on hydration mismatches: the locale-detection redirect lands the
   // user on a fresh full page load where LocaleAutoDetectNotice's first client
-  // render must match the server-rendered markup exactly.
+  // render must match the server-rendered markup exactly. Scoped to hydration-
+  // shaped messages (not a blanket "no console errors" check) because this page
+  // also makes real third-party network calls (GitHub API, Segment analytics)
+  // that are flaky in CI/sandboxed environments for reasons unrelated to this
+  // feature — see the "1 flaky" GitHub Analytics fetch failure already tolerated
+  // elsewhere in this suite (header-navigation.spec.ts).
   let consoleErrors: string[];
+  const hydrationErrorPattern = /hydrat|did not match|content does not match/i;
 
   test.beforeEach(async ({ page }) => {
     consoleErrors = [];
-    page.on("pageerror", (err) => consoleErrors.push(err.message));
+    page.on("pageerror", (err) => {
+      if (hydrationErrorPattern.test(err.message)) {
+        consoleErrors.push(err.message);
+      }
+    });
     page.on("console", (msg) => {
-      if (msg.type() === "error") consoleErrors.push(msg.text());
+      if (msg.type() === "error" && hydrationErrorPattern.test(msg.text())) {
+        consoleErrors.push(msg.text());
+      }
     });
   });
 
   test.afterEach(() => {
     expect(
       consoleErrors,
-      `Unexpected console/page errors:\n${consoleErrors.join("\n")}`,
+      `Unexpected hydration errors:\n${consoleErrors.join("\n")}`,
     ).toEqual([]);
   });
 
