@@ -140,6 +140,11 @@ describe("About (zh-Hans locale)", () => {
     expect(screen.getByText(zhHans.about.funFacts.fact1)).toBeInTheDocument();
   });
 
+  it("renders the localized Chinese full name in the about intro", () => {
+    renderWithLocale(<About />, "zh-Hans");
+    expect(screen.getByText(/我是 盧偉康 \(Dennis Lo\)/)).toBeInTheDocument();
+  });
+
   it("skills remain locale-invariant (English) in zh-Hans", () => {
     renderWithLocale(<About />, "zh-Hans");
     for (const skill of siteConfig.skills) {
