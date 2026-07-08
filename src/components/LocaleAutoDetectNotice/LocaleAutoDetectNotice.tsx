@@ -42,11 +42,8 @@ function LocaleAutoDetectNotice() {
   };
 
   return (
-    <div
-      role="status"
-      className="relative z-[60] flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-blue-50 dark:bg-blue-950 border-b border-blue-100 dark:border-blue-900 px-4 py-2 text-sm text-blue-900 dark:text-blue-100"
-    >
-      <span>
+    <div className="relative z-[60] flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-blue-50 dark:bg-blue-950 border-b border-blue-100 dark:border-blue-900 px-4 py-2 text-sm text-blue-900 dark:text-blue-100">
+      <span role="status">
         {t("localeNotice.message", {
           language: localeMeta[detectedLocale].label,
         })}
