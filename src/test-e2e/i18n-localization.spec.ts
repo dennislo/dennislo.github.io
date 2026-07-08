@@ -23,6 +23,9 @@ test.describe("i18n locale routing and content", () => {
     await page.goto("/zh-Hans/");
     await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hans");
     await expect(page.getByRole("heading", { name: "关于我" })).toBeVisible();
+    await expect(
+      page.locator("#about").getByText(/我是 盧偉康 \(Dennis Lo\)/),
+    ).toBeVisible();
     // The English heading must NOT be present in the zh-Hans page.
     await expect(page.getByRole("heading", { name: "About Me" })).toHaveCount(
       0,
