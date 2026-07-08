@@ -3,6 +3,18 @@ import { render, screen } from "@testing-library/react";
 import { wrapPageElement } from "./wrapPageElement";
 import { useLocale } from "../i18n";
 
+// LocaleAutoDetectNotice has its own dedicated test suite; stub it here so
+// this file only exercises wrapPageElement's locale-wiring responsibility
+// (it also relies on a reach-router location context that isn't present in
+// these tests).
+jest.mock(
+  "../components/LocaleAutoDetectNotice/LocaleAutoDetectNotice",
+  () => ({
+    __esModule: true,
+    default: () => null,
+  }),
+);
+
 // A probe component that reads locale from the real useLocale hook and renders
 // it into the DOM so assertions can inspect it without touching internal state.
 const LocaleProbe = () => {

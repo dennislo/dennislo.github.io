@@ -22,6 +22,11 @@ export const zhHans: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "选择语言",
   },
+  localeNotice: {
+    message: "我们已根据您的浏览器设置切换到{language}。",
+    viewInEnglish: "查看英文版",
+    dismiss: "关闭",
+  },
   identity: {
     displayName: "盧偉康 (Dennis Lo)",
   },

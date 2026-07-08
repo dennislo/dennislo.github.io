@@ -19,6 +19,11 @@ export const enUS: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "Select language",
   },
+  localeNotice: {
+    message: "We switched to {language} based on your browser.",
+    viewInEnglish: "View in English",
+    dismiss: "Dismiss",
+  },
   identity: {
     displayName: "Dennis Lo",
   },

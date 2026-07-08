@@ -2,13 +2,28 @@ import "./src/styles/global.css";
 
 export { wrapPageElement } from "./src/gatsby/wrapPageElement";
 
-import { getStoredLocale, resolveRedirectTarget } from "./src/i18n/persistence";
+import { detectLocaleFromLanguages } from "./src/i18n/detect";
+import {
+  getStoredLocale,
+  markAutoDetectedNotice,
+  resolveRedirectTarget,
+  storeLocale,
+} from "./src/i18n/persistence";
 
 export const onClientEntry = () => {
   if (typeof window === "undefined") return;
+  const stored = getStoredLocale();
+  const detected = detectLocaleFromLanguages(navigator.languages ?? []);
   const target = resolveRedirectTarget(
     window.location.pathname,
-    getStoredLocale(),
+    stored,
+    detected,
   );
-  if (target) window.location.replace(target);
+  if (target) {
+    if (stored === null && detected !== null) {
+      storeLocale(detected);
+      markAutoDetectedNotice(detected);
+    }
+    window.location.replace(target);
+  }
 };

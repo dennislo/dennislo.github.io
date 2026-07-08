@@ -1,8 +1,14 @@
 import {
   STORAGE_KEY,
+  NOTICE_STORAGE_KEY,
+  NOTICE_DISMISSED_KEY,
   getStoredLocale,
   storeLocale,
   resolveRedirectTarget,
+  markAutoDetectedNotice,
+  getAutoDetectedNotice,
+  dismissAutoDetectedNotice,
+  isAutoDetectedNoticeDismissed,
 } from "./persistence";
 
 describe("persistence — STORAGE_KEY", () => {
@@ -122,5 +128,102 @@ describe("persistence — resolveRedirectTarget", () => {
   it("returns null for any non-root path regardless of stored locale", () => {
     expect(resolveRedirectTarget("/about/", "es-ES")).toBeNull();
     expect(resolveRedirectTarget("/es-ES/about/", "es-ES")).toBeNull();
+  });
+});
+
+describe("persistence — resolveRedirectTarget with detected fallback", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it("returns '/zh-Hans/' when stored is null and detected is 'zh-Hans' at root", () => {
+    expect(resolveRedirectTarget("/", null, "zh-Hans")).toBe("/zh-Hans/");
+  });
+
+  it("returns null when stored is null and detected is null", () => {
+    expect(resolveRedirectTarget("/", null, null)).toBeNull();
+  });
+
+  it("returns null when stored is null and detected is the default locale 'en-GB'", () => {
+    expect(resolveRedirectTarget("/", null, "en-GB")).toBeNull();
+  });
+
+  it("returns '/es-ES/' when stored is 'es-ES' and detected is 'zh-Hans' (stored wins, detected ignored)", () => {
+    expect(resolveRedirectTarget("/", "es-ES", "zh-Hans")).toBe("/es-ES/");
+  });
+
+  it("returns null on a non-root path even when stored is null and detected is non-default", () => {
+    expect(resolveRedirectTarget("/contact-form/", null, "zh-Hans")).toBeNull();
+  });
+
+  it("preserves existing 2-argument behavior when detected is omitted", () => {
+    expect(resolveRedirectTarget("/", "zh-Hans")).toBe("/zh-Hans/");
+    expect(resolveRedirectTarget("/", null)).toBeNull();
+  });
+});
+
+describe("persistence — NOTICE_STORAGE_KEY and NOTICE_DISMISSED_KEY", () => {
+  it("exports the string constant 'localeAutoDetected'", () => {
+    expect(NOTICE_STORAGE_KEY).toBe("localeAutoDetected");
+  });
+
+  it("exports the string constant 'localeNoticeDismissed'", () => {
+    expect(NOTICE_DISMISSED_KEY).toBe("localeNoticeDismissed");
+  });
+});
+
+describe("persistence — markAutoDetectedNotice / getAutoDetectedNotice", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+  });
+
+  it("returns the marked locale after markAutoDetectedNotice has written it", () => {
+    markAutoDetectedNotice("zh-Hans");
+    expect(getAutoDetectedNotice()).toBe("zh-Hans");
+  });
+
+  it("writes the locale under NOTICE_STORAGE_KEY in sessionStorage", () => {
+    markAutoDetectedNotice("es-ES");
+    expect(sessionStorage.getItem(NOTICE_STORAGE_KEY)).toBe("es-ES");
+  });
+
+  it("returns null when nothing has been marked", () => {
+    expect(getAutoDetectedNotice()).toBeNull();
+  });
+
+  it("returns null when an invalid locale string is stored", () => {
+    sessionStorage.setItem(NOTICE_STORAGE_KEY, "fr");
+    expect(getAutoDetectedNotice()).toBeNull();
+  });
+
+  it("does not throw when marking multiple times", () => {
+    expect(() => {
+      markAutoDetectedNotice("en-US");
+      markAutoDetectedNotice("es-ES");
+    }).not.toThrow();
+  });
+});
+
+describe("persistence — dismissAutoDetectedNotice / isAutoDetectedNoticeDismissed", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+  });
+
+  it("returns false before any dismiss call", () => {
+    expect(isAutoDetectedNoticeDismissed()).toBe(false);
+  });
+
+  it("returns true after dismissAutoDetectedNotice has been called", () => {
+    dismissAutoDetectedNotice();
+    expect(isAutoDetectedNoticeDismissed()).toBe(true);
+  });
+
+  it("writes 'true' under NOTICE_DISMISSED_KEY in sessionStorage", () => {
+    dismissAutoDetectedNotice();
+    expect(sessionStorage.getItem(NOTICE_DISMISSED_KEY)).toBe("true");
+  });
+
+  it("does not throw when dismissing", () => {
+    expect(() => dismissAutoDetectedNotice()).not.toThrow();
   });
 });

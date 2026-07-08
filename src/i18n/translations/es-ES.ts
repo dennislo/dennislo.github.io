@@ -22,6 +22,11 @@ export const esES: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "Seleccionar idioma",
   },
+  localeNotice: {
+    message: "Hemos cambiado a {language} según tu navegador.",
+    viewInEnglish: "Ver en inglés",
+    dismiss: "Cerrar",
+  },
   identity: {
     displayName: "Dennis Lo",
   },
