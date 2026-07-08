@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import { enGB } from "../../i18n/translations/en-GB";
+import { esES } from "../../i18n/translations/es-ES";
 import { zhHans } from "../../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
@@ -204,5 +205,19 @@ describe("Hero (zh-Hans locale)", () => {
     expect(
       screen.queryByText("Dennis Lo", { exact: true }),
     ).not.toBeInTheDocument();
+  });
+});
+
+describe("Hero (es-ES locale)", () => {
+  beforeEach(() => {
+    mockUseTheme.mockReturnValue({
+      theme: "light",
+      toggleTheme: jest.fn(),
+    });
+  });
+
+  it("keeps the configured Spanish display name unchanged", () => {
+    renderWithLocale(<Hero />, "es-ES");
+    expect(screen.getByText(esES.identity.displayName)).toBeInTheDocument();
   });
 });

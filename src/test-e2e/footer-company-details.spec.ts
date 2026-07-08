@@ -30,7 +30,7 @@ test.describe("footer company details", () => {
     await expect(
       footer.getByText("盧偉康 (Dennis Lo)", { exact: true }).first(),
     ).toBeVisible();
-    await expect(footer.getByText("增值税号: 235 2977 88")).toBeVisible();
+    await expect(footer.getByText(`增值税号: ${vatNumber}`)).toBeVisible();
     await expect(footer.getByText(companyName)).toBeVisible();
     await expect(footer.getByText(companyAddress)).toBeVisible();
     await expect(footer.getByText(companyNumber)).toBeVisible();
@@ -43,7 +43,7 @@ test.describe("footer company details", () => {
     await page.goto("/");
     const footer = page.getByRole("contentinfo");
 
-    await expect(footer.getByText("VAT Number: 235 2977 88")).toBeVisible();
+    await expect(footer.getByText(`VAT Number: ${vatNumber}`)).toBeVisible();
   });
 
   test("'/' footer shows the company legal details without horizontal overflow on a mobile viewport", async ({
