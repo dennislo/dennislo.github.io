@@ -27,10 +27,23 @@ test.describe("footer company details", () => {
 
     const footer = page.getByRole("contentinfo");
 
+    await expect(
+      footer.getByText("盧偉康 (Dennis Lo)", { exact: true }).first(),
+    ).toBeVisible();
+    await expect(footer.getByText("增值税号: 235 2977 88")).toBeVisible();
     await expect(footer.getByText(companyName)).toBeVisible();
     await expect(footer.getByText(companyAddress)).toBeVisible();
     await expect(footer.getByText(companyNumber)).toBeVisible();
     await expect(footer.getByText(vatNumber)).toBeVisible();
+  });
+
+  test("'/' footer uses the capitalized English VAT label", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const footer = page.getByRole("contentinfo");
+
+    await expect(footer.getByText("VAT Number: 235 2977 88")).toBeVisible();
   });
 
   test("'/' footer shows the company legal details without horizontal overflow on a mobile viewport", async ({

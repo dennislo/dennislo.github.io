@@ -177,11 +177,15 @@ describe("SiteFooter (en-GB, default locale)", () => {
     renderWithLocale(<SiteFooter />);
     expect(
       screen.getByText(
-        new RegExp(
-          `${enGB.footer.vatNumberLabel}.*${siteConfig.companyDetails.vatNumber}`,
-        ),
+        new RegExp(`VAT Number.*${siteConfig.companyDetails.vatNumber}`),
       ),
     ).toBeInTheDocument();
+  });
+
+  it("keeps the English display name unchanged in the default locale", () => {
+    renderWithLocale(<SiteFooter />);
+    const matches = screen.getAllByText("Dennis Lo", { exact: true });
+    expect(matches.length).toBeGreaterThan(0);
   });
 });
 
@@ -229,11 +233,17 @@ describe("SiteFooter (zh-Hans locale)", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the invariant company name in zh-Hans locale", () => {
+  it("renders the localized display name in zh-Hans locale", () => {
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    const matches = screen.getAllByText("盧偉康 (Dennis Lo)", { exact: true });
+    expect(matches.length).toBeGreaterThan(0);
+  });
+
+  it("does NOT render the English-only display name in zh-Hans locale", () => {
     renderWithLocale(<SiteFooter />, "zh-Hans");
     expect(
-      screen.getByText(siteConfig.companyDetails.name),
-    ).toBeInTheDocument();
+      screen.queryByText("Dennis Lo", { exact: true }),
+    ).not.toBeInTheDocument();
   });
 
   it("renders the invariant company address in zh-Hans locale", () => {

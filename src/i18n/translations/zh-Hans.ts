@@ -22,6 +22,9 @@ export const zhHans: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "选择语言",
   },
+  identity: {
+    displayName: "盧偉康 (Dennis Lo)",
+  },
   hero: {
     greeting: "你好！",
     intro: "我是",

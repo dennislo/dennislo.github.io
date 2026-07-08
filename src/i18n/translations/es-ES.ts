@@ -22,6 +22,9 @@ export const esES: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "Seleccionar idioma",
   },
+  identity: {
+    displayName: "Dennis Lo",
+  },
   hero: {
     greeting: "¡Hola!",
     intro: "Soy",

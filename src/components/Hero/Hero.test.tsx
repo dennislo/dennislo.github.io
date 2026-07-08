@@ -55,6 +55,11 @@ describe("Hero (en-GB, default locale)", () => {
     expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
   });
 
+  it("keeps the English display name unchanged in the default locale", () => {
+    renderWithLocale(<Hero />);
+    expect(screen.getByText("Dennis Lo")).toBeInTheDocument();
+  });
+
   it("renders the title from siteConfig (locale-invariant)", () => {
     renderWithLocale(<Hero />);
     expect(screen.getByText(siteConfig.title)).toBeInTheDocument();
@@ -191,6 +196,13 @@ describe("Hero (zh-Hans locale)", () => {
 
   it("name remains locale-invariant in zh-Hans", () => {
     renderWithLocale(<Hero />, "zh-Hans");
-    expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
+    expect(screen.getByText("盧偉康 (Dennis Lo)")).toBeInTheDocument();
+  });
+
+  it("does NOT render the English-only display name in zh-Hans", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    expect(
+      screen.queryByText("Dennis Lo", { exact: true }),
+    ).not.toBeInTheDocument();
   });
 });

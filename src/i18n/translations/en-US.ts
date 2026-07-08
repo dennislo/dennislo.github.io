@@ -19,6 +19,9 @@ export const enUS: TranslationDictionary = {
   languageSwitcher: {
     ariaLabel: "Select language",
   },
+  identity: {
+    displayName: "Dennis Lo",
+  },
   hero: {
     greeting: "Hello!",
     intro: "I'm",
@@ -163,7 +166,7 @@ export const enUS: TranslationDictionary = {
     contact: "Contact",
     meetAria: "Meet with Dennis Lo",
     companyNumberLabel: "Company Number",
-    vatNumberLabel: "VAT number",
+    vatNumberLabel: "VAT Number",
   },
   contact: {
     pageTitle: "Contact Me",
