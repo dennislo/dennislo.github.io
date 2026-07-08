@@ -23,6 +23,13 @@ describe("Projects (en-GB, default locale)", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the section heading with data-section-heading for scroll highlighting", () => {
+    renderWithLocale(<Projects />);
+    expect(
+      screen.getByRole("heading", { name: enGB.projects.heading }),
+    ).toHaveAttribute("data-section-heading");
+  });
+
   it("renders the localized AI Dev Roundup project name", () => {
     renderWithLocale(<Projects />);
     expect(

@@ -22,8 +22,11 @@ import {
   stripLocale,
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
+import { useSectionHighlight } from "../hooks/useSectionHighlight";
 
 const IndexPage = () => {
+  useSectionHighlight();
+
   return (
     <Layout>
       <SiteHeader />

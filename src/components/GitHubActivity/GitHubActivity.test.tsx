@@ -122,6 +122,13 @@ describe("GitHubActivity (en-GB, default locale)", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the section heading with data-section-heading for scroll highlighting", () => {
+    renderWithLocale(<GitHubActivity />);
+    expect(
+      screen.getByRole("heading", { name: enGB.githubActivity.heading }),
+    ).toHaveAttribute("data-section-heading");
+  });
+
   it("shows skeleton placeholders with localized loading aria-label from enGB dict", () => {
     renderWithLocale(<GitHubActivity />);
     expect(
