@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import { routes, siteConfig } from "../../config";
 import { useTheme } from "../../context/ThemeContext";
 import { enGB } from "../../i18n/translations/en-GB";
+import { esES } from "../../i18n/translations/es-ES";
 import { zhHans } from "../../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../../test/renderWithLocale";
 
@@ -53,6 +54,11 @@ describe("Hero (en-GB, default locale)", () => {
   it("renders the name from siteConfig (locale-invariant)", () => {
     renderWithLocale(<Hero />);
     expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
+  });
+
+  it("keeps the English display name unchanged in the default locale", () => {
+    renderWithLocale(<Hero />);
+    expect(screen.getByText("Dennis Lo")).toBeInTheDocument();
   });
 
   it("renders the title from siteConfig (locale-invariant)", () => {
@@ -191,6 +197,27 @@ describe("Hero (zh-Hans locale)", () => {
 
   it("name remains locale-invariant in zh-Hans", () => {
     renderWithLocale(<Hero />, "zh-Hans");
-    expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
+    expect(screen.getByText("盧偉康 (Dennis Lo)")).toBeInTheDocument();
+  });
+
+  it("does NOT render the English-only display name in zh-Hans", () => {
+    renderWithLocale(<Hero />, "zh-Hans");
+    expect(
+      screen.queryByText("Dennis Lo", { exact: true }),
+    ).not.toBeInTheDocument();
+  });
+});
+
+describe("Hero (es-ES locale)", () => {
+  beforeEach(() => {
+    mockUseTheme.mockReturnValue({
+      theme: "light",
+      toggleTheme: jest.fn(),
+    });
+  });
+
+  it("keeps the configured Spanish display name unchanged", () => {
+    renderWithLocale(<Hero />, "es-ES");
+    expect(screen.getByText(esES.identity.displayName)).toBeInTheDocument();
   });
 });

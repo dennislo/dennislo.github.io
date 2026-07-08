@@ -14,6 +14,7 @@ const Hero = () => {
   const accent = siteConfig.accentColor;
   const { theme } = useTheme();
   const { t, localizePath } = useLocale();
+  const displayName = t("identity.displayName");
   const isDarkTheme = theme === "dark";
   const symbolColor = isDarkTheme ? `${accent}94` : `${accent}b8`;
   const symbolOpacity = isDarkTheme ? "0.2" : "0.24";
@@ -184,7 +185,7 @@ const Hero = () => {
           </h2>
           <h1 className="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 dark:text-gray-100 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] opacity-0">
             {t("hero.intro")}{" "}
-            <span style={{ color: accent }}>{siteConfig.name}</span>
+            <span style={{ color: accent }}>{displayName}</span>
           </h1>
           <p className="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl font-medium text-gray-600 dark:text-gray-400 animate-[fadeIn_0.8s_ease-out_0.4s_forwards] opacity-0">
             {siteConfig.title}

@@ -22,6 +22,7 @@ const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
 const SiteFooter = () => {
   const accent = siteConfig.accentColor;
   const { t, localizePath } = useLocale();
+  const displayName = t("identity.displayName");
 
   return (
     <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
@@ -30,7 +31,7 @@ const SiteFooter = () => {
           {/* Name & title */}
           <div>
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              {siteConfig.name}
+              {displayName}
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               {siteConfig.title}
@@ -115,8 +116,8 @@ const SiteFooter = () => {
 
         <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-500">
-            © {new Date().getFullYear()} {siteConfig.name}.{" "}
-            {t("footer.builtWith")} ❤️ {t("footer.using")}{" "}
+            © {new Date().getFullYear()} {displayName}. {t("footer.builtWith")}{" "}
+            ❤️ {t("footer.using")}{" "}
             <ExternalLink
               href="https://www.gatsbyjs.org/"
               className="underline transition-colors duration-300"
