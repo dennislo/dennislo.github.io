@@ -26,9 +26,10 @@ export function storeLocale(locale: Locale): void {
 export function resolveRedirectTarget(
   pathname: string,
   stored: Locale | null,
+  suffix = "",
 ): string | null {
   if (pathname !== "/") return null;
   if (stored === null) return null;
   if (stored === defaultLocale) return null;
-  return localizePath("/", stored);
+  return localizePath(`/${suffix}`, stored);
 }

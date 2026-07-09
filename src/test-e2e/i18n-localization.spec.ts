@@ -127,6 +127,24 @@ test.describe("locale persistence redirect", () => {
     await expect(page).toHaveURL(/\/es-ES\/$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
   });
+
+  test("a stored non-default locale redirect preserves a deep-link hash", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("preferredLocale", "zh-Hans");
+    });
+    await page.goto("/#projects");
+
+    // The redirect must carry the #projects hash into the localized URL,
+    // not drop it — otherwise the section-heading-highlight hook never sees
+    // a hash to act on.
+    await expect(page).toHaveURL(/\/zh-Hans\/#projects$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh-Hans");
+
+    const heading = page.getByRole("heading", { name: "项目" });
+    await expect(heading).toHaveClass(/section-heading-highlight/);
+  });
 });
 
 test.describe("locale-aware internal navigation", () => {

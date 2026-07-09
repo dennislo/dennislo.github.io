@@ -8,7 +8,7 @@ import { locales, defaultLocale } from "./src/i18n/config";
 // onClientEntry handles the same logic for completeness, but the script prevents
 // the flash that would otherwise occur while JS bundles load.
 const validLocales = locales.join("','");
-const REDIRECT_SCRIPT = `(function(){try{var s=localStorage.getItem('preferredLocale');if(s&&['${validLocales}'].indexOf(s)>-1&&s!=='${defaultLocale}'&&location.pathname==='/'){location.replace('/'+s+'/')}}catch(e){}})();`;
+const REDIRECT_SCRIPT = `(function(){try{var s=localStorage.getItem('preferredLocale');if(s&&['${validLocales}'].indexOf(s)>-1&&s!=='${defaultLocale}'&&location.pathname==='/'){location.replace('/'+s+'/'+location.search+location.hash)}}catch(e){}})();`;
 
 export const onRenderBody: GatsbySSR["onRenderBody"] = ({
   setHeadComponents,
