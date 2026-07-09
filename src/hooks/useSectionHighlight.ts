@@ -43,6 +43,11 @@ export function useSectionHighlight(): void {
     };
 
     const trigger = (hash: string) => {
+      // Reset unconditionally: navigating anywhere (even to an unmarked
+      // section like Hero, or an invalid hash) should clear a highlight
+      // that's still active from a previous target.
+      reset();
+
       const id = hash.slice(1);
       if (!id) return;
 
@@ -51,8 +56,6 @@ export function useSectionHighlight(): void {
         ?.querySelector<HTMLElement>("[data-section-heading]");
       // Sections without the marker (e.g. Hero) are intentionally a no-op.
       if (!heading) return;
-
-      reset();
 
       observer = new IntersectionObserver(
         (entries) => {

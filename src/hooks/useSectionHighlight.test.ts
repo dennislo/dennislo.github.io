@@ -236,6 +236,31 @@ describe("useSectionHighlight", () => {
     expect(heroHeading).not.toHaveClass(HIGHLIGHT_CLASS);
   });
 
+  it("cancels an active highlight when navigating to an unmarked section (e.g. Hero)", () => {
+    // Arrange: highlight #about
+    setHashSilently("#about");
+    const aboutHeading = document.querySelector(
+      "#about [data-section-heading]",
+    ) as HTMLElement;
+    renderHook(() => useSectionHighlight());
+    act(() => {
+      getLatestObserver().simulateIntersection(true);
+    });
+    expect(aboutHeading).toHaveClass(HIGHLIGHT_CLASS);
+
+    // Act: click the (unmarked) Hero anchor while #about is still highlighted
+    clickAnchorWithHref("#hero");
+
+    // Assert: the stale highlight was cleared even though the new target is a no-op
+    expect(aboutHeading).not.toHaveClass(HIGHLIGHT_CLASS);
+
+    // Advancing time fully should not resurrect the cancelled highlight
+    act(() => {
+      jest.advanceTimersByTime(HIGHLIGHT_DURATION_MS);
+    });
+    expect(aboutHeading).not.toHaveClass(HIGHLIGHT_CLASS);
+  });
+
   it("cancels the highlight on the previously active heading when a new trigger fires", () => {
     // Arrange: highlight #about
     setHashSilently("#about");
