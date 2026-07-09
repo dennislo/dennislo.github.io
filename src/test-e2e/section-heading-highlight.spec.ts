@@ -108,13 +108,14 @@ test.describe("Section heading highlight", () => {
 
     // The wash fades in over the heading's transition-colors duration, so poll
     // until the color settles rather than reading it mid-transition.
-    // Dark-mode wash: blue-400 @ ~18% opacity (see plan's CSS spec), distinct
-    // from the light-mode accent wash and from a fully transparent background.
+    // Dark-mode wash: blue-400 @ ~32% opacity, tuned up from an initial 18%
+    // that was too faint to see against gray-950. Distinct from the
+    // light-mode accent wash and from a fully transparent background.
     await expect
       .poll(() =>
         heading.evaluate((el) => window.getComputedStyle(el).backgroundColor),
       )
-      .toBe("rgba(96, 165, 250, 0.18)");
+      .toBe("rgba(96, 165, 250, 0.32)");
   });
 
   test("light theme: the highlight uses the light-mode accent tint", async ({
