@@ -175,4 +175,29 @@ test.describe("Section heading highlight", () => {
     expect(Math.round(after!.height)).toBe(Math.round(before!.height));
     expect(Math.round(after!.x)).toBe(Math.round(before!.x));
   });
+
+  test("the highlight wash hugs the heading text and does not extend past it", async ({
+    page,
+  }) => {
+    await page.setViewportSize(desktopViewport);
+    await page.goto("/");
+
+    const heading = page.getByRole("heading", { name: "Activity" });
+    await clickNavLink(page, "Activity", false);
+    await expect(heading).toHaveClass(new RegExp(HIGHLIGHT_CLASS));
+
+    const headingWidth = (await heading.boundingBox())!.width;
+    const textWidth = await heading.evaluate((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return range.getBoundingClientRect().width;
+    });
+
+    // The heading is a block element by default, which previously let its
+    // highlighted background span the full parent column regardless of how
+    // narrow the text was. It must now shrink-wrap to the text (plus the
+    // small px-3 padding on each side), not the column.
+    expect(headingWidth).toBeGreaterThanOrEqual(textWidth);
+    expect(headingWidth).toBeLessThan(textWidth + 30);
+  });
 });
