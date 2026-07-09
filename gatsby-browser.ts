@@ -9,6 +9,7 @@ export const onClientEntry = () => {
   const target = resolveRedirectTarget(
     window.location.pathname,
     getStoredLocale(),
+    `${window.location.search}${window.location.hash}`,
   );
   if (target) window.location.replace(target);
 };

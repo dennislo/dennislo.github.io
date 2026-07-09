@@ -22,6 +22,13 @@ describe("Experience (en-GB, default locale)", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the section heading with data-section-heading for scroll highlighting", () => {
+    renderWithLocale(<Experience />);
+    expect(
+      screen.getByRole("heading", { name: enGB.experience.heading }),
+    ).toHaveAttribute("data-section-heading");
+  });
+
   it("renders the localized contractor role title from enGB dict", () => {
     renderWithLocale(<Experience />);
     const titles = screen.getAllByText(enGB.experience.roleContractor);

@@ -123,4 +123,26 @@ describe("persistence — resolveRedirectTarget", () => {
     expect(resolveRedirectTarget("/about/", "es-ES")).toBeNull();
     expect(resolveRedirectTarget("/es-ES/about/", "es-ES")).toBeNull();
   });
+
+  it("preserves a hash suffix on the redirect target", () => {
+    expect(resolveRedirectTarget("/", "es-ES", "#projects")).toBe(
+      "/es-ES/#projects",
+    );
+  });
+
+  it("preserves a query string suffix on the redirect target", () => {
+    expect(resolveRedirectTarget("/", "zh-Hans", "?ref=newsletter")).toBe(
+      "/zh-Hans/?ref=newsletter",
+    );
+  });
+
+  it("preserves a combined query string and hash suffix on the redirect target", () => {
+    expect(
+      resolveRedirectTarget("/", "en-US", "?ref=newsletter#projects"),
+    ).toBe("/en-US/?ref=newsletter#projects");
+  });
+
+  it("returns the plain locale root when no suffix is given", () => {
+    expect(resolveRedirectTarget("/", "zh-Hans", "")).toBe("/zh-Hans/");
+  });
 });

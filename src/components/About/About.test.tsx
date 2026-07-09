@@ -31,6 +31,13 @@ describe("About (en-GB, default locale)", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the section heading with data-section-heading for scroll highlighting", () => {
+    renderWithLocale(<About />);
+    expect(
+      screen.getByRole("heading", { name: enGB.about.heading }),
+    ).toHaveAttribute("data-section-heading");
+  });
+
   it("renders the localized aboutMe body text from enGB dict", () => {
     renderWithLocale(<About />);
     expect(screen.getByText(enGB.about.aboutMe)).toBeInTheDocument();

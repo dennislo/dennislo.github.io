@@ -20,6 +20,13 @@ describe("Education (en-GB, default locale)", () => {
     ).toBeInTheDocument();
   });
 
+  it("marks the section heading with data-section-heading for scroll highlighting", () => {
+    renderWithLocale(<Education />);
+    expect(
+      screen.getByRole("heading", { name: enGB.education.heading }),
+    ).toHaveAttribute("data-section-heading");
+  });
+
   it("renders the localized degree from enGB dict", () => {
     renderWithLocale(<Education />);
     expect(screen.getByText(enGB.education.degree)).toBeInTheDocument();

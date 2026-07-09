@@ -13,3 +13,11 @@ html {
 body {
   font-family: var(--font-mono);
 }
+
+.section-heading-highlight {
+  background-color: rgba(29, 78, 216, 0.1);
+}
+
+[data-theme="dark"] .section-heading-highlight {
+  background-color: rgba(96, 165, 250, 0.32);
+}

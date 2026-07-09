@@ -343,7 +343,10 @@ const GitHubActivity = () => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         <div className="lg:col-span-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100">
+          <h2
+            data-section-heading
+            className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100 w-fit -mx-3 px-3 rounded-lg transition-colors duration-500 motion-reduce:transition-none"
+          >
             {t("githubActivity.heading")}
           </h2>
           <div
