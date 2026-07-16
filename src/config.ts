@@ -6,17 +6,10 @@ export type EducationEntry = {
 };
 
 export type ProjectContentKey =
-  | "aiDevRoundup"
-  | "chromeExtensionMastery"
-  | "extensionKit";
+  "aiDevRoundup" | "chromeExtensionMastery" | "extensionKit";
 
 export type ExperienceContentKey =
-  | "crosstide"
-  | "pret"
-  | "natwest"
-  | "bcg"
-  | "elsevier"
-  | "starcount";
+  "crosstide" | "pret" | "natwest" | "bcg" | "elsevier" | "starcount";
 
 export type SectionNavLink = {
   label: string;
