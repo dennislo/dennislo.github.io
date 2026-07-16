@@ -35,6 +35,13 @@ const dictionaries: Array<{ name: string; dict: typeof enGB }> = [
 ];
 
 describe("Translation dictionary key parity", () => {
+  it("provides the user-visible Markdown link label in every locale", () => {
+    expect(enGB.asMarkdown.label).toBe("As Markdown");
+    expect(enUS.asMarkdown.label).toBe("As Markdown");
+    expect(zhHans.asMarkdown.label).toBe("以 Markdown 格式查看");
+    expect(esES.asMarkdown.label).toBe("Ver como Markdown");
+  });
+
   it("en-GB dictionary itself has no empty-string leaf values", () => {
     const emptyLeaves = collectLeafValues(enGB).filter(
       (v) => typeof v === "string" && v === "",
