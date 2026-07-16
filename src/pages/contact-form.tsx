@@ -11,12 +11,27 @@ import {
   stripLocale,
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
+import AsMarkdown from "../components/AsMarkdown/AsMarkdown";
 
-const ContactFormPage = () => (
-  <Layout>
-    <ContactForm />
-  </Layout>
-);
+interface ContactFormPageProps {
+  pageContext?: { locale?: unknown };
+}
+
+const ContactFormPage = ({ pageContext }: ContactFormPageProps) => {
+  const localeFromCtx = pageContext?.locale;
+  const locale =
+    typeof localeFromCtx === "string" && isLocale(localeFromCtx)
+      ? localeFromCtx
+      : defaultLocale;
+  const dict = getDictionary(locale);
+
+  return (
+    <Layout>
+      <AsMarkdown href="/contact-form.md" label={dict.asMarkdown.label} />
+      <ContactForm />
+    </Layout>
+  );
+};
 
 export default ContactFormPage;
 

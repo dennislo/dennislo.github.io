@@ -23,12 +23,24 @@ import {
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
 import { useSectionHighlight } from "../hooks/useSectionHighlight";
+import AsMarkdown from "../components/AsMarkdown/AsMarkdown";
 
-const IndexPage = () => {
+interface IndexPageProps {
+  pageContext?: { locale?: unknown };
+}
+
+const IndexPage = ({ pageContext }: IndexPageProps) => {
   useSectionHighlight();
+  const localeFromCtx = pageContext?.locale;
+  const locale =
+    typeof localeFromCtx === "string" && isLocale(localeFromCtx)
+      ? localeFromCtx
+      : defaultLocale;
+  const dict = getDictionary(locale);
 
   return (
     <Layout>
+      <AsMarkdown href="/index.md" label={dict.asMarkdown.label} />
       <SiteHeader />
       <Hero />
       <About />

@@ -159,6 +159,9 @@ export const esES: TranslationDictionary = {
     switchToDark: "Cambiar a modo oscuro",
     switchToLight: "Cambiar a modo claro",
   },
+  asMarkdown: {
+    label: "Ver como Markdown",
+  },
   footer: {
     emailAria: "Contactar con Dennis Lo",
     githubAria: "Dennis Lo en GitHub",
