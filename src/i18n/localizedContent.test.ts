@@ -98,12 +98,7 @@ describe("getLocalizedExperience", () => {
   it("maps localized bullets by stable content key, not array position", () => {
     type KeyedExperience = (typeof siteConfig.experience)[number] & {
       contentKey:
-        | "crosstide"
-        | "pret"
-        | "natwest"
-        | "bcg"
-        | "elsevier"
-        | "starcount";
+        "crosstide" | "pret" | "natwest" | "bcg" | "elsevier" | "starcount";
     };
     const mutableConfig = siteConfig as unknown as {
       experience: KeyedExperience[];

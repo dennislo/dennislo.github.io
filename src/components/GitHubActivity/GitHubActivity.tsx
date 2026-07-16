@@ -200,8 +200,7 @@ function formatEvent(event: GitHubEvent, t: Translate): FormattedEvent {
     }
     case "PullRequestEvent": {
       const pr = event.payload.pull_request as
-        | Record<string, unknown>
-        | undefined;
+        Record<string, unknown> | undefined;
       const action =
         typeof event.payload.action === "string"
           ? event.payload.action

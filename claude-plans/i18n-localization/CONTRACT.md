@@ -64,9 +64,7 @@ export const enGB = {
     education: "Education",
   },
   languageSwitcher: { ariaLabel: "Select language" },
-  hero: {
-    /* headings, tagline, CTA + social aria-labels */
-  },
+  hero: {/* headings, tagline, CTA + social aria-labels */},
   about: {
     heading: "About" /* aboutMe, agileIT, skills section headings, etc. */,
   },
@@ -94,9 +92,7 @@ export const enGB = {
   contact: {
     /* page title, field labels, placeholders, validation, submit, aria-describedby copy */
   },
-  notFound: {
-    /* 404 copy */
-  },
+  notFound: {/* 404 copy */},
   seo: {
     siteTitle: "...",
     description: "..." /* og/twitter, jsonld jobTitle/description */,
