@@ -70,6 +70,10 @@ function missingContent(
   );
 }
 
+function markdownLinkTargets(markdown: string): string[] {
+  return Array.from(markdown.matchAll(/\]\(([^)]+)\)/g), (match) => match[1]);
+}
+
 describe.each(localeCases)(
   "$locale homepage Markdown parity",
   ({ locale, dict, webAndMobileScope }) => {
@@ -113,16 +117,41 @@ describe.each(localeCases)(
       expect(missingSkills).toEqual([]);
     });
 
-    it("contains every authoritative experience role, company, and localized bullet", () => {
+    it("contains every authoritative experience field within its employer section", () => {
       const markdown = readLocalizedHomepage(locale);
       const experience = getLocalizedExperience(dict);
-      const expected = experience.flatMap(({ title, company, bullets }) => [
-        title,
-        company,
-        ...bullets,
-      ]);
+      const educationStart = markdown.indexOf(
+        normalizeWhitespace(dict.education.degree),
+      );
+      const missingFields = experience.flatMap((entry, index) => {
+        const companyStart = markdown.indexOf(
+          normalizeWhitespace(entry.company),
+        );
+        const entryStart = markdown.lastIndexOf(
+          normalizeWhitespace(entry.title),
+          companyStart,
+        );
+        const nextEntry = experience[index + 1];
+        const nextEntryStart = nextEntry
+          ? markdown.lastIndexOf(
+              normalizeWhitespace(nextEntry.title),
+              markdown.indexOf(normalizeWhitespace(nextEntry.company)),
+            )
+          : educationStart;
+        const employerSection = markdown.slice(entryStart, nextEntryStart);
+        const expected = [
+          entry.title,
+          entry.company,
+          entry.dateRange,
+          ...entry.bullets,
+        ];
 
-      expect(missingContent(markdown, expected)).toEqual([]);
+        return missingContent(employerSection, expected).map(
+          (content) => `${entry.company}: ${content}`,
+        );
+      });
+
+      expect(missingFields).toEqual([]);
     });
 
     it("preserves named experience platforms and web/mobile scope", () => {
@@ -147,6 +176,15 @@ describe.each(localeCases)(
       ];
 
       expect(missingContent(markdown, expectedLinks)).toEqual([]);
+    });
+
+    it("keeps homepage and contact-form links within the active locale", () => {
+      const markdown = readLocalizedHomepage(locale);
+      const targets = markdownLinkTargets(markdown);
+
+      expect(targets).toEqual(
+        expect.arrayContaining([`/${locale}/`, `/${locale}/contact-form/`]),
+      );
     });
   },
 );
