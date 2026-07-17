@@ -5,6 +5,35 @@ import { enGB } from "../i18n/translations/en-GB";
 import { renderWithLocale } from "../test/renderWithLocale";
 import { getDictionary } from "../i18n/dictionaries";
 import { siteConfig } from "../config";
+import type { Locale } from "../i18n/config";
+
+const markdownRoutes: ReadonlyArray<{
+  locale: Locale;
+  pathname: string;
+  href: string;
+}> = [
+  { locale: "en-GB", pathname: "/contact-form/", href: "/contact-form.md" },
+  {
+    locale: "en-GB",
+    pathname: "/en-GB/contact-form/",
+    href: "/contact-form.md",
+  },
+  {
+    locale: "en-US",
+    pathname: "/en-US/contact-form/",
+    href: "/en-US/contact-form.md",
+  },
+  {
+    locale: "zh-Hans",
+    pathname: "/zh-Hans/contact-form/",
+    href: "/zh-Hans/contact-form.md",
+  },
+  {
+    locale: "es-ES",
+    pathname: "/es-ES/contact-form/",
+    href: "/es-ES/contact-form.md",
+  },
+];
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -30,6 +59,19 @@ describe("ContactFormPage", () => {
     render(<ContactFormPage />);
     expect(screen.getByLabelText("Contact Form")).toBeInTheDocument();
   });
+
+  it.each(markdownRoutes)(
+    "links the $locale contact page at $pathname to $href",
+    ({ locale, href }) => {
+      render(<ContactFormPage pageContext={{ locale }} />);
+
+      expect(
+        screen.getByRole("link", {
+          name: getDictionary(locale).asMarkdown.label,
+        }),
+      ).toHaveAttribute("href", href);
+    },
+  );
 
   it("renders correctly when wrapped with LocaleProvider (en-GB)", () => {
     renderWithLocale(<ContactFormPage />);
@@ -146,4 +188,18 @@ describe("ContactFormPage Head — localized SEO", () => {
       `${siteConfig.siteUrl}/zh-Hans/contact-form/`,
     );
   });
+
+  it.each(markdownRoutes)(
+    "advertises $href as the Markdown alternate for $pathname",
+    ({ locale, pathname, href }) => {
+      render(
+        <LocalizedHead pageContext={{ locale }} location={{ pathname }} />,
+      );
+
+      const alternate = document.head.querySelector(
+        'link[rel="alternate"][type="text/markdown"]',
+      );
+      expect(alternate).toHaveAttribute("href", href);
+    },
+  );
 });
