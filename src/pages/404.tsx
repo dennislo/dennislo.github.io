@@ -2,14 +2,24 @@ import React from "react";
 import { Link } from "gatsby";
 import { useLocale } from "../i18n";
 import { Head as SharedHead } from "../components/Head/Head";
-import { defaultLocale, isLocale, stripLocale } from "../i18n/config";
+import {
+  defaultLocale,
+  isLocale,
+  localizePath,
+  stripLocale,
+} from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
+import AsMarkdown from "../components/AsMarkdown/AsMarkdown";
 
 const NotFoundPage = () => {
   const { t, localizePath } = useLocale();
 
   return (
     <main className="min-h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-950">
+      <AsMarkdown
+        href={localizePath("/404.md")}
+        label={t("asMarkdown.label")}
+      />
       <div className="text-center max-w-sm">
         <h1 className="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">
           {t("notFound.title")}
@@ -64,7 +74,11 @@ export function Head({ pageContext, location }: NotFoundHeadProps = {}) {
         path={basePath}
         showHreflang={false}
       />
-      <link rel="alternate" type="text/markdown" href="/404.md" />
+      <link
+        rel="alternate"
+        type="text/markdown"
+        href={localizePath("/404.md", locale)}
+      />
     </>
   );
 }

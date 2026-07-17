@@ -156,6 +156,9 @@ export const enUS: TranslationDictionary = {
     switchToDark: "Switch to dark mode",
     switchToLight: "Switch to light mode",
   },
+  asMarkdown: {
+    label: "As Markdown",
+  },
   footer: {
     emailAria: "Contact Dennis Lo",
     githubAria: "Dennis Lo on GitHub",

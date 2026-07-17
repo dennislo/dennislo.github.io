@@ -5,6 +5,19 @@ import { enGB } from "../i18n/translations/en-GB";
 import { renderWithLocale } from "../test/renderWithLocale";
 import { getDictionary } from "../i18n/dictionaries";
 import { siteConfig } from "../config";
+import type { Locale } from "../i18n/config";
+
+const markdownRoutes: ReadonlyArray<{
+  locale: Locale;
+  pathname: string;
+  href: string;
+}> = [
+  { locale: "en-GB", pathname: "/", href: "/index.md" },
+  { locale: "en-GB", pathname: "/en-GB/", href: "/index.md" },
+  { locale: "en-US", pathname: "/en-US/", href: "/en-US/index.md" },
+  { locale: "zh-Hans", pathname: "/zh-Hans/", href: "/zh-Hans/index.md" },
+  { locale: "es-ES", pathname: "/es-ES/", href: "/es-ES/index.md" },
+];
 
 jest.mock("../components/Layout/Layout", () => ({
   __esModule: true,
@@ -127,6 +140,19 @@ describe("IndexPage", () => {
     expect(screen.getByLabelText("SiteFooter")).toBeInTheDocument();
   });
 
+  it.each(markdownRoutes)(
+    "links the $locale homepage at $pathname to $href",
+    ({ locale, href }) => {
+      render(<IndexPage pageContext={{ locale }} />);
+
+      expect(
+        screen.getByRole("link", {
+          name: getDictionary(locale).asMarkdown.label,
+        }),
+      ).toHaveAttribute("href", href);
+    },
+  );
+
   it("renders the page head title", () => {
     render(<Head />);
     expect(document.title).toBe("Who is DLO?");
@@ -209,4 +235,18 @@ describe("IndexPage Head — localized SEO", () => {
       `${siteConfig.siteUrl}/zh-Hans/`,
     );
   });
+
+  it.each(markdownRoutes)(
+    "advertises $href as the Markdown alternate for $pathname",
+    ({ locale, pathname, href }) => {
+      render(
+        <LocalizedHead pageContext={{ locale }} location={{ pathname }} />,
+      );
+
+      const alternate = document.head.querySelector(
+        'link[rel="alternate"][type="text/markdown"]',
+      );
+      expect(alternate).toHaveAttribute("href", href);
+    },
+  );
 });

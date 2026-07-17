@@ -148,6 +148,9 @@ export const zhHans: TranslationDictionary = {
     switchToDark: "切换到深色模式",
     switchToLight: "切换到浅色模式",
   },
+  asMarkdown: {
+    label: "以 Markdown 格式查看",
+  },
   footer: {
     emailAria: "联系 Dennis Lo",
     githubAria: "Dennis Lo 的 GitHub",

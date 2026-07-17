@@ -5,6 +5,23 @@ import NotFoundPage, { Head } from "./404";
 import { enGB } from "../i18n/translations/en-GB";
 import { zhHans } from "../i18n/translations/zh-Hans";
 import { renderWithLocale } from "../test/renderWithLocale";
+import { getDictionary } from "../i18n/dictionaries";
+import type { Locale } from "../i18n/config";
+
+const markdownRoutes: ReadonlyArray<{
+  locale: Locale;
+  pathname: string;
+  href: string;
+}> = [
+  { locale: "en-GB", pathname: "/404/", href: "/404.md" },
+  { locale: "en-US", pathname: "/en-US/404/", href: "/en-US/404.md" },
+  {
+    locale: "zh-Hans",
+    pathname: "/zh-Hans/404/",
+    href: "/zh-Hans/404.md",
+  },
+  { locale: "es-ES", pathname: "/es-ES/404/", href: "/es-ES/404.md" },
+];
 
 jest.mock("gatsby", () => ({
   Link: function MockLink({
@@ -106,6 +123,41 @@ describe("NotFoundPage (en-GB, default locale)", () => {
     expect(link).toBeInTheDocument();
     expect(link?.getAttribute("href")).toBe("/404.md");
   });
+});
+
+describe("NotFoundPage Markdown links", () => {
+  it.each(markdownRoutes)(
+    "links the $locale 404 page at $pathname to $href",
+    ({ locale, href }) => {
+      renderWithLocale(<NotFoundPage />, locale);
+
+      expect(
+        screen.getByRole("link", {
+          name: getDictionary(locale).asMarkdown.label,
+        }),
+      ).toHaveAttribute("href", href);
+    },
+  );
+
+  it.each(markdownRoutes)(
+    "advertises $href as the Markdown alternate for $pathname",
+    ({ locale, pathname, href }) => {
+      document.head.innerHTML = "";
+
+      render(
+        <Head
+          {...mockPageProps}
+          pageContext={{ locale }}
+          location={{ ...mockLocation, pathname }}
+        />,
+      );
+
+      const alternate = document.head.querySelector(
+        'link[rel="alternate"][type="text/markdown"]',
+      );
+      expect(alternate).toHaveAttribute("href", href);
+    },
+  );
 });
 
 describe("NotFoundPage (zh-Hans locale)", () => {
