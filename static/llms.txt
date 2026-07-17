@@ -28,3 +28,6 @@ Clean Markdown source is available at direct `.md` routes.
 - [Homepage Markdown](/index.md): Clean source for the homepage profile, services, projects, experience, and education.
 - [Contact Markdown](/contact-form.md): Clean source for contact intent and contact options.
 - [404 Markdown](/404.md): Clean source for fallback navigation.
+- [English (US) Markdown](/en-US/index.md): US English homepage source, with localized [contact](/en-US/contact-form.md) and [404](/en-US/404.md) sources.
+- [简体中文 Markdown](/zh-Hans/index.md): 简体中文首页，以及本地化的[联系](/zh-Hans/contact-form.md)和 [404](/zh-Hans/404.md) 源文件。
+- [Español (España) Markdown](/es-ES/index.md): Página de inicio en español, con fuentes localizadas de [contacto](/es-ES/contact-form.md) y [404](/es-ES/404.md).

@@ -18,6 +18,7 @@ import { siteConfig } from "../config";
 import {
   isLocale,
   defaultLocale,
+  localizePath,
   localeMeta,
   stripLocale,
 } from "../i18n/config";
@@ -40,7 +41,10 @@ const IndexPage = ({ pageContext }: IndexPageProps) => {
 
   return (
     <Layout>
-      <AsMarkdown href="/index.md" label={dict.asMarkdown.label} />
+      <AsMarkdown
+        href={localizePath("/index.md", locale)}
+        label={dict.asMarkdown.label}
+      />
       <SiteHeader />
       <Hero />
       <About />
@@ -99,7 +103,11 @@ export function Head({ pageContext, location }: IndexHeadProps = {}) {
         path={basePath}
         schemas={schemas}
       />
-      <link rel="alternate" type="text/markdown" href="/index.md" />
+      <link
+        rel="alternate"
+        type="text/markdown"
+        href={localizePath("/index.md", locale)}
+      />
     </>
   );
 }

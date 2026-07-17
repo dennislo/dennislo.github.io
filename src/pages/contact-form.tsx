@@ -27,7 +27,10 @@ const ContactFormPage = ({ pageContext }: ContactFormPageProps) => {
 
   return (
     <Layout>
-      <AsMarkdown href="/contact-form.md" label={dict.asMarkdown.label} />
+      <AsMarkdown
+        href={localizePath("/contact-form.md", locale)}
+        label={dict.asMarkdown.label}
+      />
       <ContactForm />
     </Layout>
   );
@@ -68,7 +71,11 @@ export function Head({ pageContext, location }: ContactHeadProps = {}) {
         path={basePath}
         schemas={schemas}
       />
-      <link rel="alternate" type="text/markdown" href="/contact-form.md" />
+      <link
+        rel="alternate"
+        type="text/markdown"
+        href={localizePath("/contact-form.md", locale)}
+      />
     </>
   );
 }
