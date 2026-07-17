@@ -41,60 +41,66 @@ I'm Dennis Lo, an IT consultant and software engineer who crafts robust, scalabl
 
 ### AI Dev Roundup Newsletter
 
-One concise email. Five minutes. Every Tuesday. Essential AI news and trends, production-ready libraries, and developer tools curated for engineers.
+One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, and developer tools curated for engineers.
+
+Skills: React, Node.js, AWS
 
 ### Chrome Extension Mastery
 
-A comprehensive course covering full-stack Chrome extension development, from fundamentals to publishing on the Chrome Web Store.
+A comprehensive course covering full-stack Chrome extension development from fundamentals to publishing on the Chrome Web Store.
+
+Skills: JavaScript, Chrome APIs, React
 
 ### ExtensionKit
 
 A starter template kit for Chrome extensions with TypeScript, React, and Vite — get from zero to published in minutes.
 
+Skills: TypeScript, React, Vite
+
 ## Experience
 
 ### Software Engineer (Contractor) — Crosstide / 101 Ways
 
-_Nov 2021 – Present_
+_Nov 2021 - Present_
 
 - Architected and led the Marks & Spencer web platform monorepo, now used by 200+ engineers
 - Replatformed the basket and checkout application processing millions of orders daily
-- Championed test-driven development, decision logs, and thorough code reviews
+- Championed test-driven development, decision logs, and thorough code reviews across the team
 
 ### Software Engineer (Contractor) — Pret A Manger
 
-_Mar 2021 – Oct 2021_
+_Mar 2021 - Oct 2021_
 
 - Enhanced high-volume subscription transactions with Chargebee, Commerce Tools, and Adyen
-- Advanced engineering practices through fully remote pair programming and increased test coverage
+- Spearheaded engineering practices through full remote pair programming and increased test coverage
 
 ### Software Engineer (Contractor) — NatWest Group
 
-_Sep 2018 – Feb 2021_
+_Sep 2018 - Feb 2021_
 
-- Developed a greenfield HR platform with React, Redux, and Node
+- Developed a greenfield HR platform from scratch using React, Redux, and Node
 - Collaborated across NLP, legal, insurance, and HR disciplines to deliver NatWest Mentor
 
 ### Software Engineer (Contractor) — BCG Digital Ventures
 
-_Apr 2018 – Aug 2018_
+_Apr 2018 - Aug 2018_
 
-- Built a real-time data visualization platform for IoT startup MachineMax
-- Collaborated with hardware, data science, and ML teams on production-grade dashboards
+- Built a real-time data visualization platform for an IoT startup (MachineMax)
+- Collaborated with hardware, data science, and ML teams to deliver production-grade dashboards
 
 ### Software Engineer (Contractor) — Elsevier
 
-_Apr 2016 – Mar 2018_
+_Apr 2016 - Mar 2018_
 
-- Developed ScienceDirect journal homepages for publications including Cell and The Lancet
-- Designed a shared UI library to accelerate cross-team frontend development
+- Developed journal home pages for ScienceDirect, serving publications like Cell and The Lancet
+- Designed and built a shared UI library to accelerate cross-team frontend development
 
 ### Senior Software Engineer — Starcount
 
-_Sep 2014 – Mar 2016_
+_Sep 2014 - Mar 2016_
 
-- Built the Vibe web app aggregating content from major social networks
-- Architected embeddable web components for third-party integration
+- Built the Vibe web app aggregating social media content from Facebook, Twitter, Instagram, and YouTube
+- Architected embeddable web components for third-party integration across web and mobile
 - Designed an enterprise analytics platform with scalable PDF report generation
 
 ## Education
@@ -111,4 +117,6 @@ _2003 – 2008_
 - Email: [lo.dennis@gmail.com](mailto:lo.dennis@gmail.com)
 - GitHub: [github.com/dennislo](https://github.com/dennislo)
 - LinkedIn: [linkedin.com/in/dennis-lo-profile](https://www.linkedin.com/in/dennis-lo-profile)
+- Instagram: [instagram.com/dlo](https://www.instagram.com/dlo)
+- Meet: [Schedule an online meeting](https://www.cal.eu/dennis-lo/online-meeting)
 - Contact form: [/en-US/contact-form/](/en-US/contact-form/)
