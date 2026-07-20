@@ -148,3 +148,57 @@ test.describe("As Markdown link", () => {
     });
   }
 });
+
+test.describe("As Markdown responsive icon", () => {
+  test("shows only the icon visually below sm while preserving the accessible name", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const link = page.getByRole("link", { name: "As Markdown" });
+    const icon = link.locator('svg[aria-hidden="true"]');
+    const visualLabel = link.getByText("As Markdown", { exact: true });
+
+    await expect(link).toBeVisible();
+    await expect(icon).toBeVisible();
+    await expect(visualLabel).toBeHidden();
+
+    await page.setViewportSize({ width: 640, height: 800 });
+
+    await expect(link).toBeVisible();
+    await expect(icon).toBeVisible();
+    await expect(visualLabel).toBeVisible();
+  });
+
+  test("the currentColor icon follows the link colour in light and dark themes", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("theme-source", "manual");
+      localStorage.setItem("theme", "light");
+    });
+    await page.goto("/");
+
+    const link = page.getByRole("link", { name: "As Markdown" });
+    const icon = link.locator('svg[aria-hidden="true"]');
+    const iconUsesLinkColour = async () =>
+      icon.evaluate((element) => {
+        const iconStyle = getComputedStyle(element);
+        const linkStyle = getComputedStyle(element.closest("a") as HTMLElement);
+        return (
+          iconStyle.fill === linkStyle.color ||
+          iconStyle.stroke === linkStyle.color
+        );
+      });
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(icon).toBeVisible();
+    expect(await iconUsesLinkColour()).toBe(true);
+
+    await page.getByRole("button", { name: "Switch to dark mode" }).click();
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    expect(await iconUsesLinkColour()).toBe(true);
+  });
+});

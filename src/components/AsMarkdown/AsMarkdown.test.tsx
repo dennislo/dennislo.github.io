@@ -19,4 +19,32 @@ describe("AsMarkdown", () => {
       screen.getByRole("link", { name: "以 Markdown 格式查看" }),
     ).toBeVisible();
   });
+
+  it("includes a decorative Markdown icon that inherits the link colour", () => {
+    render(<AsMarkdown href="/index.md" label="As Markdown" />);
+
+    const link = screen.getByRole("link", { name: "As Markdown" });
+    const icon = link.querySelector("svg");
+    const currentColorElement = icon?.querySelector(
+      '[fill="currentColor"], [stroke="currentColor"]',
+    );
+
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveAttribute("aria-hidden", "true");
+    expect(icon).toHaveAttribute("focusable", "false");
+    expect(icon?.querySelector("path")).toBeInTheDocument();
+    expect(
+      icon?.matches('[fill="currentColor"], [stroke="currentColor"]') ||
+        currentColorElement !== null,
+    ).toBe(true);
+  });
+
+  it("keeps the localized accessible name when its visual label is responsive", () => {
+    render(<AsMarkdown href="/index.md" label="Ver como Markdown" />);
+
+    const link = screen.getByRole("link", { name: "Ver como Markdown" });
+
+    expect(link).toHaveAccessibleName("Ver como Markdown");
+    expect(screen.getByText("Ver como Markdown")).toBeInTheDocument();
+  });
 });
