@@ -28,6 +28,7 @@ jobs:
           sparse-checkout: .github/codex/prompts/review.md
           sparse-checkout-cone-mode: false
           persist-credentials: false
+          path: trusted
 
       - name: Check out pull request
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -43,8 +44,7 @@ jobs:
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           permission-profile: ":read-only"
-          prompt-file: .github/codex/prompts/review.md
-          working-directory: pr
+          prompt-file: trusted/.github/codex/prompts/review.md
 
   post_feedback:
     runs-on: ubuntu-latest
