@@ -43,7 +43,7 @@ jobs:
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           permission-profile: ":read-only"
-          prompt-file: ../.github/codex/prompts/review.md
+          prompt-file: .github/codex/prompts/review.md
           working-directory: pr
 
   post_feedback:
