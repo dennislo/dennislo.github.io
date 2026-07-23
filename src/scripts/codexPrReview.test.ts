@@ -86,8 +86,9 @@ describe("Codex pull request review configuration", () => {
       /permission-profile:\s*(?:"|')?:read-only(?:"|')?/,
     );
     expect(codexActionStep).toMatch(
-      /prompt-file:\s*(?:\.\.\/|\$\{\{\s*github\.workspace\s*\}\}\/)\.github\/codex\/prompts\/review\.md/,
+      /^\s+prompt-file:\s*(?:"|')?\.github\/codex\/prompts\/review\.md(?:"|')?\s*$/m,
     );
+    expect(codexActionStep).not.toContain("../.github/codex/prompts/review.md");
     expect(workflow).not.toContain("allow-unsafe-pr-checkout");
   });
 
