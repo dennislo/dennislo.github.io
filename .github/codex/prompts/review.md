@@ -32,18 +32,11 @@ React Testing Library behavior-focused coverage, accessible query priorities,
 `userEvent` for interactions, AAA structure, and mocks at module boundaries.
 
 Verify a potential finding against the surrounding implementation before
-reporting it. When useful and possible in the read-only environment, run the
-narrowest relevant checks from:
-
-- `npm test`
-- `npm run lint`
-- `npm run typecheck`
-- `npm run build`
-- `npm run test:e2e`
-
-Do not install dependencies, use the network, or modify files. If a relevant
-command cannot run in the read-only environment, record that as residual risk
-rather than treating the command failure itself as a code defect.
+reporting it. Do not execute repository-provided code, scripts, tests, builds,
+package managers, or binaries. Do not install dependencies, use the network, or
+modify files. Limit all commands to read-only inspection such as `git diff`,
+`git show`, `git log`, `rg`, and `sed`. Note anything that cannot be verified
+safely as residual risk rather than treating the lack of execution as a defect.
 
 ## Output
 
