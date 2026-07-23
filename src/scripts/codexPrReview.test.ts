@@ -9,14 +9,36 @@ describe("Codex pull request review configuration", () => {
     const workflow = readRepositoryFile(
       ".github/workflows/codex-pr-review.yml",
     );
+
+    expect(workflow).toMatch(
+      /pull_request:\s*\n\s+types:\s*\[\s*opened,\s*synchronize,\s*reopened\s*\]/,
+    );
+    expect(workflow).toMatch(
+      /codex:\s*\n[\s\S]*?permissions:\s*\n\s+contents:\s*read[\s\S]*?outputs:\s*\n\s+final_message:\s*\$\{\{\s*steps\.run_codex\.outputs\.final-message\s*\}\}/,
+    );
+    expect(workflow).toMatch(
+      /uses:\s*actions\/checkout@\S+[\s\S]*?ref:\s*(?:"|')?refs\/pull\/\$\{\{\s*github\.event\.pull_request\.number\s*\}\}\/merge(?:"|')?[\s\S]*?fetch-depth:\s*0[\s\S]*?persist-credentials:\s*false/,
+    );
+    expect(workflow).toMatch(
+      /id:\s*run_codex[\s\S]*?uses:\s*openai\/codex-action@\S+[\s\S]*?openai-api-key:\s*\$\{\{\s*secrets\.OPENAI_API_KEY\s*\}\}[\s\S]*?prompt-file:\s*\.github\/codex\/prompts\/review\.md/,
+    );
+    expect(workflow).toMatch(
+      /permission-profile:\s*(?:"|')?:read-only(?:"|')?/,
+    );
+    expect(workflow).toMatch(
+      /post_feedback:\s*\n[\s\S]*?needs:\s*codex[\s\S]*?if:\s*(?:\$\{\{\s*)?needs\.codex\.outputs\.final_message\s*!=\s*''(?:\s*\}\})?[\s\S]*?permissions:\s*\n\s+issues:\s*write\s*\n\s+pull-requests:\s*write[\s\S]*?uses:\s*actions\/github-script@\S+[\s\S]*?issue_number:\s*context\.payload\.pull_request\.number[\s\S]*?body:\s*process\.env\.CODEX_FINAL_MESSAGE[\s\S]*?CODEX_FINAL_MESSAGE:\s*\$\{\{\s*needs\.codex\.outputs\.final_message\s*\}\}/,
+    );
+  });
+
+  it("runs Codex only for same-repository pull requests from trusted authors", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
+    );
     const codexJob =
       workflow.match(/\n  codex:\n[\s\S]*?(?=\n  [\w-]+:\n|$)/)?.[0] ?? "";
     const trustedAuthorGuard =
       codexJob.match(/^    if:\s*(.*(?:\n {6,}.*)*)/m)?.[0] ?? "";
 
-    expect(workflow).toMatch(
-      /pull_request:\s*\n\s+types:\s*\[\s*opened,\s*synchronize,\s*reopened\s*\]/,
-    );
     expect(trustedAuthorGuard).toContain(
       "github.event.pull_request.author_association",
     );
@@ -24,21 +46,27 @@ describe("Codex pull request review configuration", () => {
     expect(trustedAuthorGuard).not.toMatch(
       /\b(?:CONTRIBUTOR|FIRST_TIMER|FIRST_TIME_CONTRIBUTOR|MANNEQUIN|NONE)\b/,
     );
-    expect(workflow).toMatch(
-      /codex:\s*\n[\s\S]*?permissions:\s*\n\s+contents:\s*read[\s\S]*?outputs:\s*\n\s+final_message:\s*\$\{\{\s*steps\.run_codex\.outputs\.final-message\s*\}\}/,
+    expect(trustedAuthorGuard).toMatch(
+      /github\.event\.pull_request\.head\.repo\.full_name\s*==\s*github\.repository/,
     );
-    expect(workflow).toMatch(
-      /uses:\s*actions\/checkout@v\d+[\s\S]*?ref:\s*(?:"|')?refs\/pull\/\$\{\{\s*github\.event\.pull_request\.number\s*\}\}\/merge(?:"|')?[\s\S]*?fetch-depth:\s*0[\s\S]*?persist-credentials:\s*false/,
+  });
+
+  it("pins every workflow action to a reviewed commit", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
     );
-    expect(workflow).toMatch(
-      /id:\s*run_codex[\s\S]*?uses:\s*openai\/codex-action@v1[\s\S]*?openai-api-key:\s*\$\{\{\s*secrets\.OPENAI_API_KEY\s*\}\}[\s\S]*?prompt-file:\s*\.github\/codex\/prompts\/review\.md/,
-    );
-    expect(workflow).toMatch(
-      /permission-profile:\s*(?:"|')?:read-only(?:"|')?/,
-    );
-    expect(workflow).toMatch(
-      /post_feedback:\s*\n[\s\S]*?needs:\s*codex[\s\S]*?if:\s*(?:\$\{\{\s*)?needs\.codex\.outputs\.final_message\s*!=\s*''(?:\s*\}\})?[\s\S]*?permissions:\s*\n\s+issues:\s*write\s*\n\s+pull-requests:\s*write[\s\S]*?uses:\s*actions\/github-script@v\d+[\s\S]*?issue_number:\s*context\.payload\.pull_request\.number[\s\S]*?body:\s*process\.env\.CODEX_FINAL_MESSAGE[\s\S]*?CODEX_FINAL_MESSAGE:\s*\$\{\{\s*needs\.codex\.outputs\.final_message\s*\}\}/,
-    );
+
+    for (const action of [
+      "actions/checkout",
+      "openai/codex-action",
+      "actions/github-script",
+    ]) {
+      expect(workflow).toMatch(
+        new RegExp(
+          `uses:\\s*${action.replace("/", "\\/")}@[0-9a-fA-F]{40}(?:\\s+#.*)?`,
+        ),
+      );
+    }
   });
 
   it("gives Codex actionable, findings-first repository review guidance", () => {
