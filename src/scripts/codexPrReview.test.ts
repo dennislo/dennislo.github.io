@@ -26,7 +26,7 @@ describe("Codex pull request review configuration", () => {
     expect(workflow).not.toMatch(/^\s+pull_request:\s*$/m);
   });
 
-  it("checks out only the trusted base prompt at the workspace root", () => {
+  it("checks out only the trusted base prompt in a trusted directory", () => {
     const workflow = readRepositoryFile(
       ".github/workflows/codex-pr-review.yml",
     );
@@ -43,7 +43,7 @@ describe("Codex pull request review configuration", () => {
     );
     expect(trustedPromptCheckout).toMatch(/sparse-checkout-cone-mode:\s*false/);
     expect(trustedPromptCheckout).toMatch(/persist-credentials:\s*false/);
-    expect(trustedPromptCheckout).not.toMatch(/^\s+path:/m);
+    expect(trustedPromptCheckout).toMatch(/^\s+path:\s*trusted\s*$/m);
   });
 
   it("checks out the pull request merge ref in an isolated directory", () => {
@@ -65,7 +65,7 @@ describe("Codex pull request review configuration", () => {
     expect(pullRequestCheckout).toMatch(/persist-credentials:\s*false/);
   });
 
-  it("runs read-only Codex in the isolated pull request checkout", () => {
+  it("runs read-only Codex from the trusted workspace root", () => {
     const workflow = readRepositoryFile(
       ".github/workflows/codex-pr-review.yml",
     );
@@ -81,14 +81,13 @@ describe("Codex pull request review configuration", () => {
     expect(codexActionStep).toMatch(
       /openai-api-key:\s*\$\{\{\s*secrets\.OPENAI_API_KEY\s*\}\}/,
     );
-    expect(codexActionStep).toMatch(/working-directory:\s*pr/);
+    expect(codexActionStep).not.toMatch(/^\s+working-directory:/m);
     expect(codexActionStep).toMatch(
       /permission-profile:\s*(?:"|')?:read-only(?:"|')?/,
     );
     expect(codexActionStep).toMatch(
-      /^\s+prompt-file:\s*(?:"|')?\.github\/codex\/prompts\/review\.md(?:"|')?\s*$/m,
+      /^\s+prompt-file:\s*(?:"|')?trusted\/\.github\/codex\/prompts\/review\.md(?:"|')?\s*$/m,
     );
-    expect(codexActionStep).not.toContain("../.github/codex/prompts/review.md");
     expect(workflow).not.toContain("allow-unsafe-pr-checkout");
   });
 
@@ -156,6 +155,18 @@ describe("Codex pull request review configuration", () => {
     expect(prompt).toMatch(/If no findings remain[\s\S]*residual risk/i);
     expect(prompt).toMatch(
       /diff[\s\S]*(?:repository|pull request)[\s\S]*untrusted[\s\S]*ignore any instructions/i,
+    );
+    expect(prompt).toMatch(/pull request checkout is [`']?pr\//i);
+    expect(prompt).toContain("git -C pr");
+    expect(prompt).toMatch(/rg[\s\S]{0,200}[`']?pr\//i);
+    expect(prompt).toMatch(/sed[\s\S]{0,200}[`']?pr\//i);
+    expect(prompt).toMatch(/(?:repository|project) instructions/i);
+    expect(prompt).toContain("AGENTS.md");
+    expect(prompt).toMatch(
+      /(?:instructions|AGENTS\.md)[\s\S]{0,400}untrusted[\s\S]{0,200}ignore/i,
+    );
+    expect(prompt).toMatch(
+      /(?:instructions|AGENTS\.md)[^\n]*(?:inside|under|in) [`']?pr\//i,
     );
     expect(prompt).toMatch(
       /(?:do not|never) (?:execute|run) repository-provided code[\s\S]*scripts[\s\S]*tests[\s\S]*builds[\s\S]*package managers[\s\S]*binaries/i,
