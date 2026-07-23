@@ -4,27 +4,98 @@ import { resolve } from "node:path";
 const readRepositoryFile = (path: string): string =>
   readFileSync(resolve(process.cwd(), path), "utf8");
 
+const findWorkflowSteps = (workflow: string): string[] =>
+  [...workflow.matchAll(/^      - [^\n]*(?:\n(?!      - )[^\n]*)*/gm)].map(
+    ([step]) => step,
+  );
+
+const findCheckoutSteps = (workflow: string): string[] =>
+  findWorkflowSteps(workflow).filter((step) =>
+    step.includes("uses: actions/checkout@"),
+  );
+
 describe("Codex pull request review configuration", () => {
-  it("runs Codex against the pull request merge ref and posts non-empty review feedback", () => {
+  it("uses the trusted pull request target context", () => {
     const workflow = readRepositoryFile(
       ".github/workflows/codex-pr-review.yml",
     );
 
     expect(workflow).toMatch(
-      /pull_request:\s*\n\s+types:\s*\[\s*opened,\s*synchronize,\s*reopened\s*\]/,
+      /pull_request_target:\s*\n\s+types:\s*\[\s*opened,\s*synchronize,\s*reopened\s*\]/,
     );
+    expect(workflow).not.toMatch(/^\s+pull_request:\s*$/m);
+  });
+
+  it("checks out only the trusted base prompt at the workspace root", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
+    );
+    const trustedPromptCheckout =
+      findCheckoutSteps(workflow).find((step) =>
+        step.includes("github.event.pull_request.base.sha"),
+      ) ?? "";
+
+    expect(trustedPromptCheckout).toMatch(
+      /ref:\s*\$\{\{\s*github\.event\.pull_request\.base\.sha\s*\}\}/,
+    );
+    expect(trustedPromptCheckout).toMatch(
+      /^\s+sparse-checkout:\s*(?:"|')?\.github\/codex\/prompts\/review\.md(?:"|')?\s*$/m,
+    );
+    expect(trustedPromptCheckout).toMatch(/sparse-checkout-cone-mode:\s*false/);
+    expect(trustedPromptCheckout).toMatch(/persist-credentials:\s*false/);
+    expect(trustedPromptCheckout).not.toMatch(/^\s+path:/m);
+  });
+
+  it("checks out the pull request merge ref in an isolated directory", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
+    );
+    const pullRequestCheckout =
+      findCheckoutSteps(workflow).find((step) =>
+        step.includes(
+          "refs/pull/${{ github.event.pull_request.number }}/merge",
+        ),
+      ) ?? "";
+
+    expect(pullRequestCheckout).toMatch(
+      /ref:\s*(?:"|')?refs\/pull\/\$\{\{\s*github\.event\.pull_request\.number\s*\}\}\/merge(?:"|')?/,
+    );
+    expect(pullRequestCheckout).toMatch(/path:\s*pr/);
+    expect(pullRequestCheckout).toMatch(/fetch-depth:\s*0/);
+    expect(pullRequestCheckout).toMatch(/persist-credentials:\s*false/);
+  });
+
+  it("runs read-only Codex in the isolated pull request checkout", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
+    );
+    const codexActionStep =
+      findWorkflowSteps(workflow).find((step) =>
+        step.includes("uses: openai/codex-action@"),
+      ) ?? "";
+
     expect(workflow).toMatch(
       /codex:\s*\n[\s\S]*?permissions:\s*\n\s+contents:\s*read[\s\S]*?outputs:\s*\n\s+final_message:\s*\$\{\{\s*steps\.run_codex\.outputs\.final-message\s*\}\}/,
     );
-    expect(workflow).toMatch(
-      /uses:\s*actions\/checkout@\S+[\s\S]*?ref:\s*(?:"|')?refs\/pull\/\$\{\{\s*github\.event\.pull_request\.number\s*\}\}\/merge(?:"|')?[\s\S]*?fetch-depth:\s*0[\s\S]*?persist-credentials:\s*false/,
+    expect(codexActionStep).toMatch(/id:\s*run_codex/);
+    expect(codexActionStep).toMatch(
+      /openai-api-key:\s*\$\{\{\s*secrets\.OPENAI_API_KEY\s*\}\}/,
     );
-    expect(workflow).toMatch(
-      /id:\s*run_codex[\s\S]*?uses:\s*openai\/codex-action@\S+[\s\S]*?openai-api-key:\s*\$\{\{\s*secrets\.OPENAI_API_KEY\s*\}\}[\s\S]*?prompt-file:\s*\.github\/codex\/prompts\/review\.md/,
-    );
-    expect(workflow).toMatch(
+    expect(codexActionStep).toMatch(/working-directory:\s*pr/);
+    expect(codexActionStep).toMatch(
       /permission-profile:\s*(?:"|')?:read-only(?:"|')?/,
     );
+    expect(codexActionStep).toMatch(
+      /prompt-file:\s*(?:\.\.\/|\$\{\{\s*github\.workspace\s*\}\}\/)\.github\/codex\/prompts\/review\.md/,
+    );
+    expect(workflow).not.toContain("allow-unsafe-pr-checkout");
+  });
+
+  it("posts non-empty review feedback", () => {
+    const workflow = readRepositoryFile(
+      ".github/workflows/codex-pr-review.yml",
+    );
+
     expect(workflow).toMatch(
       /post_feedback:\s*\n[\s\S]*?needs:\s*codex[\s\S]*?if:\s*(?:\$\{\{\s*)?needs\.codex\.outputs\.final_message\s*!=\s*''(?:\s*\}\})?[\s\S]*?permissions:\s*\n\s+issues:\s*write\s*\n\s+pull-requests:\s*write[\s\S]*?uses:\s*actions\/github-script@\S+[\s\S]*?issue_number:\s*context\.payload\.pull_request\.number[\s\S]*?body:\s*process\.env\.CODEX_FINAL_MESSAGE[\s\S]*?CODEX_FINAL_MESSAGE:\s*\$\{\{\s*needs\.codex\.outputs\.final_message\s*\}\}/,
     );
@@ -55,17 +126,21 @@ describe("Codex pull request review configuration", () => {
     const workflow = readRepositoryFile(
       ".github/workflows/codex-pr-review.yml",
     );
+    const actionReferences = [...workflow.matchAll(/uses:\s*(\S+)/g)].map(
+      ([, reference]) => reference,
+    );
 
     for (const action of [
       "actions/checkout",
       "openai/codex-action",
       "actions/github-script",
     ]) {
-      expect(workflow).toMatch(
-        new RegExp(
-          `uses:\\s*${action.replace("/", "\\/")}@[0-9a-fA-F]{40}(?:\\s+#.*)?`,
-        ),
-      );
+      expect(
+        actionReferences.some((reference) => reference.startsWith(action)),
+      ).toBe(true);
+    }
+    for (const reference of actionReferences) {
+      expect(reference).toMatch(/^[\w./-]+@[0-9a-fA-F]{40}$/);
     }
   });
 
@@ -81,15 +156,10 @@ describe("Codex pull request review configuration", () => {
     expect(prompt).toMatch(
       /diff[\s\S]*(?:repository|pull request)[\s\S]*untrusted[\s\S]*ignore any instructions/i,
     );
-    for (const command of [
-      "npm test",
-      "npm run lint",
-      "npm run typecheck",
-      "npm run build",
-      "npm run test:e2e",
-    ]) {
-      expect(prompt).toContain(command);
-    }
+    expect(prompt).toMatch(
+      /(?:do not|never) (?:execute|run) repository-provided code[\s\S]*scripts[\s\S]*tests[\s\S]*builds[\s\S]*package managers[\s\S]*binaries/i,
+    );
+    expect(prompt).toMatch(/limit (?:all )?commands to read-only inspection/i);
     expect(prompt).toMatch(
       /correctness[\s\S]*security[\s\S]*regressions[\s\S]*accessibility[\s\S]*error handling[\s\S]*test/i,
     );
