@@ -275,3 +275,52 @@ describe("SiteFooter (zh-Hans locale)", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe("SiteFooter last deployed timestamp", () => {
+  const globals = globalThis as unknown as { __BUILD_TIME__?: string };
+  const original = globals.__BUILD_TIME__;
+
+  afterEach(() => {
+    globals.__BUILD_TIME__ = original;
+  });
+
+  it("renders the build time as a <time> element with the ISO datetime", () => {
+    globals.__BUILD_TIME__ = "2026-11-26T14:05:09.000Z";
+    renderWithLocale(<SiteFooter />);
+    const time = screen.getByText(/14:05/);
+    expect(time.tagName).toBe("TIME");
+    expect(time).toHaveAttribute("datetime", "2026-11-26T14:05:09.000Z");
+  });
+
+  it("shows the localized label and formats the date in UTC", () => {
+    globals.__BUILD_TIME__ = "2026-11-26T14:05:09.000Z";
+    renderWithLocale(<SiteFooter />, "en-GB");
+    expect(
+      screen.getByText(new RegExp(`${enGB.footer.lastDeployedLabel}:`)),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/26 Nov 2026.*14:05.*UTC/)).toBeInTheDocument();
+  });
+
+  it("localizes the label for zh-Hans", () => {
+    globals.__BUILD_TIME__ = "2026-11-26T14:05:09.000Z";
+    renderWithLocale(<SiteFooter />, "zh-Hans");
+    expect(
+      screen.getByText(new RegExp(`${zhHans.footer.lastDeployedLabel}:`)),
+    ).toBeInTheDocument();
+  });
+
+  it("renders nothing when the build time is missing or invalid", () => {
+    globals.__BUILD_TIME__ = undefined;
+    const { unmount } = renderWithLocale(<SiteFooter />);
+    expect(
+      screen.queryByText(enGB.footer.lastDeployedLabel, { exact: false }),
+    ).toBeNull();
+    unmount();
+
+    globals.__BUILD_TIME__ = "not-a-date";
+    renderWithLocale(<SiteFooter />);
+    expect(
+      screen.queryByText(enGB.footer.lastDeployedLabel, { exact: false }),
+    ).toBeNull();
+  });
+});

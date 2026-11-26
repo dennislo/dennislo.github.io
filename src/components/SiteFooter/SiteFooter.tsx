@@ -8,6 +8,7 @@ import TablerGithub from "../icons/TablerGithub";
 import TablerLinkedin from "../icons/TablerLinkedin";
 import TablerInstagram from "../icons/TablerInstagram";
 import TablerCalendarEvent from "../icons/TablerCalendarEvent";
+import { localeMeta } from "../../i18n/config";
 import type { TranslationDictionary } from "../../i18n";
 
 // Map from section href to the nav dictionary key (mirrors SiteHeader)
@@ -19,10 +20,33 @@ const hrefToNavKey: Record<string, keyof TranslationDictionary["nav"]> = {
   "#education": "education",
 };
 
+const formatBuildTime = (
+  iso: string | undefined,
+  htmlLang: string,
+): string | null => {
+  if (!iso) return null;
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return null;
+  // Fixed UTC zone keeps SSR output and client hydration identical.
+  return new Intl.DateTimeFormat(htmlLang, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  }).format(date);
+};
+
 const SiteFooter = () => {
   const accent = siteConfig.accentColor;
-  const { t, localizePath } = useLocale();
+  const { t, localizePath, locale } = useLocale();
   const displayName = t("identity.displayName");
+  const buildTime =
+    typeof __BUILD_TIME__ === "string" ? __BUILD_TIME__ : undefined;
+  const lastDeployed = formatBuildTime(buildTime, localeMeta[locale].htmlLang);
 
   return (
     <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
@@ -141,6 +165,13 @@ const SiteFooter = () => {
               {siteConfig.companyDetails.vatNumber}
             </p>
           </div>
+
+          {lastDeployed && (
+            <p className="mt-3 text-xs text-gray-500 dark:text-gray-500">
+              {t("footer.lastDeployedLabel")}:{" "}
+              <time dateTime={buildTime}>{lastDeployed}</time>
+            </p>
+          )}
         </div>
       </div>
     </footer>
