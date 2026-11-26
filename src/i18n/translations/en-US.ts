@@ -170,6 +170,7 @@ export const enUS: TranslationDictionary = {
     meetAria: "Meet with Dennis Lo",
     companyNumberLabel: "Company Number",
     vatNumberLabel: "VAT Number",
+    lastDeployedLabel: "Last deployed",
   },
   contact: {
     pageTitle: "Contact Me",

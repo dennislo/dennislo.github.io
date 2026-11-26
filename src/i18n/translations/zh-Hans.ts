@@ -162,6 +162,7 @@ export const zhHans: TranslationDictionary = {
     meetAria: "与 Dennis Lo 预约会议",
     companyNumberLabel: "公司注册号",
     vatNumberLabel: "增值税号",
+    lastDeployedLabel: "最后部署时间",
   },
   contact: {
     pageTitle: "联系我",

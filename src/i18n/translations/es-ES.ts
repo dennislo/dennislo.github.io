@@ -173,6 +173,7 @@ export const esES: TranslationDictionary = {
     meetAria: "Reunirse con Dennis Lo",
     companyNumberLabel: "Número de empresa",
     vatNumberLabel: "Número de IVA",
+    lastDeployedLabel: "Última implementación",
   },
   contact: {
     pageTitle: "Contáctame",
